@@ -12,7 +12,7 @@ function Load(width,height){
   core.preload("image/Characters.png");
   core.preload("image/Transparent.png");
   core.preload("image/Trophies_image.png");
-  for (var i = 0; i <= 0; i++){
+  for (var i = 0; i <= 1; i++){
     core.preload("image/背景/"+i+".png");
   }
   core.fps = 100;
@@ -63,115 +63,9 @@ function Load(width,height){
         if(Datas[12]!=false) Datas[12] = Number;
       }
       switch (Number) {
-        case -22:
-          var Text = "説明は以上です。";
-          Datas = [54,0,0,0,0,0,0,0,"",Text,Number+1,-1,0,0,"ゲームオーバー",0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -21:
-          var Text = "芸能人はカードが命。そして、決闘者はカードが魂であることを忘れないでください。深い意味はありませんが。";
-          Datas = [54,0,22,0,0,0,32,15,"",Text,Number+1,-1,0,0,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -20:
-          var Text = "芸能人はカードが命。";
-          Datas = [54,0,22,15,0,0,0,0,"",Text,Number+1,-1,0,22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -19:
-          var T_text = ["説明用","トロフィー","レッスン"];
-          var Text = "こんなの(これはテストなので獲得されません。)";
-          Datas = [54,0,0,0,0,0,0,0,"",Text,Number+1,-1,0,-22,Number-1,T_text[rand(2)],rand(2)];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -18:
-          var Text = "それと、無意味なトロフィー機能が存在します。";
-          Datas = [54,0,0,0,0,0,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -17:
-          var Text = "アニメ本編が正解ルートなので間違ったりするとすぐ終わっちゃったりします。";
-          Datas = [54,0,25,0,0,0,21,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -16:
-          var Text = "みおちゃんとなって選択肢を選んでいき、あいねちゃんとフレンズを組みましょう。                    (みおちゃんの名前だけは後で変更できます。)";
-          Datas = [54,0,25,0,0,0,21,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -15:
-          var Text = "このゲームはあいねちゃんとみおちゃんがフレンズ     (要はユニット)を組むまでのお話です。";
-          Datas = [54,0,25,15,0,0,21,15,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -14:
-          var Text = "名古屋らしくエビフライが好物で、頭と苗字にも海老が付いています。わかりやすいですね。          (なんかそういうデュエリストいたような…)";
-          Datas = [54,0,0,0,24,0,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -13:
-          var Text = "あと、海老原なこちゃん。「名」古屋でアイカツしている女の「子」です。";
-          Datas = [54,0,0,0,24,15,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -12:
-          var Text = "ポンコツでもワイはフレンズではココちゃんが一番好きやで…扱いがそれなりに悪いの悲しいんじゃァ…";
-          Datas = [51,0,0,0,0,0,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -11:
-          var Text = "ちなみにこの回でかなりのポンコツだった事が露呈した。";
-          Datas = [51,0,0,0,0,0,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -10:
-          var Text = "ヒェッ…";
-          Datas = [51,0,0,0,0,0,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -9:
-          var Text = "ホントに一人しかいないのか…？";
-          Datas = [54,0,0,0,31,0,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -8:
-          var Text = "要はアイカツフレンズ!世界のSiriといったところでしょうか。AIのくせに一人しかいないらしく、忙しい時は 呼んでも出でこなかったり、舌を噛んだり、自分にわからないことは人任せにして電話を勝手にかけるくらいの高性能AIです。";
-          Datas = [54,0,0,0,31,0,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -7:
-          var Text = "ついでに、アイカツ！ナビのココちゃん。　アイカツ！モバイルに「ハロー、ココちゃん！」　と呼びかけると出てきてくれるAIです。";
-          Datas = [54,0,0,0,31,15,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -6:
-          var Text = "どう見ても盗撮しようとして気づかれたみたいな構図の写真だけども、みおちゃんが写真を撮らせてもらえないのか、それとも恥ずかしくて撮らせてと言えないのかはたまた盗撮行為が好きなのか。多分後者だろうね。(偏見です)";
-          Datas = [54,0,0,0,21,0,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -5:
-          var Text = "ちなみにこの写真は二人がフレンズを組んで 一度解散し 再結成した後のみおちゃんの電話の呼び出し画面の画像です。";
-          Datas = [54,0,0,0,21,0,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -4:
-          var Text = "かわいいですね。(かわいいです)";
-          Datas = [54,0,0,0,21,0,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -3:
-          var Text = "この娘が友希あいねちゃん。ピュアパレットのピュアな方です。";
-          Datas = [54,0,0,0,21,15,0,0,"",Text,Number+1,-1,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
-        case -2:
-          var Text = "この娘は湊みお。ピュアパレットのピュアじゃない方です。";
-          Datas = [54,0,0,0,25,15,0,0,"",Text,Number+1,0,0,-22,Number-1,0,0];
-          core.replaceScene(MainScene(Datas,Return));
-          break;
         case -1:
-          var Text = "とりあえずは登場人物の紹介をしましょう。";
-          Datas = [54,0,0,0,0,0,0,0,"",Text,Number+1,0,0,-22,Number-1,0,0];
+          var Text = "説明なし";
+          Datas = [54,0,0,0,0,0,0,0,"",Text,Number+1,0,0,0,"ゲームオーバー",0,0];
           core.replaceScene(MainScene(Datas,Return));
           break;
         case 1:
@@ -190,140 +84,140 @@ function Load(width,height){
           break;
         case 3:
           var Text = "「おはようございます」";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,15,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 4:
           var Text = "事務所の扉を開け、中にいる人物に挨拶する。";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 5:
           var T_Name = "聖ヶ丘 剣哉";
           var Text = "「ああ、おはよう"+Surname+"くん」";
-          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,15,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 6:
           var Text = "机に座り書類を処理しながら反応するのは男性にしては長めの髪型をした壮年の男性ー僕がお世話になっているこの法律事務所の所長、聖ヶ丘 剣哉 だ";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 7:
           var Text = "「所長、僕に用件があるとお聞きしたのですが一体何の御用でしょう？」";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 8:
           var Text = "所長のデスクに近づき質問をぶつけると所長は書類から顔をあげ腕を口の前で構え眼光鋭く真剣な顔で答え始める。";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 9:
           var T_Name = "聖ヶ丘";
           var Text = "「うむ、その前に埼律君の担当していた事件は知っているかね？」";
-          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 10:
           var Text = "「はい、僕も先輩の手伝いで資料を纏めていたので知ってはいますが」";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 11:
           var T_Name = "聖ヶ丘";
           var Text = "「その事件の弁護を君にやってもらうことになった」";
-          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 12:
           var Text = "………………";
-          Datas = [0,0,0,0,0,0,0,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 13:
           var Text = "………………………………";
-          Datas = [0,0,0,0,0,0,0,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 14:
           var Text = "「はい？」";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 15:
           var Text = "思わず気の抜けた返事がでてしまう。";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 16:
           var Text = "ベテランの先輩の仕事をわざわざ新米の自分が横からかっさらうような事をなぜ任されるのか。";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 17:
           var Text = "「御言葉ですが……その、先輩はどうなさったのですか？」";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 18:
           var T_Name = "聖ヶ丘";
           var Text = "「驚くのも無理はないが、彼女は先日入院してしまってね」";
-          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 19:
           var Text = "「入院！？何があったのですか！？」";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 20:
           var Text = "あの健啖家で剛健な埼律先輩が入院するなんてよっぽどの事故か病気か。";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 21:
           var T_Name = "聖ヶ丘";
           var Text = "「ああ、そんなに心配する事はないよ。ただの食べ過ぎによる急性胃腸炎だそうだ」";
-          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 22:
           var T_Name = "";
           var Text = "そう言って所長は全く困ったものだと額に手をあてため息をつく。";
-          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 23:
           var Text = "(ああ、なるほどそう言えば週末わんこそばに挑戦するとかいってたけどそんなになるまで食べるとは……)";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 24:
           var T_Name = "聖ヶ丘";
           var Text = "「他のメンバーも全員出払っていて手の空いているのが君しかいないのだよ。君はこの事件のあらましも知っていることだし引き受けてくれないか？」";
-          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 25:
           var Text = "「確かに少しは知っておりますが、その、宜しいのですか？」";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 26:
           var Text = "夢にまでみた法廷デビューがこんな形で転がって来たものの不安を隠せず問い返してしまう。";
-          Datas = [0,0,0,0,0,0,0,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 27:
           var T_Name = "聖ヶ丘";
           var Text = "「気にすることはないよ。君は優秀だと聞いているし私の聞いたところこの事件、勝そうだ。それに後のことは此方でキッチリフォローするから思うようにやってみたまえ」";
-          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 28:
           var Text = "「わ、判りました。それでは準備に取りかかりますので失礼いたします」";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 29:
