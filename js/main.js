@@ -1133,7 +1133,7 @@ function Load(width,height){
         }
         else{
           Text2.text = "▶ 未取得";
-          Text10.text = "復習は大事。";
+          Text10.text = "未実装";
         }
         Text2.color = "red";
         if(window.localStorage.getItem("犯行の手口")!=undefined){
@@ -1174,7 +1174,7 @@ function Load(width,height){
         }
         else{
           Text3.text = "▶ 未取得";
-          Text10.text = "現実ではやっちゃあ駄目だよ！ココとのお約束！";
+          Text10.text = "未実装";
         }
         Text3.color = "red";
         if(window.localStorage.getItem("即決！")!=undefined){
@@ -1215,7 +1215,7 @@ function Load(width,height){
         }
         else{
           Text4.text = "▶ 未取得";
-          Text10.text = "迷ってる暇などない！";
+          Text10.text = "未実装";
         }
         Text4.color = "red";
         if(window.localStorage.getItem("電話")!=undefined){
@@ -1250,7 +1250,7 @@ function Load(width,height){
         }
         else{
           Text5.text = "▶ 未取得";
-          Text10.text = "大事なことだけど電話ですませちゃう。しかも夜分遅くに。";
+          Text10.text = "未実装";
         }
         Text5.color = "red";
         return;
