@@ -64,32 +64,31 @@ function Load(width,height){
       }
       switch (Number) {
         case -1:
-          var Text = "説明なし";
-          Datas = [54,0,0,0,0,0,0,0,"",Text,Number+1,0,0,0,"ゲームオーバー",0,0];
+          var Text = "自力でやれ";
+          Datas = [0,0,0,0,0,0,0,0,"",Text,Number+1,0,0,0,"ゲームオーバー",0,0];
           core.replaceScene(MainScene(Datas,Return));
           break;
         case 1:
           var Flag = [false,false];
-          var T_Name = Surname + " " + Name;
           var Text = "俺の名前は"+ Surname + Name +"。最近弁護士になったばかりの新入りだ。";
           window.localStorage.setItem("syoken",false);
           Data = true;
-          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,0,Number,31,Number+1,0,0];
+          Datas = [0,0,0,0,0,0,0,0,"",Text,Number-1,0,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 2:
           var Text = "まだ先輩についての見習いに過ぎないがいずれは自分自身で法廷に立つことを目標にして聖ヶ丘法律事務所にお世話になって色々な慣例等を学びつつ日々の雑務をこなしている。";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,0,Number,31,Number+1,0,0];
+          Datas = [0,0,0,0,0,0,0,0,"",Text,Number-1,0,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 3:
           var Text = "「おはようございます」";
-          Datas = [1,0,3,15,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,15,0,0,0,0,Surname+" "+S_name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 4:
           var Text = "事務所の扉を開け、中にいる人物に挨拶する。";
-          Datas = [1,0,3,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,0,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 5:
@@ -100,7 +99,7 @@ function Load(width,height){
           break;
         case 6:
           var Text = "机に座り書類を処理しながら反応するのは男性にしては長めの髪型をした壮年の男性ー僕がお世話になっているこの法律事務所の所長、聖ヶ丘 剣哉 だ";
-          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 7:
@@ -110,7 +109,7 @@ function Load(width,height){
           break;
         case 8:
           var Text = "所長のデスクに近づき質問をぶつけると所長は書類から顔をあげ腕を口の前で構え眼光鋭く真剣な顔で答え始める。";
-          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 9:
@@ -147,12 +146,12 @@ function Load(width,height){
           break;
         case 15:
           var Text = "思わず気の抜けた返事がでてしまう。";
-          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 16:
           var Text = "ベテランの先輩の仕事をわざわざ新米の自分が横からかっさらうような事をなぜ任されるのか。";
-          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 17:
@@ -173,7 +172,7 @@ function Load(width,height){
           break;
         case 20:
           var Text = "あの健啖家で剛健な埼律先輩が入院するなんてよっぽどの事故か病気か。";
-          Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 21:
@@ -183,9 +182,8 @@ function Load(width,height){
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 22:
-          var T_Name = "";
           var Text = "そう言って所長は全く困ったものだと額に手をあてため息をつく。";
-          Datas = [1,0,3,0,0,0,3,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,0,0,0,3,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 23:
