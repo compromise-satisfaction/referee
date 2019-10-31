@@ -201,7 +201,7 @@ function Load(width,height){
         case 5:
           var T_Name = "聖ヶ丘 剣哉";
           var Text = "「ああ、おはよう"+Surname+"くん」";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 6:
