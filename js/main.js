@@ -222,7 +222,7 @@ function Load(width,height){
         case 9:
           var T_Name = "聖ヶ丘";
           var Text = "「うむ、その前に埼律君の担当していた事件は知っているかね？」";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 10:
@@ -233,7 +233,7 @@ function Load(width,height){
         case 11:
           var T_Name = "聖ヶ丘";
           var Text = "「その事件の弁護を君にやってもらうことになった」";
-          Datas = [0,0,0,0,0,0,0,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [0,0,0,0,0,0,0,0,T_Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 12:
