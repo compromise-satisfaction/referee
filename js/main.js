@@ -26,6 +26,11 @@ function Load(width,height){
       var Name = window.localStorage.getItem("name");
       var Gender = window.localStorage.getItem("gender");
       var Surname = window.localStorage.getItem("surname");
+      if(Gender=="男"){
+        var www = ["僕","俺"];
+        var Person = www[rand(1)];
+      }
+      else var Person = "私";
       if(Datas!=false){
         if(Datas.length==20){
           if(Datas[13]!=false) Datas[13] = Number-1;
@@ -70,7 +75,7 @@ function Load(width,height){
           break;
         case 1:
           var Flag = [false,false];
-          var Text = "俺の名前は"+ Surname + Name +"。最近弁護士になったばかりの新入りだ。";
+          var Text = Person+"の名前は"+ Surname + Name +"。最近弁護士になったばかりの新入りだ。";
           window.localStorage.setItem("syoken",false);
           Data = true;
           Datas = [0,0,0,0,0,0,0,0,"",Text,Number-1,0,Number,31,Number+1,0,0];
@@ -83,7 +88,7 @@ function Load(width,height){
           break;
         case 3:
           var Text = "「おはようございます」";
-          Datas = [1,0,3,15,0,0,0,0,Surname+" "+S_name,Text,Number-1,1,Number,31,Number+1,0,0];
+          Datas = [1,0,3,15,0,0,0,0,Surname+" "+Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 4:
@@ -98,12 +103,12 @@ function Load(width,height){
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 6:
-          var Text = "机に座り書類を処理しながら反応するのは男性にしては長めの髪型をした壮年の男性ー僕がお世話になっているこの法律事務所の所長、聖ヶ丘 剣哉 だ";
+          var Text = "机に座り書類を処理しながら反応するのは男性にしては長めの髪型をした壮年の男性ー"+Person+"がお世話になっているこの法律事務所の所長、聖ヶ丘 剣哉 だ";
           Datas = [1,0,3,0,0,0,3,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 7:
-          var Text = "「所長、僕に用件があるとお聞きしたのですが一体何の御用でしょう？」";
+          var Text = "「所長、"+Person+"に用件があるとお聞きしたのですが一体何の御用でしょう？」";
           Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
@@ -119,7 +124,7 @@ function Load(width,height){
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 10:
-          var Text = "「はい、僕も先輩の手伝いで資料を纏めていたので知ってはいますが」";
+          var Text = "「はい、"+Person+"も先輩の手伝いで資料を纏めていたので知ってはいますが」";
           Datas = [1,0,3,0,0,0,3,0,Name,Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
@@ -219,7 +224,7 @@ function Load(width,height){
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 29:
-          var Text = "所長の剣幕に押され了承してしまった僕は一礼し所長室を後にする。";
+          var Text = "所長の剣幕に押され了承してしまった"+Person+"は一礼し所長室を後にする。";
           Datas = [0,0,0,0,0,0,0,0,"",Text,Number-1,1,Number,31,Number+1,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
