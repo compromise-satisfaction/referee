@@ -2,11 +2,15 @@ enchant()
 
 function Load(width,height){
   var core = new Core(width, height);
-  core.preload("sound.wav");
+  core.preload("sound/Item.wav");
   core.preload("image/Round.png");
   core.preload("image/title.png");
   core.preload("image/white.png");
+  core.preload("image/Item_B.png");
+  core.preload("image/Item_S.png");
+  core.preload("sound/Choice.wav");
   core.preload("image/Buttons.png");
+  core.preload("sound/Trophies.wav");
   core.preload("image/Trophies.png");
   core.preload("image/Background.png");
   core.preload("image/Characters.png");
@@ -22,7 +26,7 @@ function Load(width,height){
       return Math.floor(Math.random() * (n + 1));
     }
 
-    function Scene_loads(Number,Datas,Return,Flag){
+    function Scene_loads(Number,Datas,Return,Flag,Item){
       var Name = window.localStorage.getItem("name");
       var Gender = window.localStorage.getItem("gender");
       var Surname = window.localStorage.getItem("surname");
@@ -58,7 +62,6 @@ function Load(width,height){
           if(Datas[12]!=false) Number = Datas[12];
         }
         else Number = Datas[14]*1;
-        console.log(Datas);
         Flag = window.localStorage.getItem("flag").split(",");
         for (var i = 0; i < Flag.length; i++){
           if(Flag[i]=="true") Flag[i] = true;
@@ -71,6 +74,9 @@ function Load(width,height){
         Datas[7] = 0;
         if(Datas[12]!=false) Datas[12] = Number;
       }
+      if(Item){
+          Number = Item+Number;
+      }
       switch (Number) {
         case -1:
           var Text = "自力でやれ";
@@ -78,7 +84,7 @@ function Load(width,height){
           core.replaceScene(MainScene(Datas,Return));
           break;
         case 1:
-          var Flag = [false,false];
+          var Flag = [true];
           var Text = Person+"の名前は"+ Surname + Name +"。最近弁護士になったばかりの新入りだ。";
           window.localStorage.setItem("syoken",false);
           Data = true;
@@ -254,53 +260,44 @@ function Load(width,height){
           if(window.localStorage.getItem("Save")=="マニュアル") Datas[5] = "セーブ読み込み";
           core.replaceScene(ChoiceScene(Datas,Flag));
           break;
-        default:
-          //(背景,背景時間,(キャラ番号,時間)*3,名前,文章,戻る1,戻る2,設定,スキップ,次のシーン,トロフィー,トロフィー画像
-          Datas = [0,0,0,0,0,0,0,0,"","ここから先はできていません。",0,0,0,0,"ゲームオーバー",false,0];
-          core.replaceScene(MainScene(Datas,Return,Flag));
-          break;
+          default:
+            if(Item){
+                Number = Number.substring(Item.length)*1;
+                core.pushScene(ItemgetScene(0,"ここでは使えないようだ。",Number,Flag));
+            }
+            else{
+              //(背景,背景時間,(キャラ番号,時間)*3,名前,文章,戻る1,戻る2,設定,スキップ,次のシーン,トロフィー,トロフィー画像
+              Datas = [54,0,0,0,0,0,0,0,"","ここから先はできていません。",0,0,0,0,"ゲームオーバー",0,0];
+              core.replaceScene(MainScene(Datas,Return,Flag));
+            }
+            break;
       }
     }
     function Inspect_loads(Number,Flag){
       var Name = window.localStorage.getItem("name");
       var Datas = [];
-      for (var i = 0; i < Result3.length; i++){
-        if(Number == Result3[i].シーンナンバー){
-          Datas[0] = Result3[i].背景;
-          Datas[1] = Result3[i].幅1;
-          Datas[2] = Result3[i].高1;
-          Datas[3] = Result3[i].x1;
-          Datas[4] = Result3[i].y1;
-          Datas[5] = Result3[i].名前1;
-          Datas[6] = Result3[i].テキスト1;
-          Datas[7] = Result3[i].幅2;
-          Datas[8] = Result3[i].高2;
-          Datas[9] = Result3[i].x2;
-          Datas[10] = Result3[i].y2;
-          Datas[11] = Result3[i].名前2;
-          Datas[12] = Result3[i].テキスト2;
-          Datas[13] = Result3[i].幅3;
-          Datas[14] = Result3[i].高3;
-          Datas[15] = Result3[i].x3;
-          Datas[16] = Result3[i].y3;
-          Datas[17] = Result3[i].名前3;
-          Datas[18] = Result3[i].テキスト3;
-          Datas[19] = Result3[i].幅4;
-          Datas[20] = Result3[i].高4;
-          Datas[21] = Result3[i].x4;
-          Datas[22] = Result3[i].y4;
-          Datas[23] = Result3[i].名前4;
-          Datas[24] = Result3[i].テキスト4;
+      //[背景,(幅,高,x座標,y座標,名前(又は"シーンロード"),テキスト(又はシーンナンバー))×4]
+      switch (Number) {
+        case 137:
+          Datas = [5,367,553,1219,309,"シーンロード",137.1];
+          if(Flag[1]){
+            Datas[0] = 55;
+            Datas[6] = 137.6;
+          }
           core.pushScene(InspectScene(Datas,Flag));
-          return;
-        }
+          break;
+        default:
+          Datas = [54,0,0,0,0,0,0,0,"","ここから先はできていません。",0,0,0,0,"ゲームオーバー",false,0];
+          core.replaceScene(MainScene(Datas,Return,Flag));
+          break;
       }
+      return;
     }
     var TitleScene = function(){
 
       if(window.localStorage.getItem("syoken")!="false"){
         var Data = false;
-        var Flag = [false,false];
+        var Flag = [true];
         window.localStorage.setItem("flag",Flag);
         window.localStorage.setItem("gender","男");
         window.localStorage.setItem("name","俛人");
@@ -384,7 +381,7 @@ function Load(width,height){
         window.localStorage.setItem("flag",Flag);
         window.localStorage.setItem("datas",Datas);
       }
-
+      core.assets["sound/Choice.wav"].play();
       var Background = new Sprite(1600,900);
       Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
       Background.x = 0;
@@ -488,7 +485,7 @@ function Load(width,height){
         Settings.frame = 2;
         scene.addChild(Settings);
         Settings.addEventListener('touchstart',function(e){
-          core.pushScene(SettingScene(Datas,Flag));
+          core.pushScene(ItemScene(Datas,Flag));
           scene.addChild(Enter2);
         });
       }//設定
@@ -545,7 +542,7 @@ function Load(width,height){
           Trophies_text.tl.fadeIn(5);
           Trophies_text.text = Datas[15];
           scene.addChild(Trophies_text);
-          core.assets["sound.wav"].play();
+          core.assets["sound/Trophies.wav"].play();
           Trophies.addEventListener("enterframe",function(){
             Time++;
             if(Time==50){
@@ -565,6 +562,7 @@ function Load(width,height){
         window.localStorage.setItem("flag",Flag);
         window.localStorage.setItem("datas",Datas);
       }
+      core.assets["sound/Choice.wav"].play();
       var Background = new Sprite(1600,900);
       Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
       Background.x = 0;
@@ -694,7 +692,7 @@ function Load(width,height){
         Settings.frame = 2;
         scene.addChild(Settings);
         Settings.addEventListener('touchstart',function(e){
-          core.pushScene(SettingScene(Datas,Flag));
+          core.pushScene(ItemScene(Datas,Flag));
         });
       }
 
@@ -884,6 +882,7 @@ function Load(width,height){
 
       Text2.addEventListener('touchstart',function(e){
         core.popScene();
+        core.popScene();
         Scene_loads("タイトルに戻る",false);
         return;
       });
@@ -906,7 +905,7 @@ function Load(width,height){
           console.log(Flag);
           window.localStorage.setItem("flag",Flag);
           window.localStorage.setItem("datas",Datas);
-          core.assets["sound.wav"].play();
+          core.assets["sound/Item.wav"].play();
           scene.addChild(Text5);
         }
         return;
@@ -937,7 +936,7 @@ function Load(width,height){
           if(S_Input._element.value=="") window.localStorage.setItem("surname","防人");
           if(S_Input2._element.value=="") window.localStorage.setItem("name","玲奈");
         }
-        core.assets["sound.wav"].play();
+        core.assets["sound/Item.wav"].play();
         scene.addChild(Text12);
         return;
       });
@@ -1034,7 +1033,7 @@ function Load(width,height){
         }
         else{
           Text2.text = "▶ 未取得";
-          Text10.text = "未実装";
+          Text10.text = "復習は大事。";
         }
         Text2.color = "red";
         if(window.localStorage.getItem("犯行の手口")!=undefined){
@@ -1075,7 +1074,7 @@ function Load(width,height){
         }
         else{
           Text3.text = "▶ 未取得";
-          Text10.text = "未実装";
+          Text10.text = "現実ではやっちゃあ駄目だよ！ココとのお約束！";
         }
         Text3.color = "red";
         if(window.localStorage.getItem("即決！")!=undefined){
@@ -1116,7 +1115,7 @@ function Load(width,height){
         }
         else{
           Text4.text = "▶ 未取得";
-          Text10.text = "未実装";
+          Text10.text = "迷ってる暇などない！";
         }
         Text4.color = "red";
         if(window.localStorage.getItem("電話")!=undefined){
@@ -1151,7 +1150,7 @@ function Load(width,height){
         }
         else{
           Text5.text = "▶ 未取得";
-          Text10.text = "未実装";
+          Text10.text = "大事なことだけど電話ですませちゃう。しかも夜分遅くに。";
         }
         Text5.color = "red";
         return;
@@ -1185,7 +1184,7 @@ function Load(width,height){
             core.popScene();
             Scene_loads(Datas[6],false,false,Flag);
           }
-          else core.pushScene(TextScene(Data[0],Datas[5],Datas[6]));
+          else core.pushScene(TextScene(Datas[5],Datas[6]));
         });
       }
 
@@ -1200,7 +1199,7 @@ function Load(width,height){
             core.popScene();
             Scene_loads(Datas[12],false,false,Flag);
           }
-          else core.pushScene(TextScene(Data[0],Datas[11],Datas[12]));
+          else core.pushScene(TextScene(Datas[11],Datas[12]));
         });
       }
 
@@ -1215,7 +1214,7 @@ function Load(width,height){
             core.popScene();
             Scene_loads(Datas[18],false,false,Flag);
           }
-          else core.pushScene(TextScene(Data[0],Datas[17],Datas[18]));
+          else core.pushScene(TextScene(Datas[17],Datas[18]));
         });
       }
 
@@ -1249,7 +1248,66 @@ function Load(width,height){
 
       return scene;
     };
-    var TextScene = function(a,b,c){
+    var ItemgetScene = function(a,b,c,Flag){
+      var scene = new Scene();                                // 新しいシーンを作る
+
+      var Background = new Sprite(1600,900);
+      Background.image = core.assets["image/white.png"];
+      Background.x = 0;
+      Background.y = 900;
+      scene.addChild(Background);
+
+      var Text = new Label();
+      Text.font  = "60px monospace";
+      Text.color = 'black';
+      Text.x = 60;
+      Text.y = 1040;
+      Text.width = 1480;
+      Text.height = 800;
+      Text.text = b;
+      scene.addChild(Text);//テキスト
+
+      var Enter = new Sprite(320,60);
+      Enter.image = core.assets["image/Buttons.png"];
+      Enter.x = 1280;
+      Enter.y = height-65;
+      Enter.frame = 4;
+      scene.addChild(Enter);
+      if(b!="ここでは使えないようだ。"){
+        var Item = new Sprite(800,800);
+        Item.image = core.assets["image/Item_B.png"];
+        Item.x = 1600;
+        Item.y = 50;
+        Item.frame = a;
+        scene.addChild(Item);
+        core.assets["sound/Item.wav"].play();
+        Item.addEventListener("enterframe",function(){
+          if(Item.x!=400) Item.x -= 100;
+          if(Item.x==-800){
+            core.popScene();
+            Scene_loads(c,false,true,Flag);
+          }
+        })
+      }
+
+      Enter.addEventListener('touchstart',function(e){
+        if(b=="ここでは使えないようだ。") {
+          core.popScene();
+          Scene_loads(c,false,true,Flag);
+        }
+        else {
+          if(Item.x>400) Item.x = 400;
+          else if(Item.x==400) Item.x -= 100;
+          else{
+            core.popScene();
+            Scene_loads(c,false,true,Flag);
+          }
+        }
+      });//進む
+
+      return scene;
+    }
+    var TextScene = function(a,b){
       var scene = new Scene();                                // 新しいシーンを作る
 
       var Background = new Sprite(1600,900);
@@ -1265,7 +1323,7 @@ function Load(width,height){
       C_name.y = 960;
       C_name.width = 1600;
       C_name.height = 60;
-      C_name.text = "【" + b + "】";
+      C_name.text = "【" + a + "】";
       if(C_name.text == "【】") C_name.text = "";
       scene.addChild(C_name);//キャラ名
 
@@ -1276,12 +1334,210 @@ function Load(width,height){
       Text.y = 1040;
       Text.width = 1480;
       Text.height = 800;
-      Text.text = c;
+      Text.text = b;
       scene.addChild(Text);//テキスト
 
       scene.on("touchstart",function(e){
         core.popScene();
       });
+
+      return scene;
+    }
+    var ItemScene = function(Datas,Flag){
+      var scene = new Scene();                                // 新しいシーンを作る
+
+      var Background = new Sprite(1600,1600);
+      Background.image = core.assets["image/Background.png"];
+      Background.x = 0;
+      Background.y = 0;
+      scene.addChild(Background);
+
+      var Numbers = 400;
+
+      var Item_image = new Sprite(400,400);
+      Item_image.image = core.assets["image/Item_S.png"];
+      Item_image.x = 1000;
+      Item_image.y = 400;
+      Item_image.frame = 0;
+      scene.addChild(Item_image);
+
+      var Text1 = new Label();
+      Text1.font  = "60px monospace";
+      Text1.color = 'black';
+      Text1.x = 200;
+      Text1.y = 200;
+      Text1.width = 1600;
+      Text1.height = 60;
+      Text1.text = "▶ 戻る";
+      scene.addChild(Text1);
+
+      var Text2 = new Label();
+      Text2.font  = "60px monospace";
+      Text2.color = 'black';
+      Text2.x = 1000;
+      Text2.y = 200;
+      Text2.width = 1600;
+      Text2.height = 60;
+      Text2.text = "▶ 設定を開く";
+      scene.addChild(Text2);
+
+      var Text3 = new Label();
+      Text3.font  = "60px monospace";
+      Text3.color = 'black';
+      Text3.x = 1200;
+      Text3.y = 1400;
+      Text3.width = 1380;
+      Text3.height = 60;
+      Text3.text = "";
+      scene.addChild(Text3);
+
+      var Text4 = new Label();
+      Text4.font  = "60px monospace";
+      Text4.color = 'black';
+      Text4.x = 200;
+      Text4.y = 1000;
+      Text4.width = 1600;
+      Text4.height = 60;
+      Text4.text = "";
+      scene.addChild(Text4);
+
+      var Text5 = new Label();
+      Text5.font  = "60px monospace";
+      Text5.color = 'black';
+      Text5.x = 200;
+      Text5.y = 1100;
+      Text5.width = 1600;
+      Text5.height = 60;
+      Text5.text = "";
+      scene.addChild(Text5);
+
+      var Text6 = new Label();
+      Text6.font  = "60px monospace";
+      Text6.color = 'black';
+      Text6.x = 200;
+      Text6.y = 1200;
+      Text6.width = 1600;
+      Text6.height = 60;
+      Text6.text = "";
+      scene.addChild(Text6);
+
+      var Text7 = new Label();
+      Text7.font  = "60px monospace";
+      Text7.color = 'black';
+      Text7.x = 200;
+      Text7.y = 1300;
+      Text7.width = 1600;
+      Text7.height = 60;
+      Text7.text = "";
+      scene.addChild(Text7);
+
+      var Items = Class.create(Label, {
+        initialize: function(a,b) {
+        Label.call(this);
+        this.font  = "60px monospace";
+        this.color = 'black';
+        this.x = 200;
+        this.y = Numbers;
+        this.width = 1600;
+        this.height = 60;
+        this.text = a;
+        if(Flag[b]){
+          Numbers += 100;
+          scene.addChild(this);
+        }
+        }
+      });
+
+      var Item = [];
+      var Choice_Item = "未設定";
+      Item[0] = new Items("弁護士バッジ",0);
+      Item[1] = new Items("事件概要",0);
+
+      function Item_text(a,b){
+        a = a.substring(2);
+        var Text = [];
+        switch (a) {
+          case "弁護士バッジ":
+            Item_image.frame = 1;
+            var Gender = window.localStorage.getItem("gender");
+            if(Gender=="男"){
+              var www = ["僕","俺"];
+              var Person = www[rand(1)];
+            }
+            else var Person = "私";
+            Text[0] = Person + "の身分を証明してくれる、大切なバッジだ。";
+            Text[1] = "";
+            Text[2] = "";
+            Text[3] = "";
+            return(Text[b]);
+            break;
+          case "事件概要":
+            Item_image.frame = 2;
+            Text[0] = "被害者 清水 久太郎 しみず きゅうたろう";
+            Text[1] = "27歳 会社員";
+            Text[2] = "死因 アレルギー性ショック症状による心停止";
+            Text[3] = "蕎麦アレルギー持ち";
+            return(Text[b]);
+            break;
+          default:
+            return("開発中");
+            break;
+        }
+      }
+
+      Text1.addEventListener('touchstart',function(e){
+        core.popScene();
+        return;
+      });
+
+      Text2.addEventListener('touchstart',function(e){
+        core.pushScene(SettingScene(Datas,Flag));
+        return;
+      });
+
+      Text3.addEventListener('touchstart',function(e){
+        if(Text3.text=="▶ 使う"){
+          core.popScene();
+          if(Datas.length==17){
+            if(Datas[12]!=false) Number = Datas[12];
+          }
+          else Number = Datas[14]*1;
+          Scene_loads(Number,Datas,true,Flag,Choice_Item);
+        }
+        return;
+      });
+
+      for (var i = 0; i < Item.length; i++){
+        Item[i].addEventListener('touchstart',function(e){
+          if(this.color=="black"){
+            Choice_Item = this.text;
+            this.text = "▶ " + this.text;
+            this.color = "red";
+            Text3.text = "▶ 使う";
+            Text4.text = Item_text(this.text,0);
+            Text5.text = Item_text(this.text,1);
+            Text6.text = Item_text(this.text,2);
+            Text7.text = Item_text(this.text,3);
+          }
+          else{
+            Item_image.frame = 0;
+            this.text = this.text.substring(2);
+            this.color = "black";
+            Text3.text = "";
+            Text4.text = "";
+            Text5.text = "";
+            Text6.text = "";
+            Text7.text = "";
+          }
+          for (var k = 0; k < Item.length; k++){
+            if(Item[k].color=="red"&&this!=Item[k]){
+              Item[k].text = Item[k].text.substring(2);
+              Item[k].color = "black";
+            }
+          }
+          return;
+        });
+      }
 
       return scene;
     }
