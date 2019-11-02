@@ -1451,7 +1451,8 @@ function Load(width,height){
       var Item = [];
       var Choice_Item = "未設定";
       Item[0] = new Items("弁護士バッジ",0);
-      Item[1] = new Items("事件概要",0);
+      Item[1] = new Items("被害者概要",0);
+      Item[2] = new Items("事件概要",0);
 
       function Item_text(a,b){
         a = a.substring(2);
@@ -1471,7 +1472,7 @@ function Load(width,height){
             Text[3] = "";
             return(Text[b]);
             break;
-          case "事件概要":
+          case "被害者概要":
             Item_image.frame = 2;
             Text[0] = "被害者 清水 久太郎 しみず きゅうたろう";
             Text[1] = "27歳 会社員";
@@ -1480,6 +1481,7 @@ function Load(width,height){
             return(Text[b]);
             break;
           default:
+            Item_image.frame = 0;
             return("開発中");
             break;
         }
