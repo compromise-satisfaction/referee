@@ -13,15 +13,20 @@ function Load(width,height){
   core.preload("sound/Choice.wav");
   core.preload("image/Buttons.png");
   core.preload("image/待った！.png");
+  core.preload("sound/待った！.wav");
   core.preload("sound/Trophies.wav");
   core.preload("image/Trophies.png");
+  core.preload("image/背景/left.png");
   core.preload("image/異議あり！.png");
+  core.preload("sound/異議あり！.wav");
+  core.preload("image/背景/right.png");
   core.preload("image/Background.png");
   core.preload("image/Characters.png");
   core.preload("image/Test_stand.png");
   core.preload("image/Transparent.png");
   core.preload("image/Trophies_image.png");
-  for (var i = 0; i <= 4; i++){
+  core.preload("image/背景/Test_stand.png");
+  for (var i = 0; i <= 1; i++){
     core.preload("image/背景/"+i+".png");
   }
   core.fps = 100;
@@ -47,12 +52,14 @@ function Load(width,height){
       if(Number=="セーブ読み込み"){
         Number = window.localStorage.getItem("Number")*1;
         Flag = window.localStorage.getItem("flag").split(",");
-        for (var i = 2; i < Flag.length; i++){
+        for (var i = 4; i < Flag.length; i++){
           if(Flag[i]=="true") Flag[i] = true;
           else Flag[i] = false;
         }
         Flag[0] = Flag[0]*1;//体力
         Flag[1] = Flag[1]*1;//今どの尋問Sceneか
+        Flag[2] = Flag[2]*1;//戻るScene
+        Flag[3] = Flag[3]*1;//スキップScene
       }
       console.log(Number);
       if(Item){
@@ -257,62 +264,99 @@ function Load(width,height){
           break;
         case 36:
           //Datas = [(キャラ,キャラ名,テキスト,ゆさぶる,前,今,次,つきつける,正解)]
-          Datas = [2,"未知の決闘者","まず、被害者は溺死よ。",36.1,0,Number,Number+1,40,"被害者概要"];
+          if(Flag[4]) Datas = [3,"セラ","まず、被害者は溺死です。",36.1,0,Number,Number+1,40,"被害者概要"];
+          else Datas = [2,"未知の決闘者","まず、被害者は溺死よ。",36.1,0,Number,Number+1,40,"被害者概要"];
           core.replaceScene(InterrogationScene(Datas,Flag));
           break;
         case 36.1:
           var Text = "あれ？そうでしたっけ？";
-          Datas = [3,0,S_image,0,0,0,0,0,Name,Text,0,0,Number,36.2,0,0,0];
+          Datas = ["right",0,S_image,0,0,0,0,0,Name,Text,0,0,Number,36.2,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 36.2:
-          var Text = "なに？違うって言うの？ならば証拠を見せなさい。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,0,36.1,Number,37,0,0,0];
+          if(Flag[4]){
+            Name = "セラ";
+            var Text = "どうでしょうねぇ？";
+            var Image = 3;
+          }
+          else{
+            Name = "未知の決闘者";
+            var Text = "なに？違うって言うの？ならば証拠を見せなさい。";
+            var Image = 2;
+          }
+          Datas = ["Test_stand",0,0,0,Image,0,0,0,Name,Text,0,36.1,Number,37,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 37:
-          Datas = [2,"未知の決闘者","後は言う事はないわね。",37.1,Number-1,Number,Number+1,0,"無し"];
+          if(Flag[4]) Datas = [3,"セラ","他は特にないですね。",37.1,Number-1,Number,Number+1,0,"無し"];
+          else Datas = [2,"未知の決闘者","後は言う事はないわね。",37.1,Number-1,Number,Number+1,0,"無し"];
           core.replaceScene(InterrogationScene(Datas,Flag));
           break;
         case 37.1:
           var Text = "早くないですか？";
-          Datas = [3,0,S_image,0,0,0,0,0,Name,Text,0,0,Number,37.2,0,0,0];
+          Datas = ["right",0,S_image,0,0,0,0,0,Name,Text,0,0,Number,37.2,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 37.2:
-          var Text = "テストなんだからこんなものよ。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,0,37.1,Number,38,0,0,0];
+          if(Flag[4]){
+            Name = "セラ";
+            var Text = "テストですので。";
+            var Image = 3;
+          }
+          else{
+            Name = "未知の決闘者";
+            var Text = "テストなんだからこんなものよ。";
+            var Image = 2;
+          }
+          Datas = ["Test_stand",0,0,0,Image,0,0,0,Name,Text,0,37.1,Number,38,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 38:
-          Datas = [2,"未知の決闘者","私からは以上よ。",38.1,Number-1,Number,Number+1,0,"無し"];
+          if(Flag[4]) Datas = [3,"セラ","私からは以上です。",38.1,Number-1,Number,Number+1,0,"無し"];
+          else Datas = [2,"未知の決闘者","私からは以上よ。",38.1,Number-1,Number,Number+1,0,"無し"];
           core.replaceScene(InterrogationScene(Datas,Flag));
           break;
         case 38.1:
           var Text = "えっと…。";
-          Datas = [3,0,S_image,0,0,0,0,0,Name,Text,0,0,Number,38.2,0,0,0];
+          Datas = ["right",0,S_image,0,0,0,0,0,Name,Text,0,0,Number,38.2,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 38.2:
           var Text = "何よ。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,0,38.1,Number,38.3,0,0,0];
+          if(Flag[3]) var Next = 38.21;
+          else var Next = 38.3;
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,0,38.1,Number,Next,0,0,0];
+          core.replaceScene(MainScene(Datas,Return,Flag));
+          break;
+        case 38.21:
+          var Text = "素顔、見せてくれませんか？";
+          Datas = ["right",0,S_image,0,0,0,0,0,Name,Text,38.1,38.2,Number,38.22,0,0,0];
+          core.replaceScene(MainScene(Datas,Return,Flag));
+          break;
+        case 38.22:
+          var Text = "…";
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,38.1,38.21,Number,38.23,0,0,0];
+          core.replaceScene(MainScene(Datas,Return,Flag));
+          break;
+        case 38.23:
+          var Text = "…はい。";
+          Flag[4] = true;
+          Datas = ["Test_stand",0,0,0,3,0,0,0,"セラ",Text,38.1,38.22,Number,39,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 38.3:
           var Text = "とりあえず叫んでみました。";
-          Datas = [3,0,S_image,0,0,0,0,0,Name,Text,38.1,38.2,Number,38.4,0,0,0];
+          Datas = ["right",0,S_image,0,0,0,0,0,Name,Text,38.1,38.2,Number,38.4,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 38.4:
           var Text = "ふん。初心者にありがちね。";
-          if(Flag[3]) var Next = 39;
-          else var Next = 38.5;
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,38.1,38.3,Number,Next,0,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,38.1,38.3,Number,38.5,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 38.5:
           var Text = "その調子だと、弁護士バッジでもつきつけまくってるんでしょう。これでも持っときなさい。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,38.1,38.4,Number,38.6,0,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,38.1,38.4,Number,38.6,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 38.6:
@@ -321,95 +365,95 @@ function Load(width,height){
           break;
         case 39:
           var Text = "もう一度聞き返してみよう。";
-          Datas = [3,0,S_image,0,0,0,0,0,Name,Text,0,0,Number,36,0,0,0];
+          Datas = ["right",0,S_image,0,0,0,0,0,Name,Text,0,0,Number,36,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 40:
           var Text = "…これによると死因はアナフィラキシーショックですよ？";
-          Datas = [3,0,S_image,0,0,0,0,0,Name,Text,0,0,Number,Number+0.1,40.4,0,0];
+          Datas = ["right",0,S_image,0,0,0,0,0,Name,Text,0,0,Number,Number+0.1,40.4,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 40.1:
           var Text = "正解。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,0,Number-0.1,Number,Number+0.1,40.4,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,0,Number-0.1,Number,Number+0.1,40.4,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 40.2:
           var Text = "え。";
-          Datas = [3,0,S_image,0,0,0,0,0,Name,Text,40,Number-0.1,Number,40.3,40.4,0,0];
+          Datas = ["right",0,S_image,0,0,0,0,0,Name,Text,40,Number-0.1,Number,40.3,40.4,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 40.3:
           var Text = "今回はお試しだからね。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,40,40.2,Number,Number+0.1,0,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,40,40.2,Number,Number+0.1,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 40.4:
           var Text = "clear！";
-          Datas = [2,0,0,0,2,0,0,0,"",Text,40,Number-0.1,Number,"ゲームオーバー",0,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"",Text,40,Number-0.1,Number,"ゲームオーバー",0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 41:
           var Text = "これは明らかにおかしいです？";
-          Datas = [3,0,S_image,0,0,0,0,0,Name,Text,0,0,Number,Number+1,44,0,0];
+          Datas = ["right",0,S_image,0,0,0,0,0,Name,Text,0,0,Number,Number+1,44,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 42:
           var Text = "自信なさげね。そんなんだと裁判官の心象が悪くなるわよ。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,0,Number-1,Number,Number+1,44,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,0,Number-1,Number,Number+1,44,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 43:
           var Text = "今はまだ裁判長の画像がないから私が鉄槌を下してあげるわ。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,41,Number-1,Number,Number+1,0,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,41,Number-1,Number,Number+1,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 44:
           Flag[0]--;
           var Text = "(ライフが減ったようだ…残り)"+Flag[0];
-          Datas = [3,0,S_image,0,0,0,0,0,"",Text,0,0,0,Flag[1],0,0,0];
+          Datas = ["right",0,S_image,0,0,0,0,0,"",Text,0,0,0,Flag[1],0,0,0];
           if(Flag[0]==0) Datas[13] = 45;
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 45:
           var Text = "そこまで！";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,0,0,Number,Number+1,0,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,0,0,Number,Number+1,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 46:
           var Text = "どうやらこの裁判は有罪ね。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,0,0,Number,Number+1,0,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,0,0,Number,Number+1,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 47:
           var Text = "\"ゲームオーバーですお疲れさまでした。\"";
-          Datas = [2,0,0,0,2,0,0,0,"",Text,0,0,Number,"ゲームオーバー",0,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"",Text,0,0,Number,"ゲームオーバー",0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case "弁護士バッジ47":
           var Text = "…？何？弁護士バッジを差し出したりして。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,0,0,48,49,51,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,0,0,48,49,51,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 48:
           var Text = "…？何？弁護士バッジを差し出したりして。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,0,0,Number,Number+1,51,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,0,0,Number,Number+1,51,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 49:
           var Text = "こんなの弁護士失格なので返却しようかと…";
-          Datas = [3,0,S_image,0,0,0,0,0,Name,Text,0,Number-1,Number,Number+1,51,0,0];
+          Datas = ["right",0,S_image,0,0,0,0,0,Name,Text,0,Number-1,Number,Number+1,51,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 50:
           var Text = "…なかなか見上げた根性ね。いいわ、ライフ＋100して上げる。";
-          Datas = [2,0,0,0,2,0,0,0,"未知の決闘者",Text,48,Number-1,Number,Number+1,0,0,0];
+          Datas = ["Test_stand",0,0,0,2,0,0,0,"未知の決闘者",Text,48,Number-1,Number,Number+1,0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case 51:
           Flag[0]+=100;
           var Text = "(ライフが回復した。残り)"+Flag[0];
-          Datas = [3,0,S_image,0,0,0,0,0,"",Text,0,0,0,Flag[1],0,0,0];
+          Datas = ["right",0,S_image,0,0,0,0,0,"",Text,0,0,0,Flag[1],0,0,0];
           core.replaceScene(MainScene(Datas,Return,Flag));
           break;
         case "タイトルに戻る":
@@ -638,22 +682,14 @@ function Load(width,height){
         scene.addChild(Character2);
       }//キャラ真ん中
 
-
-      var Stand = new Sprite(1600,900);
-
       switch (Datas[0]) {
-        case 2:
-          Stand.image = core.assets["image/Test_stand.png"];
-          scene.addChild(Stand);
-          break;
-          case 3:
-          Stand.image = core.assets["image/right.png"];
+        case "Test_stand":
+        case "right":
+        case "left":
+          var Stand = new Sprite(1600,900);
+          Stand.image = core.assets["image/"+Datas[0]+".png"];
           scene.addChild(Stand);
             break;
-            case 4:
-            Stand.image = core.assets["image/left.png"];
-            scene.addChild(Stand);
-              break;
         default:
           break;
       }
@@ -791,6 +827,7 @@ function Load(width,height){
       Pop.image = core.assets["image/"+Type+".png"];
       Pop.x = 0;
       Pop.y = 0;
+      core.assets["sound/"+Type+".wav"].play();
       scene.addChild(Pop);//異議ありOR待った
 
       var Time = 0;
@@ -815,7 +852,7 @@ function Load(width,height){
       Flag[1] = Datas[5];
       //core.assets["sound/Choice.wav"].play();
       var Background = new Sprite(1600,900);
-      Background.image = core.assets["image/背景/2.png"];
+      Background.image = core.assets["image/背景/Test_stand.png"];
       Background.x = 0;
       Background.y = 0;
       scene.addChild(Background);//証言席
