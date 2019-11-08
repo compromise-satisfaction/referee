@@ -34,7 +34,7 @@ function Load(width,height){
   for (var i = 1; i <= 2; i++){
     core.preload("image/アイテム/"+i+".png");
   }
-  for (var i = 1; i <= 8; i++){
+  for (var i = 1; i <= 11; i++){
     core.preload("image/人物/"+i+".png");
   }
   for (var i = 0; i <= 1; i++){
@@ -46,6 +46,7 @@ function Load(width,height){
     function Scene_loads(Number,Return,Item){
       if(Number=="セーブ読み込み") Scene_type = Number;
       else Scene_loads2(Number,Item);
+      console.log(Scene_type);
       if(Flag[9]) core.assets["sound/Choice.wav"].play();
       switch (Scene_type) {
         case "すっごーい！":
@@ -61,10 +62,12 @@ function Load(width,height){
             break;
         case "メインpush":
           core.pushScene(MainScene(Return));
+          Scene_kazu++;
+          console.log(Scene_kazu);
           break;
-        case "メインpushpush":
-          core.pushScene(MainScene(false));
-          break;
+          case "調べる":
+            core.replaceScene(ChoiceScene(true));
+            break;
         case "チョイス":
         core.replaceScene(ChoiceScene());
         break;
@@ -76,6 +79,8 @@ function Load(width,height){
         break;
         case "シーンを外す":
         core.popScene();
+        Scene_kazu--;
+        console.log(Scene_kazu);
         break;
         case "セーブ読み込み":
         Flag = window.localStorage.getItem("Flag").split(",");
@@ -120,9 +125,8 @@ function Load(width,height){
               break;
             case "メインpush":
               core.pushScene(MainScene(Return));
-              break;
-            case "メインpushpush":
-              core.pushScene(MainScene(false));
+              Scene_kazu++;
+              console.log(Scene_kazu);
               break;
             case "チョイス":
             core.replaceScene(ChoiceScene());
@@ -135,72 +139,48 @@ function Load(width,height){
             break;
             case "シーンを外す":
             core.popScene();
+            Scene_kazu--;
+            console.log(Scene_kazu);
             break;
           }
           break;
       default:
       if(Scene_type.length==3){
         core.pushScene(ItemgetScene(Scene_type[0],Scene_type[1],Scene_type[2]));
+        Scene_kazu++;
+        console.log(Scene_kazu);
         return;
       }
         else if(Scene_type.substring(0,5)=="異議あり！"){
           core.pushScene(PopScene(Scene_type.substring(5)*1,"異議あり！"));
+          Scene_kazu++;
+          console.log(Scene_kazu);
+        }
+        else {
+          console.log("エラー");
         }
         break;
       }
+      console.log(Flag[4]);
     }
 
     function Inspect_loads(Number,Item){
-      var Name = Flag[0];
-      //[背景,(幅,高,x座標,y座標,シーンロード又はfalse以外,シーンナンバー]
-      if(Item){
-        switch (Item) {
-          case "双眼鏡":
-            Datas = [58,917,717,333,85,"しない","双眼鏡"];
-            core.pushScene(InspectScene(false));
-            break;
-          case "使い古された包丁":
-          case "新品で強靭な包丁":
-          case "折れた包丁":
-            if(Number==261){
-              Datas = [59,1069,900,266,0,"シーンロード",264];
-              if(Flag[25]) Datas[0] = 60;
-              if(Flag[26]) Datas[0] = 61;
-              core.replaceScene(InspectScene(false));
-              break;
-            }
-            Datas = [59,1069,900,266,0,"シーンロード",Number];
-            if(Flag[25]) Datas[0] = 60;
-            if(Flag[26]) Datas[0] = 61;
-            core.replaceScene(InspectScene("包丁"));
-            break;
-          default:
-            Datas = ["Black",1600,900,0,0,"しない","未設定"];
-            core.pushScene(InspectScene(false));
-            break;
-        }
-        return;
-      }
+      console.log(Number+"調べる");
+      Flag[4] = Number;
+      //Inspect = [背景ナンバー,(幅,高さ,x座標,y座標,シーンナンバー)*4]
+      //調べるシーンを続行する場合,次はpushSceneに最後に戻るように。
       switch (Number) {
-        case 137:
-          Datas = [5,367,553,1219,309,"シーンロード",1138,158,567,0,333,"しない",1144];
-          if(Flag[5]){
-            Datas[0] = 55;
-            Datas[6] = 1143;
-          }
-          core.pushScene(InspectScene(false));
-          break;
-        case 261:
-          Datas = [59,1069,900,266,0,"シーンロード",264];
-          if(Flag[25]) Datas[0] = 60;
-          if(Flag[26]) Datas[0] = 61;
-          core.pushScene(InspectScene(false));
-          break;
-          core.pushScene(InspectScene(false));
+        case 20009:
+          var Inspect = [1,367,553,1219,309,true,1138,158,567,0,333,true,1144];
+          core.replaceScene(InspectScene(Inspect,false));
+          Scene_kazu++;
+          console.log(Scene_kazu);
           break;
         default:
-          Datas = ["Black",1600,900,0,0,"しない","未設定"];
-          core.pushScene(InspectScene(false));
+          Inspect = ["Black",1600,900,0,0,"しない","未設定"];
+          core.pushScene(InspectScene(Inspect,false));
+          Scene_kazu++;
+          console.log(Scene_kazu);
           break;
       }
       return;
@@ -211,7 +191,36 @@ function Load(width,height){
       if(window.localStorage.getItem("syoken")!="false"){
         var Data = false;
       }
-      else var Data = true;
+      else{
+        var Data = true;
+        Flag = window.localStorage.getItem("Flag").split(",");
+        Number = window.localStorage.getItem("Number")*1;
+        Item_Flag = window.localStorage.getItem("Item").split("端");
+        for (var i = 0; i < Item_Flag.length; i++){
+          Item_Flag[i] = Item_Flag[i].split(",");
+        }
+        for (var i = 1; i < Item_Flag.length; i++){
+          var Item_Flag2 = [];
+          for (var k = 1; k < Item_Flag[i].length; k++){
+            Item_Flag2[k-1] = Item_Flag[i][k];
+            if(k==3) Item_Flag2[k-1] = Item_Flag2[k-1]*1;
+          }
+          Item_Flag[i] = Item_Flag2;
+        }
+        for (var i = 0; i < Item_Flag.length-1; i++) {
+          Item_Flag2[i] = Item_Flag[i];
+        }
+        Item_Flag = Item_Flag2;
+        if(Item_Flag == undefined) Item_Flag = [];
+        for (var i = 8; i < Flag.length; i++){
+          if(Flag[i]=="true") Flag[i] = true;
+          else Flag[i] = false;
+        }
+        for (var i = 3; i < 8; i++) {
+          Flag[i] = Flag[i]*1;//3早戻し,4本線,5先送り,6体力,7アイテムページ
+        }
+        Pages = Flag[7];
+      }
 
       var scene = new Scene();                                // 新しいシーンを作る
 
@@ -274,6 +283,8 @@ function Load(width,height){
 
       Clear.addEventListener('touchstart',function(e){
         core.pushScene(ClearScene());
+        Scene_kazu++;
+        console.log(Scene_kazu);
         return;
       });
 
@@ -284,6 +295,8 @@ function Load(width,height){
       Title.addEventListener("enterframe",function(){
         if(core.input.up){
           core.popScene();
+          Scene_kazu--;
+          console.log(Scene_kazu);
         }
       })
 
@@ -292,8 +305,11 @@ function Load(width,height){
     var MainScene = function(Return){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      if(Flag[8]&&Datas[12]!=false&&Datas[12]!=1){
-        Save(Datas[12]);
+      if(Datas[12]!=false){
+        Flag[4] = Datas[12];
+        if(Flag[8]&&Datas[12]!=1){
+          Save(Datas[12]);
+        }
       }
 
       var Background = new Sprite(1600,900);
@@ -490,6 +506,8 @@ function Load(width,height){
         scene.addChild(Settings);
         Settings.addEventListener('touchstart',function(e){
           core.pushScene(ItemScene(Datas[12],false));
+          Scene_kazu++;
+          console.log(Scene_kazu);
         });
       }//アイテム
 
@@ -560,12 +578,14 @@ function Load(width,height){
       }//トロフィー*/
       return scene;
     };
-    var ChoiceScene = function(){
+    var ChoiceScene = function(Inspect){
       var scene = new Scene();                                // 新しいシーンを作る
 
       if(Flag[8]&&Datas[14]!="ゲームオーバー"){
         Save(Datas[14]);
       }
+
+      Flag[4] = Datas[14];
 
       var Background = new Sprite(1600,900);
       Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
@@ -629,7 +649,11 @@ function Load(width,height){
         scene.addChild(C1);
         C1.addEventListener('touchstart',function(e){
           if(C1.text == "▶ 調べる") Inspect_loads(Datas[14],false);
-          else if (C1.text == "▶ つきつける") core.pushScene(ItemScene(Datas[14],"日常"));
+          else if (C1.text == "▶ つきつける"){
+            core.pushScene(ItemScene(Datas[14],"日常"));
+            Scene_kazu++;
+            console.log(Scene_kazu);
+          }
           else Scene_loads(Datas[8],false,false);
         });
       }
@@ -646,7 +670,11 @@ function Load(width,height){
         scene.addChild(C2);
         C2.addEventListener('touchstart',function(e){
           if(C2.text == "▶ 調べる") Inspect_loads(Datas[14],false);
-          else if (C2.text == "▶ つきつける") core.pushScene(ItemScene(Datas[14],"日常"));
+          else if (C2.text == "▶ つきつける"){
+            core.pushScene(ItemScene(Datas[14],"日常"));
+            Scene_kazu++;
+            console.log(Scene_kazu);
+          }
           else Scene_loads(Datas[9],false,false);
         });
       }
@@ -663,7 +691,11 @@ function Load(width,height){
         scene.addChild(C3);
         C3.addEventListener('touchstart',function(e){
           if(C3.text == "▶ 調べる") Inspect_loads(Datas[14],false);
-          else if (C3.text == "▶ つきつける") core.pushScene(ItemScene(Datas[14],"日常"));
+          else if (C3.text == "▶ つきつける"){
+            core.pushScene(ItemScene(Datas[14],"日常"));
+            Scene_kazu++;
+            console.log(Scene_kazu);
+          }
           else Scene_loads(Datas[10],false,false);
         });
       }
@@ -680,7 +712,11 @@ function Load(width,height){
         scene.addChild(C4);
         C4.addEventListener('touchstart',function(e){
           if(C4.text == "▶ 調べる") Inspect_loads(Datas[14],false);
-          else if (C4.text == "▶ つきつける") core.pushScene(ItemScene(Datas[14],"日常"));
+          else if (C4.text == "▶ つきつける"){
+            core.pushScene(ItemScene(Datas[14],"日常"));
+            Scene_kazu++;
+            console.log(Scene_kazu);
+          }
           else Scene_loads(Datas[11],false,false);
         });
       }
@@ -718,9 +754,17 @@ function Load(width,height){
         scene.addChild(Settings);
         Settings.addEventListener('touchstart',function(e){
           core.pushScene(ItemScene(Datas[14],false));
+          Scene_kazu++;
+          console.log(Scene_kazu);
         });
       }
-
+      if(Inspect){
+        core.popScene();
+        Scene_kazu--;
+        console.log(Scene_kazu);
+        console.log("調べるに戻る");
+        Inspect_loads(Datas[14],false);
+      }
       return scene;
     };
     var PopScene = function(Number,Type){
@@ -753,6 +797,8 @@ function Load(width,height){
             break;
           case 15:
             core.popScene();
+            Scene_kazu--;
+            console.log(Scene_kazu);
             Scene_loads(Number,false,false);
             break;
           default:
@@ -832,6 +878,8 @@ function Load(width,height){
       scene.addChild(Button1);
       Button1.addEventListener('touchstart',function(e){
         core.pushScene(PopScene(Datas[3],"待った！"));
+        Scene_kazu++;
+        console.log(Scene_kazu);
       });//ゆさぶる
 
       if(Datas[4]!=false){
@@ -854,6 +902,8 @@ function Load(width,height){
       scene.addChild(Button3);
       Button3.addEventListener('touchstart',function(e){
         core.pushScene(SettingScene(Datas[5]));
+        Scene_kazu++;
+        console.log(Scene_kazu);
       });//設定
 
       var Button4 = new Sprite(320,60);
@@ -874,6 +924,8 @@ function Load(width,height){
       scene.addChild(Button5);
       Button5.addEventListener('touchstart',function(e){
         core.pushScene(ItemScene(Datas[7],Datas[8]));
+        Scene_kazu++;
+        console.log(Scene_kazu);
       });//つきつける
 
       return scene;
@@ -1062,12 +1114,17 @@ function Load(width,height){
 
       Text.addEventListener('touchstart',function(e){
         core.popScene();
+        Scene_kazu--;
+        console.log(Scene_kazu);
         return;
       });
 
       Text2.addEventListener('touchstart',function(e){
         core.popScene();
         core.popScene();
+        Scene_kazu--;
+        Scene_kazu--;
+        console.log(Scene_kazu);
         Scene_loads("タイトルに戻る",false,false,false);
         return;
       });
@@ -1125,6 +1182,9 @@ function Load(width,height){
           if(S_Input2._element.value=="ナンバー移動"){
             core.popScene();
             core.popScene();
+            Scene_kazu--;
+            Scene_kazu--;
+            console.log(Scene_kazu);
             Flag = [];
             Scene_loads(S_Input._element.value*1,false,false);
             return;
@@ -1132,6 +1192,9 @@ function Load(width,height){
           else if(S_Input2._element.value=="チート移動"){
             core.popScene();
             core.popScene();
+            Scene_kazu--;
+            Scene_kazu--;
+            console.log(Scene_kazu);
             Flag = [];
             Scene_loads(S_Input._element.value,false,false);
             return;
@@ -1156,6 +1219,8 @@ function Load(width,height){
 
       Text13.addEventListener('touchstart',function(e){
         core.pushScene(TrophiesScene());
+        Scene_kazu++;
+        console.log(Scene_kazu);
         return;
       });
 
@@ -1222,6 +1287,8 @@ function Load(width,height){
 
       Text1.addEventListener('touchstart',function(e){
         core.popScene();
+        Scene_kazu--;
+        console.log(Scene_kazu);
         return;
       });
 
@@ -1249,14 +1316,17 @@ function Load(width,height){
 
       return scene;
     };
-    var InspectScene = function(Item){
+    var InspectScene = function(Inspect,Item){
       var scene = new Scene();                                // 新しいシーンを作る
 
       var Background = new Sprite(1600,900);
-      Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
+      Background.image = core.assets["image/背景/"+ Inspect[0] +".png"];
       Background.x = 0;
       Background.y = 0;
       scene.addChild(Background);
+      Background.addEventListener('touchstart',function(e){
+        Scene_loads("何もない",false,Item);
+      });
 
       var Background2 = new Sprite(1600,900);
       Background2.image = core.assets["image/white.png"];
@@ -1264,53 +1334,61 @@ function Load(width,height){
       Background2.y = 900;
       scene.addChild(Background2);
 
-      if(Datas[5]!=false){
-        var Background3 = new Sprite(Datas[1],Datas[2]);
-        Background3.image = core.assets["image/背景/Transparent.png"];
-        Background3.x = Datas[3];
-        Background3.y = Datas[4];
-        scene.addChild(Background3);
-        Background3.addEventListener('touchstart',function(e){
-          if(Datas[5]=="シーンロード") core.popScene();
-          Scene_loads(Datas[6],false,Item);
-        });
-      }
+      var Background3 = new Sprite(Inspect[1],Inspect[2]);
+      Background3.image = core.assets["image/背景/Transparent.png"];
+      Background3.x = Inspect[3];
+      Background3.y = Inspect[4];
+      scene.addChild(Background3);
+      Background3.addEventListener('touchstart',function(e){
+        if(Inspect[5]==false){
+          core.popScene();
+          Scene_kazu--;
+          console.log(Scene_kazu);
+        }
+        Scene_loads(Inspect[6],false,Item);
+      });
 
-      if(Datas[11]!=false){
-        var Background4 = new Sprite(Datas[7],Datas[8]);
-        Background4.image = core.assets["image/背景/Transparent.png"];
-        Background4.x = Datas[9];
-        Background4.y = Datas[10];
-        scene.addChild(Background4);
-        Background4.addEventListener('touchstart',function(e){
-          if(Datas[11]=="シーンロード") core.popScene();
-          Scene_loads(Datas[12],false,Item);
-        });
-      }
+      var Background4 = new Sprite(Inspect[7],Inspect[8]);
+      Background4.image = core.assets["image/背景/Transparent.png"];
+      Background4.x = Inspect[9];
+      Background4.y = Inspect[10];
+      scene.addChild(Background4);
+      Background4.addEventListener('touchstart',function(e){
+        if(Inspect[11]==false){
+          core.popScene();
+          Scene_kazu--;
+          console.log(Scene_kazu);
+        }
+        Scene_loads(Inspect[12],false,Item);
+      });
 
-      if(Datas[17]!=false){
-        var Background5 = new Sprite(Datas[13],Datas[14]);
-        Background5.image = core.assets["image/背景/Transparent.png"];
-        Background5.x = Datas[15];
-        Background5.y = Datas[16];
-        scene.addChild(Background5);
-        Background5.addEventListener('touchstart',function(e){
-          if(Datas[17]=="シーンロード") core.popScene();
-          Scene_loads(Datas[18],false,Item);
-        });
-      }
+      var Background5 = new Sprite(Inspect[13],Inspect[14]);
+      Background5.image = core.assets["image/背景/Transparent.png"];
+      Background5.x = Inspect[15];
+      Background5.y = Inspect[16];
+      scene.addChild(Background5);
+      Background5.addEventListener('touchstart',function(e){
+        if(Inspect[17]==false){
+          core.popScene();
+          Scene_kazu--;
+          console.log(Scene_kazu);
+        }
+        Scene_loads(Inspect[18],false,Item);
+      });
 
-      if(Datas[23]!=false){
-        var Background6 = new Sprite(Datas[19],Datas[20]);
-        Background6.image = core.assets["image/背景/Transparent.png"];
-        Background6.x = Datas[21];
-        Background6.y = Datas[22];
-        scene.addChild(Background6);
-        Background6.addEventListener('touchstart',function(e){
-          if(Datas[23]=="シーンロード") core.popScene();
-          Scene_loads(Datas[24],false,Item);
-        });
-      }
+      var Background6 = new Sprite(Inspect[19],Inspect[20]);
+      Background6.image = core.assets["image/背景/Transparent.png"];
+      Background6.x = Inspect[21];
+      Background6.y = Inspect[22];
+      scene.addChild(Background6);
+      Background6.addEventListener('touchstart',function(e){
+        if(Inspect[23]==false){
+          core.popScene();
+          Scene_kazu--;
+          console.log(Scene_kazu);
+        }
+        Scene_loads(Inspect[24],false,Item);
+      });
 
       var C1 = new Label();
       C1.font  = "60px monospace";
@@ -1322,7 +1400,7 @@ function Load(width,height){
       C1.text = "▶ 戻る";
       scene.addChild(C1);
       C1.addEventListener('touchstart',function(e){
-        core.popScene();
+        Scene_loads(Flag[4],false,Item);
       });
 
       return scene;
@@ -1375,6 +1453,8 @@ function Load(width,height){
         if(Item.x!=400) Item.x -= 100;
         if(Item.x==-800){
           core.popScene();
+          Scene_kazu--;
+          console.log(Scene_kazu);
           Scene_loads(c,true,false);
         }
       })
@@ -1384,6 +1464,8 @@ function Load(width,height){
         else if(Item.x==400) Item.x -= 100;
         else{
           core.popScene();
+          Scene_kazu--;
+          console.log(Scene_kazu);
           Scene_loads(c,true,false);
         }
       });//進む
@@ -1617,23 +1699,37 @@ function Load(width,height){
 
       Text1.addEventListener('touchstart',function(e){
         core.popScene();
+        Scene_kazu--;
+        console.log(Scene_kazu);
         return;
       });
 
       Text2.addEventListener('touchstart',function(e){
         if(Text2.text=="▶ 設定を開く"){
           core.pushScene(SettingScene(Number));
+          Scene_kazu++;
+          console.log(Scene_kazu);
         }
         return;
       });
 
       Text3.addEventListener('touchstart',function(e){
         core.popScene();
+        Scene_kazu--;
+        console.log(Scene_kazu);
         if(this.text=="▶ 使う") Scene_loads(Number,true,Choice_Item);
         else{
-          if(Ig==Choice_Item) core.pushScene(PopScene(Number,"異議あり！"));
+          if(Ig==Choice_Item){
+            core.pushScene(PopScene(Number,"異議あり！"));
+            Scene_kazu++;
+            console.log(Scene_kazu);
+          }
           else if(Ig=="日常") Scene_loads(Number,true,Choice_Item+"つきつける");
-          else core.pushScene(PopScene("つきつけ失敗","異議あり！"));
+          else{
+            core.pushScene(PopScene("つきつけ失敗","異議あり！"));
+            Scene_kazu++;
+            console.log(Scene_kazu);
+          }
         }
         return;
       });
@@ -1656,6 +1752,8 @@ function Load(width,height){
             if(Item[i].text.substring(2)==Choice_Item) break;
           }
           core.pushScene(DetailsScene(Item[i].syousai));
+          Scene_kazu++;
+          console.log(Scene_kazu);
         }
         return;
       });
@@ -1745,6 +1843,8 @@ function Load(width,height){
 
       Text1.addEventListener('touchstart',function(e){
         core.popScene();
+        Scene_kazu--;
+        console.log(Scene_kazu);
         return;
       });
 
@@ -1791,6 +1891,8 @@ function Load(width,height){
 
       Text2.addEventListener('touchstart',function(e){
         core.popScene();
+        Scene_kazu--;
+        console.log(Scene_kazu);
         Data = false;
         window.localStorage.clear();
         core.replaceScene(TitleScene());
@@ -1799,6 +1901,8 @@ function Load(width,height){
 
       Text3.addEventListener('touchstart',function(e){
         core.popScene();
+        Scene_kazu--;
+        console.log(Scene_kazu);
         return;
       });
 
