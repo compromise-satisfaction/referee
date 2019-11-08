@@ -126,6 +126,13 @@ function Scene_loads2(Number,Item){
         var S4 = 0;
         Datas = ["Black",0,0,0,C1,C2,C3,C4,S1,S2,S3,S4,0,0,Number];
         Scene_type = "チョイス";
+        var Flag2 = [];
+        Flag2[0] = Flag[0];
+        Flag2[1] = Flag[1];
+        Flag2[2] = Flag[2];
+        Flag2[8] = Flag[8];
+        Flag2[9] = Flag[9];
+        Flag = Flag2;
         break;
     case 1.1:
       R_S(Number,31);
@@ -344,7 +351,7 @@ function Scene_loads2(Number,Item){
           T_Name = "";
           if(Flag[10]){//事件概要を所持しているかどうか
             R_S(Number,1000);
-            Text = "容疑者に合うに行こう。";
+            Text = "容疑者に会いに行こう。";
             Datas = ["Black",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,1000,Skip];
           }
           else {
