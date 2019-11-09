@@ -4,16 +4,27 @@ var Skip = 0;
 var Before = 0;
 var After = 0;
 var Datas = [];
-var Flag = ["俛人","若辻","男",1,1,21,10,0,true,false];//3早戻し,4本線,5先送り,6体力,7アイテムページ,8オートセーブ,9選択音
+var Flag = ["俛人","若辻","男",1,1,21,10,"0,0",true,false];//3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9選択音
 var Item_Flag = [];//所持アイテム
+var Character_Flag = [];//人物図
 var Pages = 0;//アイテムのページ
+var Pages2 = 0;//人物のページ
 T_Name = "";
 Text = "";
 var Scene_type = "メイン";
 var Scene_kazu = 1;
 
+function have(Item){
+  for (var i = 0; i < Item_Flag.length; i++) {
+    if(Item_Flag[i][0]==Item) return(true);
+  }
+  return(false);
+}
+
 function Save(Number){
+  Flag[7] = Pages+"乙"+Pages2;
   window.localStorage.setItem("Flag",Flag);
+  window.localStorage.setItem("Datas",Datas);
   window.localStorage.setItem("Number",Number);
   var Item_Flag2 = [];
   for (var i = 0; i < Item_Flag.length; i++) {
@@ -21,6 +32,13 @@ function Save(Number){
   }
   if(Item_Flag2==[]) Item_Flag2 = [[]+"端"]
   window.localStorage.setItem("Item",Item_Flag2);
+  var Character_Flag2 = [];
+  for (var i = 0; i < Character_Flag.length; i++) {
+    Character_Flag2[i] = Character_Flag[i] + "端";
+  }
+  if(Character_Flag2==[]) Character_Flag2 = [[]+"端"]
+  window.localStorage.setItem("Character",Character_Flag2);
+  window.localStorage.setItem("syoken",false);
   console.log(Flag);
 }//セーブ
 
@@ -28,48 +46,122 @@ function rand(n) {
   return Math.floor(Math.random() * (n + 1));
 }
 
-function R_S(a,b){
-  Flag[3] = a;
-  Flag[5] = b;
+function R_S(Number,skip){
+  Flag[3] = Number;
+  Flag[5] = skip;
   Rewind = 0;
-  Skip = b;
+  Skip = skip;
   Before = 0;
   return;
 }
 
-function Get_Item(a,b,c,d,e){
-  Item_Flag[Item_Flag.length] = [a,b,c,d,e];
+function Get_Item(Character,a,b,c,d,e){
+  if(Character){
+    for (var i = 0; i < Character_Flag.length; i++) {
+      if(Character_Flag[i][0]==a) return;
+    }
+    Character_Flag[Character_Flag.length] = [a,b,c];
+  }
+  else{
+    for (var i = 0; i < Item_Flag.length; i++) {
+      if(Item_Flag[i][0]==a) return;
+    }
+    Item_Flag[Item_Flag.length] = [a,b,c,d,e];
+  }
   return;
 }//アイテムget
 
-function Rewrite_Item(a,b,c,d,e){
-  for (var i = 0; i < Item_Flag.length; i++) {
-    if(Item_Flag[i][0]==a) break;
-  }
-  if(b=="消失"){
-    Item_Flag[i] = false;
-    var Item_Flag2 = [];
-    k = 0;
-    for (var i = 0; i < Item_Flag.length; i++){
-      if(Item_Flag[i]){
-        Item_Flag2[k] = Item_Flag[i];
-        k++;
-      }
+function Rewrite_Item(Character,a,b,c,d,e){
+  if(Character){
+    for (var i = 0; i < Character_Flag.length; i++) {
+      if(Character_Flag[i][0]==a) break;
     }
-    Item_Flag = Item_Flag2;
-    if(Pages==Item_Flag.length) Pages-=5;
+    if(b=="消失"){
+      Character_Flag[i] = false;
+      var Character_Flag2 = [];
+      k = 0;
+      for (var i = 0; i < Character_Flag.length; i++){
+        if(Character_Flag[i]){
+          Character_Flag2[k] = Character_Flag[i];
+          k++;
+        }
+      }
+      Character_Flag = Character_Flag2;
+      if(Pages2==Character_Flag.length) Pages2-=5;
+    }
+    else Character_Flag[i] = [b,c,d];
   }
-  else Item_Flag[i] = [b,c,d,e];
+  else{
+    for (var i = 0; i < Item_Flag.length; i++) {
+      if(Item_Flag[i][0]==a) break;
+    }
+    if(b=="消失"){
+      Item_Flag[i] = false;
+      var Item_Flag2 = [];
+      k = 0;
+      for (var i = 0; i < Item_Flag.length; i++){
+        if(Item_Flag[i]){
+          Item_Flag2[k] = Item_Flag[i];
+          k++;
+        }
+      }
+      Item_Flag = Item_Flag2;
+      if(Pages==Item_Flag.length) Pages-=5;
+    }
+    else Item_Flag[i] = [b,c,d,e];
+  }
   return;
 }//アイテム情報の書き換え&Lost
+
+function Default(Item){
+  T_Name = "";
+  if(Item.substring(Item.length-5)=="つきつける"){
+    Text = "反応がない。";
+  }
+  else Text = "ここでは使えないようだ。";
+  if(Scene_type == "メイン"){
+    Datas[1] = 0;
+    Datas[3] = 0;
+    Datas[5] = 0;
+    Datas[7] = 0;
+    Datas[8] = "";
+    Datas[9] = Text;
+    Datas[10] = 0;
+    Datas[11] = Flag[4];
+    Datas[12] = "使う反応なし";
+    Datas[13] = 0;
+    Datas[14] = 0;
+  }
+  if(Scene_type == "チョイス"){
+    var Datas2 = [];
+    Datas2[0] = Datas[0];
+    Datas2[1] = 0;
+    Datas2[2] = Datas[1];
+    Datas2[3] = 0;
+    Datas2[4] = Datas[2];
+    Datas2[5] = 0;
+    Datas2[6] = Datas[3];
+    Datas2[7] = 0;
+    Datas2[8] = "";
+    Datas2[9] = Text;
+    Datas2[10] = 0;
+    Datas2[11] = Flag[4];
+    Datas2[12] = "使う反応なし";
+    Datas2[13] = 0;
+    Datas2[14] = 0;
+    Datas = Datas2;
+  }
+  Scene_type = "メイン";
+  return;
+}
 
 function Scene_loads2(Number,Item){
   var Name = Flag[0];
   var Gender = Flag[2];
   var Surname = Flag[1];
   if(Gender=="男"){
-    var www = ["僕","俺","吾輩","拙者"];
-    var Person = www[rand(3)];
+    var www = ["僕","俺"];
+    var Person = www[rand(1)];
     var S_image = 1;
   }
   else{
@@ -78,15 +170,24 @@ function Scene_loads2(Number,Item){
   }
   if(Item){
     switch (Item) {
-      default:
-      console.log("アイテム使用,デフォルト");
-      T_Name = "";
-      if(Item.substring(Item.length-5)=="つきつける"){
-        Text = "反応がない。";
+      case "つきつける弁護士バッジ":
+      switch (Number) {
+        case 20009:
+          Number = "つきつける弁護士バッジ20009_1";
+          R_S(Number,"つきつける弁護士バッジ20009_3");
+          T_Name = "聖ヶ丘";
+          Text = "「お？つきつけるかい？(改行) あの噂は本当だったんだな。」";
+          After = "つきつける弁護士バッジ20009_2";
+          Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+          Scene_type = "メイン";
+          break;
+        default:
+        Default(Item);
+        break;
       }
-      else Text = "ここでは使えないようだ。";
-        Datas = ["Transparent",0,0,0,0,0,0,0,"",Text,0,0,0,"シーンを外す",0];
-        Scene_type = "メインpush";
+      break;
+      default:
+        Default(Item);
         break;
     }
     return;
@@ -101,6 +202,9 @@ function Scene_loads2(Number,Item){
     case "タイトルに戻る":
       Scene_type = Number;
       break;
+    case "使う反応なし":
+      Scene_type = "メイン";
+      break;
     case "ゲームオーバー":
       Datas = ["Black",0,0,0,"タイトルに戻る","セーブ読み込み",0,0,"タイトルに戻る","セーブ読み込み",0,0,0,0,Number];
       if(Flag[8]) Datas[5] = 0;
@@ -114,7 +218,7 @@ function Scene_loads2(Number,Item){
     case 1:
       Data = true;
       Item_Flag = [];
-      window.localStorage.setItem("syoken",false);
+      Character_Flag = []
       var C1 = "第一話(未完成)";
       var C2 = "第二話(未完成)";
       var C3 = 0;
@@ -132,14 +236,13 @@ function Scene_loads2(Number,Item){
       Flag2[8] = Flag[8];
       Flag2[9] = Flag[9];
       Flag = Flag2;
+      Flag[6] = 10;
       Datas = ["Black",0,0,0,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
       Scene_type = "チョイス";
       break;
     case 1.1:
       R_S(Number,31);
-      if(Flag[10]);
-      else Item_Flag = [["弁護士バッジ",Person+"の身分を(改行)証明してくれる、(改行)大切なバッジだ。",1]]; //ここに来たことがなければ
-      Flag[10] = true;//ここに来た
+      Get_Item(false,"弁護士バッジ",Person+"の身分を(改行)証明してくれる、(改行)大切なバッジだ。",1);
       Rewind = 0;
       T_Name = "";
       Text = Person+"の名前は"+ Surname + " " + Name +"。(改行)最近弁護士になったばかりの新入りだ。";
@@ -331,7 +434,7 @@ function Scene_loads2(Number,Item){
       var S2 = 33;
       var S3 = 34;
       var S4 = 35;
-      if(Flag[11]){//事件概要を所持しているかどうか
+      if(have("事件概要")){//事件概要を所持しているかどうか
         C1 = "容疑者に会いに行く";
         C2 = "先輩のお見舞いに行く";
         C3 = "尋問テスト";
@@ -345,13 +448,12 @@ function Scene_loads2(Number,Item){
       Scene_type = "チョイス";
       break;
     case 32:
-      Flag[11] = true;//事件概要を所持した
-      Get_Item("事件概要","被害者は清水 久太郎 しみず きゅうたろう(改行)27歳 会社員(改行)死因はアレルギー性ショック症状による心停止(改行)蕎麦アレルギー持ち",2,"詳細",0);
+      Get_Item(false,"事件概要","被害者は清水 久太郎 しみず きゅうたろう(改行)27歳 会社員(改行)死因はアレルギー性ショック症状による心停止(改行)蕎麦アレルギー持ち",2,"詳細",0);
       Scene_type = [2,"事件概要を法廷記録にファイルした。",31];
       break;
     case 33:
       T_Name = "";
-      if(Flag[11]){//事件概要を所持しているかどうか
+      if(have("事件概要")){//事件概要を所持しているかどうか
         R_S(Number,1000);
         Text = "容疑者に会いに行こう。";
         Datas = ["Black",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,1000,Skip];
@@ -389,6 +491,7 @@ function Scene_loads2(Number,Item){
       break;
     case 38:
       T_Name = "？？？";
+      Get_Item(true,"未知の決闘者","遊☆戯☆王 THE DARK SIDE OF DIMENSIONSの(改行)前日談に海馬と戦った決闘者。(改行)前日談はもう読めないので知名度が低そう。(改行)スタイルがいいがこれはアバターである。",2);
       Text = "「検察側、準備完了していません。」";
       Datas = ["right",0,0,0,0,0,5,0,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
@@ -468,6 +571,7 @@ function Scene_loads2(Number,Item){
     case 51:
       T_Name = "";
       Text = "";
+      Get_Item(true,"セラ","ホント可愛い藍神ィ…の妹。(改行)未知の決闘者の中身。(改行)遊戯王デュエルリンクスでプレイできるぞ。(改行)さあ、今すぐインストール！",3);
       Datas = ["stand",0,0,0,6,15,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
       break;
@@ -509,7 +613,7 @@ function Scene_loads2(Number,Item){
       break;
     case 58:
       T_Name = "？？？";
-      Text = "「関係ないでしょうそんなこと…。」";
+      Text = "「関係ないでしょうそんなこと…。(改行) まあ人物欄はあるしいいか。」";
       Datas = ["right",0,0,0,0,0,5,0,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
       break;
@@ -617,6 +721,7 @@ function Scene_loads2(Number,Item){
       break;
     case 77:
       T_Name = "サーバル";
+      Get_Item(true,"サーバル","ジャンプ力ぅ…ですかねぇ…(改行)高いところに、スッと、(改行)ジャンプできる動物でして、(改行)結構高いところが好きなので。",1);
       Text = "「すっごーい！」";
       Datas = ["stand",0,0,0,8,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "すっごーい！";
@@ -647,6 +752,8 @@ function Scene_loads2(Number,Item){
       break;
     case 82:
       T_Name = "";
+      Get_Item(true,"未知の決闘者","遊☆戯☆王 THE DARK SIDE OF DIMENSIONSの(改行)前日談に海馬と戦った決闘者。(改行)前日談はもう読めないので知名度が低そう。(改行)スタイルがいいがこれはアバターである。",2);
+      Get_Item(true,"セラ","ホント可愛い藍神ィ…の妹。(改行)未知の決闘者の中身。(改行)遊戯王デュエルリンクスでプレイできるぞ。(改行)さあ、今すぐインストール！",3);
       Text = "尋問開始";
       Datas = ["stand",0,0,0,6,0,0,0,T_Name,Text,Rewind,Before,Number,After,0];
       Scene_type = "メイン";
@@ -673,7 +780,7 @@ function Scene_loads2(Number,Item){
     case 83.3:
       T_Name = Name;
       Text = "(仕方ない。資料を見るか…)";
-      if(Flag[11]) After = 84;//事件概要所持してたら
+      if(have("事件概要")) After = 84;//事件概要所持してたら
       else After = 83.4;
       Datas = ["left",0,S_image,0,0,0,0,0,T_Name,Text,Rewind,83.2,Number,After,Skip];
       Scene_type = "メイン";
@@ -798,9 +905,7 @@ function Scene_loads2(Number,Item){
       break;
     case 20001:
       R_S(Number,20009);
-      if(Flag[10]);
-      else Item_Flag = [["弁護士バッジ",Person+"の身分を(改行)証明してくれる、(改行)大切なバッジだ。",1]]; //ここに来たことがなければ
-      Flag[10] = true;//ここに来た
+      Get_Item(false,"弁護士バッジ",Person+"の身分を(改行)証明してくれる、(改行)大切なバッジだ。",1);
       T_Name = "1月4日";
       Text = "聖ヶ丘法律事務所";
       Datas = [1,0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
@@ -809,57 +914,259 @@ function Scene_loads2(Number,Item){
     case 20002:
       T_Name = "埼律 美智子";
       Text = "「いやー、おせちにお雑煮、(改行) お正月は美味しいものがたくさんあってまいるねぇ」";
-      Datas = [1,0,1,15,0,0,10,15,T_Name,Text,Rewind,Before,Number,After,Skip];
+      Datas = [1,0,S_image,15,0,0,10,15,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
       break;
     case 20003:
       T_Name = Name;
       Text = "「先輩…食べ過ぎて鏡餅みたいになるくらいなら(改行) 結構ですけど、前みたいなことはゴメンですよ？」";
-      Datas = [1,0,1,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+      Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
       break;
     case 20004:
       T_Name = Name;
       Text = "「初めての裁判が殺人事件で(改行) こっちは大変だったんですから。」";
-      Datas = [1,0,1,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+      Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
       break;
     case 20005:
       T_Name = "美智子";
       Text = "「まあまあ。(改行) でも、初めてであんな裁判をやってのけたんだから(改行) これから依頼がわんさかくるんじゃない？」";
-      Datas = [1,0,1,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+      Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
       break;
     case 20006:
       T_Name = Name;
       Text = "「まさか。そんな単純に(改行) 行くわけないじゃないですか。」";
-      Datas = [1,0,1,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+      Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
       break;
     case 20007:
       T_Name = "聖ヶ丘";
       Text = "「いや。それがそうでもないぞ。」";
-      Datas = [1,0,1,0,0,0,4,15,T_Name,Text,Rewind,Before,Number,After,Skip];
+      Datas = [1,0,S_image,0,0,0,4,15,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
       break;
     case 20008:
       T_Name = Name;
       Text = "「えっ？」";
-      Datas = [1,0,1,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+      Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
       break;
     case 20009:
+      R_S(20001,Number);
       var C1 = "話す";
       var C2 = "調べる";
       var C3 = "移動する";
       var C4 = "つきつける";
       var S1 = 20010;
       var S2 = 0;
-      var S3 = 0;
+      var S3 = "移動";
       var S4 = 0;
+      Rewind = 20001;
+      Before = 20008;
       Datas = [1,S_image,0,4,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
       Scene_type = "チョイス";
       break;
+      case "調べる20009ゴミ箱":
+        R_S(Number,"調べる20009ゴミ箱5");
+        T_Name = Name;
+        Text = "「先輩の食べたおやつのゴミで散らかっている。」";
+        After = "調べる20009ゴミ箱2";
+        Datas = [1,0,S_image,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "調べる20009ゴミ箱2":
+        T_Name = "美智子";
+        Text = "「ちょっと！私だけのせいにしないでよ！」";
+        Rewind = 0;
+        Before = "調べる20009ゴミ箱";
+        After = "調べる20009ゴミ箱3";
+        console.log(Skip);
+        Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "調べる20009ゴミ箱3":
+        T_Name = "聖ヶ丘";
+        Text = "「そういえば、私はそのゴミ箱を使っていないな。」";
+        Before = "調べる20009ゴミ箱2";
+        After = "調べる20009ゴミ箱4";
+        Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+        case "調べる20009ゴミ箱4":
+          T_Name = Name;
+          Text = "「"+Person+"もです。」";
+          Before = "調べる20009ゴミ箱3";
+          After = "調べる20009ゴミ箱5";
+          Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+          Scene_type = "メイン";
+          break;
+      case "調べる20009ゴミ箱5":
+        T_Name = "美智子";
+        Text = "「………」";
+        Before = "調べる20009ゴミ箱4";
+        After = "調べる";
+        Skip = 0;
+        Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "つきつける弁護士バッジ20009_1":
+        R_S(Number,"つきつける弁護士バッジ20009_3");
+        T_Name = "聖ヶ丘";
+        Text = "「お？つきつけるかい？(改行) あの噂は本当だったんだな。」";
+        After = "つきつける弁護士バッジ20009_2";
+        Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "つきつける弁護士バッジ20009_2":
+        T_Name = "美智子";
+        Text = "「噂って？」";
+        Rewind = 0;
+        Before = "つきつける弁護士バッジ20009_1";
+        After = "つきつける弁護士バッジ20009_3";
+        Datas = [1,0,10,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "つきつける弁護士バッジ20009_3":
+        Before = "つきつける弁護士バッジ20009_2";
+        var C1 = "ああ！";
+        var C2 = Person+"も知らないです。";
+        var C3 = "ある人の身の上や物事についての確実でない話。";
+        var C4 = 0;
+        var S1 = "つきつける弁護士バッジ20009_4";
+        var S2 = "つきつける弁護士バッジ20009_5";
+        var S3 = "つきつける弁護士バッジ20009_6";
+        var S4 = 0;
+        Datas = [1,10,0,S_image,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
+        Scene_type = "チョイス";
+        break;
+      case "つきつける弁護士バッジ20009_4":
+        R_S(Number,20009);
+        T_Name = Name;
+        Text = "「ああ！」";
+        After = "つきつける弁護士バッジ20009_4.1";
+        Datas = [1,0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "つきつける弁護士バッジ20009_4.1":
+        T_Name = "聖ヶ丘";
+        Text = "「それってハネクリボー？」";
+        Rewind = 0;
+        Before = "つきつける弁護士バッジ20009_4";
+        After = "つきつける弁護士バッジ20009_4.2";
+        Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "つきつける弁護士バッジ20009_4.2":
+        T_Name = "美智子";
+        Text = "「…は？」";
+        Before = "つきつける弁護士バッジ20009_5.1";
+        After = 20009;
+        Skip = 0;
+        Datas = [1,0,10,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "つきつける弁護士バッジ20009_5":
+        R_S(Number,20009);
+        T_Name = "聖ヶ丘";
+        Text = "「弁護士バッジをつきつけたがる弁護士は優秀(改行) っていう噂だよ。」";
+        After = "つきつける弁護士バッジ20009_5.1";
+        Datas = [1,0,10,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "つきつける弁護士バッジ20009_5.1":
+        T_Name = "美智子";
+        Text = "「へー。じゃあ私もやってみようかな。」";
+        Rewind = 0;
+        Before = "つきつける弁護士バッジ20009_5";
+        After = "つきつける弁護士バッジ20009_5.2";
+        Datas = [1,0,10,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "つきつける弁護士バッジ20009_5.2":
+        T_Name = Name;
+        Text = "(その前に先輩は弁護士バッジを(改行) もっと綺麗にした方がいいと思うが…)";
+        Before = "つきつける弁護士バッジ20009_5.1";
+        After = 20009;
+        Skip = 0;
+        Datas = [1,0,10,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "つきつける弁護士バッジ20009_6":
+        R_S(Number,20009);
+        T_Name = Name;
+        Text = "「ある人の身の上や、(改行) 物事についての確実でない話のことですよ。」";
+        After = "つきつける弁護士バッジ20009_6.1";
+        Datas = [1,0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "つきつける弁護士バッジ20009_6.1":
+        T_Name = "美智子";
+        Text = "「わかってるよ そんなこと…」";
+        Rewind = 0;
+        Before = "つきつける弁護士バッジ20009_6";
+        After = "つきつける弁護士バッジ20009_6.2";
+        Datas = [1,0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "つきつける弁護士バッジ20009_6.2":
+        T_Name = "聖ヶ丘";
+        Text = "「弁護士バッジをつきつけたがる弁護士は優秀(改行) っていう噂だったんだが…嘘かもしれないな。」";
+        Before = "つきつける弁護士バッジ20009_6.1";
+        After = 20009;
+        Skip = 0;
+        Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case 20010:
+        var C1 = "依頼について";
+        var C2 = 0;
+        var C3 = 0;
+        var C4 = 0;
+        var S1 = 20011;
+        var S2 = 0;
+        var S3 = 0;
+        var S4 = 0;
+        Rewind = 0;
+        Before = 20009;
+        Datas = [1,S_image,0,4,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
+        Scene_type = "チョイス";
+        break;
+      case 20011:
+        R_S(Number,20010);
+        T_Name = Name;
+        Text = "所長、そうでもないとはどういうことですか？";
+        Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+      case "移動":
+        var C1 = "留置所";
+        var C2 = 0;
+        var C3 = 0;
+        var C4 = 0;
+        var S1 = 200012;
+        var S2 = 0;
+        var S3 = 0;
+        var S4 = 0;
+        Rewind = 0;
+        Before = 20009;
+        Datas = [1,S_image,0,4,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
+        Scene_type = "チョイス";
+        break;
+      case 200012:
+        if(Flag[10]){//が達成済みなら
+
+        }
+        T_Name = Name;
+        Text = "(まずは所長の話を聞くべきだろう)";
+        Rewind = 0;
+        Before = 0;
+        After = "移動";
+        Skip = 0;
+        Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
     case "つきつけ失敗":
       T_Name = Name;
       Text = "「今の証言はこの証拠品と明らかに矛盾しています！」";
@@ -917,79 +1224,50 @@ function Scene_loads2(Number,Item){
       Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,0,0,0,"ゲームオーバー",0];
       Scene_type = "メイン";
       break;
-    case "何もない":
+    case "調べる何もない":
       T_Name = "";
       Text = "特に気になるものはない。";
-      Datas = ["Transparent",0,0,0,0,0,0,0,"",Text,0,0,0,"調べる",0];
+      Datas[1] = 0;
+      Datas[2] = 0;
+      Datas[3] = 0;
+      Datas[4] = 0;
+      Datas[5] = 0;
+      Datas[6] = 0;
+      Datas[7] = 0;
+      Datas[8] = "";
+      Datas[9] = Text;
+      Datas[10] = 0;
+      Datas[11] = 0;
+      Datas[12] = Number;
+      Datas[13] = "調べる";
+      Datas[14] = 0;
       Scene_type = "メイン";
       break;
     case "調べる":
       Get_Datas();
       Scene_type = Number;
       break;
-    case "シーンを外す":
-      Get_Datas();
-      Scene_type = Number;
-      break;
     default:
       console.log(Number);
       Datas = ["Black",0,0,0,0,0,0,0,"","ここから先はできていません。",0,0,0,"ゲームオーバー",0];
-      if(Scene_kazu>1) Datas[13] = "シーンを外す";
       Scene_type = "メイン";
       break;
   }
 }
 
-function Inspect_loads2(Number,Item){
-  var Name = Flag[0];
-  //[背景,(幅,高,x座標,y座標,シーンロード又はfalse以外,シーンナンバー]
-  if(Item){
-    switch (Item) {
-      case "双眼鏡":
-        Datas = [58,917,717,333,85,"しない","双眼鏡"];
-        core.pushScene(InspectScene(false));
-        break;
-      case "使い古された包丁":
-      case "新品で強靭な包丁":
-      case "折れた包丁":
-        if(Number==261){
-          Datas = [59,1069,900,266,0,"シーンロード",264];
-          if(Flag[25]) Datas[0] = 60;
-          if(Flag[26]) Datas[0] = 61;
-          core.replaceScene(InspectScene(false));
-          break;
-        }
-        Datas = [59,1069,900,266,0,"シーンロード",Number];
-        if(Flag[25]) Datas[0] = 60;
-        if(Flag[26]) Datas[0] = 61;
-        core.replaceScene(InspectScene("包丁"));
-        break;
-      default:
-        Datas = ["Black",1600,900,0,0,"しない","未設定"];
-        core.pushScene(InspectScene(false));
-        break;
-    }
-    return;
-  }
+function Inspect_loads2(Number){
+  console.log(Number+"調べる");
+  Flag[4] = Number;
+  var Inspect = ["背景ナンバー","(幅,高さ,x座標,y座標,シーンナンバー)"];
   switch (Number) {
     case 20009:
-      Datas = [1,367,553,1219,309,"シーンロード",1138,158,567,0,333,"しない",1144];
-      core.pushScene(InspectScene(false));
-      break;
-    case 261:
-      Datas = [59,1069,900,266,0,"シーンロード",264];
-      if(Flag[25]) Datas[0] = 60;
-      if(Flag[26]) Datas[0] = 61;
-      core.pushScene(InspectScene(false));
-      break;
-      core.pushScene(InspectScene(false));
+      Inspect = [1,122,708,175,189,"調べる"+Number+"ゴミ箱"];
       break;
     default:
-      Datas = ["Black",1600,900,0,0,"しない","未設定"];
-      core.pushScene(InspectScene(false));
+      Inspect = ["Black",0,0,1600,900];
       break;
   }
-  return;
+  return(Inspect);
 }
 
 function Get_Datas(){
