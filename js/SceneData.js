@@ -169,6 +169,7 @@ function Scene_loads2(Number,Item){
     var S_image = 2;
   }
   if(Item){
+    console.log(Item,Number);
     switch (Item) {
       case "つきつける弁護士バッジ":
       switch (Number) {
@@ -218,7 +219,7 @@ function Scene_loads2(Number,Item){
     case 1:
       Data = true;
       Item_Flag = [];
-      Character_Flag = []
+      Character_Flag = [];
       var C1 = "第一話(未完成)";
       var C2 = "第二話(未完成)";
       var C3 = 0;
@@ -426,6 +427,7 @@ function Scene_loads2(Number,Item){
       Scene_type = "メイン";
       break;
     case 31:
+      R_S(Number,31);
       var C1 = "資料を洗い直す";
       var C2 = "容疑者に会いに行く";
       var C3 = "先輩のお見舞いに行く";
@@ -1258,8 +1260,18 @@ function Scene_loads2(Number,Item){
 function Inspect_loads2(Number){
   console.log(Number+"調べる");
   Flag[4] = Number;
+  if(Number.length>5){
+    if(Number.substring(0,6)=="アイテム使用"){
+      Number = Number.substring(6).split(",");
+      if(Flag[4].replace(/\d/g,"").replace(/\./g,"")=="") Flag[4] = Flag[4]*1;
+      Number = Number[0];
+    }
+  }
   var Inspect = ["背景ナンバー","(幅,高さ,x座標,y座標,シーンナンバー)"];
   switch (Number) {
+    case "弁護士バッジ":
+      Inspect = [1,122,708,175,189,"調べる"+20009+"ゴミ箱"];
+      break;
     case 20009:
       Inspect = [1,122,708,175,189,"調べる"+Number+"ゴミ箱"];
       break;

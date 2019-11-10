@@ -62,6 +62,17 @@ function Load(width,height){
             core.replaceScene(MainScene(Return));
             break;
         case "調べる":
+          if(Number.length>5){
+            if(Number.substring(0,6)=="アイテム使用"){
+              Number = Number.substring(6).split(",");
+              Flag[4] = Number[1];
+              if(Flag[4].replace(/\d/g,"").replace(/\./g,"")=="") Flag[4] = Flag[4]*1;
+              Number = Number[0];
+              console.log(Number);
+              Inspect_loads(Number,false);
+              return;
+            }
+          }
           Inspect_loads(Flag[4],false);
           break;
         case "チョイス":
@@ -168,8 +179,8 @@ function Load(width,height){
     }
 
     function Inspect_loads(Number,Item){
-      Flag[4] = Number;
-      core.replaceScene(InspectScene(Inspect_loads2(Number),Item));
+      if(Item) core.replaceScene(InspectScene(Inspect_loads2("アイテム使用"+Item+","+Number),false));
+      else core.replaceScene(InspectScene(Inspect_loads2(Number),false));
       return;
     }
 
@@ -326,7 +337,6 @@ function Load(width,height){
             }
           }
         }
-        console.log(OK);
         if(OK) Flag[4] = Datas[12];
         if(Flag[8]){
           Save(Datas[12]);
@@ -1372,6 +1382,13 @@ function Load(width,height){
       C1.text = "▶ 戻る";
       scene.addChild(C1);
       C1.addEventListener('touchstart',function(e){
+        if(Flag[4].length>5){
+          if(Flag[4].substring(0,6)=="アイテム使用"){
+            Flag[4] = Flag[4].substring(6).split(",");
+            Flag[4] = Flag[4][1];
+            if(Flag[4].replace(/\d/g,"").replace(/\./g,"")=="") Flag[4] = Flag[4]*1;
+          }
+        }
         Scene_loads(Flag[4],true,Item);
       });
 
@@ -1445,6 +1462,7 @@ function Load(width,height){
       return scene;
     }
     var ItemScene = function(Number,Ig){
+
       var scene = new Scene();                                // 新しいシーンを作る
       var Background = new Sprite(1600,1600);
       Background.image = core.assets["image/Background.png"];
