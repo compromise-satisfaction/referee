@@ -1563,7 +1563,7 @@ function Load(width,height){
       Text3.color = 'black';
       if(Ig) Text3.x = 1100;
       else Text3.x = 1280;
-      Text3.y = 1800;
+      Text3.y = 1400;
       Text3.width = 1380;
       Text3.height = (height/25);
       Text3.text = "";
@@ -1613,7 +1613,7 @@ function Load(width,height){
       Text8.color = 'black';
       if(Ig) Text8.x = (height/2);
       else Text8.x = 980;
-      Text8.y = 1800;
+      Text8.y = 1400;
       Text8.width = 1380;
       Text8.height = (height/25);
       Text8.text = "";
@@ -1622,7 +1622,7 @@ function Load(width,height){
       Text9.font  = (height/25)+"px monospace";
       Text9.color = 'black';
       Text9.x = (width/8);
-      Text9.y = 1800;
+      Text9.y = 1400;
       Text9.width = 1380;
       Text9.height = (height/25);
       Text9.text = "◀ 前";
@@ -1631,7 +1631,7 @@ function Load(width,height){
       Text10.font  = (height/25)+"px monospace";
       Text10.color = 'black';
       Text10.x = 600;
-      Text10.y = 1800;
+      Text10.y = 1400;
       Text10.width = 1380;
       Text10.height = (height/25);
       Text10.text = "▶ 次";
@@ -1939,7 +1939,7 @@ function Load(width,height){
       Text9.font  = (height/25)+"px monospace";
       Text9.color = 'black';
       Text9.x = (width/8);
-      Text9.y = 1800;
+      Text9.y = 1400;
       Text9.width = 1380;
       Text9.height = (height/25);
       Text9.text = "◀ 前";
@@ -1948,7 +1948,7 @@ function Load(width,height){
       Text10.font  = (height/25)+"px monospace";
       Text10.color = 'black';
       Text10.x = 600;
-      Text10.y = 1800;
+      Text10.y = 1400;
       Text10.width = 1380;
       Text10.height = (height/25);
       Text10.text = "▶ 次";
