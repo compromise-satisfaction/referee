@@ -288,6 +288,7 @@ function Scene_loads2(Number,Item,get){
     case 2:
       Before = 1.1;
       Rewind = 0;
+      T_Name = "";
       Text = "まだ先輩についての見習いに過ぎないがいずれは(改行)自分自身で法廷に立つことを目標にして(改行)聖ヶ丘法律事務所にお世話になって(改行)色々な慣例等を学びつつ日々の雑務をこなしている。";
       Datas = ["Black",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
