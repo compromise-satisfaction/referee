@@ -236,7 +236,7 @@ function Scene_loads2(Number,Item,get){
       Scene_type = "メイン";
       break;
     case "ゲームオーバー":
-      Datas = ["stand",0,0,0,"タイトルに戻る","セーブ読み込み",0,0,"タイトルに戻る","セーブ読み込み",0,0,0,0,Number];
+      Datas = ["stand",0,0,0,0,0,Number,"タイトルに戻る","タイトルに戻る","セーブ読み込み","セーブ読み込み"];
       if(Flag[8]) Datas[5] = 0;
       Scene_type = "チョイス";
       break;
@@ -251,12 +251,8 @@ function Scene_loads2(Number,Item,get){
       Character_Flag = [];
       var C1 = "第一話(未完成)";
       var C2 = "第二話(未完成)";
-      var C3 = 0;
-      var C4 = 0;
       var S1 = 1.1;
       var S2 = 20001;
-      var S3 = 0;
-      var S4 = 0;
       Rewind = 0;
       Number = 0;
       var Flag2 = [];
@@ -272,7 +268,7 @@ function Scene_loads2(Number,Item,get){
       Flag2[14] = Flag[14];
       Flag = Flag2;
       Flag[6] = 10;
-      Datas = ["Black",0,0,0,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
+      Datas = ["Black",0,0,0,Rewind,Before,Number,C1,S1,C2,S2];
       Scene_type = "チョイス";
       break;
     case 1.1:
@@ -471,17 +467,16 @@ function Scene_loads2(Number,Item,get){
       var S2 = 33;
       var S3 = 34;
       var S4 = 35;
+      Datas = ["Black",0,0,0,Rewind,Before,Number,C1,S1,C2,S2,C3,S3,C4,S4];
       if(have("事件概要")){//事件概要を所持しているかどうか
         C1 = "容疑者に会いに行く";
         C2 = "先輩のお見舞いに行く";
         C3 = "尋問テスト";
-        C4 = 0;
         S1 = 33;
         S2 = 34;
         S3 = 35;
-        S4 = 0;
+        Datas = ["Black",0,0,0,Rewind,Before,Number,C1,S1,C2,S2,C3,S3];
       }
-      Datas = ["Black",0,0,0,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
       Scene_type = "チョイス";
       break;
     case 32:
@@ -831,13 +826,10 @@ function Scene_loads2(Number,Item,get){
     case 83.5:
       var C1 = "続ける";
       var C2 = "出直す";
-      var C3 = 0;
-      var C4 = 0;
       var S1 = 84;
       var S2 = 31;
-      var S3 = 0;
-      var S4 = 0;
-      Datas = ["left",S_image,0,0,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,83.4,Number];
+      Before = 83.4;
+      Datas = ["left",S_image,0,0,Rewind,Before,Number,C1,S1,C2,S2];
       Scene_type = "チョイス";
       break;
     case 84:
@@ -1002,7 +994,7 @@ function Scene_loads2(Number,Item,get){
       var S4 = 0;
       Rewind = 20001;
       Before = 20008;
-      Datas = [1,S_image,0,4,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
+      Datas = [1,S_image,0,4,Rewind,Before,Number,C1,S1,C2,S2,C3,S3,C4,S4];
       Scene_type = "チョイス";
       break;
       case "調べる20009ゴミ箱":
@@ -1019,7 +1011,6 @@ function Scene_loads2(Number,Item,get){
         Rewind = 0;
         Before = "調べる20009ゴミ箱";
         After = "調べる20009ゴミ箱3";
-        console.log(Skip);
         Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
         Scene_type = "メイン";
         break;
@@ -1070,12 +1061,10 @@ function Scene_loads2(Number,Item,get){
         var C1 = "ああ！";
         var C2 = Person+"も知らないです。";
         var C3 = "ある人の身の上や物事についての確実でない話。";
-        var C4 = 0;
         var S1 = "つきつける弁護士バッジ20009_4";
         var S2 = "つきつける弁護士バッジ20009_5";
         var S3 = "つきつける弁護士バッジ20009_6";
-        var S4 = 0;
-        Datas = [1,10,0,S_image,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
+        Datas = [1,10,0,S_image,Rewind,Before,Number,C1,S1,C2,S2,C3,S3];
         Scene_type = "チョイス";
         break;
       case "つきつける弁護士バッジ20009_4":
@@ -1158,13 +1147,8 @@ function Scene_loads2(Number,Item,get){
         break;
       case 20010:
         var C1 = "依頼について";
-        var C2 = 0;
-        var C3 = 0;
-        var C4 = 0;
         var S1 = 20011;
         var S2 = 20016;
-        var S3 = 0;
-        var S4 = 0;
         if(have("依頼について")){
           C1 += " ✓";
           C2 = "依頼人について";
@@ -1172,7 +1156,7 @@ function Scene_loads2(Number,Item,get){
         if(have("依頼人について")) C2 += " ✓";
         Rewind = 0;
         Before = 20009;
-        Datas = [1,S_image,0,4,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
+        Datas = [1,S_image,0,4,Rewind,Before,Number,C1,S1,C2,S2];
         Scene_type = "チョイス";
         break;
       case 20011:
@@ -1251,22 +1235,16 @@ function Scene_loads2(Number,Item,get){
                         break;
       case 20022:
         var C1 = "留置所";
-        var C2 = 0;
-        var C3 = 0;
-        var C4 = 0;
         var S1 = 20023;
-        var S2 = 0;
-        var S3 = 0;
-        var S4 = 0;
         Rewind = 0;
         Before = 20009;
-        Datas = [1,S_image,0,4,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
+        Datas = [1,S_image,0,4,Rewind,Before,Number,C1,S1];
         Scene_type = "チョイス";
         break;
       case 20023:
         if(have("依頼人について")){//が達成済みなら
           R_S(Number,20094);
-          T_Name = "1月4日 某時刻";
+          T_Name = "同日 某時刻";
           Text = "留置所";
           Datas = ["留置所",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
           Scene_type = "メイン";
@@ -1709,9 +1687,6 @@ Get_I_C_F("人物","瀬名 翼","Dreamy Crown のデザイナー。(改行)瀬�
 Get_I_C_F("人物","大空あかり","スターライト学園のアイドル。(改行)スターライトクイーン。",5);
 Get_I_C_F("人物","氷上 スミレ","スターライト学園のアイドル。(改行)通称ステージに咲く氷の花。",6);
 Get_I_C_F("人物","新条ひなき","スターライト学園のアイドル。(改行)モデルとしても活躍している。",7);
-for (var i = 1; i < 10; i++) {
-Get_I_C_F("アイテム","りんご"+i,"氷上 スミレから貰った。(改行)いつも持ち歩いているらしい。",3);
-}
 Get_I_C_F("アイテム","りんご","氷上 スミレから貰った。(改行)いつも持ち歩いているらしい。",3);
                         Get_I_C_F("人物","天羽まどか","スターライト学園のアイドル。(改行)今回の事件の被告人。",8);
                         R_S(20023,Number);
@@ -1725,7 +1700,7 @@ Get_I_C_F("アイテム","りんご","氷上 スミレから貰った。(改行)
                           var S4 = 0;
                           Rewind = 20023;
                           Before = 20093;
-                          Datas = ["留置所",0,22,0,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
+                          Datas = ["留置所",0,22,0,Rewind,Before,Number,C1,S1,C2,S2,C3,S3,C4,S4];
                           Scene_type = "チョイス";
                           break;
       case 20095:
@@ -1733,15 +1708,28 @@ Get_I_C_F("アイテム","りんご","氷上 スミレから貰った。(改行)
       var C2 = "被害者のこと";
       var C3 = "事件現場のこと";
       var C4 = "依頼の理由";
-      var S1 = 0;
+      var S1 = 20096;
       var S2 = 0;
       var S3 = 0;
       var S4 = 0;
       Rewind = 0;
       Before = 20094;
-      Datas = ["留置所",0,22,0,C1,C2,C3,C4,S1,S2,S3,S4,Rewind,Before,Number];
+      Datas = ["留置所",0,22,0,Rewind,Before,Number,C1,S1,C2,S2,C3,S3,C4,S4];
       Scene_type = "チョイス";
       break;
+      case 20096:
+      R_S(Number,20094);
+        T_Name = Name;
+        Text = "「えっと…鹿目さん。」";
+        Datas = ["留置所",0,S_image,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+        Scene_type = "メイン";
+        break;
+        case 20097:
+          T_Name = "まどか";
+          Text = "「天羽です。(改行) というか、まどかちゃんでいいですよ。」";
+          Datas = ["留置所",0,S_image,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+          Scene_type = "メイン";
+          break;
       case "つきつけるりんご20094":
         R_S(Number,20094);
         T_Name = "まどか";

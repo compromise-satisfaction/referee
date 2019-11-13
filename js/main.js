@@ -675,18 +675,18 @@ function Load(width,height){
 
       var OK = true;
 
-      if(Datas[14].length>1){
-        if(Datas[14].substring(0,2)=="使う") OK = false;
-        if(Datas[14].length>2){
-          if(Datas[14].substring(0,3)=="調べる") OK = false;
-          if(Datas[14].length>4){
-            if(Datas[14].substring(0,5)=="つきつける") OK = false;
+      if(Datas[6].length>1){
+        if(Datas[6].substring(0,2)=="使う") OK = false;
+        if(Datas[6].length>2){
+          if(Datas[6].substring(0,3)=="調べる") OK = false;
+          if(Datas[6].length>4){
+            if(Datas[6].substring(0,5)=="つきつける") OK = false;
           }
         }
       }
-      if(OK) Flag[4] = Datas[14];
-      if(Flag[8]&&Datas[14]!="ゲームオーバー"){
-        Save(Datas[14]);
+      if(OK) Flag[4] = Datas[6];
+      if(Flag[8]&&Datas[6]!="ゲームオーバー"){
+        Save(Datas[6]);
       }
 
       var xxx = core.assets["image/背景/"+ Datas[0] +".png"].width;
@@ -769,95 +769,41 @@ function Load(width,height){
           break;
       }
 
+      var Numbers = width/16*9+(width/20);
+
+      var Texts = Class.create(Label, {
+        initialize: function(a,b) {
+          if(a==false||a==undefined||a==0) return;
+          Numbers += (width/20)+(width/25);
+          Label.call(this);
+          this.font  = (width/20)+"px monospace";
+          this.color = 'black';
+          this.x = 0;
+          this.y = Numbers;
+          this.width = width;
+          this.height = (width/20);
+          this.text = "▶ " + a;
+          scene.addChild(this);
+          if(this.text.substring(this.text.length-2)==" ✓") this.color = "red";
+          this.addEventListener('touchstart',function(e){
+            if(this.text == "▶ 調べる") Inspect_loads(Datas[6],false);
+            else if (this.text == "▶ つきつける"){
+              core.pushScene(ItemScene(Datas[6],"日常"));
+              Scene_kazu++;
+              console.log("Scene数",Scene_kazu);
+            }
+            else Scene_loads(b,false,false);
+          });
+        }
+      });
+
+      var Text = [];
+
+        for (var i = 7; i < Datas.length; i = i+2) {
+          Text = new Texts(Datas[i],Datas[i+1]);
+        }
+
       if(Datas[4]!=false){
-        var C1 = new Label();
-        C1.font  = (width/20)+"px monospace";
-        C1.color = 'black';
-        C1.x = 0;
-        C1.y = (height/2)+(width/20)*3;
-        C1.width = width;
-        C1.height = (width/20);
-        C1.text = "▶ " + Datas[4];
-        if(C1.text.substring(C1.text.length-2)==" ✓") C1.color = "red";
-        scene.addChild(C1);
-        C1.addEventListener('touchstart',function(e){
-          if(C1.text == "▶ 調べる") Inspect_loads(Datas[14],false);
-          else if (C1.text == "▶ つきつける"){
-            core.pushScene(ItemScene(Datas[14],"日常"));
-            Scene_kazu++;
-            console.log("Scene数",Scene_kazu);
-          }
-          else Scene_loads(Datas[8],false,false);
-        });
-      }
-
-      if(Datas[5]!=false){
-        var C2 = new Label();
-        C2.font  = (width/20)+"px monospace";
-        C2.color = 'black';
-        C2.x = 0;
-        C2.y = (height/2)+(width/20)*5;
-        C2.width = width;
-        C2.height = (width/20);
-        C2.text = "▶ " + Datas[5];
-        if(C2.text.substring(C2.text.length-2)==" ✓") C2.color = "red";
-        scene.addChild(C2);
-        C2.addEventListener('touchstart',function(e){
-          if(C2.text == "▶ 調べる") Inspect_loads(Datas[14],false);
-          else if (C2.text == "▶ つきつける"){
-            core.pushScene(ItemScene(Datas[14],"日常"));
-            Scene_kazu++;
-            console.log("Scene数",Scene_kazu);
-          }
-          else Scene_loads(Datas[9],false,false);
-        });
-      }
-
-      if(Datas[6]!=false){
-        var C3 = new Label();
-        C3.font  = (width/20)+"px monospace";
-        C3.color = 'black';
-        C3.x = 0;
-        C3.y = (height/2)+(width/20)*7;
-        C3.width = width;
-        C3.height = (width/20);
-        C3.text = "▶ " + Datas[6];
-        if(C3.text.substring(C3.text.length-2)==" ✓") C3.color = "red";
-        scene.addChild(C3);
-        C3.addEventListener('touchstart',function(e){
-          if(C3.text == "▶ 調べる") Inspect_loads(Datas[14],false);
-          else if (C3.text == "▶ つきつける"){
-            core.pushScene(ItemScene(Datas[14],"日常"));
-            Scene_kazu++;
-            console.log("Scene数",Scene_kazu);
-          }
-          else Scene_loads(Datas[10],false,false);
-        });
-      }
-
-      if(Datas[7]!=false){
-        var C4 = new Label();
-        C4.font  = (width/20)+"px monospace";
-        C4.color = 'black';
-        C4.x = 0;
-        C4.y = (height/2)+(width/20)*9;
-        C4.width = width;
-        C4.height = (width/20);
-        C4.text = "▶ " + Datas[7];
-        if(C4.text.substring(C4.text.length-2)==" ✓") C4.color = "red";
-        scene.addChild(C4);
-        C4.addEventListener('touchstart',function(e){
-          if(C4.text == "▶ 調べる") Inspect_loads(Datas[14],false);
-          else if (C4.text == "▶ つきつける"){
-            core.pushScene(ItemScene(Datas[14],"日常"));
-            Scene_kazu++;
-            console.log("Scene数",Scene_kazu);
-          }
-          else Scene_loads(Datas[11],false,false);
-        });
-      }
-
-      if(Datas[12]!=false){
         var xxx = core.assets["image/Buttons.png"].width/8;
         var yyy = core.assets["image/Buttons.png"].height;
         var Return1 = new Sprite(xxx,yyy);
@@ -869,11 +815,11 @@ function Load(width,height){
         Return1.frame = 1;
         scene.addChild(Return1);
         Return1.addEventListener('touchstart',function(e){
-          Scene_loads(Datas[12],true,false);
+          Scene_loads(Datas[4],true,false);
         });
       } //戻る1
 
-      if(Datas[13]!=false){
+      if(Datas[5]!=false){
         var xxx = core.assets["image/Buttons.png"].width/8;
         var yyy = core.assets["image/Buttons.png"].height;
         var Return2 = new Sprite(xxx,yyy);
@@ -885,11 +831,11 @@ function Load(width,height){
         Return2.frame = 2;
         scene.addChild(Return2);
         Return2.addEventListener('touchstart',function(e){
-          Scene_loads(Datas[13],true,false);
+          Scene_loads(Datas[5],true,false);
         });
       }//戻る2
 
-      if(Datas[14]!=false&&Datas[14]!="ゲームオーバー"){
+      if(Datas[6]!=false&&Datas[6]!="ゲームオーバー"){
         var xxx = core.assets["image/Buttons.png"].width/8;
         var yyy = core.assets["image/Buttons.png"].height;
         var Settings = new Sprite(xxx,yyy);
@@ -901,7 +847,7 @@ function Load(width,height){
         Settings.frame = 4;
         scene.addChild(Settings);
         Settings.addEventListener('touchstart',function(e){
-          core.pushScene(ItemScene(Datas[14],false));
+          core.pushScene(ItemScene(Datas[6],false));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
         });
@@ -997,28 +943,29 @@ function Load(width,height){
       C_name.font  = (width/20)+"px monospace";
       C_name.color = 'black';
       C_name.x = 0;
-      C_name.y = Background.height+(width/20)*1;
+      C_name.y = width/16*9+(width/25);
       C_name.width = width;
       C_name.height = (width/20);
       C_name.text = "【" + Datas[1] + "】";
       scene.addChild(C_name);//キャラ名
 
-      var Numbers = 1040;
+      var Numbers = width/16*9+(width/20)+(width/25);
 
       var Texts = Class.create(Label, {
         initialize: function(a) {
+          Numbers += (width/20)+(width/25);
           Label.call(this);
           this.font  = (width/20)+"px monospace";
           this.color = 'black';
-          this.x = (width/25);
+          this.x = (width/50);
           this.y = Numbers;
           this.width = width;
           this.height = (width/20);
           this.text = a;
-          Numbers += 100;
+          if(a.substring(0,1)=="("&&a.substring(a.length-1)==")") this.color = "blue";
           scene.addChild(this);
         }
-      });//テキスト
+      });
 
       var Text = Datas[2].split("(改行)");
 
