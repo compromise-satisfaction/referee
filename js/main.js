@@ -558,7 +558,7 @@ function Load(width,height){
         var Return1 = new Sprite(xxx,yyy);
         Return1.image = core.assets["image/Buttons.png"];
         Return1.scaleX = ((width/5)/xxx);
-        Return1.scaleY = (((width/20))/yyy);
+        Return1.scaleY = (((width/5))/yyy);//ココが変換した場所
         Return1.x = (Return1.scaleX*xxx/2)-xxx/2;
         Return1.y = (Return1.scaleY*yyy/2)-yyy/2+height-Return1.scaleY*yyy;
         Return1.frame = 1;
@@ -574,7 +574,7 @@ function Load(width,height){
         var Return2 = new Sprite(xxx,yyy);
         Return2.image = core.assets["image/Buttons.png"];
         Return2.scaleX = ((width/5)/xxx);
-        Return2.scaleY = (((width/20))/yyy);
+        Return2.scaleY = (((width/5))/yyy);//ココが変換した場所
         Return2.x = (Return2.scaleX*xxx/2)-xxx/2+(width/5)*1;
         Return2.y = (Return2.scaleY*yyy/2)-yyy/2+height-Return2.scaleY*yyy;
         Return2.frame = 2;
@@ -590,7 +590,7 @@ function Load(width,height){
         var Settings = new Sprite(xxx,yyy);
         Settings.image = core.assets["image/Buttons.png"];
         Settings.scaleX = ((width/5)/xxx);
-        Settings.scaleY = (((width/20))/yyy);
+        Settings.scaleY = (((width/5))/yyy);//ココが変換した場所
         Settings.x = (Settings.scaleX*xxx/2)-xxx/2+(width/5)*2;
         Settings.y = (Settings.scaleY*yyy/2)-yyy/2+height-Settings.scaleY*yyy;
         Settings.frame = 4;
@@ -608,7 +608,7 @@ function Load(width,height){
         var Enter1 = new Sprite(xxx,yyy);
         Enter1.image = core.assets["image/Buttons.png"];
         Enter1.scaleX = ((width/5)/xxx);
-        Enter1.scaleY = (((width/20))/yyy);
+        Enter1.scaleY = (((width/5))/yyy);//ココが変換した場所
         Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
         Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
         Enter1.frame = 5;
@@ -624,7 +624,7 @@ function Load(width,height){
         var Enter2 = new Sprite(xxx,yyy);
         Enter2.image = core.assets["image/Buttons.png"];
         Enter2.scaleX = ((width/5)/xxx);
-        Enter2.scaleY = (((width/20))/yyy);
+        Enter2.scaleY = (((width/5))/yyy);//ココが変換した場所
         Enter2.x = (Enter2.scaleX*xxx/2)-xxx/2+(width/5)*4;
         Enter2.y = (Enter2.scaleY*yyy/2)-yyy/2+height-Enter2.scaleY*yyy;
         Enter2.frame = 6;
@@ -816,7 +816,7 @@ function Load(width,height){
         var Return1 = new Sprite(xxx,yyy);
         Return1.image = core.assets["image/Buttons.png"];
         Return1.scaleX = ((width/5)/xxx);
-        Return1.scaleY = (((width/20))/yyy);
+        Return1.scaleY = (((width/5))/yyy);//ココが変換した場所
         Return1.x = (Return1.scaleX*xxx/2)-xxx/2;
         Return1.y = (Return1.scaleY*yyy/2)-yyy/2+height-Return1.scaleY*yyy;
         Return1.frame = 1;
@@ -832,7 +832,7 @@ function Load(width,height){
         var Return2 = new Sprite(xxx,yyy);
         Return2.image = core.assets["image/Buttons.png"];
         Return2.scaleX = ((width/5)/xxx);
-        Return2.scaleY = (((width/20))/yyy);
+        Return2.scaleY = (((width/5))/yyy);//ココが変換した場所
         Return2.x = (Return2.scaleX*xxx/2)-xxx/2+(width/5)*1;
         Return2.y = (Return2.scaleY*yyy/2)-yyy/2+height-Return2.scaleY*yyy;
         Return2.frame = 2;
@@ -848,7 +848,7 @@ function Load(width,height){
         var Settings = new Sprite(xxx,yyy);
         Settings.image = core.assets["image/Buttons.png"];
         Settings.scaleX = ((width/5)/xxx);
-        Settings.scaleY = (((width/20))/yyy);
+        Settings.scaleY = (((width/5))/yyy);//ココが変換した場所
         Settings.x = (Settings.scaleX*xxx/2)-xxx/2+(width/5)*2;
         Settings.y = (Settings.scaleY*yyy/2)-yyy/2+height-Settings.scaleY*yyy;
         Settings.frame = 4;
@@ -985,7 +985,7 @@ function Load(width,height){
       var Button1 = new Sprite(xxx,yyy);
       Button1.image = core.assets["image/Buttons.png"];
       Button1.scaleX = ((width/5)/xxx);
-      Button1.scaleY = (((width/20))/yyy);
+      Button1.scaleY = (((width/5))/yyy);//ココが変換した場所
       Button1.x = (Button1.scaleX*xxx/2)-xxx/2;
       Button1.y = (Button1.scaleY*yyy/2)-yyy/2+height-Button1.scaleY*yyy;
       Button1.frame = 0;
@@ -1002,7 +1002,7 @@ function Load(width,height){
         var Button2 = new Sprite(xxx,yyy);
         Button2.image = core.assets["image/Buttons.png"];
         Button2.scaleX = ((width/5)/xxx);
-        Button2.scaleY = (((width/20))/yyy);
+        Button2.scaleY = (((width/5))/yyy);//ココが変換した場所
         Button2.x = (Button2.scaleX*xxx/2)-xxx/2+(width/5);
         Button2.y = (Button2.scaleY*yyy/2)-yyy/2+height-Button2.scaleY*yyy;
         Button2.frame = 2;
@@ -1017,7 +1017,7 @@ function Load(width,height){
       var Button3 = new Sprite(xxx,yyy);
       Button3.image = core.assets["image/Buttons.png"];
       Button3.scaleX = ((width/5)/xxx);
-      Button3.scaleY = (((width/20))/yyy);
+      Button3.scaleY = (((width/5))/yyy);//ココが変換した場所
       Button3.x = (Button3.scaleX*xxx/2)-xxx/2+(width/5)*2;
       Button3.y = (Button3.scaleY*yyy/2)-yyy/2+height-Button3.scaleY*yyy;
       Button3.frame = 3;
@@ -1033,7 +1033,7 @@ function Load(width,height){
       var Button4 = new Sprite(xxx,yyy);
       Button4.image = core.assets["image/Buttons.png"];
       Button4.scaleX = ((width/5)/xxx);
-      Button4.scaleY = (((width/20))/yyy);
+      Button4.scaleY = (((width/5))/yyy);//ココが変換した場所
       Button4.x = (Button4.scaleX*xxx/2)-xxx/2+(width/5)*3;
       Button4.y = (Button4.scaleY*yyy/2)-yyy/2+height-Button4.scaleY*yyy;
       Button4.frame = 5;
@@ -1047,7 +1047,7 @@ function Load(width,height){
       var Button5 = new Sprite(xxx,yyy);
       Button5.image = core.assets["image/Buttons.png"];
       Button5.scaleX = ((width/5)/xxx);
-      Button5.scaleY = (((width/20))/yyy);
+      Button5.scaleY = (((width/5))/yyy);//ココが変換した場所
       Button5.x = (Button5.scaleX*xxx/2)-xxx/2+(width/5)*4;
       Button5.y = (Button5.scaleY*yyy/2)-yyy/2+height-Button5.scaleY*yyy;
       Button5.frame = 7;
@@ -1474,7 +1474,7 @@ function Load(width,height){
       var Enter1 = new Sprite(xxx,yyy);
       Enter1.image = core.assets["image/Buttons.png"];
       Enter1.scaleX = ((width/5)/xxx);
-      Enter1.scaleY = (((width/20))/yyy);
+      Enter1.scaleY = (((width/5))/yyy);//ココが変換した場所
       Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
       Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
       Enter1.frame = 5;
