@@ -29,11 +29,11 @@ function Load(width,height){
   core.preload("image/背景/留置所.png");
   core.preload("image/Background.png");
   core.preload("image/Trophies_image.png");
-  core.preload("image/背景/Transparent.png");
+  core.preload("image/背景/透明.png");
   for (var i = 1; i <= 2; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 3; i++){
+  for (var i = 1; i <= 4; i++){
     core.preload("image/アイテム/"+i+".png");
   }
   for (var i = 1; i <= 22; i++){
@@ -43,10 +43,7 @@ function Load(width,height){
     core.preload("image/アイテム詳細/"+i+".png");
   }
   for (var i = 1; i <= 8; i++){
-    core.preload("image/人物/小/"+i+".png");
-  }
-  for (var i = 1; i <= 4; i++){
-    core.preload("image/アイテム/小/"+i+".png");
+    core.preload("image/人物/詳細/"+i+".png");
   }
   core.fps = 100;
   core.onload = function(){
@@ -244,15 +241,13 @@ function Load(width,height){
       Pages = Flag[7].split("乙");
       Pages2 = Pages[1]*1;
       Pages = Pages[0]*1;
-      console.log(Number);
+      //console.log(Number);
       return(Number);
     }
-
 
     var TitleScene = function(){
 
       var scene = new Scene();                                // 新しいシーンを作る
-      console.log(Flag);
       if(window.localStorage.getItem("syoken")!="false"){
         var Data = false;
       }
@@ -261,74 +256,60 @@ function Load(width,height){
         BGM_Stop(true);
       }
 
-      var Title = new Sprite(width,(width/16)*9);
+      var xxx = core.assets["image/title.png"].width;
+      var yyy = core.assets["image/title.png"].height;
+      var Title = new Sprite(xxx,yyy);
       Title.image = core.assets["image/title.png"];
-      Title.x = 0;
-      Title.y = 0;
+      Title.scaleX = width/xxx;
+      Title.scaleY = width/16*9/yyy;
+      Title.x = (Title.scaleX*xxx/2)-xxx/2;
+      Title.y = (Title.scaleY*yyy/2)-yyy/2;
       scene.addChild(Title);
 
-      var Beginning = new Label();
-      Beginning.font  = (height/20)+"px monospace";
-      Beginning.color = 'black';
-      Beginning.x = 0;
-      Beginning.y = Title.height+(height/25)*1;
-      Beginning.width = width;
-      Beginning.height = (height/20);
-      Beginning.text = "▶ 最初から";
-      scene.addChild(Beginning);
+      var Numbers = width/16*9;
+      var i = 0;
 
-      var Continuation = new Label();
-      Continuation.font  = (height/20)+"px monospace";
-      Continuation.color = 'black';
-      Continuation.x = 0;
-      Continuation.y = Title.height+(height/25)*3;
-      Continuation.width = width;
-      Continuation.height = (height/20);
-      Continuation.text = "▶ 説明";
-      if(Data) Continuation.text = "▶ 続きから";
-      scene.addChild(Continuation);
-
-      var Explanation = new Label();
-      Explanation.font  = (height/20)+"px monospace";
-      Explanation.color = 'black';
-      Explanation.x = 0;
-      Explanation.y = Title.height+(height/25)*5;
-      Explanation.width = width;
-      Explanation.height = (height/20);
-      Explanation.text = "▶ 説明";
-      if(Data) scene.addChild(Explanation);
-
-      var Clear = new Label();
-      Clear.font  = (height/20)+"px monospace";
-      Clear.color = 'black';
-      Clear.x = (width/2)+(width/25)*3;
-      Clear.y = Title.height+(height/25)*1;
-      Clear.width = width;
-      Clear.height = (height/25);
-      Clear.text = "▶ データ初期化";
-      if(Data) scene.addChild(Clear);
-
-      Beginning.addEventListener('touchstart',function(e){
-        if(Data) Load_Datas();
-        Scene_loads(1,false,false);
-        return;
+      var Texts = Class.create(Label, {
+        initialize: function(a) {
+          Label.call(this);
+          this.font  = (width/20)+"px monospace";
+          this.color = 'black';
+          if(a=="▶ データ初期化") this.x = width-(width/2.5);
+          else{
+            this.x = 0;
+            Numbers += (width/20)+(width/25);
+          }
+          this.y = Numbers;
+          this.width = width;
+          this.height = (width/20);
+          this.text = a;
+          i++;
+          scene.addChild(this);
+        }
       });
 
-      Continuation.addEventListener('touchstart',function(e){
-        if(Continuation.text == "▶ 説明") Scene_loads(-1,false,false);
-        else Scene_loads("セーブ読み込み",false,false);
-      });
+      var Text = [];
 
-      Clear.addEventListener('touchstart',function(e){
-        core.pushScene(ClearScene());
-        Scene_kazu++;
-        console.log("Scene数",Scene_kazu);
-        return;
-      });
+      Text[i] = new Texts("▶ 最初から");
+      if(Data){
+        Text[i] = new Texts("▶ データ初期化");
+        Text[i] = new Texts("▶ 続きから");
+      }
+      Text[i] = new Texts("▶ 説明");
 
-      Explanation.addEventListener('touchstart',function(e){
-        Scene_loads(-1,false,false,false);
-      });
+      for (var i = 0; i < Text.length; i++){
+        Text[i].addEventListener('touchstart',function(e){
+          if(Data) Load_Datas();
+          if(this.text == "▶ 最初から") Scene_loads(1,false,false);
+          if(this.text == "▶ 続きから") Scene_loads("セーブ読み込み",false,false);
+          if(this.text == "▶ 説明") Scene_loads(-1,false,false);
+          if(this.text == "▶ データ初期化"){
+            core.pushScene(ClearScene());
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+          }
+        });
+      }
 
       Title.addEventListener("enterframe",function(){
         if(core.input.up){
@@ -361,10 +342,15 @@ function Load(width,height){
         }
       }
 
-      var Background = new Sprite(width,(width/16)*9);
+      var xxx = core.assets["image/背景/"+ Datas[0] +".png"].width;
+      var yyy = core.assets["image/背景/"+ Datas[0] +".png"].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = width/xxx;
+      Background.scaleY = width/16*9/yyy;
       Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
-      Background.x = 0;
-      Background.y = 0;
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
+
       if(Datas[1]!=0){
         if(Datas[1]>0){
           if(Return!=true){
@@ -382,10 +368,14 @@ function Load(width,height){
       scene.addChild(Background);//背景
 
       if(Datas[4]!=false){
-        var Character2 = new Sprite((height/2),(width/16)*9);
+        var xxx = core.assets["image/人物/"+Datas[4]+".png"].width;
+        var yyy = core.assets["image/人物/"+Datas[4]+".png"].height;
+        var Character2 = new Sprite(xxx,yyy);
+        Character2.scaleX = ((width/2)/xxx);
+        Character2.scaleY = (((width/16)*9)/yyy);
         Character2.image = core.assets["image/人物/"+Datas[4]+".png"];
-        Character2.x = (height/4);
-        Character2.y = 0;
+        Character2.x = (Character2.scaleX*xxx/2)-xxx/2+(width/4);
+        Character2.y = (Character2.scaleX*yyy/2)-yyy/2;
         if(Datas[5]!=0){
           if(Datas[5]>0){
             if(Return!=true){
@@ -406,8 +396,14 @@ function Load(width,height){
       switch (Datas[0]) {
         case "stand":
         case "留置所":
-          var Stand = new Sprite(width,(width/16)*9);
-          Stand.image = core.assets["image/"+Datas[0]+".png"];
+          var xxx = core.assets["image/"+ Datas[0] +".png"].width;
+          var yyy = core.assets["image/"+ Datas[0] +".png"].height;
+          var Stand = new Sprite(xxx,yyy);
+          Stand.scaleX = width/xxx;
+          Stand.scaleY = width/16*9/yyy;
+          Stand.image = core.assets["image/"+ Datas[0] +".png"];
+          Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
+          Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
           break;
         default:
@@ -415,10 +411,14 @@ function Load(width,height){
       }
 
       if(Datas[2]!=false){
-        var Character1 = new Sprite((height/2),(width/16)*9);
+        var xxx = core.assets["image/人物/"+Datas[2]+".png"].width;
+        var yyy = core.assets["image/人物/"+Datas[2]+".png"].height;
+        var Character1 = new Sprite(xxx,yyy);
+        Character1.scaleX = ((width/2)/xxx);
+        Character1.scaleY = (((width/16)*9)/yyy);
         Character1.image = core.assets["image/人物/"+Datas[2]+".png"];
-        Character1.x = 0;
-        Character1.y = 0;
+        Character1.x = (Character1.scaleX*xxx/2)-xxx/2;
+        Character1.y = (Character1.scaleX*yyy/2)-yyy/2;
         if(Datas[3]!=0){
           if(Datas[3]>0){
             if(Return!=true){
@@ -437,10 +437,14 @@ function Load(width,height){
       }//キャラ左
 
       if(Datas[6]!=false){
-        var Character3 = new Sprite((height/2),(width/16)*9);
+        var xxx = core.assets["image/人物/"+Datas[6]+".png"].width;
+        var yyy = core.assets["image/人物/"+Datas[6]+".png"].height;
+        var Character3 = new Sprite(xxx,yyy);
+        Character3.scaleX = ((width/2)/xxx);
+        Character3.scaleY = (((width/16)*9)/yyy);
         Character3.image = core.assets["image/人物/"+Datas[6]+".png"];
-        Character3.x = (height/2);
-        Character3.y = 0;
+        Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/2);
+        Character3.y = (Character3.scaleX*yyy/2)-yyy/2;
         if(Datas[7]!=0){
           if(Datas[7]>0){
             if(Return!=true){
@@ -461,8 +465,14 @@ function Load(width,height){
       switch (Datas[0]) {
         case "right":
         case "left":
-          var Stand = new Sprite(width,(width/16)*9);
-          Stand.image = core.assets["image/"+Datas[0]+".png"];
+          var xxx = core.assets["image/"+ Datas[0] +".png"].width;
+          var yyy = core.assets["image/"+ Datas[0] +".png"].height;
+          var Stand = new Sprite(xxx,yyy);
+          Stand.scaleX = width/xxx;
+          Stand.scaleY = width/16*9/yyy;
+          Stand.image = core.assets["image/"+ Datas[0] +".png"];
+          Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
+          Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
           break;
         default:
@@ -470,10 +480,14 @@ function Load(width,height){
       }
 
       if(Datas[15]!=undefined&&Datas[15]!=false){
-        var Item = new Sprite((width/4),(width/4));
-        Item.image = core.assets["image/アイテム/小/"+Datas[16]+".png"];
-        Item.x = Datas[15].substring(0,4)*1;
-        Item.y = Datas[15].substring(5,9)*1;
+        var xxx = core.assets["image/アイテム/"+Datas[16]+".png"].width;
+        var yyy = core.assets["image/アイテム/"+Datas[16]+".png"].height;
+        var Item = new Sprite(xxx,yyy);
+        Item.scaleX = ((width/4)/xxx);
+        Item.scaleY = ((width/4)/yyy);
+        Item.image = core.assets["image/アイテム/"+Datas[16]+".png"];
+        Item.x = ((Item.scaleX*xxx/2)-xxx/2)+Datas[15].substring(0,4)*(width/1600);
+        Item.y = ((Item.scaleY*yyy/2)-yyy/2)+Datas[15].substring(5,9)*(width/16/100);
         if(Return!=true&&Datas[15].substring(11,12)*1!=0){
           Sound_ON("Choice",true);
           Item.opacity = 0;
@@ -490,30 +504,30 @@ function Load(width,height){
 
       if(Datas[8]!=""){
         var C_name = new Label();
-        C_name.font  = (height/25)+"px monospace";
+        C_name.font  = (width/20)+"px monospace";
         C_name.color = 'black';
         C_name.x = 0;
-        C_name.y = Background.height+(height/25)*1;
+        C_name.y = width/16*9+(width/25);
         C_name.width = width;
-        C_name.height = (height/25);
+        C_name.height = (width/20);
         C_name.text = "【" + Datas[8] + "】";
         scene.addChild(C_name);//キャラ名
       }
 
-      var Numbers = Background.height+(height/25)*3;
+      var Numbers = width/16*9+(width/20)+(width/25);
 
       var Texts = Class.create(Label, {
         initialize: function(a) {
+          Numbers += (width/20)+(width/25);
           Label.call(this);
-          this.font  = (height/25)+"px monospace";
+          this.font  = (width/20)+"px monospace";
           this.color = 'black';
           this.x = (width/50);
           this.y = Numbers;
           this.width = width;
-          this.height = (height/25);
+          this.height = (width/20);
           this.text = a;
           if(a.substring(0,1)=="("&&a.substring(a.length-1)==")") this.color = "blue";
-          Numbers += (height/25);
           scene.addChild(this);
         }
       });
@@ -532,10 +546,14 @@ function Load(width,height){
       }
 
       if(Datas[10]!=false){
-        var Return1 = new Sprite((width/5),(height/25));
+        var xxx = core.assets["image/Buttons.png"].width/8;
+        var yyy = core.assets["image/Buttons.png"].height;
+        var Return1 = new Sprite(xxx,yyy);
         Return1.image = core.assets["image/Buttons.png"];
-        Return1.x = 0;
-        Return1.y = height-(height/25)-5;
+        Return1.scaleX = ((width/5)/xxx);
+        Return1.scaleY = (((width/20))/yyy);
+        Return1.x = (Return1.scaleX*xxx/2)-xxx/2;
+        Return1.y = (Return1.scaleY*yyy/2)-yyy/2+height-Return1.scaleY*yyy;
         Return1.frame = 1;
         scene.addChild(Return1);
         Return1.addEventListener('touchstart',function(e){
@@ -544,10 +562,14 @@ function Load(width,height){
       } //戻る1
 
       if(Datas[11]!=false){
-        var Return2 = new Sprite((width/5),(height/25));
+        var xxx = core.assets["image/Buttons.png"].width/8;
+        var yyy = core.assets["image/Buttons.png"].height;
+        var Return2 = new Sprite(xxx,yyy);
         Return2.image = core.assets["image/Buttons.png"];
-        Return2.x = (width/5);
-        Return2.y = height-(height/25)-5;
+        Return2.scaleX = ((width/5)/xxx);
+        Return2.scaleY = (((width/20))/yyy);
+        Return2.x = (Return2.scaleX*xxx/2)-xxx/2+(width/5)*1;
+        Return2.y = (Return2.scaleY*yyy/2)-yyy/2+height-Return2.scaleY*yyy;
         Return2.frame = 2;
         scene.addChild(Return2);
         Return2.addEventListener('touchstart',function(e){
@@ -556,10 +578,14 @@ function Load(width,height){
       }//戻る2
 
       if(Datas[12]!=false){
-        var Settings = new Sprite((width/5),(height/25));
+        var xxx = core.assets["image/Buttons.png"].width/8;
+        var yyy = core.assets["image/Buttons.png"].height;
+        var Settings = new Sprite(xxx,yyy);
         Settings.image = core.assets["image/Buttons.png"];
-        Settings.x = (width/5)*2;
-        Settings.y = height-(height/25)-5;
+        Settings.scaleX = ((width/5)/xxx);
+        Settings.scaleY = (((width/20))/yyy);
+        Settings.x = (Settings.scaleX*xxx/2)-xxx/2+(width/5)*2;
+        Settings.y = (Settings.scaleY*yyy/2)-yyy/2+height-Settings.scaleY*yyy;
         Settings.frame = 4;
         scene.addChild(Settings);
         Settings.addEventListener('touchstart',function(e){
@@ -570,10 +596,14 @@ function Load(width,height){
       }//アイテム画面
 
       if(Datas[13]!=false){
-        var Enter1 = new Sprite((width/5),(height/25));
+        var xxx = core.assets["image/Buttons.png"].width/8;
+        var yyy = core.assets["image/Buttons.png"].height;
+        var Enter1 = new Sprite(xxx,yyy);
         Enter1.image = core.assets["image/Buttons.png"];
-        Enter1.x = (width/5)*3;
-        Enter1.y = height-(height/25)-5;
+        Enter1.scaleX = ((width/5)/xxx);
+        Enter1.scaleY = (((width/20))/yyy);
+        Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
+        Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
         Enter1.frame = 5;
         scene.addChild(Enter1);
         Enter1.addEventListener('touchstart',function(e){
@@ -582,10 +612,14 @@ function Load(width,height){
       }//進む1
 
       if(Datas[14]!=false){
-        var Enter2 = new Sprite((width/5),(height/25));
+        var xxx = core.assets["image/Buttons.png"].width/8;
+        var yyy = core.assets["image/Buttons.png"].height;
+        var Enter2 = new Sprite(xxx,yyy);
         Enter2.image = core.assets["image/Buttons.png"];
-        Enter2.x = (width/5)*4;
-        Enter2.y = height-(height/25)-5;
+        Enter2.scaleX = ((width/5)/xxx);
+        Enter2.scaleY = (((width/20))/yyy);
+        Enter2.x = (Enter2.scaleX*xxx/2)-xxx/2+(width/5)*4;
+        Enter2.y = (Enter2.scaleY*yyy/2)-yyy/2+height-Enter2.scaleY*yyy;
         Enter2.frame = 6;
         scene.addChild(Enter2);
         Enter2.addEventListener('touchstart',function(e){
@@ -613,7 +647,7 @@ function Load(width,height){
           Trophies_image.tl.fadeIn(5);
           scene.addChild(Trophies_image);
           var Trophies_text = new Label();
-          Trophies_text.font  = (height/25)+"px monospace";
+          Trophies_text.font  = (width/20)+"px monospace";
           Trophies_text.color = 'white';
           Trophies_text.x = width-453+145;
           Trophies_text.y = 90;
@@ -655,26 +689,39 @@ function Load(width,height){
         Save(Datas[14]);
       }
 
-      var Background = new Sprite(width,(width/16)*9);
+      var xxx = core.assets["image/背景/"+ Datas[0] +".png"].width;
+      var yyy = core.assets["image/背景/"+ Datas[0] +".png"].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = ((width)/xxx);
+      Background.scaleY = (((width/16)*9)/yyy);
       Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
-      Background.x = 0;
-      Background.y = 0;
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
 
       if(Datas[2]!=false){
-        var Character2 = new Sprite((height/2),(width/16)*9);
+        var xxx = core.assets["image/人物/"+Datas[2]+".png"].width;
+        var yyy = core.assets["image/人物/"+Datas[2]+".png"].height;
+        var Character2 = new Sprite(xxx,yyy);
+        Character2.scaleX = ((width/2)/xxx);
+        Character2.scaleY = (((width/16)*9)/yyy);
         Character2.image = core.assets["image/人物/"+Datas[2]+".png"];
-        Character2.x = (height/4);
-        Character2.y = 0;
-        Character2.frame = Datas[2];
+        Character2.x = (Character2.scaleX*xxx/2)-xxx/2+(width/4);
+        Character2.y = (Character2.scaleX*yyy/2)-yyy/2;
         scene.addChild(Character2);
       }//キャラ真ん中
 
       switch (Datas[0]) {
         case "stand":
         case "留置所":
-          var Stand = new Sprite(width,(width/16)*9);
-          Stand.image = core.assets["image/"+Datas[0]+".png"];
+          var xxx = core.assets["image/"+ Datas[0] +".png"].width;
+          var yyy = core.assets["image/"+ Datas[0] +".png"].height;
+          var Stand = new Sprite(xxx,yyy);
+          Stand.scaleX = width/xxx;
+          Stand.scaleY = width/16*9/yyy;
+          Stand.image = core.assets["image/"+ Datas[0] +".png"];
+          Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
+          Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
           break;
         default:
@@ -682,27 +729,40 @@ function Load(width,height){
       }
 
       if(Datas[1]!=false){
-        var Character1 = new Sprite((height/2),(width/16)*9);
+        var xxx = core.assets["image/人物/"+Datas[1]+".png"].width;
+        var yyy = core.assets["image/人物/"+Datas[1]+".png"].height;
+        var Character1 = new Sprite(xxx,yyy);
+        Character1.scaleX = ((width/2)/xxx);
+        Character1.scaleY = (((width/16)*9)/yyy);
         Character1.image = core.assets["image/人物/"+Datas[1]+".png"];
-        Character1.x = 0;
-        Character1.y = 0;
+        Character1.x = (Character1.scaleX*xxx/2)-xxx/2;
+        Character1.y = (Character1.scaleX*yyy/2)-yyy/2;
         scene.addChild(Character1);
       }//キャラ左
 
       if(Datas[3]!=false){
-        var Character3 = new Sprite((height/2),(width/16)*9);
+        var xxx = core.assets["image/人物/"+Datas[3]+".png"].width;
+        var yyy = core.assets["image/人物/"+Datas[3]+".png"].height;
+        var Character3 = new Sprite(xxx,yyy);
+        Character3.scaleX = ((width/2)/xxx);
+        Character3.scaleY = (((width/16)*9)/yyy);
         Character3.image = core.assets["image/人物/"+Datas[3]+".png"];
-        Character3.x = (height/2);
-        Character3.y = 0;
-        Character3.frame = Datas[3];
+        Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/2);
+        Character3.y = (Character3.scaleX*yyy/2)-yyy/2;
         scene.addChild(Character3);
       }//キャラ右
 
       switch (Datas[0]) {
         case "right":
         case "left":
-          var Stand = new Sprite(width,(width/16)*9);
-          Stand.image = core.assets["image/"+Datas[0]+".png"];
+          var xxx = core.assets["image/"+ Datas[0] +".png"].width;
+          var yyy = core.assets["image/"+ Datas[0] +".png"].height;
+          var Stand = new Sprite(xxx,yyy);
+          Stand.scaleX = width/xxx;
+          Stand.scaleY = width/16*9/yyy;
+          Stand.image = core.assets["image/"+ Datas[0] +".png"];
+          Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
+          Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
           break;
         default:
@@ -711,12 +771,12 @@ function Load(width,height){
 
       if(Datas[4]!=false){
         var C1 = new Label();
-        C1.font  = (height/25)+"px monospace";
+        C1.font  = (width/20)+"px monospace";
         C1.color = 'black';
         C1.x = 0;
-        C1.y = (height/2)+(height/25)*3;
+        C1.y = (height/2)+(width/20)*3;
         C1.width = width;
-        C1.height = (height/25);
+        C1.height = (width/20);
         C1.text = "▶ " + Datas[4];
         if(C1.text.substring(C1.text.length-2)==" ✓") C1.color = "red";
         scene.addChild(C1);
@@ -733,12 +793,12 @@ function Load(width,height){
 
       if(Datas[5]!=false){
         var C2 = new Label();
-        C2.font  = (height/25)+"px monospace";
+        C2.font  = (width/20)+"px monospace";
         C2.color = 'black';
         C2.x = 0;
-        C2.y = (height/2)+(height/25)*5;
+        C2.y = (height/2)+(width/20)*5;
         C2.width = width;
-        C2.height = (height/25);
+        C2.height = (width/20);
         C2.text = "▶ " + Datas[5];
         if(C2.text.substring(C2.text.length-2)==" ✓") C2.color = "red";
         scene.addChild(C2);
@@ -755,12 +815,12 @@ function Load(width,height){
 
       if(Datas[6]!=false){
         var C3 = new Label();
-        C3.font  = (height/25)+"px monospace";
+        C3.font  = (width/20)+"px monospace";
         C3.color = 'black';
         C3.x = 0;
-        C3.y = (height/2)+(height/25)*7;
+        C3.y = (height/2)+(width/20)*7;
         C3.width = width;
-        C3.height = (height/25);
+        C3.height = (width/20);
         C3.text = "▶ " + Datas[6];
         if(C3.text.substring(C3.text.length-2)==" ✓") C3.color = "red";
         scene.addChild(C3);
@@ -777,12 +837,12 @@ function Load(width,height){
 
       if(Datas[7]!=false){
         var C4 = new Label();
-        C4.font  = (height/25)+"px monospace";
+        C4.font  = (width/20)+"px monospace";
         C4.color = 'black';
         C4.x = 0;
-        C4.y = (height/2)+(height/25)*9;
+        C4.y = (height/2)+(width/20)*9;
         C4.width = width;
-        C4.height = (height/25);
+        C4.height = (width/20);
         C4.text = "▶ " + Datas[7];
         if(C4.text.substring(C4.text.length-2)==" ✓") C4.color = "red";
         scene.addChild(C4);
@@ -797,11 +857,15 @@ function Load(width,height){
         });
       }
 
-      if(Datas[12]!=false&&Datas[14]!="ゲームオーバー"){
-        var Return1 = new Sprite((width/5),(height/25));
+      if(Datas[12]!=false){
+        var xxx = core.assets["image/Buttons.png"].width/8;
+        var yyy = core.assets["image/Buttons.png"].height;
+        var Return1 = new Sprite(xxx,yyy);
         Return1.image = core.assets["image/Buttons.png"];
-        Return1.x = 0;
-        Return1.y = height-(height/25)-5;
+        Return1.scaleX = ((width/5)/xxx);
+        Return1.scaleY = (((width/20))/yyy);
+        Return1.x = (Return1.scaleX*xxx/2)-xxx/2;
+        Return1.y = (Return1.scaleY*yyy/2)-yyy/2+height-Return1.scaleY*yyy;
         Return1.frame = 1;
         scene.addChild(Return1);
         Return1.addEventListener('touchstart',function(e){
@@ -810,10 +874,14 @@ function Load(width,height){
       } //戻る1
 
       if(Datas[13]!=false){
-        var Return2 = new Sprite((width/5),(height/25));
+        var xxx = core.assets["image/Buttons.png"].width/8;
+        var yyy = core.assets["image/Buttons.png"].height;
+        var Return2 = new Sprite(xxx,yyy);
         Return2.image = core.assets["image/Buttons.png"];
-        Return2.x = (width/5);
-        Return2.y = height-(height/25)-5;
+        Return2.scaleX = ((width/5)/xxx);
+        Return2.scaleY = (((width/20))/yyy);
+        Return2.x = (Return2.scaleX*xxx/2)-xxx/2+(width/5)*1;
+        Return2.y = (Return2.scaleY*yyy/2)-yyy/2+height-Return2.scaleY*yyy;
         Return2.frame = 2;
         scene.addChild(Return2);
         Return2.addEventListener('touchstart',function(e){
@@ -822,10 +890,14 @@ function Load(width,height){
       }//戻る2
 
       if(Datas[14]!=false&&Datas[14]!="ゲームオーバー"){
-        var Settings = new Sprite((width/5),(height/25));
+        var xxx = core.assets["image/Buttons.png"].width/8;
+        var yyy = core.assets["image/Buttons.png"].height;
+        var Settings = new Sprite(xxx,yyy);
         Settings.image = core.assets["image/Buttons.png"];
-        Settings.x = (width/5)*2;
-        Settings.y = height-(height/25)-5;
+        Settings.scaleX = ((width/5)/xxx);
+        Settings.scaleY = (((width/20))/yyy);
+        Settings.x = (Settings.scaleX*xxx/2)-xxx/2+(width/5)*2;
+        Settings.y = (Settings.scaleY*yyy/2)-yyy/2+height-Settings.scaleY*yyy;
         Settings.frame = 4;
         scene.addChild(Settings);
         Settings.addEventListener('touchstart',function(e){
@@ -839,13 +911,16 @@ function Load(width,height){
     var PopScene = function(Number,Type){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var Pop = new Sprite(width,(width/16)*9);
-
+      var xxx = core.assets["image/"+Type+".png"].width;
+      var yyy = core.assets["image/"+Type+".png"].height;
+      var Pop = new Sprite(xxx,yyy);
       Pop.image = core.assets["image/"+Type+".png"];
-      Pop.x = 0;
-      Pop.y = 0;
+      Pop.scaleX = width/xxx;
+      Pop.scaleY = width/16*9/yyy;
+      Pop.x = (Pop.scaleX*xxx/2)-xxx/2;
+      Pop.y = (Pop.scaleY*yyy/2)-yyy/2;
+      scene.addChild(Pop);
       Sound_ON(Type,true);
-      scene.addChild(Pop);//異議ありOR待った
 
       var Time = 0;
 
@@ -853,16 +928,16 @@ function Load(width,height){
         Time++;
         switch (Time) {
           case 2:
-            Pop.x = 10;
-            Pop.y = 10;
+            Pop.x = ((Pop.scaleX*xxx/2)-xxx/2)+10;
+            Pop.y = ((Pop.scaleY*yyy/2)-yyy/2)+10;
             break;
           case 3:
-            Pop.x = -20;
-            Pop.y = -30;
+            Pop.x = ((Pop.scaleX*xxx/2)-xxx/2)-20;
+            Pop.y = ((Pop.scaleY*yyy/2)-yyy/2)-30;
             break;
           case 4:
-            Pop.x = 30;
-            Pop.y = 20;
+            Pop.x = ((Pop.scaleX*xxx/2)-xxx/2)+30;
+            Pop.y = ((Pop.scaleY*yyy/2)-yyy/2)+20;
             break;
           case 15:
             core.popScene();
@@ -871,8 +946,8 @@ function Load(width,height){
             Scene_loads(Number,false,false);
             break;
           default:
-            Pop.x = 0;
-            Pop.y = 0;
+            Pop.x = ((Pop.scaleX*xxx/2)-xxx/2);
+            Pop.y = ((Pop.scaleY*yyy/2)-yyy/2);
             break;
         }
       })
@@ -888,31 +963,43 @@ function Load(width,height){
 
       Flag[4] = Datas[5];
 
-      var Background = new Sprite(width,(width/16)*9);
+      var xxx = core.assets["image/背景/stand.png"].width;
+      var yyy = core.assets["image/背景/stand.png"].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = width/xxx;
+      Background.scaleY = width/16*9/yyy;
       Background.image = core.assets["image/背景/stand.png"];
-      Background.x = 0;
-      Background.y = 0;
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);//証言席
 
-      var Character = new Sprite((height/2),(width/16)*9);
+      var xxx = core.assets["image/人物/"+Datas[0]+".png"].width;
+      var yyy = core.assets["image/人物/"+Datas[0]+".png"].height;
+      var Character = new Sprite(xxx,yyy);
+      Character.scaleX = ((width/2)/xxx);
+      Character.scaleY = (((width/16)*9)/yyy);
       Character.image = core.assets["image/人物/"+Datas[0]+".png"];
-      Character.x = (height/4);
-      Character.y = 0;
+      Character.x = (Character.scaleX*xxx/2)-xxx/2+(width/4);
+      Character.y = (Character.scaleX*yyy/2)-yyy/2;
       scene.addChild(Character);//キャラ
 
-      var Stand = new Sprite(width,(width/16)*9);
+      var xxx = core.assets["image/stand.png"].width;
+      var yyy = core.assets["image/stand.png"].height;
+      var Stand = new Sprite(xxx,yyy);
+      Stand.scaleX = width/xxx;
+      Stand.scaleY = width/16*9/yyy;
       Stand.image = core.assets["image/stand.png"];
-      Stand.x = 0;
-      Stand.y = 0;
+      Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
+      Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
       scene.addChild(Stand);//証言台
 
       var C_name = new Label();
-      C_name.font  = (height/25)+"px monospace";
+      C_name.font  = (width/20)+"px monospace";
       C_name.color = 'black';
       C_name.x = 0;
-      C_name.y = Background.height+(height/25)*1;
+      C_name.y = Background.height+(width/20)*1;
       C_name.width = width;
-      C_name.height = (height/25);
+      C_name.height = (width/20);
       C_name.text = "【" + Datas[1] + "】";
       scene.addChild(C_name);//キャラ名
 
@@ -921,12 +1008,12 @@ function Load(width,height){
       var Texts = Class.create(Label, {
         initialize: function(a) {
           Label.call(this);
-          this.font  = (height/25)+"px monospace";
+          this.font  = (width/20)+"px monospace";
           this.color = 'black';
           this.x = (width/25);
           this.y = Numbers;
           this.width = width;
-          this.height = (height/25);
+          this.height = (width/20);
           this.text = a;
           Numbers += 100;
           scene.addChild(this);
@@ -939,10 +1026,14 @@ function Load(width,height){
         Text[i] = new Texts(Text[i]);
       }
 
-      var Button1 = new Sprite((width/5),(height/25));
+      var xxx = core.assets["image/Buttons.png"].width/8;
+      var yyy = core.assets["image/Buttons.png"].height;
+      var Button1 = new Sprite(xxx,yyy);
       Button1.image = core.assets["image/Buttons.png"];
-      Button1.x = 0;
-      Button1.y = height-(height/25)-5;
+      Button1.scaleX = ((width/5)/xxx);
+      Button1.scaleY = (((width/20))/yyy);
+      Button1.x = (Button1.scaleX*xxx/2)-xxx/2;
+      Button1.y = (Button1.scaleY*yyy/2)-yyy/2+height-Button1.scaleY*yyy;
       Button1.frame = 0;
       scene.addChild(Button1);
       Button1.addEventListener('touchstart',function(e){
@@ -952,10 +1043,14 @@ function Load(width,height){
       });//ゆさぶる
 
       if(Datas[4]!=false){
-        var Button2 = new Sprite((width/5),(height/25));
+        var xxx = core.assets["image/Buttons.png"].width/8;
+        var yyy = core.assets["image/Buttons.png"].height;
+        var Button2 = new Sprite(xxx,yyy);
         Button2.image = core.assets["image/Buttons.png"];
-        Button2.x = (width/5);
-        Button2.y = height-(height/25)-5;
+        Button2.scaleX = ((width/5)/xxx);
+        Button2.scaleY = (((width/20))/yyy);
+        Button2.x = (Button2.scaleX*xxx/2)-xxx/2+(width/5);
+        Button2.y = (Button2.scaleY*yyy/2)-yyy/2+height-Button2.scaleY*yyy;
         Button2.frame = 2;
         scene.addChild(Button2);
         Button2.addEventListener('touchstart',function(e){
@@ -963,10 +1058,14 @@ function Load(width,height){
         });
       }//戻る
 
-      var Button3 = new Sprite((width/5),(height/25));
+      var xxx = core.assets["image/Buttons.png"].width/8;
+      var yyy = core.assets["image/Buttons.png"].height;
+      var Button3 = new Sprite(xxx,yyy);
       Button3.image = core.assets["image/Buttons.png"];
-      Button3.x = (width/5)*2;
-      Button3.y = height-(height/25)-5;
+      Button3.scaleX = ((width/5)/xxx);
+      Button3.scaleY = (((width/20))/yyy);
+      Button3.x = (Button3.scaleX*xxx/2)-xxx/2+(width/5)*2;
+      Button3.y = (Button3.scaleY*yyy/2)-yyy/2+height-Button3.scaleY*yyy;
       Button3.frame = 3;
       scene.addChild(Button3);
       Button3.addEventListener('touchstart',function(e){
@@ -975,20 +1074,28 @@ function Load(width,height){
         console.log("Scene数",Scene_kazu);
       });//設定
 
-      var Button4 = new Sprite((width/5),(height/25));
+      var xxx = core.assets["image/Buttons.png"].width/8;
+      var yyy = core.assets["image/Buttons.png"].height;
+      var Button4 = new Sprite(xxx,yyy);
       Button4.image = core.assets["image/Buttons.png"];
-      Button4.x = (width/5)*3;
-      Button4.y = height-(height/25)-5;
+      Button4.scaleX = ((width/5)/xxx);
+      Button4.scaleY = (((width/20))/yyy);
+      Button4.x = (Button4.scaleX*xxx/2)-xxx/2+(width/5)*3;
+      Button4.y = (Button4.scaleY*yyy/2)-yyy/2+height-Button4.scaleY*yyy;
       Button4.frame = 5;
       scene.addChild(Button4);
       Button4.addEventListener('touchstart',function(e){
         Scene_loads(Datas[6],true,false);
       });//進む
 
-      var Button5 = new Sprite((width/5),(height/25));
+      var xxx = core.assets["image/Buttons.png"].width/8;
+      var yyy = core.assets["image/Buttons.png"].height;
+      var Button5 = new Sprite(xxx,yyy);
       Button5.image = core.assets["image/Buttons.png"];
-      Button5.x = (width/5)*4;
-      Button5.y = height-(height/25)-5;
+      Button5.scaleX = ((width/5)/xxx);
+      Button5.scaleY = (((width/20))/yyy);
+      Button5.x = (Button5.scaleX*xxx/2)-xxx/2+(width/5)*4;
+      Button5.y = (Button5.scaleY*yyy/2)-yyy/2+height-Button5.scaleY*yyy;
       Button5.frame = 7;
       scene.addChild(Button5);
       Button5.addEventListener('touchstart',function(e){
@@ -1001,96 +1108,71 @@ function Load(width,height){
     };
     var SettingScene = function(Number){
       var scene = new Scene();                                // 新しいシーンを作る
-      var Background = new Sprite(width,height);
+
+      var xxx = core.assets["image/Background.png"].width;
+      var yyy = core.assets["image/Background.png"].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = ((width)/xxx);
+      Background.scaleY = ((height)/yyy);
       Background.image = core.assets["image/Background.png"];
-      Background.x = 0;
-      Background.y = 0;
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
 
-      var Text = new Label();
-      Text.font  = (height/25)+"px monospace";
-      Text.color = 'black';
-      Text.x = (width/8);
-      Text.y = (width/8);
-      Text.width = width;
-      Text.height = (height/25);
-      Text.text = "▶ 設定を閉じる";
-      scene.addChild(Text);
+      var Numbers = (width/20);
 
-      var Text2 = new Label();
-      Text2.font  = (height/25)+"px monospace";
-      Text2.color = 'black';
-      Text2.x = (width/8);
-      Text2.y = 300;
-      Text2.width = width;
-      Text2.height = (height/25);
-      Text2.text = "▶ タイトルに戻る";
-      scene.addChild(Text2);
+      var Texts = Class.create(Label, {
+        initialize: function(a) {
+          Label.call(this);
+          Numbers += (width/20)+(width/25);
+          this.font  = (width/20)+"px monospace";
+          this.color = 'black';
+          this.x = (width/15);
+          this.y = Numbers;
+          this.width = width;
+          this.height = (width/20);
+          this.text = a;
+          i++;
+          scene.addChild(this);
+        }
+      });
 
-      var Text2_5 = new Label();
-      Text2_5.font  = (height/25)+"px monospace";
-      Text2_5.color = 'black';
-      Text2_5.x = (width/8);
-      Text2_5.y = (height/4);
-      Text2_5.width = width;
-      Text2_5.height = (height/25);
-      Text2_5.text = "▶ サウンド設定";
-      scene.addChild(Text2_5);
+      var Text = [];
 
-      var Text3 = new Label();
-      Text3.font  = (height/25)+"px monospace";
-      Text3.color = 'black';
-      Text3.x = (width/8);
-      Text3.y = 500;
-      Text3.width = width;
-      Text3.height = (height/25);
-      Text3.text = "▶ セーブ方法の切り替え";
-      scene.addChild(Text3);
+      Text[0] = new Texts("▶ 設定を閉じる");
+      Text[1] = new Texts("▶ タイトルに戻る");
+      Text[2] = new Texts("▶ サウンド設定");
+      Text[3] = new Texts("▶ セーブ方法の切り替え");
+      Text[4] = new Texts("▶ セーブデータ読み込み");
+      if(Flag[8]) Text[5] = new Texts("現在はオートセーブです。");
+      else Text[5] = new Texts("▶ セーブする");
+      Text[6] = new Texts("");
+      Text[7] = new Texts("性別");
+      Text[8] = new Texts("苗字");
+      Text[9] = new Texts("名前");
+      Text[10] = new Texts("▶ 設定する");
+      Text[11] = new Texts("");
 
-      var Text4 = new Label();
-      Text4.font  = (height/25)+"px monospace";
-      Text4.color = 'black';
-      Text4.x = (width/8);
-      Text4.y = 600;
-      Text4.width = width;
-      Text4.height = (height/25);
-      if(Flag[8]) Text4.text = "現在はオートセーブです。";
-      else Text4.text = "▶ セーブする";
-      scene.addChild(Text4);
+      var Man = new Label();
+      Man.font  = (width/20)+"px monospace";
+      Man.color = 'black';
+      Man.x = (width/5);
+      Man.y = Text[7].y;
+      Man.text = "男";
+      scene.addChild(Man);
 
-      var Text5 = new Label();
-      Text5.font  = (height/25)+"px monospace";
-      Text5.color = 'black';
-      Text5.x = (width/8);
-      Text5.y = 700;
-      Text5.width = width;
-      Text5.height = (height/25);
-      Text5.text = "セーブしました。";
-
-      var Text6 = new Label();
-      Text6.font  = (height/25)+"px monospace";
-      Text6.color = 'black';
-      Text6.x = (width/8);
-      Text6.y = (width/16)*9;
-      Text6.width = width;
-      Text6.height = (height/25);
-      Text6.text = "性別";
-      scene.addChild(Text6);
-
-      var Text7 = new Label();
-      Text7.font  = (height/25)+"px monospace";
-      Text7.color = 'black';
-      Text7.x = (width/8);
-      Text7.y = (height/1.6);
-      Text7.width = width;
-      Text7.height = (height/25);
-      Text7.text = "苗字";
-      scene.addChild(Text7);
+      var Woman = new Label();
+      Woman.font  = (width/20)+"px monospace";
+      Woman.color = 'black';
+      Woman.x = (width/5)+(width/5);
+      Woman.y = Text[7].y;
+      Woman.text = "女";
+      scene.addChild(Woman);
 
       var S_Input = new Entity();
-      S_Input.moveTo(330,(height/1.6));
+      S_Input.moveTo((width/5),Text[8].y);
       S_Input.width = 190;
-      S_Input.height = (height/25);
+      S_Input.height = (width/20);
       S_Input._element = document.createElement('input');
       S_Input._element.type = "text";
       S_Input._element.name = "myText";
@@ -1098,20 +1180,10 @@ function Load(width,height){
       S_Input._element.placeholder = "苗字を入力";
       scene.addChild(S_Input);
 
-      var Text8 = new Label();
-      Text8.font  = (height/25)+"px monospace";
-      Text8.color = 'black';
-      Text8.x = (width/8);
-      Text8.y = (height/1.6)+(height/25);
-      Text8.width = width;
-      Text8.height = (height/25);
-      Text8.text = "名前";
-      scene.addChild(Text8);
-
       var S_Input2 = new Entity();
-      S_Input2.moveTo(330,1100);
+      S_Input2.moveTo((width/5),Text[9].y);
       S_Input2.width = 190;
-      S_Input2.height = (height/25);
+      S_Input2.height = (width/20);
       S_Input2._element = document.createElement('input');
       S_Input2._element.type = "text";
       S_Input2._element.name = "myText";
@@ -1119,189 +1191,140 @@ function Load(width,height){
       S_Input2._element.placeholder = "名前を入力";
       scene.addChild(S_Input2);
 
-      var Text9 = new Label();
-      Text9.font  = (height/25)+"px monospace";
-      Text9.color = 'black';
-      Text9.x = (height/4);
-      Text9.y = (width/16)*9;
-      Text9.width = width;
-      Text9.height = (height/25);
-      Text9.text = "男";
-      scene.addChild(Text9);
-
-      var Text10 = new Label();
-      Text10.font  = (height/25)+"px monospace";
-      Text10.color = 'black';
-      Text10.x = 500;
-      Text10.y = (width/16)*9;
-      Text10.width = width;
-      Text10.height = (height/25);
-      Text10.text = "女";
-      scene.addChild(Text10);
-
-      var Text11 = new Label();
-      Text11.font  = (height/25)+"px monospace";
-      Text11.color = 'black';
-      Text11.x = (width/8);
-      Text11.y = 1200;
-      Text11.width = width;
-      Text11.height = (height/25);
-      Text11.text = "▶ 設定する";
-      scene.addChild(Text11);
-
-      var Text12 = new Label();
-      Text12.font  = (height/25)+"px monospace";
-      Text12.color = 'black';
-      Text12.x = (width/8);
-      Text12.y = 1300;
-      Text12.width = width;
-      Text12.height = (height/25);
-      Text12.text = "設定しました。";
-
-      var Text13 = new Label();
-      Text13.font  = (height/25)+"px monospace";
-      Text13.color = 'black';
-      Text13.x = (height/2);
-      Text13.y = (width/8);
-      Text13.width = width;
-      Text13.height = (height/25);
-      Text13.text = "▶ 獲得トロフィー";
-      scene.addChild(Text13);
-
-      var Round = new Sprite((height/25),(height/25));
+      var xxx = core.assets["image/Round.png"].width;
+      var yyy = core.assets["image/Round.png"].height;
+      var Round = new Sprite(xxx,yyy);
+      Round.scaleX = ((width/20)/xxx);
+      Round.scaleY = ((width/20)/yyy);
       Round.image = core.assets["image/Round.png"];
-      if(Flag[2]=="女"){
-        Round.x = Text10.x;
-        Round.y = Text10.y;
-      }
-      else{
-        Round.x = Text9.x;
-        Round.y = Text9.y;
-      }
+      Round.x = Man.x+(Round.scaleX*xxx/2)-xxx/2;
+      Round.y = Man.y+(Round.scaleY*yyy/2)-yyy/2;
       scene.addChild(Round);
 
-      Text.addEventListener('touchstart',function(e){
-        core.popScene();
-        Scene_kazu--;
-        console.log("Scene数",Scene_kazu);
-        return;
-      });
-
-      Text2.addEventListener('touchstart',function(e){
-        core.popScene();
-        core.popScene();
-        Scene_kazu--;
-        Scene_kazu--;
-        console.log("Scene数",Scene_kazu);
-        Scene_loads("タイトルに戻る",false,false,false);
-        return;
-      });
-
-      Text2_5.addEventListener('touchstart',function(e){
-        core.pushScene(SoundScene());
-        Scene_kazu++;
-        console.log("Scene数",Scene_kazu);
-        return;
-      });
-
-      Text3.addEventListener('touchstart',function(e){
-        if(Flag[8]){
-          Flag[8] = false;
-          Text4.text = "▶ セーブする";
-        }
-        else{
-          Flag[8] = true;
-          Text4.text = "現在はオートセーブです。";
-          scene.removeChild(Text5);
-        }
-        return;
-      });
-
-      Text4.addEventListener('touchstart',function(e){
-        if(Text4.text == "▶ セーブする"){
-          Save(Number);
-          Sound_ON("Item",true);
-          scene.addChild(Text5);
-        }
-        return;
-      });
-
-      Text9.addEventListener('touchstart',function(e){
-        Round.x = Text9.x;
-        Round.y = Text9.y;
-        return;
-      });
-
-      Text10.addEventListener('touchstart',function(e){
-        Round.x = Text10.x;
-        Round.y = Text10.y;
-        return;
-      });
-
-      Text11.addEventListener('touchstart',function(e){
-        if(Round.x == Text9.x){
-          if(S_Input2._element.value=="チート移動"){
+      for (var i = 0; i < Text.length; i++) {
+        Text[i].addEventListener('touchstart',function(e){
+          switch (this.text.substring(2)){
+            case "設定を閉じる":
+            core.popScene();
+            Scene_kazu--;
+            console.log("Scene数",Scene_kazu);
+            break;
+            case "タイトルに戻る":
             core.popScene();
             core.popScene();
             Scene_kazu--;
             Scene_kazu--;
             console.log("Scene数",Scene_kazu);
-            Number = S_Input._element.value;
-            if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
-            Scene_loads(Number,false,false);
-            return;
-          }
-          else if(S_Input2._element.value=="チートアイテム"){
-            Item_Flag[Item_Flag.length] = [S_Input._element.value,"チートで生み出したアイテム。"];
-            Sound_ON("Item",true);
-            Text12.text = S_Input._element.value;
-            scene.addChild(Text12);
-            return;
-          }
-          else if(S_Input2._element.value=="チート体力"){
-            Flag[6] = S_Input._element.value*1;
-            Sound_ON("Item",true);
-            Text12.text = "残り回数 = "+S_Input._element.value;
-            scene.addChild(Text12);
-            return;
-          }
-          else if(S_Input2._element.value=="チートフラグ"){
-            for (var i = 10; i < Flag.length; i++){
-              if(Flag[i]==S_Input._element.value){
-                Flag[i] = false;
-                Text12.text = S_Input._element.value+" 消去";
-                scene.addChild(Text12);
-                return;
+            Scene_loads("タイトルに戻る",false,false,false);
+            break;
+            case "サウンド設定":
+            core.pushScene(SoundScene());
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+            break;
+            case "セーブする":
+              Save(Number);
+              Sound_ON("Item",true);
+              Text[6].text = "セーブしました。";
+              break;
+              case "セーブ方法の切り替え":
+              if(Flag[8]){
+                Flag[8] = false;
+                Text[5].text = "▶ セーブする";
               }
-            }
-            Flag[Flag.length] = S_Input._element.value;
-            Sound_ON("Item",true);
-            Text12.text = S_Input._element.value;
-            scene.addChild(Text12);
-            return;
+              else{
+                Flag[8] = true;
+                Text[5].text = "現在はオートセーブです。";
+                Text[6].text = "";
+              }
+              break;
+              case "セーブデータ読み込み":
+              core.popScene();
+              core.popScene();
+              Scene_kazu--;
+              Scene_kazu--;
+              console.log("Scene数",Scene_kazu);
+              Scene_loads("セーブ読み込み",false,false);
+              break;
+              case "設定する":
+              if(Round.x == Man.x+(Round.scaleX*xxx/2)-xxx/2){
+                Flag[0] = S_Input2._element.value;
+                Flag[0] = S_Input2._element.value;
+                if(S_Input2._element.value=="チート移動"){
+                  core.popScene();
+                  core.popScene();
+                  Scene_kazu--;
+                  Scene_kazu--;
+                  console.log("Scene数",Scene_kazu);
+                  Number = S_Input._element.value;
+                  if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
+                  Scene_loads(Number,false,false);
+                  return;
+                }
+                else if(S_Input2._element.value=="チートアイテム"){
+                  Item_Flag[Item_Flag.length] = [S_Input._element.value,"チートで生み出したアイテム。"];
+                  Sound_ON("Item",true);
+                  Text12.text = S_Input._element.value;
+                  scene.addChild(Text12);
+                  return;
+                }
+                else if(S_Input2._element.value=="チート体力"){
+                  Flag[6] = S_Input._element.value*1;
+                  Sound_ON("Item",true);
+                  Text12.text = "残り回数 = "+S_Input._element.value;
+                  scene.addChild(Text12);
+                  return;
+                }
+                else if(S_Input2._element.value=="チートフラグ"){
+                  for (var i = 10; i < Flag.length; i++){
+                    if(Flag[i]==S_Input._element.value){
+                      Flag[i] = false;
+                      Text12.text = S_Input._element.value+" 消去";
+                      scene.addChild(Text12);
+                      return;
+                    }
+                  }
+                  Flag[Flag.length] = S_Input._element.value;
+                  Sound_ON("Item",true);
+                  Text12.text = S_Input._element.value;
+                  scene.addChild(Text12);
+                  return;
+                }
+                Flag[2] = "男";
+                if(S_Input._element.value=="") Flag[1] = "若辻";
+                if(S_Input2._element.value=="") Flag[0] = "俛人";
+              }
+              else{
+                Flag[2] = "女";
+                if(S_Input._element.value=="") Flag[1] = "防人";
+                if(S_Input2._element.value=="") Flag[0] = "玲奈";
+              }
+              Sound_ON("Item",true);
+              Text[11].text = "設定しました。";
+                break;
           }
-          Flag[2] = "男";
-          if(S_Input._element.value=="") Flag[1] = "若辻";
-          if(S_Input2._element.value=="") Flag[0] = "俛人";
-        }
-        else{
-          Flag[2] = "女";
-          if(S_Input._element.value=="") Flag[1] = "防人";
-          if(S_Input2._element.value=="") Flag[0] = "玲奈";
-        }
-        Flag[1] = S_Input._element.value;
-        Flag[0] = S_Input2._element.value;
-        Sound_ON("Item",true);
-        scene.addChild(Text12);
+        });
+      }
+
+      Man.addEventListener('touchstart',function(e){
+        Round.x = Man.x+(Round.scaleX*xxx/2)-xxx/2;
+        Round.y = Man.y+(Round.scaleY*yyy/2)-yyy/2;
         return;
       });
 
+      Woman.addEventListener('touchstart',function(e){
+        Round.x = Woman.x+(Round.scaleX*xxx/2)-xxx/2;
+        Round.y = Woman.y+(Round.scaleY*yyy/2)-yyy/2;
+        return;
+      });
+
+      /*
       Text13.addEventListener('touchstart',function(e){
         core.pushScene(TrophiesScene());
         Scene_kazu++;
         console.log("Scene数",Scene_kazu);
         return;
-      });
+      });*/
 
       return scene;
     };
@@ -1315,17 +1338,17 @@ function Load(width,height){
       scene.addChild(Background);
 
       var Text1 = new Label();
-      Text1.font  = (height/25)+"px monospace";
+      Text1.font  = (width/20)+"px monospace";
       Text1.color = 'black';
       Text1.x = (width/8);
       Text1.y = (height/8);
       Text1.width = width;
-      Text1.height = (height/25);
+      Text1.height = (width/20);
       Text1.text = "▶ 戻る";
       scene.addChild(Text1);
 
       var Text2 = new Label();
-      Text2.font  = (height/25)+"px monospace";
+      Text2.font  = (width/20)+"px monospace";
       Text2.color = 'black';
       Text2.x = (width/8);
       Text2.y = 1100;
@@ -1339,12 +1362,12 @@ function Load(width,height){
       var Texts = Class.create(Label, {
         initialize: function(a,b,c) {
           Label.call(this);
-          this.font  = (height/25)+"px monospace";
+          this.font  = (width/20)+"px monospace";
           this.color = 'black';
           this.x = (width/8);
           this.y = Numbers;
           this.width = width;
-          this.height = (height/25);
+          this.height = (width/20);
           this.text = "未獲得";
           this.syousai = b;
           if(window.localStorage.getItem(a)=="獲得！"){
@@ -1398,10 +1421,15 @@ function Load(width,height){
     var InspectScene = function(Inspect,Item){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var Background = new Sprite(width,(width/16)*9);
-      Background.image = core.assets["image/背景/"+ Inspect[0] +".png"];
-      Background.x = 0;
-      Background.y = 0;
+
+    var xxx = core.assets["image/背景/"+ Datas[0] +".png"].width;
+    var yyy = core.assets["image/背景/"+ Datas[0] +".png"].height;
+    var Background = new Sprite(xxx,yyy);
+    Background.scaleX = width/xxx;
+    Background.scaleY = width/16*9/yyy;
+    Background.image = core.assets["image/背景/"+ Inspect[0] +".png"];
+    Background.x = (Background.scaleX*xxx/2)-xxx/2;
+    Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
       Background.addEventListener('touchstart',function(e){
         Scene_loads("調べる何もない",false,Item);
@@ -1412,7 +1440,7 @@ function Load(width,height){
           Sprite.call(this,width,height);
           this.x = x;
           this.y = y;
-          this.image = core.assets["image/背景/Transparent.png"];
+          this.image = core.assets["image/背景/透明.png"];
           scene.addChild(this);
           this.addEventListener('touchstart',function(e){
             Scene_loads(Number,false,Item);
@@ -1430,12 +1458,12 @@ function Load(width,height){
       }
 
       var Text = new Label();
-      Text.font  = (height/25)+"px monospace";
+      Text.font  = (width/20)+"px monospace";
       Text.color = 'black';
       Text.x = 0;
-      Text.y = Background.height+(height/25)*1;
+      Text.y = Background.height+(width/20)*1;
       Text.width = width;
-      Text.height = (height/25);
+      Text.height = (width/20);
       Text.text = "▶ 戻る";
       scene.addChild(Text);
       Text.addEventListener('touchstart',function(e){
@@ -1456,28 +1484,29 @@ function Load(width,height){
 
       BGM_Stop(true);
 
-      var Background = new Sprite(width,(width/16)*9);
+      var Background = new Sprite(width,height-(width/16)*9);
       Background.image = core.assets["image/white.png"];
       Background.x = 0;
       Background.y = (width/16)*9;
       scene.addChild(Background);
 
-      var Numbers = 1040;
+      var Numbers = width/16*9+(width/20)+(width/25);
 
       var Texts = Class.create(Label, {
         initialize: function(a) {
+          Numbers += (width/20)+(width/25);
           Label.call(this);
-          this.font  = (height/25)+"px monospace";
+          this.font  = (width/20)+"px monospace";
           this.color = 'black';
-          this.x = (width/25);
+          this.x = (width/50);
           this.y = Numbers;
           this.width = width;
-          this.height = (height/25);
+          this.height = (width/20);
           this.text = a;
-          Numbers += 100;
+          if(a.substring(0,1)=="("&&a.substring(a.length-1)==")") this.color = "blue";
           scene.addChild(this);
         }
-      });//テキスト
+      });
 
       var Text = b.split("(改行)");
 
@@ -1485,22 +1514,38 @@ function Load(width,height){
         Text[i] = new Texts(Text[i]);
       }
 
-      var Enter = new Sprite((width/5),(height/25));
-      Enter.image = core.assets["image/Buttons.png"];
-      Enter.x = (width/5)*3;
-      Enter.y = height-(height/25)-5;
-      Enter.frame = 5;
-      scene.addChild(Enter);
-      var Item = new Sprite((height/2),(height/2));
+      var xxx = core.assets["image/Buttons.png"].width/8;
+      var yyy = core.assets["image/Buttons.png"].height;
+      var Enter1 = new Sprite(xxx,yyy);
+      Enter1.image = core.assets["image/Buttons.png"];
+      Enter1.scaleX = ((width/5)/xxx);
+      Enter1.scaleY = (((width/20))/yyy);
+      Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
+      Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
+      Enter1.frame = 5;
+      scene.addChild(Enter1);
+
+      var xxx = core.assets["image/アイテム/"+a+".png"].width;
+      var yyy = core.assets["image/アイテム/"+a+".png"].height;
+      var Item = new Sprite(xxx,yyy);
+      Item.scaleX = ((width/2)/xxx);
+      Item.scaleY = ((width/2)/yyy);
       Item.image = core.assets["image/アイテム/"+a+".png"];
-      Item.x = width;
-      Item.y = 50;
+      var X_0 = (Item.scaleX*xxx/2)-xxx/2;
+      var Y_0 = (Item.scaleY*yyy/2)-yyy/2;
+      Item.x = X_0 + width;
+      Item.y = Y_0 + width/32;
       scene.addChild(Item);
       Sound_ON("Item",true);
 
       Item.addEventListener("enterframe",function(){
-        if(Item.x!=(height/4)) Item.x -= 100;
-        if(Item.x==-(height/2)){
+        if(Item.x < X_0+width/2-width/4-width/18 || Item.x > X_0+width/2-width/4+width/18){
+          Item.x -= width/18;
+        }
+        else {
+          Item.x = X_0+width/2-width/4;
+        }
+        if(Item.x<X_0-width/2){
           core.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
@@ -1508,9 +1553,11 @@ function Load(width,height){
         }
       })
 
-      Enter.addEventListener('touchstart',function(e){
-        if(Item.x>(height/4)) Item.x = (height/4);
-        else if(Item.x==(height/4)) Item.x -= 100;
+      Enter1.addEventListener('touchstart',function(e){
+        if(Item.x>X_0+width/2-width/4){
+          Item.x = X_0 + width/2 -width/4;
+        }
+        else if(Item.x==X_0+width/2-width/4) Item.x -= width/18+1;
         else{
           core.popScene();
           Scene_kazu--;
@@ -1524,116 +1571,120 @@ function Load(width,height){
     var ItemScene = function(Number,Ig){
 
       var scene = new Scene();                                // 新しいシーンを作る
-      var Background = new Sprite(width,height);
+
+      var xxx = core.assets["image/Background.png"].width;
+      var yyy = core.assets["image/Background.png"].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = ((width)/xxx);
+      Background.scaleY = ((height)/yyy);
       Background.image = core.assets["image/Background.png"];
-      Background.x = 0;
-      Background.y = 0;
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
 
       var Text1 = new Label();
-      Text1.font  = (height/25)+"px monospace";
+      Text1.font  = (width/20)+"px monospace";
       Text1.color = 'black';
       Text1.x = (width/8);
-      Text1.y = (height/8);
+      Text1.y = (width/6);
       Text1.width = width;
-      Text1.height = (height/25);
+      Text1.height = (width/20);
       Text1.text = "▶ 閉じる";
       scene.addChild(Text1);
 
       var Text2 = new Label();
-      Text2.font  = (height/25)+"px monospace";
+      Text2.font  = (width/20)+"px monospace";
       Text2.color = 'black';
       Text2.x = (width/1.6);
-      Text2.y = (height/8);
+      Text2.y = (width/6);
       Text2.width = width;
-      Text2.height = (height/25);
+      Text2.height = (width/20);
       Text2.text = "▶ 設定を開く";
 
       var Text21 = new Label();
-      Text21.font  = (height/25)+"px monospace";
+      Text21.font  = (width/20)+"px monospace";
       Text21.color = 'black';
-      Text21.x = 600;
-      Text21.y = (height/8);
+      Text21.x = (width/2.5);
+      Text21.y = (width/6);
       Text21.width = width;
-      Text21.height = (height/25);
+      Text21.height = (width/20);
       Text21.text = "▶ 人物";
 
       var Text3 = new Label();
-      Text3.font  = (height/25)+"px monospace";
+      Text3.font  = (width/20)+"px monospace";
       Text3.color = 'black';
-      if(Ig) Text3.x = 1100;
-      else Text3.x = 1280;
-      Text3.y = 1400;
-      Text3.width = 1380;
-      Text3.height = (height/25);
+      if(Ig) Text3.x = (width/1.6);
+      else Text3.x = (width/1.3);
+      Text3.y = (width/4) + ((width/20)+(width/25)*14);
+      Text3.width = width;
+      Text3.height = (width/20);
       Text3.text = "";
 
       var Text4 = new Label();
-      Text4.font  = (height/25)+"px monospace";
+      Text4.font  = (width/20)+"px monospace";
       Text4.color = 'black';
       Text4.x = (width/8);
-      Text4.y = (height/1.6);
+      Text4.y = (width/4) + ((width/20)+(width/25)*18);
       Text4.width = width;
-      Text4.height = (height/25);
+      Text4.height = (width/20);
       Text4.text = "";
       scene.addChild(Text4);
 
       var Text5 = new Label();
-      Text5.font  = (height/25)+"px monospace";
+      Text5.font  = (width/20)+"px monospace";
       Text5.color = 'black';
       Text5.x = (width/8);
-      Text5.y = 1100;
+      Text5.y = (width/4) + ((width/20)+(width/25)*20);
       Text5.width = width;
-      Text5.height = (height/25);
+      Text5.height = (width/20);
       Text5.text = "";
       scene.addChild(Text5);
 
       var Text6 = new Label();
-      Text6.font  = (height/25)+"px monospace";
+      Text6.font  = (width/20)+"px monospace";
       Text6.color = 'black';
       Text6.x = (width/8);
-      Text6.y = 1200;
+      Text6.y = (width/4) + ((width/20)+(width/25)*22);
       Text6.width = width;
-      Text6.height = (height/25);
+      Text6.height = (width/20);
       Text6.text = "";
       scene.addChild(Text6);
 
       var Text7 = new Label();
-      Text7.font  = (height/25)+"px monospace";
+      Text7.font  = (width/20)+"px monospace";
       Text7.color = 'black';
       Text7.x = (width/8);
-      Text7.y = 1300;
+      Text7.y = (width/4) + ((width/20)+(width/25)*24);
       Text7.width = width;
-      Text7.height = (height/25);
+      Text7.height = (width/20);
       Text7.text = "";
       scene.addChild(Text7);
 
       var Text8 = new Label();
-      Text8.font  = (height/25)+"px monospace";
+      Text8.font  = (width/20)+"px monospace";
       Text8.color = 'black';
-      if(Ig) Text8.x = (height/2);
-      else Text8.x = 980;
-      Text8.y = 1400;
-      Text8.width = 1380;
-      Text8.height = (height/25);
+      Text8.x = (width/1.3);
+      Text8.y = (width/4) + ((width/20)+(width/25)*10);
+      Text8.width = width;
+      Text8.height = (width/20);
       Text8.text = "";
 
       var Text9 = new Label();
-      Text9.font  = (height/25)+"px monospace";
+      Text9.font  = (width/20)+"px monospace";
       Text9.color = 'black';
       Text9.x = (width/8);
-      Text9.y = 1400;
-      Text9.width = 1380;
-      Text9.height = (height/25);
+      Text9.y = (width/4) + ((width/20)+(width/25)*14);
+      Text9.width = width;
+      Text9.height = (width/20);
       Text9.text = "◀ 前";
 
       var Text10 = new Label();
-      Text10.font  = (height/25)+"px monospace";
+      Text10.font  = (width/20)+"px monospace";
       Text10.color = 'black';
-      Text10.x = 600;
-      Text10.y = 1400;
-      Text10.width = 1380;
-      Text10.height = (height/25);
+      Text10.x = (width/2.5);
+      Text10.y = (width/4) + ((width/20)+(width/25)*14);
+      Text10.width = width;
+      Text10.height = (width/20);
       Text10.text = "▶ 次";
 
       if(Number.length>1){
@@ -1662,26 +1713,30 @@ function Load(width,height){
       }
       else Pages = 0;
 
-      var Numbers = (height/4);
-
       var Item_image = Class.create(Sprite,{
           initialize: function(a) {
-              Sprite.call(this,(height/4),(height/4));
-              this.x = (width/1.6);
-              this.y = (height/4);
-              this.image = core.assets["image/アイテム/小/"+a+".png"];
+              var xxx = core.assets["image/アイテム/"+a+".png"].width;
+              var yyy = core.assets["image/アイテム/"+a+".png"].height;
+              Sprite.call(this,xxx,yyy);
+              this.scaleX = ((width/4)/xxx);
+              this.scaleY = ((width/4)/yyy);
+              this.image = core.assets["image/アイテム/"+a+".png"];
+              this.x = (this.scaleX*xxx/2)-xxx/2+(width/1.6);
+              this.y = (this.scaleY*yyy/2)-yyy/2+(width/4)+(width/20)+(width/25);
           }
       });
 
+      var Numbers = (width/4);
       var Items = Class.create(Label, {
         initialize: function(a) {
           Label.call(this);
-          this.font  = (height/25)+"px monospace";
+          Numbers += (width/20)+(width/25);
+          this.font  = (width/20)+"px monospace";
           this.color = 'black';
           this.x = (width/8);
           this.y = Numbers;
           this.width = width;
-          this.height = (height/25);
+          this.height = (width/20);
           this.text = a[0];
           var Syousai_text = a[1].split("(改行)");
           if(Syousai_text[0]) this.text2 = Syousai_text[0];
@@ -1701,7 +1756,6 @@ function Load(width,height){
           else this.text6 = "";
           this.image_number = Item_Number;
           scene.addChild(this);
-          Numbers += 100;
           Item_Number ++;
         }
       });
@@ -1857,101 +1911,143 @@ function Load(width,height){
       return scene;
     }
     var CharacterScene = function(Number,Ig){
+
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var Background = new Sprite(width,height);
+      var xxx = core.assets["image/Background.png"].width;
+      var yyy = core.assets["image/Background.png"].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = ((width)/xxx);
+      Background.scaleY = ((height)/yyy);
       Background.image = core.assets["image/Background.png"];
-      Background.x = 0;
-      Background.y = 0;
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
 
       var Text1 = new Label();
-      Text1.font  = (height/25)+"px monospace";
+      Text1.font  = (width/20)+"px monospace";
       Text1.color = 'black';
       Text1.x = (width/8);
-      Text1.y = (height/8);
+      Text1.y = (width/6);
       Text1.width = width;
-      Text1.height = (height/25);
+      Text1.height = (width/20);
       Text1.text = "▶ 閉じる";
       scene.addChild(Text1);
 
       var Text2 = new Label();
-      Text2.font  = (height/25)+"px monospace";
+      Text2.font  = (width/20)+"px monospace";
       Text2.color = 'black';
       Text2.x = (width/1.6);
-      Text2.y = (height/8);
+      Text2.y = (width/6);
       Text2.width = width;
-      Text2.height = (height/25);
+      Text2.height = (width/20);
       Text2.text = "▶ 設定を開く";
-      if(Ig==false) scene.addChild(Text2);
+
+      var Text21 = new Label();
+      Text21.font  = (width/20)+"px monospace";
+      Text21.color = 'black';
+      Text21.x = (width/2.5);
+      Text21.y = (width/6);
+      Text21.width = width;
+      Text21.height = (width/20);
+      Text21.text = "▶ 持物";
 
       var Text3 = new Label();
-      Text3.font  = (height/25)+"px monospace";
+      Text3.font  = (width/20)+"px monospace";
       Text3.color = 'black';
-      Text3.x = 600;
-      Text3.y = (height/8);
+      if(Ig) Text3.x = (width/1.6);
+      else Text3.x = (width/1.3);
+      Text3.y = (width/4) + ((width/20)+(width/25)*14);
       Text3.width = width;
-      Text3.height = (height/25);
-      Text3.text = "▶ アイテム";
-      scene.addChild(Text3);
+      Text3.height = (width/20);
+      Text3.text = "";
 
       var Text4 = new Label();
-      Text4.font  = (height/25)+"px monospace";
+      Text4.font  = (width/20)+"px monospace";
       Text4.color = 'black';
       Text4.x = (width/8);
-      Text4.y = (height/1.6);
+      Text4.y = (width/4) + ((width/20)+(width/25)*18);
       Text4.width = width;
-      Text4.height = (height/25);
+      Text4.height = (width/20);
       Text4.text = "";
       scene.addChild(Text4);
 
       var Text5 = new Label();
-      Text5.font  = (height/25)+"px monospace";
+      Text5.font  = (width/20)+"px monospace";
       Text5.color = 'black';
       Text5.x = (width/8);
-      Text5.y = 1100;
+      Text5.y = (width/4) + ((width/20)+(width/25)*20);
       Text5.width = width;
-      Text5.height = (height/25);
+      Text5.height = (width/20);
       Text5.text = "";
       scene.addChild(Text5);
 
       var Text6 = new Label();
-      Text6.font  = (height/25)+"px monospace";
+      Text6.font  = (width/20)+"px monospace";
       Text6.color = 'black';
       Text6.x = (width/8);
-      Text6.y = 1200;
+      Text6.y = (width/4) + ((width/20)+(width/25)*22);
       Text6.width = width;
-      Text6.height = (height/25);
+      Text6.height = (width/20);
       Text6.text = "";
       scene.addChild(Text6);
 
       var Text7 = new Label();
-      Text7.font  = (height/25)+"px monospace";
+      Text7.font  = (width/20)+"px monospace";
       Text7.color = 'black';
       Text7.x = (width/8);
-      Text7.y = 1300;
+      Text7.y = (width/4) + ((width/20)+(width/25)*24);
       Text7.width = width;
-      Text7.height = (height/25);
+      Text7.height = (width/20);
       Text7.text = "";
       scene.addChild(Text7);
 
+      var Text8 = new Label();
+      Text8.font  = (width/20)+"px monospace";
+      Text8.color = 'black';
+      Text8.x = (width/1.3);
+      Text8.y = (width/4) + ((width/20)+(width/25)*10);
+      Text8.width = width;
+      Text8.height = (width/20);
+      Text8.text = "";
+
       var Text9 = new Label();
-      Text9.font  = (height/25)+"px monospace";
+      Text9.font  = (width/20)+"px monospace";
       Text9.color = 'black';
       Text9.x = (width/8);
-      Text9.y = 1400;
-      Text9.width = 1380;
-      Text9.height = (height/25);
+      Text9.y = (width/4) + ((width/20)+(width/25)*14);
+      Text9.width = width;
+      Text9.height = (width/20);
       Text9.text = "◀ 前";
 
       var Text10 = new Label();
-      Text10.font  = (height/25)+"px monospace";
+      Text10.font  = (width/20)+"px monospace";
       Text10.color = 'black';
-      Text10.x = 600;
-      Text10.y = 1400;
-      Text10.width = 1380;
-      Text10.height = (height/25);
+      Text10.x = (width/2.5);
+      Text10.y = (width/4) + ((width/20)+(width/25)*14);
+      Text10.width = width;
+      Text10.height = (width/20);
       Text10.text = "▶ 次";
+
+      if(Number.length>1){
+        if(Number.substring(0,2)=="使う") Text3.text = "未表示";
+        if(Number.length>2){
+          if(Number.substring(0,3)=="調べる") Text3.text = "未表示";
+          if(Number.length>4){
+            if(Number.substring(0,5)=="つきつける") Text3.text = "未表示";
+          }
+        }
+      }
+      if(Text3.text==""){
+        scene.addChild(Text8);
+        scene.addChild(Text2);
+        scene.addChild(Text21);
+        scene.addChild(Text3);
+      }
+      if(Ig){
+        Text3.text = "";
+        scene.addChild(Text3);
+      }
 
       if(Character_Flag.length>5){
         scene.addChild(Text9);
@@ -1961,24 +2057,28 @@ function Load(width,height){
 
       var Character_image = Class.create(Sprite,{
           initialize: function(a) {
-              Sprite.call(this,(height/4),(height/4));
-              this.x = (width/1.6);
-              this.y = (height/4);
-              this.image = core.assets["image/人物/小/"+a+".png"];
+              var xxx = core.assets["image/人物/詳細/"+a+".png"].width;
+              var yyy = core.assets["image/人物/詳細/"+a+".png"].height;
+              Sprite.call(this,xxx,yyy);
+              this.scaleX = ((width/4)/xxx);
+              this.scaleY = ((width/4)/yyy);
+              this.image = core.assets["image/人物/詳細/"+a+".png"];
+              this.x = (this.scaleX*xxx/2)-xxx/2+(width/1.6);
+              this.y = (this.scaleY*yyy/2)-yyy/2+(width/4)+(width/20)+(width/25);
           }
       });
 
-      var Numbers = (height/4);
-
+      var Numbers = (width/4);
       var Characters = Class.create(Label, {
         initialize: function(a) {
           Label.call(this);
-          this.font  = (height/25)+"px monospace";
+          Numbers += (width/20)+(width/25);
+          this.font  = (width/20)+"px monospace";
           this.color = 'black';
           this.x = (width/8);
           this.y = Numbers;
           this.width = width;
-          this.height = (height/25);
+          this.height = (width/20);
           this.text = a[0];
           var Syousai_text = a[1].split("(改行)");
           if(Syousai_text[0]) this.text2 = Syousai_text[0];
@@ -1991,23 +2091,26 @@ function Load(width,height){
           else this.text5 = "";
           Image[Character_Number] = new Character_image(a[2]);
           if(a[3]){
-            this.text6 = "▶ " + a[3];
+            if(a[3]=="停止") this.text6 = "■ 停止";
+            else this.text6 = "▶ " + a[3];
             this.syousai = a[4];
           }
           else this.text6 = "";
           this.image_number = Character_Number;
           scene.addChild(this);
-          Numbers += 100;
           Character_Number ++;
         }
       });
 
       var Character = [];
       var Image = [];
+      var Choice_Character = "未設定";
       var Character_Number = 0;
 
       for (var i = 0; i < 5; i++) {
-        if(Character_Flag[i+Pages2]) Character[Character_Number] = new Characters(Character_Flag[i+Pages2]);
+        if(Character_Flag[i+Pages2]){
+          Character[Character_Number] = new Characters(Character_Flag[i+Pages2]);
+        };
       }
 
       Text1.addEventListener('touchstart',function(e){
@@ -2026,8 +2129,67 @@ function Load(width,height){
         return;
       });
 
-      Text3.addEventListener('touchstart',function(e){
+      Text21.addEventListener('touchstart',function(e){
         core.replaceScene(ItemScene(Number,Ig));
+        return;
+      });
+
+      Text3.addEventListener('touchstart',function(e){
+        core.popScene();
+        Scene_kazu--;
+        console.log("Scene数",Scene_kazu);
+        if(this.text=="▶ 使う") Scene_loads(Number,true,"使う"+Choice_Character);
+        else{
+          if(Ig==Choice_Character){
+            core.pushScene(PopScene(Number,"異議あり！"));
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+          }
+          else if(Ig=="日常") Scene_loads(Number,true,"つきつける"+Choice_Character);
+          else{
+            core.pushScene(PopScene("つきつけ失敗","異議あり！"));
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+          }
+        }
+        return;
+      });
+
+      Text8.addEventListener('touchstart',function(e){
+        if(this.text=="") return;
+        else if(this.text=="▶ 再生"){
+          Sound_ON(Choice_Character,true);
+          for (var i = 0; i < Character_Flag.length; i++) {
+            if(Character_Flag[i][0]==Choice_Character) break;
+          }
+          Get_I_C_F("人物",Choice_Character,Character[i].text2+"(改行)"+Character[i].text3+"(改行)"+Character[i].text4+"(改行)"+Character[i].text5,Character[i].image_f,"停止");
+          core.popScene();
+          Scene_kazu--;
+          console.log("Scene数",Scene_kazu);
+        }
+        else if(this.text=="■ 停止"){
+          Sound_ON(Choice_Character,false);
+          for (var i = 0; i < Character_Flag.length; i++) {
+            if(Character_Flag[i][0]==Choice_Character) break;
+          }
+          Get_I_C_F("人物",Choice_Character,Character[i].text2+"(改行)"+Character[i].text3+"(改行)"+Character[i].text4+"(改行)"+Character[i].text5,Character[i].image_f,"再生");
+          core.popScene();
+          console.log("Scene数",Scene_kazu);
+        }
+        else if(this.text=="▶ 調べる"){
+          core.popScene();
+          Scene_kazu--;
+          console.log("Scene数",Scene_kazu);
+          Inspect_loads(Number,Choice_Character);
+        }
+        else {
+          for (var i = 0; i < Character.length; i++) {
+            if(Character[i].text.substring(2)==Choice_Character) break;
+          }
+          core.pushScene(DetailsScene(Character[i].syousai));
+          Scene_kazu++;
+          console.log("Scene数",Scene_kazu);
+        }
         return;
       });
 
@@ -2058,19 +2220,24 @@ function Load(width,height){
             Choice_Character = this.text;
             this.text = "▶ " + this.text;
             this.color = "red";
+            if(Ig) Text3.text = "▶ つきつける";
+            else Text3.text = "";
             Text4.text = this.text2;
             Text5.text = this.text3;
             Text6.text = this.text4;
             Text7.text = this.text5;
+            Text8.text = this.text6;
           }
           else{
             scene.removeChild(Image[this.image_number]);
             this.text = this.text.substring(2);
             this.color = "black";
+            Text3.text = "";
             Text4.text = "";
             Text5.text = "";
             Text6.text = "";
             Text7.text = "";
+            Text8.text = "";
           }
           for (var k = 0; k < Character.length; k++){
             if(Character[k].color=="red"&&this!=Character[k]){
@@ -2095,12 +2262,12 @@ function Load(width,height){
       scene.addChild(Background);
 
       var Text1 = new Label();
-      Text1.font  = (height/25)+"px monospace";
+      Text1.font  = (width/20)+"px monospace";
       Text1.color = 'black';
       Text1.x = (width/8);
       Text1.y = (height/8);
       Text1.width = width;
-      Text1.height = (height/25);
+      Text1.height = (width/20);
       Text1.text = "▶ 戻る";
       scene.addChild(Text1);
 
@@ -2129,12 +2296,12 @@ function Load(width,height){
       scene.addChild(Background);
 
       var Text1 = new Label();
-      Text1.font  = (height/25)+"px monospace";
+      Text1.font  = (width/20)+"px monospace";
       Text1.color = 'black';
       Text1.x = (width/8);
       Text1.y = (height/8);
       Text1.width = width;
-      Text1.height = (height/25);
+      Text1.height = (width/20);
       Text1.text = "▶ 戻る";
       scene.addChild(Text1);
 
@@ -2146,12 +2313,12 @@ function Load(width,height){
       var Texts = Class.create(Label, {
         initialize: function(a) {
           Label.call(this);
-          this.font  = (height/25)+"px monospace";
+          this.font  = (width/20)+"px monospace";
           this.color = 'black';
           this.x = (width/8);
           this.y = Numbers;
           this.width = width;
-          this.height = (height/25);
+          this.height = (width/20);
           this.c = Text_Number;
           this.text = "▶ "+a;
           scene.addChild(this);
@@ -2162,12 +2329,12 @@ function Load(width,height){
       var Texts2 = Class.create(Label, {
         initialize: function(a) {
           Label.call(this);
-          this.font  = (height/25)+"px monospace";
+          this.font  = (width/20)+"px monospace";
           this.color = 'black';
           this.x = (height/2);
           this.y = Numbers;
           this.width = width;
-          this.height = (height/25);
+          this.height = (width/20);
           if(a) this.text = "現在はオンです。";
           else this.text = "現在はオフです。";
           scene.addChild(this);
@@ -2232,32 +2399,32 @@ function Load(width,height){
       scene.addChild(Background);
 
       var Text = new Label();
-      Text.font  = (height/25)+"px monospace";
+      Text.font  = (width/20)+"px monospace";
       Text.color = 'black';
       Text.x = (width/8);
       Text.y = (height/8);
       Text.width = width;
-      Text.height = (height/25);
+      Text.height = (width/20);
       Text.text = "データを消去する？";
       scene.addChild(Text);
 
       var Text2 = new Label();
-      Text2.font  = (height/25)+"px monospace";
+      Text2.font  = (width/20)+"px monospace";
       Text2.color = 'black';
       Text2.x = (width/8);
       Text2.y = 500;
       Text2.width = width;
-      Text2.height = (height/25);
+      Text2.height = (width/20);
       Text2.text = "▶ はい";
       scene.addChild(Text2);
 
       var Text3 = new Label();
-      Text3.font  = (height/25)+"px monospace";
+      Text3.font  = (width/20)+"px monospace";
       Text3.color = 'black';
       Text3.x = (width/8);
       Text3.y = (width/16)*9;
       Text3.width = width;
-      Text3.height = (height/25);
+      Text3.height = (width/20);
       Text3.text = "▶ いいえ";
       scene.addChild(Text3);
 
