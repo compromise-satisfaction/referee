@@ -532,7 +532,14 @@ function Load(width,height){
         }
       });
 
-      var Text = Datas[9].split("(改行)");
+      var Text = "";
+      Datas[9] = Datas[9].replace(/\(改行\) /,"");
+      Datas[9] = Datas[9].replace(/\(改行\)/,"");
+      Text += Datas[9].substring(0,19)+"(改行) ";
+      Text += Datas[9].substring(19,38)+"(改行) ";
+      Text += Datas[9].substring(38,57)+"(改行) ";
+      Text += Datas[9].substring(57,76)+"(改行) ";
+      Text = Text.split("(改行)");
 
       for (var i = 0; i < Text.length; i++) {
         Text[i] = new Texts(Text[i]);
