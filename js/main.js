@@ -532,16 +532,14 @@ function Load(width,height){
         }
       });
 
-      var Text = "";
-      Datas[9] = Datas[9].replace(/\(改行\) /,"");
-      Datas[9] = Datas[9].replace(/\(改行\)/,"");
-      Text += Datas[9].substring(0,19)+"(改行) ";
-      Text += Datas[9].substring(19,38)+"(改行) ";
-      Text += Datas[9].substring(38,57)+"(改行) ";
-      Text += Datas[9].substring(57,76)+"(改行) ";
-      Text = Text.split("(改行)");
+      var Text = Datas[9].split("(改行)");
 
       for (var i = 0; i < Text.length; i++) {
+        if(Text[i].length>18){
+          if(Text[i+1]==undefined) Text[i+1] = Text[i].substring(18);
+          else Text[i+1] = Text[i].substring(18) + Text[i+1]+"";
+          Text[i] = Text[i].substring(0,18);
+        }
         Text[i] = new Texts(Text[i]);
       }
 
@@ -1151,8 +1149,14 @@ function Load(width,height){
       Round.scaleX = ((width/20)/xxx);
       Round.scaleY = ((width/20)/yyy);
       Round.image = core.assets["image/Round.png"];
-      Round.x = Man.x+(Round.scaleX*xxx/2)-xxx/2;
-      Round.y = Man.y+(Round.scaleY*yyy/2)-yyy/2;
+      if(Flag[2]=="男"){
+        Round.x = Man.x+(Round.scaleX*xxx/2)-xxx/2;
+        Round.y = Man.y+(Round.scaleY*yyy/2)-yyy/2;
+      }
+      else{
+        Round.x = Woman.x+(Round.scaleX*xxx/2)-xxx/2;
+        Round.y = Woman.y+(Round.scaleY*yyy/2)-yyy/2;
+      }
       scene.addChild(Round);
 
       for (var i = 0; i < Text.length; i++) {
@@ -1416,7 +1420,7 @@ function Load(width,height){
       Text.font  = (width/20)+"px monospace";
       Text.color = 'black';
       Text.x = 0;
-      Text.y = Background.height+(width/20)*1;
+      Text.y = (width/16*9)+(width/20)*1;
       Text.width = width;
       Text.height = (width/20);
       Text.text = "▶ 戻る";
@@ -1520,7 +1524,6 @@ function Load(width,height){
           Scene_loads(c,true,false);
         }
       });//進む
-
       return scene;
     }
     var ItemScene = function(Number,Ig){

@@ -206,7 +206,7 @@
     Number = Item+Number;
     R_S(Number,Number+"_3");
     T_Name = "聖ヶ丘";
-    Text = "「お？つきつけるかい？(改行) あの噂は本当だったんだな。」";
+    Text = "「お？つきつけるかい？(改行)あの噂は本当だったんだな。」";
     After = Number+"_2";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip,"0600,0250,15",1];
     Scene_type = "アイテム";
@@ -315,7 +315,7 @@
     break;
     case 7:
     T_Name = Name;
-    Text = "「所長、"+Person+"に用件があるとお聞きしたのですが(改行) 一体何の御用でしょう？」";
+    Text = "「所長、"+Person+"に用件があるとお聞きしたのですが(改行)一体何の御用でしょう？」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -327,13 +327,13 @@
     break;
     case 9:
     T_Name = "聖ヶ丘";
-    Text = "「うむ、その前に(改行) 埼律君の担当していた事件は知っているかね？」";
+    Text = "「うむ、その前に(改行)埼律君の担当していた事件は知っているかね？」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 10:
     T_Name = Name;
-    Text = "「はい、"+Person+"も先輩の手伝いで(改行) 資料を纏めていたので知ってはいますが」";
+    Text = "「はい、"+Person+"も先輩の手伝いで(改行)資料を纏めていたので知ってはいますが」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -375,13 +375,13 @@
     break;
     case 17:
     T_Name = Name;
-    Text = "「御言葉ですが……(改行) その、先輩はどうなさったのですか？」";
+    Text = "「御言葉ですが……(改行)その、先輩はどうなさったのですか？」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 18:
     T_Name = "聖ヶ丘";
-    Text = "「驚くのも無理はないが、(改行) 彼女は先日入院してしまってね」";
+    Text = "「驚くのも無理はないが、(改行)彼女は先日入院してしまってね」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -399,7 +399,7 @@
     break;
     case 21:
     T_Name = "聖ヶ丘";
-    Text = "「ああ、そんなに心配する事はないよ。(改行) ただの食べ過ぎによる急性胃腸炎だそうだ」";
+    Text = "「ああ、そんなに心配する事はないよ。(改行)ただの食べ過ぎによる急性胃腸炎だそうだ」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -411,19 +411,19 @@
     break;
     case 23:
     T_Name = Name;
-    Text = "(ああ、なるほどそう言えば週末(改行) わんこそばに挑戦するとかいってたけど(改行) そんなになるまで食べるとは……)";
+    Text = "(ああ、なるほどそう言えば週末(改行)わんこそばに挑戦するとかいってたけど(改行)そんなになるまで食べるとは……)";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 24:
     T_Name = "聖ヶ丘";
-    Text = "「他のメンバーも全員出払っていて(改行) 手の空いているのが君しかいないのだよ。(改行) 君はこの事件のあらましも知っていることだし(改行) 引き受けてくれないか？」";
+    Text = "「他のメンバーも全員出払っていて(改行)手の空いているのが君しかいないのだよ。(改行)君はこの事件のあらましも知っていることだし(改行)引き受けてくれないか？」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 25:
     T_Name = Name;
-    Text = "「確かに少しは知っておりますが、(改行) その、宜しいのですか？」";
+    Text = "「確かに少しは知っておりますが、(改行)その、宜しいのですか？」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -435,13 +435,13 @@
     break;
     case 27:
     T_Name = "聖ヶ丘";
-    Text = "「気にすることはないよ。(改行) 君は優秀だと聞いているし私の聞いたところこの事件、(改行) 勝そうだ。それに後のことは此方で(改行) キッチリフォローするから思うようにやってみたまえ」";
+    Text = "「気にすることはないよ。(改行)君は優秀だと聞いているし私の聞いたところこの事件、(改行)勝そうだ。それに後のことは此方で(改行)キッチリフォローするから思うようにやってみたまえ」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 28:
     T_Name = Name;
-    Text = "「わ、判りました。(改行) それでは準備に取りかかりますので失礼いたします」";
+    Text = "「わ、判りました。(改行)それでは準備に取りかかりますので失礼いたします」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -542,7 +542,7 @@
     break;
     case 41:
     T_Name = "？？？";
-    Text = "「仕方ないでしょう。(改行) ストーリーの進行が遅いのだから。」";
+    Text = "「仕方ないでしょう。(改行)ストーリーの進行が遅いのだから。」";
     Datas = ["right",0,0,0,0,0,5,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -560,7 +560,7 @@
     break;
     case 44:
     T_Name = "裁判長";
-    Text = "「仕方ありませぬな。(改行) 検察側は適当に過ごしておくように。」";
+    Text = "「仕方ありませぬな。(改行)検察側は適当に過ごしておくように。」";
     Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -578,7 +578,7 @@
     break;
     case 47:
     T_Name = "？？？";
-    Text = "「いいのよ。(改行) 本編逆転裁判だって実質証人との対決だしね。」";
+    Text = "「いいのよ。(改行)本編逆転裁判だって実質証人との対決だしね。」";
     Datas = ["right",0,0,0,0,0,5,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -633,19 +633,19 @@
     break;
     case 56:
     T_Name = "？？？";
-    Text = "「あなただって、名前欄【？？？】じゃないですか。(改行) それに、逆転裁判1でのみ御剣検事は(改行) 証人に名前を聞くのが苦手って設定があるんですよ。」";
+    Text = "「あなただって、名前欄【？？？】じゃないですか。(改行)それに、逆転裁判1でのみ御剣検事は(改行)証人に名前を聞くのが苦手って設定があるんですよ。」";
     Datas = ["stand",0,0,0,6,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 57:
     T_Name = "？？？";
-    Text = "「そんな感じがしない2,3が発売された後の(改行) 蘇る逆転でも何故かあるっぽい謎の設定です。」";
+    Text = "「そんな感じがしない2,3が発売された後の(改行)蘇る逆転でも何故かあるっぽい謎の設定です。」";
     Datas = ["stand",0,0,0,6,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 58:
     T_Name = "？？？";
-    Text = "「関係ないでしょうそんなこと…。(改行) まあ人物欄はあるしいいか。」";
+    Text = "「関係ないでしょうそんなこと…。(改行)まあ人物欄はあるしいいか。」";
     Datas = ["right",0,0,0,0,0,5,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -663,7 +663,7 @@
     break;
     case 61:
     T_Name = "？？？";
-    Text = "「たぶんそうよ。自信はないけどね。(改行) 根拠としては3に出てくる店のチラシがでてくるわ。」";
+    Text = "「たぶんそうよ。自信はないけどね。(改行)根拠としては3に出てくる店のチラシがでてくるわ。」";
     Datas = ["stand",0,0,0,6,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -675,7 +675,7 @@
     break;
     case 63:
     T_Name = "？？？";
-    Text = "「ふーん。(改行) とりあえず尋問しましょうか。」";
+    Text = "「ふーん。(改行)とりあえず尋問しましょうか。」";
     Datas = ["right",0,0,0,0,0,5,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -708,7 +708,7 @@
     break;
     case 69:
     T_Name = Name;
-    Text = "「今あなたウインクしたじゃないですか！(改行) そんな画像が用意できるなら…。」";
+    Text = "「今あなたウインクしたじゃないですか！(改行)そんな画像が用意できるなら…。」";
     Datas = ["left",0,S_image,0,0,0,0,0,T_Name,Text,Rewind,67,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -723,7 +723,7 @@
     break;
     case 72:
     T_Name = "？？？";
-    Text = "「そんなの作者の趣味でしょう？(改行) 事件には関係ないわ！」";
+    Text = "「そんなの作者の趣味でしょう？(改行)事件には関係ないわ！」";
     Datas = ["right",0,0,0,0,0,5,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -747,7 +747,7 @@
     break;
     case 76:
     T_Name = "？？？";
-    Text = "「面倒だからね。サーバルちゃんの(改行) \"すっごーい\"なら用意してもいいわよ。」";
+    Text = "「面倒だからね。サーバルちゃんの(改行)\"すっごーい\"なら用意してもいいわよ。」";
     Datas = ["right",0,0,0,0,0,5,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -942,31 +942,31 @@
     break;
     case 20002:
     T_Name = "埼律 美智子";
-    Text = "「いやー、おせちにお雑煮、(改行) お正月は美味しいものがたくさんあってまいるねぇ」";
+    Text = "「いやー、おせちにお雑煮、(改行)お正月は美味しいものがたくさんあってまいるねぇ」";
     Datas = [1,0,S_image,15,0,0,10,15,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 20003:
     T_Name = Name;
-    Text = "「先輩…食べ過ぎて鏡餅みたいになるくらいなら(改行) 結構ですけど、前みたいなことはゴメンですよ？」";
+    Text = "「先輩…食べ過ぎて鏡餅みたいになるくらいなら(改行)結構ですけど、前みたいなことはゴメンですよ？」";
     Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 20004:
     T_Name = Name;
-    Text = "「初めての裁判が殺人事件で(改行) こっちは大変だったんですから。」";
+    Text = "「初めての裁判が殺人事件で(改行)こっちは大変だったんですから。」";
     Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 20005:
     T_Name = "美智子";
-    Text = "「まあまあ。(改行) でも、初めてであんな裁判をやってのけたんだから(改行) これから依頼がわんさかくるんじゃない？」";
+    Text = "「まあまあ。(改行)でも、初めてであんな裁判をやってのけたんだから(改行)これから依頼がわんさかくるんじゃない？」";
     Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 20006:
     T_Name = Name;
-    Text = "「まさか。そんな単純に(改行) 行くわけないじゃないですか。」";
+    Text = "「まさか。そんな単純に(改行)行くわけないじゃないですか。」";
     Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1042,7 +1042,7 @@
     case "つきつける弁護士バッジ20009":
     R_S(Number,"つきつける弁護士バッジ20009_3");
     T_Name = "聖ヶ丘";
-    Text = "「お？つきつけるかい？(改行) あの噂は本当だったんだな。」";
+    Text = "「お？つきつけるかい？(改行)あの噂は本当だったんだな。」";
     After = "つきつける弁護士バッジ20009_2";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
@@ -1096,7 +1096,7 @@
     case "つきつける弁護士バッジ20009_5":
     R_S(Number,20009);
     T_Name = "聖ヶ丘";
-    Text = "「弁護士バッジをつきつけたがる弁護士は優秀(改行) っていう噂だよ。」";
+    Text = "「弁護士バッジをつきつけたがる弁護士は優秀(改行)っていう噂だよ。」";
     After = "つきつける弁護士バッジ20009_5.1";
     Datas = [1,0,10,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
@@ -1112,7 +1112,7 @@
     break;
     case "つきつける弁護士バッジ20009_5.2":
     T_Name = Name;
-    Text = "(その前に先輩は弁護士バッジを(改行) もっと綺麗にした方がいいと思うが…)";
+    Text = "(その前に先輩は弁護士バッジを(改行)もっと綺麗にした方がいいと思うが…)";
     Before = "つきつける弁護士バッジ20009_5.1";
     After = 20009;
     Skip = 0;
@@ -1122,7 +1122,7 @@
     case "つきつける弁護士バッジ20009_6":
     R_S(Number,20009);
     T_Name = Name;
-    Text = "「ある人の身の上や、(改行) 物事についての確実でない話のことですよ。」";
+    Text = "「ある人の身の上や、(改行)物事についての確実でない話のことですよ。」";
     After = "つきつける弁護士バッジ20009_6.1";
     Datas = [1,0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
@@ -1138,7 +1138,7 @@
     break;
     case "つきつける弁護士バッジ20009_6.2":
     T_Name = "聖ヶ丘";
-    Text = "「弁護士バッジをつきつけたがる弁護士は優秀(改行) っていう噂だったんだが…嘘かもしれないな。」";
+    Text = "「弁護士バッジをつきつけたがる弁護士は優秀(改行)っていう噂だったんだが…嘘かもしれないな。」";
     Before = "つきつける弁護士バッジ20009_6.1";
     After = 20009;
     Skip = 0;
@@ -1169,7 +1169,7 @@
     break;
     case 20012:
     T_Name = "聖ヶ丘";
-    Text = "「ああ、実はな"+Surname+"君。(改行) 君に弁護の依頼が来ているのだ。」";
+    Text = "「ああ、実はな"+Surname+"君。(改行)君に弁護の依頼が来ているのだ。」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1197,7 +1197,7 @@
     R_S(Number,20010);
     Get_I_C_F("フラグ","依頼人について");
     T_Name = "聖ヶ丘";
-    Text = "「依頼人は瀬名 翼というらしい。(改行) 君の友人だそうだね？」";
+    Text = "「依頼人は瀬名 翼というらしい。(改行)君の友人だそうだね？」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1209,7 +1209,7 @@
     break;
     case 20018:
     T_Name = "聖ヶ丘";
-    Text = "「留置所で待ってるそうだから、(改行) 詳しい話は本人に聞くといい。」";
+    Text = "「留置所で待ってるそうだから、(改行)詳しい話は本人に聞くといい。」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1221,7 +1221,7 @@
     break;
     case 20020:
     T_Name = "聖ヶ丘";
-    Text = "「それと、今回の事件は難しいだろうから、(改行) 埼律君もサポートを頼むよ。」";
+    Text = "「それと、今回の事件は難しいだろうから、(改行)埼律君もサポートを頼むよ。」";
     Datas = [1,0,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1261,7 +1261,7 @@
     break;
     case 20024:
     T_Name = "美智子";
-    Text = "「おや？面会に沢山の(改行) 女の子が来てるみたいだね。」";
+    Text = "「おや？面会に沢山の(改行)女の子が来てるみたいだね。」";
     Datas = ["留置所",0,10,15,0,0,S_image,15,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1273,31 +1273,31 @@
     break;
     case 20026:
     T_Name = "美智子";
-    Text = "「まあ、そんなことより瀬名さんって(改行) どんな人なのさ？」";
+    Text = "「まあ、そんなことより瀬名さんって(改行)どんな人なのさ？」";
     Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 20027:
     T_Name = Name;
-    Text = "「中学の時の知り合いなんですが、(改行) その頃からドレスの作成に興味があって、(改行) 今では自分のブランドを持ってたと思いますよ。」";
+    Text = "「中学の時の知り合いなんですが、(改行)その頃からドレスの作成に興味があって、(改行)今では自分のブランドを持ってたと思いますよ。」";
     Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 20028:
     T_Name = "美智子";
-    Text = "「そうなんだ、すごいじゃん！(改行) ちなみに、なんてブランドなの？」";
+    Text = "「そうなんだ、すごいじゃん！(改行)ちなみに、なんてブランドなの？」";
     Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 20029:
     T_Name = Name;
-    Text = "「たしか…(改行) “Dreamy Crown”だったかな？」";
+    Text = "「たしか…(改行)“Dreamy Crown”だったかな？」";
     Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 20030:
       T_Name = "美智子";
-      Text = "「え！？ドリーミークラウン！？(改行) それってあかりちゃんのドレスのブランドだよね！？(改行) "+Surname+"君そんなすごい人と友達だったの？」";
+      Text = "「え！？ドリーミークラウン！？(改行)それってあかりちゃんのドレスのブランドだよね！？(改行)"+Surname+"君そんなすごい人と友達だったの？」";
       Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
       Scene_type = "メイン";
       break;
@@ -1309,13 +1309,13 @@
         break;
         case 20032:
           T_Name = "美智子";
-          Text = "「何言ってんのさ。(改行) 大空あかりちゃんと言えば(改行) スターライトクイーンだよ？」";
+          Text = "「何言ってんのさ。(改行)大空あかりちゃんと言えば(改行)スターライトクイーンだよ？」";
           Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
           Scene_type = "メイン";
           break;
           case 20033:
             T_Name = "美智子";
-            Text = "「君だって、”大空お天気”(改行) くらいはみたことがあるんじゃない？」";
+            Text = "「君だって、”大空お天気”(改行)くらいはみたことがあるんじゃない？」";
             Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
             Scene_type = "メイン";
             break;
@@ -1327,7 +1327,7 @@
               break;
               case 20035:
                 T_Name = "美智子";
-                Text = "「これは是が非でも無罪にして、(改行) お礼にドレスを作ってもらわないとね。」";
+                Text = "「これは是が非でも無罪にして、(改行)お礼にドレスを作ってもらわないとね。」";
                 Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
                 Scene_type = "メイン";
                 break;
@@ -1339,13 +1339,13 @@
             break;
             case 20037:
               T_Name = "美智子";
-              Text = "「ところで、ドリーミークラウンのデザイナーさんは(改行) 人里離れた湖畔でデザインをしてるって(改行) テレビであかりちゃんが言ってたけど？」";
+              Text = "「ところで、ドリーミークラウンのデザイナーさんは(改行)人里離れた湖畔でデザインをしてるって(改行)テレビであかりちゃんが言ってたけど？」";
               Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
               Scene_type = "メイン";
               break;
               case 20038:
                 T_Name = Name;
-                Text = "「そうなんですよ。(改行) そんなに人付き合いをする奴でもなかったし、(改行) 一体何の罪で…。」";
+                Text = "「そうなんですよ。(改行)そんなに人付き合いをする奴でもなかったし、(改行)一体何の罪で…。」";
                 Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
                 Scene_type = "メイン";
                 break;
@@ -1358,7 +1358,7 @@
                   case 20040:
                     T_Name = Name;
                     Get_I_C_F("人物","瀬名 翼","Dreamy Crown のデザイナー。(改行)瀬名翼の画像をアップすると(改行)近い構図の春日が送られてくる(改行)Twitterが存在して笑った。",4)
-                    Text = "「あっ、瀬名。(改行) なんだ、てっきりお前が捕まったのかと思ったぞ。」";
+                    Text = "「あっ、瀬名。(改行)なんだ、てっきりお前が捕まったのかと思ったぞ。」";
                     Datas = ["留置所",0,S_image,0,0,0,18,0,T_Name,Text,Rewind,Before,Number,After,Skip];
                     Scene_type = "メイン";
                     break;
@@ -1370,7 +1370,7 @@
                       break;
                       case 20042:
                         T_Name = "美智子";
-                        Text = "「それはよかった。知り合いを弁護とか気が重いし(改行) "+Surname+"君がもし弁護に失敗しても(改行) ドリーミークラウンはなくならいないわけね。」";
+                        Text = "「それはよかった。知り合いを弁護とか気が重いし(改行)"+Surname+"君がもし弁護に失敗しても(改行)ドリーミークラウンはなくならいないわけね。」";
                         Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
                         Scene_type = "メイン";
                         break;
@@ -1388,13 +1388,13 @@
                 break;
                 case 20045:
                   T_Name = "美智子";
-                  Text = "「じゃあ、まずは被告人に面会したいところだけど…(改行) 人が多いわね。」";
+                  Text = "「じゃあ、まずは被告人に面会したいところだけど…(改行)人が多いわね。」";
                   Datas = ["留置所",0,10,0,0,0,18,0,T_Name,Text,Rewind,Before,Number,After,Skip];
                   Scene_type = "メイン";
                   break;
               case 20046:
                 T_Name = "瀬名";
-                Text = "「今、面会中の奴等は知り合いなんで、(改行) ちょっと声かけてきますよ。」";
+                Text = "「今、面会中の奴等は知り合いなんで、(改行)ちょっと声かけてきますよ。」";
                 Datas = ["留置所",0,10,0,0,0,18,0,T_Name,Text,Rewind,Before,Number,After,Skip];
                 Scene_type = "メイン";
                 break;
@@ -1436,7 +1436,7 @@
                             break;
                             case 20053:
                               T_Name = Name;
-                              Text = "「どうも。(改行) 弁護士の"+Surname+" "+Name+"です。」";
+                              Text = "「どうも。(改行)弁護士の"+Surname+" "+Name+"です。」";
                               Datas = ["留置所",0,S_image,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip,"0600,0250,15",1];
                               Scene_type = "メイン";
                               break;
@@ -1455,7 +1455,7 @@
                                   case 20056:
     T_Name = "氷上 スミレ";
     Get_I_C_F("人物","氷上 スミレ","スターライト学園のアイドル。(改行)通称ステージに咲く氷の花。",6);
-    Text = "「あ。えっと…(改行) 氷上 スミレです。」";
+    Text = "「あ。えっと…(改行)氷上 スミレです。」";
     Datas = ["留置所",0,S_image,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip,"0600,0250,15",3];
     Scene_type = "メイン";
     break;
@@ -1467,7 +1467,7 @@
     break;
     case 20058:
     T_Name = "？？？";
-    Text = "「スミレちゃん、前にタルト・タタンのステージで(改行) りんごを使うことになって、(改行) 慣れるためにいつも持ち歩いてたら(改行) 癖になっちゃったんです。」";
+    Text = "「スミレちゃん、前にタルト・タタンのステージで(改行)りんごを使うことになって、(改行)慣れるためにいつも持ち歩いてたら(改行)癖になっちゃったんです。」";
     Datas = ["留置所",0,S_image,0,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1491,7 +1491,7 @@
     break;
     case 20062:
     T_Name = "スミレ";
-    Text = "「こっちも何か見せないとダメかな、と思ったので…。(改行) 良かったらどうぞ。」";
+    Text = "「こっちも何か見せないとダメかな、と思ったので…。(改行)良かったらどうぞ。」";
     Datas = ["留置所",0,S_image,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip,"0600,0250,0",3];
     Scene_type = "メイン";
     break;
@@ -1552,13 +1552,13 @@
     break;
     case 20072:
     T_Name = "美智子";
-    Text = "「そして、スターライトクイーンの大空あかりちゃん！(改行) さっき話したでしょ！」";
+    Text = "「そして、スターライトクイーンの大空あかりちゃん！(改行)さっき話したでしょ！」";
     Datas = ["留置所",0,10,0,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 20073:
     T_Name = "美智子";
-    Text = "「この三人が組んでいるユニット。(改行) それがルミナスなのよ！」";
+    Text = "「この三人が組んでいるユニット。(改行)それがルミナスなのよ！」";
     Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1570,7 +1570,7 @@
     break;
     case 20075:
     T_Name = "美智子";
-    Text = "「まさかこんなところで会えるなんで…(改行) でもいったいどうして？」";
+    Text = "「まさかこんなところで会えるなんで…(改行)でもいったいどうして？」";
     Datas = ["留置所",0,10,0,0,0,21,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1582,7 +1582,7 @@
     break;
     case 20077:
     T_Name = "美智子";
-    Text = "「え！？そういえばさっきまどかって…。(改行) じゃあ今回の依頼人って天羽まどかちゃん？」";
+    Text = "「え！？そういえばさっきまどかって…。(改行)じゃあ今回の依頼人って天羽まどかちゃん？」";
     Datas = ["留置所",0,10,0,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1594,7 +1594,7 @@
     break;
     case 20079:
     T_Name = Name;
-    Text = "「なるほど…被告人はアイドルか…。(改行) それであんなにテレビカメラがいるのか。」";
+    Text = "「なるほど…被告人はアイドルか…。(改行)それであんなにテレビカメラがいるのか。」";
     Datas = ["留置所",0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1612,7 +1612,7 @@
     break;
     case 20082:
     T_Name = "美智子";
-    Text = "「早くまどかちゃんを出してあげないと。(改行) まどかちゃんが犯人のはずがない。(改行) ファンならみんなそういうわ。」";
+    Text = "「早くまどかちゃんを出してあげないと。(改行)まどかちゃんが犯人のはずがない。(改行)ファンならみんなそういうわ。」";
     Datas = ["留置所",0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1636,7 +1636,7 @@
     break;
     case 20086:
     T_Name = "美智子";
-    Text = "「…そう言われるとそんな気もするわね。(改行) まどかちゃん天使系で売ってるけど(改行) 実際小悪魔系だし。」";
+    Text = "「…そう言われるとそんな気もするわね。(改行)まどかちゃん天使系で売ってるけど(改行)実際小悪魔系だし。」";
     Datas = ["留置所",0,10,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1648,7 +1648,7 @@
     break;
     case 20088:
     T_Name = "？？？";
-    Text = "「ちょっと！(改行) ひどいじゃないですか！」";
+    Text = "「ちょっと！(改行)ひどいじゃないですか！」";
     Datas = ["留置所",0,10,0,22,15,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
@@ -1726,14 +1726,14 @@
     break;
     case 20097:
     T_Name = "まどか";
-    Text = "「天羽です。(改行) というか、まどかちゃんでいいですよ。」";
+    Text = "「天羽です。(改行)というか、まどかちゃんでいいですよ。」";
     Datas = ["留置所",0,S_image,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case 20098:
-    T_Name = "テスト";
-    Text = "一二三四五六七八九零一二三四五六七八九零";
-    Datas = ["留置所",0,S_image,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+    T_Name = "？？？";
+    Text = "「見つからないので(改行)留置所自分で描きました。(改行)サイズも変更したので(改行)操作しやすくなったんじゃない？」";
+    Datas = ["留置所",0,0,0,5,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
     Scene_type = "メイン";
     break;
     case "つきつけるりんご20094":
@@ -1763,7 +1763,7 @@
     break;
     case "つきつけるりんご20094_4":
     T_Name = Name;
-    Text = "「手に入れたアイテムは(改行) すぐ使ってみたくなる性分なもので。」";
+    Text = "「手に入れたアイテムは(改行)すぐ使ってみたくなる性分なもので。」";
     Before = "つきつけるりんご20094_3";
     After = "つきつけるりんご20094_5";
     Datas = ["留置所",0,S_image,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip,"0900,0250,0",3];
@@ -1797,7 +1797,7 @@
     break;
     case "つきつける弁護士バッジ20094_3":
     T_Name = "美智子";
-    Text = "「この行為には何の意味もないけどね。(改行) 見て弁護士バッジだってわかる人少ないし。」";
+    Text = "「この行為には何の意味もないけどね。(改行)見て弁護士バッジだってわかる人少ないし。」";
     Before = "つきつける弁護士バッジ20094_2";
     After = "つきつける弁護士バッジ20094_4";
     Datas = ["留置所",0,10,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
@@ -1813,7 +1813,7 @@
     break;
     case "つきつける弁護士バッジ20094_5":
     T_Name = Name;
-    Text = "「まどかちゃんはどう？(改行) 学生証とか、あんまり使ってないんじゃない？」";
+    Text = "「まどかちゃんはどう？(改行)学生証とか、あんまり使ってないんじゃない？」";
     Before = "つきつける弁護士バッジ20094_4";
     After = "つきつける弁護士バッジ20094_6";
     Datas = ["留置所",0,S_image,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
@@ -1821,7 +1821,7 @@
     break;
     case "つきつける弁護士バッジ20094_6":
     T_Name = "まどか";
-    Text = "「アイカツシステムの起動に必要なので、(改行) ライブのたびに使ってますね。」";
+    Text = "「アイカツシステムの起動に必要なので、(改行)ライブのたびに使ってますね。」";
     Before = "つきつける弁護士バッジ20094_5";
     After = "つきつける弁護士バッジ20094_7";
     Datas = ["留置所",0,S_image,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
@@ -1879,7 +1879,7 @@
     break;
     case "調べる20094ガラスの穴6":
     T_Name = "美智子";
-    Text = "「トンネルを掘る道具よ。(改行) わからなかったらすぐ調べなさい！(改行) 現代っ子の常識でしょう。」";
+    Text = "「トンネルを掘る道具よ。(改行)わからなかったらすぐ調べなさい！(改行)現代っ子の常識でしょう。」";
     Before = "調べる20094ガラスの穴5";
     After = "調べる20094ガラスの穴7";
     Datas = ["留置所",0,10,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
@@ -1904,7 +1904,7 @@
     break;
     case "調べる20094椅子2":
     T_Name = "まどか";
-    Text = "「長時間座ることが多いからでしょうか。(改行) かなりいいですよ。」";
+    Text = "「長時間座ることが多いからでしょうか。(改行)かなりいいですよ。」";
     Rewind = 0;
     Before = "調べる20094椅子";
     After = "調べる20094椅子3";
@@ -1913,7 +1913,7 @@
     break;
     case "調べる20094椅子3":
     T_Name = Name;
-    Text = "「やっぱり そうなんだ。(改行) 一度座ってみたいなぁ」";
+    Text = "「やっぱり そうなんだ。(改行)一度座ってみたいなぁ」";
     Before = "調べる20094椅子2";
     After = "調べる20094椅子4";
     Datas = ["留置所",0,S_image,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
@@ -1921,7 +1921,7 @@
     break;
     case "調べる20094椅子4":
     T_Name = "まどか";
-    Text = "「あかり先輩のライブに銃を持って乱入とかしたら(改行) すぐに座れると思いますよ。」";
+    Text = "「あかり先輩のライブに銃を持って乱入とかしたら(改行)すぐに座れると思いますよ。」";
     Before = "調べる20094椅子3";
     After = "調べる20094椅子5";
     Datas = ["留置所",0,S_image,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
@@ -1929,7 +1929,7 @@
     break;
     case "調べる20094椅子5":
     T_Name = Name;
-    Text = "「…それだと、(改行) 刑務所の住み心地も知る羽目になるからやだよ。」";
+    Text = "「…それだと、(改行)刑務所の住み心地も知る羽目になるからやだよ。」";
     Before = "調べる20094椅子4";
     After = "調べる20094椅子6";
     Datas = ["留置所",0,S_image,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
