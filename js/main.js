@@ -1437,9 +1437,10 @@ function Load(width,height){
 
       var Touchs = Class.create(Sprite, {
         initialize: function(x,y,width,height,Number){
-          Sprite.call(this,width,height);
-          this.x = x;
-          this.y = y;
+          Sprite.call(this,width*Background.scaleX,height*Background.scaleY);
+          console.log(width);
+          this.x = x*Background.scaleX;
+          this.y = y*Background.scaleY;
           this.image = core.assets["image/背景/透明.png"];
           scene.addChild(this);
           this.addEventListener('touchstart',function(e){

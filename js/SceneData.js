@@ -1006,7 +1006,7 @@ function Scene_loads2(Number,Item,get){
       Scene_type = "チョイス";
       break;
       case "調べる20009ゴミ箱":
-        R_S(Number,"調べる20009ゴミ箱5");
+        R_S(Number,"調べる");
         T_Name = Name;
         Text = "「先輩の食べたおやつのゴミで散らかっている。」";
         After = "調べる20009ゴミ箱2";
@@ -1043,7 +1043,7 @@ function Scene_loads2(Number,Item,get){
         T_Name = "美智子";
         Text = "「………」";
         Before = "調べる20009ゴミ箱4";
-        After = "調べる";
+        After = Skip;
         Skip = 0;
         Datas = [1,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
         Scene_type = "メイン";
