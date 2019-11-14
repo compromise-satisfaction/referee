@@ -28,22 +28,19 @@ function Load(width,height){
   core.preload("image/背景/裁判長.png");
   core.preload("image/背景/留置所.png");
   core.preload("image/Background.png");
-  core.preload("image/Trophies_image.png");
   core.preload("image/背景/透明.png");
+
   for (var i = 1; i <= 2; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 4; i++){
-    core.preload("image/アイテム/"+i+".png");
+  for (var i = 1; i <= 13; i++){
+    core.preload("image/正方形/"+i+".png");
   }
   for (var i = 1; i <= 22; i++){
     core.preload("image/人物/"+i+".png");
   }
   for (var i = 0; i <= 1; i++){
     core.preload("image/アイテム詳細/"+i+".png");
-  }
-  for (var i = 1; i <= 8; i++){
-    core.preload("image/人物/詳細/"+i+".png");
   }
   core.fps = 100;
   core.onload = function(){
@@ -480,12 +477,12 @@ function Load(width,height){
       }
 
       if(Datas[15]!=undefined&&Datas[15]!=false){
-        var xxx = core.assets["image/アイテム/"+Datas[16]+".png"].width;
-        var yyy = core.assets["image/アイテム/"+Datas[16]+".png"].height;
+        var xxx = core.assets["image/正方形/"+Datas[16]+".png"].width;
+        var yyy = core.assets["image/正方形/"+Datas[16]+".png"].height;
         var Item = new Sprite(xxx,yyy);
         Item.scaleX = ((width/4)/xxx);
         Item.scaleY = ((width/4)/yyy);
-        Item.image = core.assets["image/アイテム/"+Datas[16]+".png"];
+        Item.image = core.assets["image/正方形/"+Datas[16]+".png"];
         Item.x = ((Item.scaleX*xxx/2)-xxx/2)+Datas[15].substring(0,4)*(width/1600);
         Item.y = ((Item.scaleY*yyy/2)-yyy/2)+Datas[15].substring(5,9)*(width/16/100);
         if(Return!=true&&Datas[15].substring(11,12)*1!=0){
@@ -544,9 +541,17 @@ function Load(width,height){
       }
 
 
+      if(Text[0].text.substring(0,1)=="「"&&Text[i-1].text.substring(Text[i-1].text.length-1)=="」"){
+        for (var i = 1; i < Text.length; i++) {
+          Text[i].text = "　" + Text[i].text;
+        }
+      }
+
       if(Text[0].text.substring(0,1)=="("&&Text[i-1].text.substring(Text[i-1].text.length-1)==")"){
         for (var i = 0; i < Text.length; i++) {
           Text[i].color = "blue";
+          if(i==0) continue;
+          Text[i].text = " " + Text[i].text;
         }
       }
 
@@ -636,39 +641,46 @@ function Load(width,height){
         if(window.localStorage.getItem(Datas[17])==undefined){
           if(Datas[12]>0) window.localStorage.setItem(Datas[17],"獲得！");
           var Time = 0;
-          var Trophies = new Sprite(443,113);
+          var xxx = core.assets["image/Trophies.png"].width;
+          var yyy = core.assets["image/Trophies.png"].height;
+          var Trophies = new Sprite(xxx,yyy);
           Trophies.image = core.assets["image/Trophies.png"];
-          Trophies.x = width-463;
-          Trophies.y = 20;
+          Trophies.scaleX = ((width/3.61)/xxx);
+          Trophies.scaleY = (((width/14.15))/yyy);//ココが変換した場所
+          Trophies.x = (Trophies.scaleX*xxx/2)-xxx/2+(width-(width/3.5));
+          Trophies.y = (Trophies.scaleY*yyy/2)-yyy/2+(width/80);
           Trophies.opacity = 0;
-          Trophies.tl.fadeIn(5);
+          Trophies.tl.fadeIn(50);
           scene.addChild(Trophies);
-          var Trophies_image = new Sprite(88,85);
-          Trophies_image.image = core.assets["image/Trophies_image.png"];
-          Trophies_image.x = width-453;
-          Trophies_image.y = 35;
-          Trophies_image.frame = Datas[18];
+          var xxx = core.assets["image/正方形/"+Datas[18]+".png"].width;
+          var yyy = core.assets["image/正方形/"+Datas[18]+".png"].height;
+          var Trophies_image = new Sprite(xxx,yyy);
+          Trophies_image.image = core.assets["image/正方形/"+Datas[18]+".png"];
+          Trophies_image.scaleX = ((width/18.82)/xxx);
+          Trophies_image.scaleY = ((width/18.82)/yyy);
+          Trophies_image.x = (Trophies_image.scaleX*xxx/2)-xxx/2+(width-(width/3.6));
+          Trophies_image.y = (Trophies_image.scaleY*yyy/2)-yyy/2+(width/50);
           Trophies_image.opacity = 0;
-          Trophies_image.tl.fadeIn(5);
+          Trophies_image.tl.fadeIn(50);
           scene.addChild(Trophies_image);
           var Trophies_text = new Label();
-          Trophies_text.font  = (width/20)+"px monospace";
+          Trophies_text.font  = (width/40)+"px monospace";
           Trophies_text.color = 'white';
-          Trophies_text.x = width-453+145;
-          Trophies_text.y = 90;
+          Trophies_text.x = (width-(width/5));
+          Trophies_text.y = (width/28)+(width/80);
           Trophies_text.width = width;
-          Trophies_text.height = 30;
+          Trophies_text.height = (width/40);
           Trophies_text.opacity = 0;
-          Trophies_text.tl.fadeIn(5);
+          Trophies_text.tl.fadeIn(50);
           Trophies_text.text = Datas[17];
           scene.addChild(Trophies_text);
           Sound_ON("Trophies",true);
           Trophies.addEventListener("enterframe",function(){
             Time++;
-            if(Time==50){
-              Trophies.tl.fadeOut(5);
-              Trophies_image.tl.fadeOut(5);
-              Trophies_text.tl.fadeOut(5);
+            if(Time==200){
+              Trophies.tl.fadeOut(50);
+              Trophies_image.tl.fadeOut(50);
+              Trophies_text.tl.fadeOut(50);
             }
           })
         }
@@ -967,7 +979,7 @@ function Load(width,height){
           this.width = width;
           this.height = (width/20);
           this.text = a;
-          if(a.substring(0,1)=="("&&a.substring(a.length-1)==")") this.color = "blue";
+          this.color = "green";
           scene.addChild(this);
         }
       });
@@ -1484,12 +1496,12 @@ function Load(width,height){
       Enter1.frame = 5;
       scene.addChild(Enter1);
 
-      var xxx = core.assets["image/アイテム/"+a+".png"].width;
-      var yyy = core.assets["image/アイテム/"+a+".png"].height;
+      var xxx = core.assets["image/正方形/"+a+".png"].width;
+      var yyy = core.assets["image/正方形/"+a+".png"].height;
       var Item = new Sprite(xxx,yyy);
       Item.scaleX = ((width/2)/xxx);
       Item.scaleY = ((width/2)/yyy);
-      Item.image = core.assets["image/アイテム/"+a+".png"];
+      Item.image = core.assets["image/正方形/"+a+".png"];
       var X_0 = (Item.scaleX*xxx/2)-xxx/2;
       var Y_0 = (Item.scaleY*yyy/2)-yyy/2;
       Item.x = X_0 + width;
@@ -1673,12 +1685,12 @@ function Load(width,height){
 
       var Item_image = Class.create(Sprite,{
           initialize: function(a) {
-              var xxx = core.assets["image/アイテム/"+a+".png"].width;
-              var yyy = core.assets["image/アイテム/"+a+".png"].height;
+              var xxx = core.assets["image/正方形/"+a+".png"].width;
+              var yyy = core.assets["image/正方形/"+a+".png"].height;
               Sprite.call(this,xxx,yyy);
               this.scaleX = ((width/4)/xxx);
               this.scaleY = ((width/4)/yyy);
-              this.image = core.assets["image/アイテム/"+a+".png"];
+              this.image = core.assets["image/正方形/"+a+".png"];
               this.x = (this.scaleX*xxx/2)-xxx/2+(width/1.6);
               this.y = (this.scaleY*yyy/2)-yyy/2+(width/4)+(width/20)+(width/25);
           }
@@ -2015,12 +2027,12 @@ function Load(width,height){
 
       var Character_image = Class.create(Sprite,{
           initialize: function(a) {
-              var xxx = core.assets["image/人物/詳細/"+a+".png"].width;
-              var yyy = core.assets["image/人物/詳細/"+a+".png"].height;
+              var xxx = core.assets["image/正方形/"+a+".png"].width;
+              var yyy = core.assets["image/正方形/"+a+".png"].height;
               Sprite.call(this,xxx,yyy);
               this.scaleX = ((width/4)/xxx);
               this.scaleY = ((width/4)/yyy);
-              this.image = core.assets["image/人物/詳細/"+a+".png"];
+              this.image = core.assets["image/正方形/"+a+".png"];
               this.x = (this.scaleX*xxx/2)-xxx/2+(width/1.6);
               this.y = (this.scaleY*yyy/2)-yyy/2+(width/4)+(width/20)+(width/25);
           }
