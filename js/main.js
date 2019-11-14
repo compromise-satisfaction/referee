@@ -30,13 +30,13 @@ function Load(width,height){
   core.preload("image/Background.png");
   core.preload("image/背景/透明.png");
 
-  for (var i = 1; i <= 2; i++){
+  for (var i = 1; i <= 4; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 13; i++){
+  for (var i = 1; i <= 15; i++){
     core.preload("image/正方形/"+i+".png");
   }
-  for (var i = 1; i <= 22; i++){
+  for (var i = 1; i <= 23; i++){
     core.preload("image/人物/"+i+".png");
   }
   for (var i = 0; i <= 1; i++){
@@ -45,6 +45,8 @@ function Load(width,height){
   core.fps = 100;
   core.onload = function(){
 
+    var XXX = width;
+    var YYY = width/16*9;
 
     function BGM_Stop(Pause){
       return;
@@ -95,6 +97,11 @@ function Load(width,height){
         case "アイテム":
           core.replaceScene(MainScene(false));
           break;
+          case "移動":
+            core.pushScene(MoveScene(30));
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+            break;
         case "調べる":
           if(Number.length>5){
             if(Number.substring(0,6)=="アイテム使用"){
@@ -322,7 +329,7 @@ function Load(width,height){
       var scene = new Scene();                                // 新しいシーンを作る
 
       var OK = true;
-
+      console.log(Datas[12]);
       if(Datas[12]!=false){
         if(Datas[12].length>1){
           if(Datas[12].substring(0,2)=="使う") OK = false;
@@ -687,11 +694,58 @@ function Load(width,height){
       }//トロフィー*/
       return scene;
     };
+    var MoveScene = function(Out){
+      var scene = new Scene();                                // 新しいシーンを作る
+
+      var xxx = core.assets["image/背景/Black.png"].width;
+      var yyy = core.assets["image/背景/Black.png"].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = width/xxx;
+      Background.scaleY = width/16*9/yyy;
+      Background.image = core.assets["image/背景/Black.png"];
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
+      if(Out!=0){
+        if(Out>0){
+            Background.opacity = 0;
+            Background.tl.fadeIn(Out);
+        }
+        else{
+            Background.tl.fadeOut(Out*-1);
+        }
+      }
+      scene.addChild(Background);//背景
+
+      var Background2 = new Sprite(width,height-(width/16)*9);
+      Background2.image = core.assets["image/white.png"];
+      Background2.x = 0;
+      Background2.y = (width/16)*9;
+      scene.addChild(Background2);//白地
+
+      Background.addEventListener("enterframe",function(){
+        if(Background.opacity == 1 && Out>0){
+          core.popScene();
+          Scene_kazu--;
+          console.log("Scene数",Scene_kazu);
+          Scene_loads(Moves,false,false);
+          core.pushScene(MoveScene(-30));
+          Scene_kazu++;
+          console.log("Scene数",Scene_kazu);
+        }
+        if(Background.opacity == 0 && Out<0){
+          core.popScene();
+          Scene_kazu--;
+          console.log("Scene数",Scene_kazu);
+        }
+      })
+
+      return scene;
+    };
     var ChoiceScene = function(){
       var scene = new Scene();                                // 新しいシーンを作る
 
       var OK = true;
-
+      console.log(Datas[6]);
       if(Datas[6].length>1){
         if(Datas[6].substring(0,2)=="使う") OK = false;
         if(Datas[6].length>2){
@@ -1406,9 +1460,8 @@ function Load(width,height){
       });
 
       var Touchs = Class.create(Sprite, {
-        initialize: function(x,y,width,height,Number){
-          Sprite.call(this,width*Background.scaleX,height*Background.scaleY);
-          console.log(width);
+        initialize: function(x,y,width1,height1,Number){
+          Sprite.call(this,width1*width/1600,height1*width/1600);
           this.x = x*Background.scaleX;
           this.y = y*Background.scaleY;
           this.image = core.assets["image/背景/透明.png"];
@@ -1579,6 +1632,7 @@ function Load(width,height){
       Text21.width = width;
       Text21.height = (width/20);
       Text21.text = "▶ 人物";
+      scene.addChild(Text21);
 
       var Text3 = new Label();
       Text3.font  = (width/20)+"px monospace";
@@ -1669,7 +1723,6 @@ function Load(width,height){
       if(Text3.text==""){
         scene.addChild(Text8);
         scene.addChild(Text2);
-        scene.addChild(Text21);
         scene.addChild(Text3);
       }
       if(Ig){
@@ -1921,6 +1974,7 @@ function Load(width,height){
       Text21.width = width;
       Text21.height = (width/20);
       Text21.text = "▶ 持物";
+      scene.addChild(Text21);
 
       var Text3 = new Label();
       Text3.font  = (width/20)+"px monospace";
@@ -2011,7 +2065,6 @@ function Load(width,height){
       if(Text3.text==""){
         scene.addChild(Text8);
         scene.addChild(Text2);
-        scene.addChild(Text21);
         scene.addChild(Text3);
       }
       if(Ig){
