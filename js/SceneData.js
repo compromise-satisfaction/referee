@@ -27,9 +27,31 @@ if(Flag[i]==Item) return(true);
 return(false);
 }
 
-function Move(Number){
+function Move(Number,fade){
   Moves = Number;
   Scene_type = "移動";
+  if(fade) Scene_type = "フェードイン";
+}
+
+function Last(){
+  After = Skip;
+  Skip = 0;
+}
+
+function Flag_reset(){
+  var Flag2 = [];
+  Flag2[0] = Flag[0];
+  Flag2[1] = Flag[1];
+  Flag2[2] = Flag[2];
+  Flag2[8] = Flag[8];
+  Flag2[9] = Flag[9];
+  Flag2[10] = Flag[10];
+  Flag2[11] = Flag[11];
+  Flag2[12] = Flag[12];
+  Flag2[13] = Flag[13];
+  Flag2[14] = Flag[14];
+  Flag = Flag2;
+  Flag[6] = 10;
 }
 
 function Save(Number){
@@ -221,19 +243,7 @@ var S1 = 1.1;
 var S2 = 20001;
 Rewind = 0;
 Number = 0;
-var Flag2 = [];
-Flag2[0] = Flag[0];
-Flag2[1] = Flag[1];
-Flag2[2] = Flag[2];
-Flag2[8] = Flag[8];
-Flag2[9] = Flag[9];
-Flag2[10] = Flag[10];
-Flag2[11] = Flag[11];
-Flag2[12] = Flag[12];
-Flag2[13] = Flag[13];
-Flag2[14] = Flag[14];
-Flag = Flag2;
-Flag[6] = 10;
+Flag_reset();
 Datas = ["Black",0,0,0,Rewind,Before,Number,C1,S1,C2,S2];
 Scene_type = "チョイス";
 break;
@@ -901,7 +911,7 @@ break;
 case 20001:
 R_S(Number,20009);
 Get_ICF("アイテム","弁護士バッジ",Person+"の身分を(改行)証明してくれる、(改行)大切なバッジだ。",1);
-T_Name = "1月4日";
+T_Name = "1月4日 9時36分";
 Text = "聖ヶ丘法律事務所";
 Datas = [1,0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
@@ -1958,7 +1968,7 @@ if(have("事件現場へ")) Move(20155);
 break;
 case "地下スタジオへ移動":
 Move(20157);
-if(have("事件現場")) Move(20163);
+if(have("事件現場")) Move(20183);
 break;
 case "留置所へ移動":
 Move(20024);
@@ -2083,7 +2093,7 @@ Scene_type = "メイン";
 break;
 case 20152:
 T_Name = "ジョニー";
-Text = "「瀬名ウイングの？(改行)…なら問題ない。(改行)俺はちょっと用事があるから(改行)後のことは頼んだぜハニー達！」";
+Text = "「瀬名ウイングの？(改行)…ならノープロブレム！(改行)俺はちょっと用事があるから(改行)後のことは頼んだぜハニー達！」";
 Datas = [3,0,23,0,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
@@ -2156,43 +2166,198 @@ Datas = [3,0,0,0,Rewind,Before,Number,C1,S1,C2,S2,C3,S3,C4,S4];
 Scene_type = "チョイス";
 break;
 case 20157:
-R_S(Number,20163);
+R_S(Number,20183);
 T_Name = "同日 某時刻";
-Text = "地下スタジオ";
-Datas = [4,0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Text = "地下スタジオ前廊下";
+Datas = [5,0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
 case 20158:
 T_Name = Name;
-Text = "「さて、ついたな。」";
-Datas = [4,0,S_image,15,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Text = "「随分と主張の激しい(改行)立ち入り禁止だな。」";
+Datas = [5,0,S_image,15,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
 case 20159:
-T_Name = "あかり";
-Text = "「あれ？なんか変な場所がバミってあるよ？」";
-Datas = [4,0,S_image,0,0,0,19,15,T_Name,Text,Rewind,Before,Number,After,Skip];
+T_Name = "スミレ";
+Text = "「霧矢先輩によると、(改行)三ノ輪先輩はライブを邪魔されたり、(改行)練習を見られたりするのが嫌いだったらしいです。」";
+Datas = [5,0,S_image,0,0,0,20,15,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
 case 20160:
-T_Name = "スミレ";
-Text = "「あれはバミってるんじゃなくて(改行)遺体のあった場所のテープみたい。」";
-Datas = [4,0,20,15,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+T_Name = Name;
+Text = "「じゃ、今は別に入って問題ないってことだよな。」";
+Datas = [5,0,S_image,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
 case 20161:
+T_Name = "スタッフ";
+Text = "「あ、構いませんよ。」";
+Datas = [5,0,S_image,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20162:
+T_Name = Name;
+Text = "「あ、スタッフさんですか。」";
+Datas = [5,0,S_image,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20163:
+T_Name = "スタッフ";
+Text = "「はい。ただ、ここは飲食物持ち込み禁止なので、そのりんごはちょっと。」";
+Datas = [5,0,S_image,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20164:
+T_Name = Name;
+Text = "「そうなんですか。どうするかな」";
+Datas = [5,0,S_image,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20165:
+T_Name = "スタッフ";
+Text = "「よかったら、預かっておきますよ。」";
+Datas = [5,0,S_image,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20166:
+T_Name = Name;
+Text = "「あ、じゃあお願いします。」";
+Datas = [5,0,S_image,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20167:
+if(have("りんご")) Get_ICF("アイテム","りんご","書き換え","引換券");
+Get_ICF("アイテム","引換券","スタッフにりんごを(改行)預けたことを証明する券。(改行)地下ステージは飲食禁止らしい。",16);
+Scene_type = [16,"りんごを渡して引換券を受け取った。",20168];
+break;
+case 20168:
+T_Name = "(先輩)";
+Text = "「じゃあ入りましょうか。」";
+Before = 20166;
+Datas = [5,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20169:
+T_Name = Name;
+Text = "「でも、このドアカードキーを(改行)タッチして開けるタイプみたいですよ」";
+Datas = [5,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20170:
+T_Name = "(先輩)";
+Text = "「そこはコレでしょう。」";
+Datas = [5,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip,"0600,0250,15",5];
+Scene_type = "メイン";
+break;
+case 20171:
+T_Name = "";
+Text = "ピッ";
+Datas = [5,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip,"0600,0250,0",5];
+Scene_type = "メイン";
+break;
+case 20172:
+T_Name = "";
+Text = "ブブー";
+Datas = [5,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20173:
+T_Name = "(先輩)";
+Text = "「あれ？おかしいな。」";
+Datas = [5,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20174:
+T_Name = "スタッフ";
+Text = "「ああ、そこは限られた(改行)生徒さんしか入れないんですよ。(改行)でも、今は調査のためにロックをかけてないので(改行)手動で開きますよ。」";
+Datas = [5,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20175:
+T_Name = "(先輩)";
+Text = "「なんだそうか…ちょっと楽しみだったのにな。残念。」";
+Datas = [5,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20176:
+T_Name = Name;
+Text = "「でも、これは有益な情報ですよ。」";
+Datas = [5,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20177:
+Get_ICF("アイテム","地下ステージのドア","限られた生徒しか(改行)開けれないらしい。(改行)まどかの学生証は反応しなかった。",17);
+Scene_type = [17,"地下ステージのドアを(改行)法廷記録にファイルした。",20177.1];
+break;
+case 20177.1:
+T_Name = "(先輩)";
+Text = "「じゃあこんどこそ入りましょうか。」";
+Before = 20176;
+After = 20177.2;
+Datas = [5,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20177.2:
+T_Name = "";
+Text = "地下ステージ";
+Before = 20177.1;
+After = 20178;
+Datas = [4,0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20178:
+T_Name = Name;
+Text = "「随分質素なステージだな。」";
+Before = 20177.2;
+After = 20178.1;
+Datas = [4,0,S_image,15,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20178.1:
+T_Name = "ひなき";
+Text = "「三ノ輪先輩は実力派だったから、(改行)ステージは関係ないんだぜ。」";
+Before = 20178;
+After = 20178.2;
+Datas = [4,0,S_image,0,0,0,21,15,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20178.2:
+T_Name = "スミレ";
+Text = "「アイカツシステムで、(改行)見栄えは変わるしね。」";
+Before = 20178.1;
+After = 20179;
+Datas = [4,0,20,15,0,0,21,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20179:
+T_Name = "あかり";
+Text = "「でも、バミったテープがそのままなのは変じゃないかな？」";
+Datas = [4,0,20,0,0,0,19,15,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20180:
+T_Name = "スミレ";
+Text = "「あれはバミってるんじゃなくて(改行)遺体のあった場所のテープみたい。」";
+Datas = [4,0,20,0,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20181:
 T_Name = "(先輩)";
 Text = "「つまり、イミってるってやつだね。」";
 Datas = [4,0,10,15,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
-case 20162:
+case 20182:
 T_Name = Name;
 Text = "(訳のわからない単語を増やさないでくれ…)";
 Datas = [4,0,10,0,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
-case 20163:
+case 20183:
+if(have("りんご")) Get_ICF("アイテム","りんご","書き換え","引換券");
+Get_ICF("アイテム","引換券","スタッフにりんごを(改行)預けたことを証明する券。(改行)地下ステージは飲食禁止らしい。",16);
+Get_ICF("アイテム","地下ステージのドア","限られた生徒しか(改行)開けれないらしい。(改行)まどかの学生証は反応しなかった。",17);
 Get_ICF("フラグ","事件現場");
 var C1 = "調べる";
 var S1 = 0;
@@ -2200,15 +2365,920 @@ var C2 = "移動する";
 var S2 = After;
 R_S(20157,Number);
 Rewind = 20157;
-Before = 20162;
+Before = 20182;
 Datas = [4,0,0,0,Rewind,Before,Number,C1,S1,C2,S2,C3,S3,C4,S4];
 Scene_type = "チョイス";
 break;
-case 20164:
+case 20184:
 var C1 = "スターライト学園正門";
 var S1 = C1+"へ移動";
+Rewind = 0;
 Datas = [4,0,0,0,Rewind,Before,Number,C1,S1,C2,S2,C3,S3,C4,S4];
 Scene_type = "チョイス";
+break;
+case 20185:
+Flag_reset();
+R_S(Number,20241);
+Get_ICF("人物","三ノ輪 ヒカリ","スターライト学園のアイドル。(改行)今回の事件の被害者。(改行)トロピカルジュースとロコモコが(改行)好物で、豆類が苦手。",14);
+T_Name = Name;
+Text = "「結局、得られる情報はこれ以上なさそうですね。」";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20186:
+T_Name = "(先輩)";
+Text = "「弁護士って、情報得るの大変だからね(改行)後は法廷で勝負しましょうか。」";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20187:
+T_Name = "あかり";
+Text = "「じゃあ、私たちもこの辺で(改行)失礼しますね。」";
+Datas = [4,0,10,0,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20188:
+T_Name = "(先輩)";
+Text = "「うん、ルミナスのみんな、ありがとうね。(改行)おかげで今日は楽しかったよ。」";
+Datas = [4,0,10,0,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20189:
+T_Name = Name;
+Text = "(人が死んでるのに気楽なもんだな…)";
+Datas = [4,0,10,0,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20190:
+T_Name = Name;
+Text = "(まあいい、今日は帰って寝るか…)";
+Datas = [4,0,10,0,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20191:
+Move(20192);
+break;
+case 20192:
+T_Name = "1月5日 9時45分";
+Text = "裁判所 被告人控室";
+Before = 20190;
+Datas = [6,0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20193:
+T_Name = "まどか";
+Text = "「弁護士さん。(改行)今日はよろしくお願いしますね。」";
+Datas = [6,0,0,0,22,15,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20194:
+T_Name = Name;
+Text = "「あ、ああ。任せときなよ。」";
+Datas = [6,0,0,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20195:
+T_Name = "まどか";
+Text = "「あれ？弁護士さん、なんだか緊張してます？」";
+Datas = [6,0,0,0,22,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20196:
+T_Name = "(先輩)";
+Text = "「"+Surname+"君、こう見えて弁護2回目の新人さんだからね。」";
+Datas = [6,0,10,15,0,0,22,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20197:
+T_Name = "まどか";
+Text = "「へぇ。そうなんですか。」";
+Datas = [6,0,10,0,0,0,22,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20198:
+T_Name = "(先輩)";
+Text = "「まどかちゃんは、どう？(改行)緊張してない？」";
+Datas = [6,0,10,0,0,0,22,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20199:
+T_Name = "まどか";
+Text = "「はい！私はアイドルですからね。(改行)たくさんの人に見られるのは(改行)慣れてます。(改行)今日は何もしませんし。」";
+Datas = [6,0,10,0,0,0,22,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20200:
+T_Name = Name;
+Text = "(そういうものだろうか…？)";
+Datas = [6,0,10,0,0,0,22,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20201:
+T_Name = "(先輩)";
+Text = "「おっと！もう開廷時間だね。行くよ！"+Surname+"君！」";
+Datas = [6,0,10,0,0,0,22,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20202:
+Move(20203);
+break;
+case 20203:
+T_Name = "同日 10時";
+Text = "裁判所 第一法廷";
+Before = 20201;
+Datas = [7,0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20204:
+T_Name = "裁判長";
+Text = "「これより、天羽 まどかの法廷を(改行)開廷します。」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20205:
+T_Name = "(検事)";
+Text = "「検察側、(改行)準備完了しております。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20206:
+T_Name = Name;
+Text = "「弁護側、(改行)準備完了しております。」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20207:
+T_Name = "裁判長";
+Text = "「では…。えっと、なんでしたかな？」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20208:
+T_Name = "(検事)";
+Text = "「冒頭弁論だ。裁判長。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20209:
+T_Name = "裁判長";
+Text = "「おっと。そうでしたな。(改行)どうも緊張してしまって。」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20210:
+T_Name = Name;
+Text = "「裁判長はベテランなのに、(改行)そういう事もあるんですね。」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20211:
+T_Name = "裁判長";
+Text = "「えっ。それは、その…」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20212:
+Scene_type = "異議あり！20213";
+break;
+case 20213:
+T_Name = "(検事)";
+Text = "「これから出てくるのはアイドル。(改行)有名人だ。それなりに緊張してもおかしくはなかろう。」";
+Before = 20211;
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20214:
+T_Name = "裁判長";
+Text = "「まあ、そういうことです。(改行)では(検事)検事。(改行)気を取り直して冒頭弁論を。」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20215:
+T_Name = "(検事)";
+Text = "「事件はアイドル学校(改行)スターライト学園の敷地内で発生した」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20216:
+T_Name = "(検事)";
+Text = "「学園はそれなりに警備が厳しい。(改行)これにより、検察側は学校関係者から容疑者を割り出し、逮捕した。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20217:
+T_Name = "(検事)";
+Text = "「容疑者の犯行であることを示す、(改行)証拠も準備している。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20218:
+T_Name = "裁判長";
+Text = "「なるほど。(改行)では、さっそく始めてもらいましょう。」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20219:
+T_Name = "(検事)";
+Text = "「では、最初の証人の入廷を。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20220:
+T_Name = "";
+Text = "";
+Datas = ["stand",0,0,0,24,15,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20221:
+T_Name = "(検事)";
+Text = "「証人。名前と職業を。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20222:
+T_Name = "(刑事苗字)";
+Text = "「自分は(刑事苗字) (刑事名前)。(改行)所轄署の殺人事件捜査担当の(改行)刑事ッス。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20223:
+T_Name = "(検事)";
+Text = "「(刑事苗字)刑事。(改行)まず事件の説明をお願いする。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20224:
+T_Name = "(刑事苗字)";
+Text = "「死体の発見は三日前の早朝。(改行)被害者友人のアイドルが第一発見者ッス。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20224:
+T_Name = "(刑事苗字)";
+Text = "「死体は、学園内の地下ステージで発見されたッス。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20225:
+T_Name = "(検事)";
+Text = "「被害者の死因は？」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20226:
+T_Name = "(刑事苗字)";
+Text = "「服毒による、中毒死ッス。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20227:
+T_Name = Name;
+Text = "(…珍しい。先輩の勘が当たったぞ)";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20228:
+T_Name = "裁判長";
+Text = "「なるほど。毒殺ですか。」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20229:
+T_Name = "(検事)";
+Text = "「それでは、被告人がどのようにして(改行)毒を盛ったかを証言してもらおう！」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20230:
+T_Name = "証言開始";
+Text = "～被告人が毒をもった方法～";
+Datas = ["stand",0,25,30,24,0,26,30,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20231:
+T_Name = "(刑事苗字)";
+Text = "「まず、被告人は被害者の後輩ッス。」";
+Datas = ["stand",0,27,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20232:
+T_Name = "(刑事苗字)";
+Text = "「後輩なら先輩に(改行)弁当を持っていくことぐらいは(改行)当然ッス！」";
+Datas = ["stand",0,27,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20233:
+T_Name = "(刑事苗字)";
+Text = "「被告人は、地下ステージへ弁当を(改行)持って行ったッス。」";
+Datas = ["stand",0,27,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20234:
+T_Name = "(刑事苗字)";
+Text = "「その弁当に毒を盛ったに(改行)違いないッス！」";
+Datas = ["stand",0,27,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20235:
+T_Name = "裁判長";
+Text = "「ふむぅ…。お弁当に毒を…。」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20236:
+T_Name = "裁判長";
+Text = "「しかし、(改行)えらく単純な証言でしたね。」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20237:
+T_Name = "(刑事苗字)";
+Text = "「最初ッスからね。(改行)こんなもんッスよ。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20238:
+T_Name = Name;
+Text = "(なんだよ。それ。)";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20239:
+T_Name = "裁判長";
+Text = "「では、弁護人。尋問を。」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20240:
+T_Name = Name;
+Text = "「はい。」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20241:
+T_Name = "尋問開始";
+Text = "～被告人が毒をもった方法～";
+After = Skip+1;
+Skip = 0;
+Datas = ["stand",0,12,30,24,0,13,30,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20242:
+Get_ICF("フラグ","先輩がいる");
+R_S(Number,0);
+T_Name = "(刑事苗字)";
+Text = "「まず、被告人は被害者の後輩ッス。」";
+Datas = [24,T_Name,Text,20246,Before,Number,After,0,"無"];
+Scene_type = "尋問";
+break;
+case 20243:
+T_Name = "(刑事苗字)";
+Text = "「後輩なら先輩に(改行)弁当を持っていくことぐらいは(改行)当然ッス！」";
+Datas = [24,T_Name,Text,20248,Before,Number,After,0,"無"];
+Scene_type = "尋問";
+break;
+case 20244:
+T_Name = "(刑事苗字)";
+Text = "「被告人は、地下ステージへ弁当を(改行)持って行ったッス。」";
+Datas = [24,T_Name,Text,20256,Before,Number,After,20274,"引換券"];
+Scene_type = "尋問";
+break;
+case 20245:
+T_Name = "(刑事苗字)";
+Text = "「その弁当に毒を盛ったに(改行)違いないッス！」";
+After = 20272;
+Datas = [24,T_Name,Text,20265,Before,Number,After,0,"無"];
+Scene_type = "尋問";
+break;
+case 20246:
+R_S(Number,20243);
+T_Name = Name;
+Text = "「それが、どうかしましたか？」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20247:
+T_Name = "(刑事苗字)";
+Text = "「せっかちッスね。(改行)これから言うッスよ。」";
+Last();
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20248:
+R_S(Number,20244);
+T_Name = Name;
+Text = "「そうでしょうか？(改行)"+Person+"はそんな経験ありませんよ。」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20249:
+T_Name = "(先輩)";
+Text = "「確かに、ないわね。」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20250:
+T_Name = "(刑事苗字)";
+Text = "「そんな！？(改行)自分は先輩にも、(検事)検事殿にも(改行)持って行ってるッスよ！？」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20251:
+T_Name = "(検事)";
+Text = "「それはキミが勝手にやっているだけだ刑事。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20252:
+T_Name = "(刑事苗字)";
+Text = "「じゃ、じゃあ、自分が先輩になった時には…？」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20253:
+T_Name = "(先輩)";
+Text = "「貰えないでしょうね。」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20254:
+T_Name = "(刑事苗字)";
+Text = "「そんな…じゃあ今までの弁当代は…(改行)それに、この証言にも矛盾が…」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20255:
+T_Name = "(刑事苗字)";
+Text = "「…いや！きっと被告人は(改行)自分と同じタイプの人間だったッス！(改行)そうに違いないッス！(改行)つまり…」";
+Last();
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20256:
+R_S(Number,20245);
+T_Name = Name;
+Text = "「その証拠はありますか？」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20257:
+T_Name = "(刑事苗字)";
+Text = "「そんなもんねぇッス！」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20258:
+T_Name = Name;
+Text = "「…はい？」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20259:
+T_Name = "(刑事苗字)";
+Text = "「証拠はないと言ったッス。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20260:
+T_Name = Name;
+Text = "「いやいや、(改行)開き直らないでくださいよ！」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20261:
+T_Name = "(検事)";
+Text = "「こちらとしてはあるのだが…。(改行)このタイミングで出すのも馬鹿馬鹿しいな。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20262:
+T_Name = Name;
+Text = "(そりゃそうだろうが…)";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20263:
+T_Name = "(刑事苗字)";
+Text = "「検事殿もああいってるし(改行)そもそも持って行ってないという証拠も無いッスからね。(改行)問題なしッス。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20264:
+T_Name = Name;
+Text = "(持って行ってない証拠はない…か)";
+Last();
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20265:
+R_S(Number,20272);
+T_Name = Name;
+Text = "「ちなみに、どんなお弁当だったんですか？」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20266:
+T_Name = "(刑事苗字)";
+Text = "「えっと…。どんなだったッスか？(改行)(検事)検事。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20267:
+T_Name = "(検事)";
+Text = "「……………………」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20268:
+T_Name = Name;
+Text = "(恐ろしい顔で刑事を睨んでるな…。)";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20269:
+T_Name = "(刑事苗字)";
+Text = "「ヒッ…。(改行)け、検事殿は弁当の中身など事件に関係ないと言ってるッス！」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20270:
+T_Name = "(刑事苗字)";
+Text = "「この話は終わりッスよ！」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20271:
+T_Name = Name;
+Text = "(確かに、中身は今関係ないか…)";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Last();
+Scene_type = "メイン";
+break;
+case 20272:
+R_S(Number,20242);
+T_Name = Name;
+Text = "「今問題なのは”被告人が(改行)地下ステージに弁当を持って行ったか”ですね。」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20273:
+T_Name = "(先輩)";
+Text = "「そうね、持って行っていないという(改行)証拠を提供しましょう。」";
+Last();
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20274:
+R_S(Number,20309);
+T_Name = Name;
+Text = "「証人。これが何かおわかりですか？」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip,"0900,0250,15",16];
+Scene_type = "メイン";
+break;
+case 20275:
+T_Name = "(刑事苗字)";
+Text = "「引換券ッスか？自分も持ち合わせがない時使うッス。(改行)しょっちゅうッス。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip,"0100,0100,15",16];
+Scene_type = "メイン";
+break;
+case 20276:
+T_Name = Name;
+Text = "「そう。これは引換券です。(改行)ただし、あなたがいつも使っている店のものではない。」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip,"0900,0250,0",16];
+Scene_type = "メイン";
+break;
+case 20277:
+T_Name = Name;
+Text = "「調査で地下ステージに入る時、(改行)スタッフにりんごと交換してもらったんですよ。」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20278:
+T_Name = "(刑事苗字)";
+Text = "「りんごと引換券をッスか？確かに、(改行)自分がやっているのは逆ッスね。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20279:
+T_Name = Name;
+Text = "「で、この券はそのりんごを返して貰う為の券なんですよ。」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20280:
+T_Name = "(刑事苗字)";
+Text = "「りんご預けたってことッスか？(改行)なんでわざわざ。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20281:
+T_Name = Name;
+Text = "「それはですね証人。あの地下ステージは飲食禁止だからですよ！」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20282:
+T_Name = "(刑事苗字)";
+Text = "「えええッ！」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20283:
+T_Name = Name;
+Text = "「毒の入ったお弁当を、飲食禁止の場所へもっていく…」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20284:
+T_Name = Name;
+Text = "「そんなことをしては、スタッフに止められて犯行が明るみになってしまいます！」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20285:
+T_Name = "(刑事苗字)";
+Text = "「た、確かに…自分でもそんなことは避けるッス…」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20286:
+Scene_type = "異議あり！20287";
+break;
+case 20287:
+T_Name = "(検事)";
+Text = "「なにが確かにだ。そのことについては確認をとっただろう。」";
+Before = 20285;
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20288:
+T_Name = "(刑事苗字)";
+Text = "「そうでしたっけ？」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20289:
+T_Name = "(検事)";
+Text = "「まったく…いいか？事件発生時、被害者が毒を摂取したとしたらいつだ？」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20290:
+T_Name = Name;
+Text = "「発見時が三日前だから、四日前くらいでしょうか？」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20291:
+T_Name = "(検事)";
+Text = "「そうだ。(改行)それはつまりお正月なのだよ。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20292:
+T_Name = Name;
+Text = "「ま、まさか…お正月休みでスタッフはいなかったとか…」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20293:
+T_Name = "(検事)";
+Text = "「いや、スタッフはいた。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20294:
+T_Name = Name;
+Text = "「…？じゃあ、(改行)やっぱりとめられるのでは？」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20295:
+T_Name = "(検事)";
+Text = "「スタッフが証言してくれたよ…(改行)年に一度のおせち料理だから、特別に通した、とね。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20296:
+T_Name = Name;
+Text = "「おせち料理？被告人が持って行ったのはお弁当だったのでは？」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20297:
+T_Name = "(刑事苗字)";
+Text = "「いやーすまねッス。(改行)おせち料理なんて縁がないからすっかり忘れてたッス。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20298:
+T_Name = "(刑事苗字)";
+Text = "「そういえば、学園が用意したおせち料理で全生徒に配るのを被告人に頼んだと言う話だったッス。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20299:
+T_Name = Name;
+Text = "「全生徒にですか？それはちょっと重労働なのでは…？」";
+Datas = ["left",0,S_image,0,10,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20300:
+T_Name = "(検事)";
+Text = "「それについては新しく証言として話していただこう。」";
+Datas = ["right",0,0,0,0,0,11,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20301:
+T_Name = "裁判長";
+Text = "「それでは、”おせち料理について”(改行)証言をお願いします。(改行)(刑事苗字)刑事。」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20302:
+T_Name = "(刑事苗字)";
+Text = "「承知ッス。」";
+Datas = ["stand",0,0,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20303:
+T_Name = "証言開始";
+Text = "～おせち料理について～";
+Datas = ["stand",0,25,30,24,0,26,30,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20304:
+T_Name = "(刑事苗字)";
+Text = "「被告人が持ち込んだのは(改行)おせち料理だったッス。」";
+Datas = ["stand",0,27,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20305:
+T_Name = "(刑事苗字)";
+Text = "「これは学園が用意したもので、(改行)全生徒分あったッス。」";
+Datas = ["stand",0,27,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20306:
+T_Name = "(刑事苗字)";
+Text = "「ただ、限られた生徒しか入れない部屋なんかが数あるから配るのはそれに対応できる生徒に頼んだ。との事ッス。」";
+Datas = ["stand",0,27,0,24,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20307:
+T_Name = "裁判長";
+Text = "「なるほど。そういうことですか。」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20308:
+T_Name = "裁判長";
+Text = "「では弁護人。尋問を。」";
+Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20309:
+T_Name = "尋問開始";
+Text = "～おせち料理について～";
+After = Skip+1;
+Skip = 0;
+Datas = ["stand",0,12,30,24,0,13,30,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case 20310:
+T_Name = "(刑事苗字)";
+Text = "「被告人が持ち込んだのは(改行)おせち料理だったッス。」";
+Before = 0;
+Datas = [24,T_Name,Text,20256,Before,Number,After,20274,"引換券"];
+Scene_type = "尋問";
+break;
+case 20311:
+T_Name = "(刑事苗字)";
+Text = "「これは学園が用意したもので、(改行)全生徒分あったッス。」";
+Datas = [24,T_Name,Text,20256,Before,Number,After,20274,"引換券"];
+Scene_type = "尋問";
+break;
+case 20312:
+T_Name = "(刑事苗字)";
+Text = "「ただ、限られた生徒しか入れない部屋なんかが数あるから配るのはそれに対応できる生徒に頼んだ。との事ッス。」";
+Datas = [24,T_Name,Text,20256,Before,Number,After,20274,"引換券"];
+Scene_type = "尋問";
+break;
+case "調べる20183":
+R_S(Number,20185);
+T_Name = Name;
+Text = "「遺体のあった場所だ。(改行)この光景を見るのは二度目だな。」";
+Before = 0;
+After = "調べる20183_2";
+Datas = [4,0,S_image,0,0,0,0,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_2":
+T_Name = "(先輩)";
+Text = "「ではここで"+Surname+"君に問題だ。(改行)被害者の死因は？」";
+Rewind = 0;
+Before = "調べる20183";
+After = "調べる20183_3";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_3":
+T_Name = Name;
+Text = "「それを断定するには、データが足りないですね。」";
+Before = "調べる20183_2";
+After = "調べる20183_4";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_4":
+T_Name = "(先輩)";
+Text = "「ブッブー。答えは”毒殺”です。(改行)さあ、メモったメモった。」";
+Before = "調べる20183_3";
+After = "調べる20183_5";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_5":
+T_Name = Name;
+Text = "「…一応、理由を聞きましょう。」";
+Before = "調べる20183_4";
+After = "調べる20183_6";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_6":
+T_Name = "(先輩)";
+Text = "「まず、この床。綺麗すぎます。(改行)撲殺なら血痕が残っているはずだから違う。」";
+Before = "調べる20183_5";
+After = "調べる20183_7";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_7":
+T_Name = Name;
+Text = "「それで？」";
+Before = "調べる20183_6";
+After = "調べる20183_8";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_8":
+T_Name = "(先輩)";
+Text = "「後は…弁護士としての勘よ！」";
+Before = "調べる20183_7";
+After = "調べる20183_9";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_9":
+T_Name = Name;
+Text = "「それじゃ、断定はできないので(改行)　メモの必要はないですね。」(改行)(先輩の勘は当たらないし。)";
+Before = "調べる20183_8";
+After = "調べる20183_10";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_10":
+T_Name = "(先輩)";
+Text = "「…じゃあこれはメモっときなさい。(改行)好きな食べ物はトロピカルジュース、(改行)ロコモコ。(改行)苦手な食べ物は豆類、(改行)特にグリーンピースと納豆よ。」";
+Before = "調べる20183_9";
+After = "調べる20183_11";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_11":
+T_Name = Name;
+Text = "「…情報源は？」";
+Before = "調べる20183_10";
+After = "調べる20183_12";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_12":
+T_Name = "(先輩)";
+Text = "「今ググったわ。プロフィールに書いて(改行)あったから間違いないわよ。(改行)さあ、メモメモ。」";
+Before = "調べる20183_11";
+After = "調べる20183_13";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_13":
+T_Name = Name;
+Text = "「わかりましたよ…。」";
+Before = "調べる20183_12";
+After = "調べる20183_14";
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
+break;
+case "調べる20183_14":
+Get_ICF("人物","三ノ輪 ヒカリ","スターライト学園のアイドル。(改行)今回の事件の被害者。(改行)トロピカルジュースとロコモコが(改行)好物で、豆類が苦手。",14);
+T_Name = "";
+Text = "三ノ輪 ヒカリの情報を書き加えた。";
+Before = "調べる20183_12";
+After = Skip;
+Skip = 0;
+Datas = [4,0,S_image,0,0,0,10,0,T_Name,Text,Rewind,Before,Number,After,Skip];
+Scene_type = "メイン";
 break;
 case "調べる20142":
 R_S(Number,"調べる");
@@ -2530,8 +3600,9 @@ Scene_type = "メイン";
 break;
 case "つきつけ失敗":
 T_Name = Name;
-Text = "「今の証言はこの証拠品と明らかに矛盾しています！」";
+Text = "「今の証言はこの証拠品と明らかに(改行)矛盾しています！」";
 Datas = ["left",0,S_image,0,0,0,0,0,T_Name,Text,0,0,0,"つきつけ失敗2",0];
+if(have("先輩がいる")) Datas[4] = 10;
 Scene_type = "メイン";
 break;
 case "つきつけ失敗2":
@@ -2544,17 +3615,19 @@ case "つきつけ失敗3":
 T_Name = Name;
 Text = "「えっと…それは…」";
 Datas = ["left",0,S_image,0,0,0,0,0,T_Name,Text,0,0,0,"つきつけ失敗4",0];
+if(have("先輩がいる")) Datas[4] = 10;
 Scene_type = "メイン";
 break;
 case "つきつけ失敗4":
 T_Name = Name;
 Text = "「…」";
 Datas = ["left",0,S_image,0,0,0,0,0,T_Name,Text,0,0,0,"つきつけ失敗5",0];
+if(have("先輩がいる")) Datas[4] = 10;
 Scene_type = "メイン";
 break;
 case "つきつけ失敗5":
 T_Name = "裁判長";
-Text = "「弁護人はもっと考えて発言するように。」";
+Text = "「弁護人はもっと考えて(改行)発言するように。」";
 Datas = ["裁判長",0,0,0,0,0,0,0,T_Name,Text,0,0,0,"つきつけ失敗6",0];
 Scene_type = "メイン";
 break;
@@ -2565,6 +3638,10 @@ Text = "(失敗したみたいだ…。)(改行)(改行)(残り"+Flag[6]+"回)";
 if(Flag[6]==0) After = "つきつけ失敗7";
 else After = Flag[4];
 Datas = ["left",0,S_image,0,0,0,0,0,T_Name,Text,0,0,0,After,0];
+if(have("先輩がいる")){
+  Datas[4] = 10;
+  Datas[9] = Text = "(失敗したみたいだ…。(改行)先輩も、止めてくれよ…)(改行)(改行)(残り"+Flag[6]+"回)";
+}
 Scene_type = "メイン";
 break;
 case "つきつけ失敗7":
@@ -2659,10 +3736,10 @@ case 20142:
 Inspect = [3,0,0,1600,900,"調べる"+Number];
 break;
 case 20155:
-Inspect = [3,381,35,680,640,"調べる"+Number];
+Inspect = [3,381,39,330,312,"調べる"+Number];
 break;
-case 20163:
-Inspect = [4,0,620,1600,100,"調べる"+Number];
+case 20183:
+Inspect = [4,1085,849,835,231,"調べる"+Number];
 break;
 default:
 Inspect = ["Black",0,0,1600,900];

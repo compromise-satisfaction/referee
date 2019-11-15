@@ -30,13 +30,13 @@ function Load(width,height){
   core.preload("image/Background.png");
   core.preload("image/背景/透明.png");
 
-  for (var i = 1; i <= 4; i++){
+  for (var i = 1; i <= 7; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 15; i++){
+  for (var i = 1; i <= 17; i++){
     core.preload("image/正方形/"+i+".png");
   }
-  for (var i = 1; i <= 23; i++){
+  for (var i = 1; i <= 27; i++){
     core.preload("image/人物/"+i+".png");
   }
   for (var i = 0; i <= 1; i++){
@@ -102,6 +102,12 @@ function Load(width,height){
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
             break;
+        case "フェードイン":
+          Scene_loads(Moves,false,false);
+          core.pushScene(MoveScene(-30));
+          Scene_kazu++;
+          console.log("Scene数",Scene_kazu);
+          break;
         case "調べる":
           if(Number.length>5){
             if(Number.substring(0,6)=="アイテム使用"){
@@ -722,6 +728,24 @@ function Load(width,height){
       Background2.y = (width/16)*9;
       scene.addChild(Background2);//白地
 
+      var xxx = core.assets["image/Buttons.png"].width/8;
+      var yyy = core.assets["image/Buttons.png"].height;
+      var Enter1 = new Sprite(xxx,yyy);
+      Enter1.image = core.assets["image/Buttons.png"];
+      Enter1.scaleX = ((width/5)/xxx);
+      Enter1.scaleY = (((width/5))/yyy);//ココが変換した場所
+      Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
+      Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
+      Enter1.frame = 5;
+      scene.addChild(Enter1);
+
+      Enter1.addEventListener('touchstart',function(e){
+        core.popScene();
+        Scene_kazu--;
+        console.log("Scene数",Scene_kazu);
+        Scene_loads(Moves,false,false);
+      });
+
       Background.addEventListener("enterframe",function(){
         if(Background.opacity == 1 && Out>0){
           core.popScene();
@@ -1027,13 +1051,12 @@ function Load(width,height){
           Numbers += (width/20)+(width/25);
           Label.call(this);
           this.font  = (width/20)+"px monospace";
-          this.color = 'black';
+          this.color = 'purple';
           this.x = (width/50);
           this.y = Numbers;
           this.width = width;
           this.height = (width/20);
           this.text = a;
-          this.color = "green";
           scene.addChild(this);
         }
       });
@@ -1041,7 +1064,18 @@ function Load(width,height){
       var Text = Datas[2].split("(改行)");
 
       for (var i = 0; i < Text.length; i++) {
+        if(Text[i].length>18){
+          if(Text[i+1]==undefined) Text[i+1] = Text[i].substring(18);
+          else Text[i+1] = Text[i].substring(18) + Text[i+1]+"";
+          Text[i] = Text[i].substring(0,18);
+        }
         Text[i] = new Texts(Text[i]);
+      }
+
+      if(Text[0].text.substring(0,1)=="「"&&Text[i-1].text.substring(Text[i-1].text.length-1)=="」"){
+        for (var i = 1; i < Text.length; i++) {
+          Text[i].text = "　" + Text[i].text;
+        }
       }
 
       var xxx = core.assets["image/Buttons.png"].width/8;
@@ -1461,7 +1495,7 @@ function Load(width,height){
 
       var Touchs = Class.create(Sprite, {
         initialize: function(x,y,width1,height1,Number){
-          Sprite.call(this,width1*width/1600,height1*width/1600);
+          Sprite.call(this,width1*Background.scaleX,height1*Background.scaleY);
           this.x = x*Background.scaleX;
           this.y = y*Background.scaleY;
           this.image = core.assets["image/背景/透明.png"];
