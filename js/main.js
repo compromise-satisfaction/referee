@@ -543,6 +543,7 @@ function Load(width,height){
       });
 
       var Text = Datas[9].split("(改行)");
+      var Text2 = [];
 
       for (var i = 0; i < Text.length; i++) {
         if(Text[i].length>18){
@@ -550,17 +551,27 @@ function Load(width,height){
           else Text[i+1] = Text[i].substring(18) + Text[i+1]+"";
           Text[i] = Text[i].substring(0,18);
         }
-        Text[i] = new Texts(Text[i]);
+        Text2[i] = new Texts("");
       }
 
+      var Time = 0;
+      var k = 0;
+      Background2.addEventListener("enterframe",function(){
+        Time ++;
+        if(Time==19){
+          Time = 0;
+          k++;
+        }
+        if(k<Text.length) Text2[k].text = Text2[k].text+Text[k].substring(Time-1,Time);
+      })
 
-      if(Text[0].text.substring(0,1)=="「"&&Text[i-1].text.substring(Text[i-1].text.length-1)=="」"){
+      if(Text2[0].text.substring(0,1)=="「"&&Text[i-1].text.substring(Text[i-1].text.length-1)=="」"){
         for (var i = 1; i < Text.length; i++) {
           Text[i].text = "　" + Text[i].text;
         }
       }
 
-      if(Text[0].text.substring(0,1)=="("&&Text[i-1].text.substring(Text[i-1].text.length-1)==")"){
+      if(Text2[0].text.substring(0,1)=="("&&Text[i-1].text.substring(Text[i-1].text.length-1)==")"){
         for (var i = 0; i < Text.length; i++) {
           Text[i].color = "blue";
           if(i==0) continue;
@@ -1877,7 +1888,6 @@ function Load(width,height){
           for (var i = 0; i < Item_Flag.length; i++) {
             if(Item_Flag[i][0]==Choice_Item) break;
           }
-          Get_I_C_F("アイテム",Choice_Item,Item[i].text2+"(改行)"+Item[i].text3+"(改行)"+Item[i].text4+"(改行)"+Item[i].text5,Item[i].image_f,"停止");
           core.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
@@ -1887,7 +1897,6 @@ function Load(width,height){
           for (var i = 0; i < Item_Flag.length; i++) {
             if(Item_Flag[i][0]==Choice_Item) break;
           }
-          Get_I_C_F("アイテム",Choice_Item,Item[i].text2+"(改行)"+Item[i].text3+"(改行)"+Item[i].text4+"(改行)"+Item[i].text5,Item[i].image_f,"再生");
           core.popScene();
           console.log("Scene数",Scene_kazu);
         }
@@ -2219,7 +2228,6 @@ function Load(width,height){
           for (var i = 0; i < Character_Flag.length; i++) {
             if(Character_Flag[i][0]==Choice_Character) break;
           }
-          Get_I_C_F("人物",Choice_Character,Character[i].text2+"(改行)"+Character[i].text3+"(改行)"+Character[i].text4+"(改行)"+Character[i].text5,Character[i].image_f,"停止");
           core.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
@@ -2229,7 +2237,6 @@ function Load(width,height){
           for (var i = 0; i < Character_Flag.length; i++) {
             if(Character_Flag[i][0]==Choice_Character) break;
           }
-          Get_I_C_F("人物",Choice_Character,Character[i].text2+"(改行)"+Character[i].text3+"(改行)"+Character[i].text4+"(改行)"+Character[i].text5,Character[i].image_f,"再生");
           core.popScene();
           console.log("Scene数",Scene_kazu);
         }
