@@ -542,42 +542,79 @@ function Load(width,height){
         }
       });
 
-      var Text = Datas[9].split("(改行)");
-      var Text2 = [];
+      var Text =[];
 
-      for (var i = 0; i < Text.length; i++) {
-        if(Text[i].length>18){
-          if(Text[i+1]==undefined) Text[i+1] = Text[i].substring(18);
-          else Text[i+1] = Text[i].substring(18) + Text[i+1]+"";
-          Text[i] = Text[i].substring(0,18);
-        }
-        Text2[i] = new Texts("");
+      for (var i = 0; i <6; i++) {
+        Text[i] = new Texts("");
       }
 
       var Time = 0;
+      var Time2 = 0;
       var k = 0;
-      Background2.addEventListener("enterframe",function(){
-        Time ++;
-        if(Time==19){
-          Time = 0;
-          k++;
+      var Text_defined = true;
+
+      function T_D(){
+        var s = true;
+        if(Datas[9].substring(Time,Time+1)=="→"){
+          s = false;
         }
-        if(k<Text.length) Text2[k].text = Text2[k].text+Text[k].substring(Time-1,Time);
+        Time ++;
+        if(s){
+          Time2 ++;
+          if(Time2==19){
+            k++;
+            Time2 = 0;
+            if(Datas[9].substring(0,1)=="("){
+              Text[k].text = " ";
+              Time2 ++;
+            }
+            if(Datas[9].substring(0,1)=="「"){
+              if(Datas[9].substring(Time-2,Time-1)!="」"){
+                Text[k].text = "　";
+                Time2 ++;
+              }
+            }
+          }
+          if(Datas[9].substring(Time-1,Time)=="↓"||Time2==19){
+            if(Time2>1) k++;
+            Time2 = 0;
+            if(Datas[9].substring(0,1)=="("){
+              Text[k].color = "blue";
+              Text[k].text = " ";
+              Time2 ++;
+            }
+            if(Datas[9].substring(0,1)=="("){
+              Text[k].text = " ";
+              Time2 ++;
+            }
+            if(Datas[9].substring(0,1)=="「"){
+              if(Datas[9].substring(Time-2,Time-1)!="」"){
+                Text[k].text = "　";
+                Time2 ++;
+              }
+            }
+          }
+          else if(Datas[9].substring(Time-1,Time)!=""){
+            if(Text[k].text.substring(0,1)=="("||Text[k].text.substring(0,1)==" ") Text[k].color = "blue";
+            Text[k].text = Text[k].text+Datas[9].substring(Time-1,Time);
+          }
+          else if(Datas[9].substring(Time-1,Time)==""){
+            Text_defined = false;
+          }
+        }
+      }
+
+      Background2.addEventListener("enterframe",function(){
+        if(Return!=true&&Text_defined){
+          T_D();
+        }
       })
 
-      if(Text2[0].text.substring(0,1)=="「"&&Text[i-1].text.substring(Text[i-1].text.length-1)=="」"){
-        for (var i = 1; i < Text.length; i++) {
-          Text[i].text = "　" + Text[i].text;
+      if(Return){
+          for (var i = 0; i < Datas[9].length+1; i++) {
+            T_D();
+          }
         }
-      }
-
-      if(Text2[0].text.substring(0,1)=="("&&Text[i-1].text.substring(Text[i-1].text.length-1)==")"){
-        for (var i = 0; i < Text.length; i++) {
-          Text[i].color = "blue";
-          if(i==0) continue;
-          Text[i].text = " " + Text[i].text;
-        }
-      }
 
       if(Datas[10]!=false){
         var xxx = core.assets["image/Buttons.png"].width/8;
@@ -641,7 +678,19 @@ function Load(width,height){
         Enter1.frame = 5;
         scene.addChild(Enter1);
         Enter1.addEventListener('touchstart',function(e){
-          Scene_loads(Datas[13],false,false);
+          if(Text_defined){
+            Text_defined = false;
+            for (var i = 0; i <6; i++) {
+              Text[i].text = "";
+            }
+            Time = 0;
+            Time2 = 0;
+            k = 0;
+            for (var i = 0; i < Datas[9].length+1; i++) {
+              T_D();
+            }
+          }
+          else Scene_loads(Datas[13],false,false);
         });
       }//進む1
 
@@ -1072,7 +1121,7 @@ function Load(width,height){
         }
       });
 
-      var Text = Datas[2].split("(改行)");
+      var Text = Datas[2].split("↓");
 
       for (var i = 0; i < Text.length; i++) {
         if(Text[i].length>18){
@@ -1566,7 +1615,7 @@ function Load(width,height){
           Numbers += (width/20)+(width/25);
           Label.call(this);
           this.font  = (width/20)+"px monospace";
-          this.color = 'black';
+          this.color = 'blue';
           this.x = (width/50);
           this.y = Numbers;
           this.width = width;
@@ -1577,11 +1626,71 @@ function Load(width,height){
         }
       });
 
-      var Text = b.split("(改行)");
+      var Text =[];
 
-      for (var i = 0; i < Text.length; i++) {
-        Text[i] = new Texts(Text[i]);
+      for (var i = 0; i <6; i++) {
+        Text[i] = new Texts("");
       }
+
+      var Time = 0;
+      var Time2 = 0;
+      var k = 0;
+      var Text_defined = true;
+
+      function T_D(){
+        var s = true;
+        if(b.substring(Time,Time+1)=="→"){
+          s = false;
+        }
+        Time ++;
+        if(s){
+          Time2 ++;
+          if(Time2==19){
+            k++;
+            Time2 = 0;
+            if(b.substring(0,1)=="("){
+              Text[k].text = " ";
+              Time2 ++;
+            }
+            if(b.substring(0,1)=="「"){
+              if(b.substring(Time-2,Time-1)!="」"){
+                Text[k].text = "　";
+                Time2 ++;
+              }
+            }
+          }
+          if(b.substring(Time-1,Time)=="↓"||Time2==19){
+            if(Time2>1) k++;
+            Time2 = 0;
+            if(b.substring(0,1)=="("){
+              Text[k].color = "blue";
+              Text[k].text = " ";
+              Time2 ++;
+            }
+            if(b.substring(0,1)=="("){
+              Text[k].text = " ";
+              Time2 ++;
+            }
+            if(b.substring(0,1)=="「"){
+              if(b.substring(Time-2,Time-1)!="」"){
+                Text[k].text = "　";
+                Time2 ++;
+              }
+            }
+          }
+          else if(b.substring(Time-1,Time)!=""){
+            if(Text[k].text.substring(0,1)=="("||Text[k].text.substring(0,1)==" ") Text[k].color = "blue";
+            Text[k].text = Text[k].text+b.substring(Time-1,Time);
+          }
+          else if(b.substring(Time-1,Time)==""){
+            Text_defined = false;
+          }
+        }
+      }
+
+      Background.addEventListener("enterframe",function(){
+        T_D();
+      })
 
       var xxx = core.assets["image/Buttons.png"].width/8;
       var yyy = core.assets["image/Buttons.png"].height;
@@ -1618,7 +1727,7 @@ function Load(width,height){
           core.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
-          Scene_loads(c,true,false);
+          Scene_loads(c,false,false);
         }
       })
 
@@ -1631,7 +1740,7 @@ function Load(width,height){
           core.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
-          Scene_loads(c,true,false);
+          Scene_loads(c,false,false);
         }
       });//進む
       return scene;
@@ -1806,7 +1915,7 @@ function Load(width,height){
           this.width = width;
           this.height = (width/20);
           this.text = a[0];
-          var Syousai_text = a[1].split("(改行)");
+          var Syousai_text = a[1].split("↓");
           if(Syousai_text[0]) this.text2 = Syousai_text[0];
           else this.text2 = "";
           if(Syousai_text[1]) this.text3 = Syousai_text[1];
@@ -2146,7 +2255,7 @@ function Load(width,height){
           this.width = width;
           this.height = (width/20);
           this.text = a[0];
-          var Syousai_text = a[1].split("(改行)");
+          var Syousai_text = a[1].split("↓");
           if(Syousai_text[0]) this.text2 = Syousai_text[0];
           else this.text2 = "";
           if(Syousai_text[1]) this.text3 = Syousai_text[1];
