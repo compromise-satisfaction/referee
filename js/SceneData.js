@@ -1490,7 +1490,7 @@ Scene_type = "メイン";
 break;
 case 20064:
 T_Name = Name;
-Text = "「まあ、せっかくだし貰っておくよ。」";
+Text = "「まあ、→→→せっかくだし貰っておくよ。」";
 Datas = ["留置所",0,S_image,0,0,0,20,0,T_Name,Text,Rewind,Before,Number,After,Skip,"0600,0250,0",3];
 Scene_type = "メイン";
 break;
@@ -1500,7 +1500,7 @@ Scene_type = [3,"りんごを受け取った。",20066];
 break;
 case 20066:
 T_Name = "美智子";
-Text = "「…本物のルミナスだ。」";
+Text = "「…→→→→→→→→→→→→本物のルミナスだ。」";
 Before = 20064;
 Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
@@ -1513,13 +1513,13 @@ Scene_type = "メイン";
 break;
 case 20068:
 T_Name = "美智子";
-Text = "「ルミナスよ！ルミナス！」";
+Text = "「ルミナスよ！→→→→→→ルミナス！」";
 Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
 case 20069:
 T_Name = "美智子";
-Text = "「ステージに咲く氷の花、氷上スミレちゃん！」";
+Text = "「ステージに咲く氷の花、→→→氷上スミレちゃん！」";
 Datas = ["留置所",0,10,0,0,0,20,15,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
@@ -1533,19 +1533,15 @@ break;
 case 20071:
 T_Name = "美智子";
 Get_ICF("人物","大空 あかり","スターライト学園のアイドル。↓スターライトクイーン。",13);
-Text = "「そして、スターライトクイーンの大空あかりちゃん！」";
+Text = "「そして、スターライトクイーンの大空あかりちゃん！→→→→→→→→→さっき話したでしょ！」";
+After ++;
 Datas = ["留置所",0,10,0,0,0,19,15,T_Name,Text,Rewind,Before,Number,After,Skip];
-Scene_type = "メイン";
-break;
-case 20072:
-T_Name = "美智子";
-Text = "「さっき話したでしょ！」";
-Datas = ["留置所",0,10,0,0,0,19,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
 case 20073:
 T_Name = "美智子";
-Text = "「この三人が組んでいるユニット。↓それがルミナスなのよ！」";
+Text = "「この三人が組んでいるユニット。→→→→→→↓それがルミナスなのよ！」";
+Before --;
 Datas = ["留置所",0,10,0,0,0,S_image,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
@@ -1557,7 +1553,7 @@ Scene_type = "メイン";
 break;
 case 20075:
 T_Name = "美智子";
-Text = "「まさかこんなところで会えるなんで…↓でもいったいどうして？」";
+Text = "「まさかこんなところで会えるなんで…→→→→→→↓でもいったいどうして？」";
 Datas = ["留置所",0,10,0,0,0,21,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 Scene_type = "メイン";
 break;
