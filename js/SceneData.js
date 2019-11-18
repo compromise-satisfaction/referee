@@ -101,6 +101,7 @@ return;
 }
 
 function Get_ICF(Get_Type,a,b,c,d,e){
+  console.log(a,b,c,d,e);
 if(Get) return;
 if(Get_Type=="人物"){
 for (var i = 0; i < Character_Flag.length; i++) {
@@ -347,7 +348,7 @@ if(DATAS[i].get!=false){
       for (var k = 0; k < DATAS.length; k++) {
         if(DATAS[k].Number==GET[l]) break;
       }
-      Get_ICF(DATAS[k].type,DATAS[k].Datas0,DATAS[k].Datas1.replace(/\n/g,"↓").replace(/\(一人称\)/g,Person),DATAS[k].Datas2,DATAS[k].Datas3);
+      Get_ICF(DATAS[k].type,DATAS[k].Datas0,DATAS[k].Datas1.replace(/\n/g,"↓").replace(/\(一人称\)/g,Person),DATAS[k].Datas2,DATAS[k].Datas3,DATAS[k].Datas4);
     }
   }
 }

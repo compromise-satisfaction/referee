@@ -33,7 +33,7 @@ function Load(width,height){
   for (var i = 1; i <= 7; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 17; i++){
+  for (var i = 1; i <= 18; i++){
     core.preload("image/正方形/"+i+".png");
   }
   for (var i = 1; i <= 27; i++){
@@ -2419,29 +2419,60 @@ function Load(width,height){
     var DetailsScene = function(Number){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var Background = new Sprite(width,height);
+      var xxx = core.assets["image/Background.png"].width;
+      var yyy = core.assets["image/Background.png"].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = ((width)/xxx);
+      Background.scaleY = ((height)/yyy);
       Background.image = core.assets["image/Background.png"];
-      Background.x = 0;
-      Background.y = 0;
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
 
-      var Text1 = new Label();
-      Text1.font  = (width/20)+"px monospace";
-      Text1.color = 'black';
-      Text1.x = (width/8);
-      Text1.y = (height/8);
-      Text1.width = width;
-      Text1.height = (width/20);
-      Text1.text = "▶ 戻る";
-      scene.addChild(Text1);
+      var Numbers = (width/20);
 
-      var Item = new Sprite(1200,1200);
-      Item.image = core.assets["image/アイテム詳細/"+Number+".png"];
-      Item.x = (width/8);
-      Item.y = 275;
-      scene.addChild(Item);
+      var Texts = Class.create(Label, {
+        initialize: function(a) {
+          Label.call(this);
+          Numbers += (width/20)+(width/25);
+          this.font  = (width/20)+"px monospace";
+          this.color = 'black';
+          this.x = (width/15);
+          this.y = Numbers;
+          this.width = width;
+          this.height = (width/20);
+          this.text = a;
+          i++;
+          scene.addChild(this);
+        }
+      });
 
-      Text1.addEventListener('touchstart',function(e){
+      var Text = [];
+
+      Text[0] = new Texts("▶ 閉じる");
+
+      if(Number.length!=11){
+        var xxx = core.assets["image/アイテム詳細/"+Number+".png"].width;
+        var yyy = core.assets["image/アイテム詳細/"+Number+".png"].height;
+        var Item = new Sprite(xxx,yyy);
+        Item.image = core.assets["image/アイテム詳細/"+Number+".png"];
+        Item.scaleX = (width/xxx*0.8);
+        Item.scaleY = (width/yyy*0.8);
+        Item.x = (Item.scaleX*xxx/2)-xxx/2+(width/15)+(width/30);
+        Item.y = (Item.scaleY*yyy/2)-yyy/2+Numbers+(width/15);
+        scene.addChild(Item);
+      }
+      else{
+        var Video = new Entity()
+        Video.visible =  true;
+        Video._element = document.createElement('div')
+        Video.x = (width/15)+(width/30);
+        Video.y = Numbers+(width/5);
+        Video._element.innerHTML = '<iframe src="https://www.youtube.com/embed/'+Number+'?enablejsapi=1&controls=0&showinfo=0&autoplay=0&rel=0&vq=small"  width="'+(width*0.8)+'" height="'+(width/16*9*0.8)+'" frameborder="0" id="player"></iframe>'
+        scene.addChild(Video);
+      }
+
+      Text[0].addEventListener('touchstart',function(e){
         core.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
@@ -2556,43 +2587,41 @@ function Load(width,height){
     var ClearScene = function(){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var Background = new Sprite(width,height);
+      var xxx = core.assets["image/Background.png"].width;
+      var yyy = core.assets["image/Background.png"].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = ((width)/xxx);
+      Background.scaleY = ((height)/yyy);
       Background.image = core.assets["image/Background.png"];
-      Background.x = 0;
-      Background.y = 0;
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
 
-      var Text = new Label();
-      Text.font  = (width/20)+"px monospace";
-      Text.color = 'black';
-      Text.x = (width/8);
-      Text.y = (height/8);
-      Text.width = width;
-      Text.height = (width/20);
-      Text.text = "データを消去する？";
-      scene.addChild(Text);
+      var Numbers = (width/20);
 
-      var Text2 = new Label();
-      Text2.font  = (width/20)+"px monospace";
-      Text2.color = 'black';
-      Text2.x = (width/8);
-      Text2.y = 500;
-      Text2.width = width;
-      Text2.height = (width/20);
-      Text2.text = "▶ はい";
-      scene.addChild(Text2);
+      var Texts = Class.create(Label, {
+        initialize: function(a) {
+          Label.call(this);
+          Numbers += (width/20)+(width/25)+(width/25)+(width/25)+(width/25)+(width/25);
+          this.font  = (width/20)+"px monospace";
+          this.color = 'black';
+          this.x = (width/15);
+          this.y = Numbers;
+          this.width = width;
+          this.height = (width/20);
+          this.text = a;
+          i++;
+          scene.addChild(this);
+        }
+      });
 
-      var Text3 = new Label();
-      Text3.font  = (width/20)+"px monospace";
-      Text3.color = 'black';
-      Text3.x = (width/8);
-      Text3.y = (width/16)*9;
-      Text3.width = width;
-      Text3.height = (width/20);
-      Text3.text = "▶ いいえ";
-      scene.addChild(Text3);
+      var Text = [];
 
-      Text2.addEventListener('touchstart',function(e){
+      Text[0] = new Texts("データを初期化する？");
+      Text[1] = new Texts("▶ はい");
+      Text[2] = new Texts("▶ いいえ");
+
+      Text[1].addEventListener('touchstart',function(e){
         core.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
@@ -2618,7 +2647,7 @@ function Load(width,height){
         return;
       });
 
-      Text3.addEventListener('touchstart',function(e){
+      Text[2].addEventListener('touchstart',function(e){
         core.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
