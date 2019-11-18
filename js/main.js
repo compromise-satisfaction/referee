@@ -1357,7 +1357,7 @@ function Load(width,height){
               case "設定する":
               if(Round.x == Man.x+(Round.scaleX*xxx/2)-xxx/2){
                 Flag[0] = S_Input2._element.value;
-                Flag[0] = S_Input2._element.value;
+                Flag[1] = S_Input._element.value;
                 if(S_Input2._element.value=="チート移動"){
                   core.popScene();
                   core.popScene();
