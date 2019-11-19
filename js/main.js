@@ -33,10 +33,10 @@ function Load(width,height){
   for (var i = 1; i <= 7; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 18; i++){
+  for (var i = 1; i <= 19; i++){
     core.preload("image/正方形/"+i+".png");
   }
-  for (var i = 1; i <= 27; i++){
+  for (var i = 1; i <= 28; i++){
     core.preload("image/人物/"+i+".png");
   }
   for (var i = 0; i <= 1; i++){
@@ -162,31 +162,24 @@ function Load(width,height){
             case "尋問":
               core.replaceScene(InterrogationScene());
               break;
-            case "タイトルに戻る":
-              core.replaceScene(TitleScene());
-              break;
           }
           break;
+          case "異議あり！":
+          core.pushScene(PopScene(Datas[0],"異議あり！"));
+          Scene_kazu++;
+          console.log("Scene数",Scene_kazu);
+            break;
+            case "待った！":
+            core.pushScene(PopScene(Datas[0],"待った！"));
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+              break;
         default:
           if(Scene_type.length==3){
             core.pushScene(ItemgetScene(Scene_type[0],Scene_type[1],Scene_type[2]));
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
             return;
-          }
-          else if(Scene_type.substring(0,5)=="異議あり！"){
-            Number = Scene_type.substring(5);
-            if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
-            core.pushScene(PopScene(Number,"異議あり！"));
-            Scene_kazu++;
-            console.log("Scene数",Scene_kazu);
-          }
-          else if(Scene_type.substring(0,4)=="待った！"){
-            Number = Scene_type.substring(4);
-            if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
-            core.pushScene(PopScene(Number,"待った！"));
-            Scene_kazu++;
-            console.log("Scene数",Scene_kazu);
           }
           else{
             console.log("エラー");
@@ -1187,7 +1180,7 @@ function Load(width,height){
       Button4.frame = 5;
       scene.addChild(Button4);
       Button4.addEventListener('touchstart',function(e){
-        Scene_loads(Datas[6],true,false);
+        Scene_loads(Datas[6],false,false);
       });//進む
 
       var xxx = core.assets["image/Buttons.png"].width/8;
@@ -1244,8 +1237,8 @@ function Load(width,height){
       Text[0] = new Texts("▶ 設定を閉じる");
       Text[1] = new Texts("▶ タイトルに戻る");
       Text[2] = new Texts("▶ サウンド設定");
-      Text[3] = new Texts("▶ セーブ方法の切り替え");
-      Text[4] = new Texts("▶ セーブデータ読み込み");
+      Text[3] = new Texts("▶ セーブデータ読み込み");
+      Text[4] = new Texts("▶ セーブ方法の切り替え");
       if(Flag[8]) Text[5] = new Texts("現在はオートセーブです。");
       else Text[5] = new Texts("▶ セーブする");
       Text[6] = new Texts("");
@@ -2484,10 +2477,14 @@ function Load(width,height){
     var SoundScene = function(){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var Background = new Sprite(width,height);
+      var xxx = core.assets["image/Background.png"].width;
+      var yyy = core.assets["image/Background.png"].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = ((width)/xxx);
+      Background.scaleY = ((height)/yyy);
       Background.image = core.assets["image/Background.png"];
-      Background.x = 0;
-      Background.y = 0;
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
 
       var Text1 = new Label();
@@ -2526,7 +2523,7 @@ function Load(width,height){
           Label.call(this);
           this.font  = (width/20)+"px monospace";
           this.color = 'black';
-          this.x = (height/2);
+          this.x = (width/8)+(width/8)+(width/8)+(width/8);
           this.y = Numbers;
           this.width = width;
           this.height = (width/20);

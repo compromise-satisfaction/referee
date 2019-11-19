@@ -101,7 +101,7 @@ return;
 }
 
 function Get_ICF(Get_Type,a,b,c,d,e){
-  console.log(a,b,c,d,e);
+//console.log(a,b,c,d,e);
 if(Get) return;
 if(Get_Type=="人物"){
 for (var i = 0; i < Character_Flag.length; i++) {
@@ -292,7 +292,7 @@ if(Scene_type=="メイン"){
   Datas[5] = DATAS[i].Datas5;
   Datas[6] = DATAS[i].Datas6;
   Datas[7] = DATAS[i].Datas7.replace(/\(主人公苗字\)/g,Surname).replace(/\(主人公名前\)/,Name);
-  Datas[8] = DATAS[i].Datas8.replace(/\n/g,"↓").replace(/\(主人公苗字\)/g,Surname).replace(/\(主人公名前\)/g,Name).replace(/\(一人称\)/g,Person);
+  Datas[8] = DATAS[i].Datas8.replace(/\n/g,"↓").replace(/\(主人公苗字\)/g,Surname).replace(/\(主人公名前\)/g,Name).replace(/\(一人称\)/g,Person).replace(/\(残りライフ\)/g,Flag[6]);
   Datas[9] = DATAS[i].Datas9;
   Datas[10] = DATAS[i].Datas10;
   Datas[11] = DATAS[i].Datas11;
@@ -336,15 +336,44 @@ else if(Scene_type=="分岐"){
   }
   Scene_loads2(Number,false,false);
 }
+else if (Scene_type=="ライフ判断") {
+  if(Flag[6]==0){
+    Number = "ライフ0_1";
+  }
+  else {
+    Number = Flag[4];
+  }
+  Scene_loads2(Number,false,false);
+}
 else if (Scene_type=="移動") {
   Move(DATAS[i].Datas0);
+}
+else if (Scene_type=="尋問") {
+  Datas = [DATAS[i].Datas0,DATAS[i].Datas1,DATAS[i].Datas2,DATAS[i].Datas3,DATAS[i].Datas4,DATAS[i].Datas5,DATAS[i].Datas6,DATAS[i].Datas7,DATAS[i].Datas8];
 }
 else if(Scene_type=="アイテムゲット"){
   Scene_type = [DATAS[i].Datas0,DATAS[i].Datas1,DATAS[i].Datas2];
 }
+else{
+  Datas[0] = DATAS[i].Datas0;
+  Datas[1] = DATAS[i].Datas1;
+}
 if(DATAS[i].get!=false){
   GET = DATAS[i].get.split("\n");
     for (var l = 0; l < GET.length; l++) {
+      switch(GET[l]){
+        case "フラグリセット":
+          Flag_reset();
+          continue;
+          break;
+        case "ダメージ":
+          Flag[6]--;
+          continue;
+          break;
+        default:
+        console.log(GET[l]);
+        break;
+      }
       for (var k = 0; k < DATAS.length; k++) {
         if(DATAS[k].Number==GET[l]) break;
       }
@@ -377,12 +406,6 @@ for (var i = 0; i < DATAS.length; i++) {
 if(i==DATAS.length){
 Inspect = ["Black"];
 }
-return(Inspect);
-switch (Number) {//ここを変える調べる
-case 20183:
-Inspect = [4,1085,849,835,231,"調べる"+Number];
-break;
-}//ココを変える調べる
 return(Inspect);
 }
 
