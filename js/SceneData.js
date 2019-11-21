@@ -245,7 +245,8 @@ Scene_type = "チョイス";
 return;
 }
 if(DATAS==undefined){
-  Datas = ["Black",,,,,,,"読み込みエラー","やり直してください。",,,,,];
+  console.log("エラー");
+  Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",0,0,0,0,0];
   Scene_type = "読み込みエラー";
   return;
 }
