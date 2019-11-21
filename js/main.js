@@ -32,7 +32,7 @@ function Load(width,height){
   core.preload("image/背景/透明.png");
   core.preload("image/背景/カットイン.png");
 
-  for (var i = 1; i <= 7; i++){
+  for (var i = 1; i <= 8; i++){
     core.preload("image/背景/"+i+".png");
   }
   for (var i = 1; i <= 20; i++){
@@ -302,6 +302,7 @@ function Load(width,height){
         Text[i] = new Texts("▶ 続きから");
       }
       Text[i] = new Texts("▶ 説明");
+      if(DATAS==undefined) Text[i] = new Texts("読み込みエラー！やり直してください。");
 
       for (var i = 0; i < Text.length; i++){
         Text[i].addEventListener('touchstart',function(e){
