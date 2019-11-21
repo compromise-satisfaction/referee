@@ -94,6 +94,9 @@ function Load(width,height){
       //console.log(Scene_type);
       Sound_ON("Choice",true);
       switch (Scene_type) {
+        case "読み込みエラー":
+          core.replaceScene(MainScene(Return));
+          break;
         case "メイン":
           core.replaceScene(MainScene(Return));
           break;
@@ -302,7 +305,6 @@ function Load(width,height){
         Text[i] = new Texts("▶ 続きから");
       }
       Text[i] = new Texts("▶ 説明");
-      if(DATAS==undefined) Text[i] = new Texts("読み込みエラー！やり直してください。");
 
       for (var i = 0; i < Text.length; i++){
         Text[i].addEventListener('touchstart',function(e){

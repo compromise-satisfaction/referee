@@ -244,6 +244,11 @@ if(Flag[8]) Datas[9] = 0;
 Scene_type = "チョイス";
 return;
 }
+if(DATAS==undefined){
+  Datas = ["Black",,,,,,,"読み込みエラー","やり直してください。",,,,,];
+  Scene_type = "読み込みエラー";
+  return;
+}
 for (var i = 0; i < DATAS.length; i++) {
   if(DATAS[i].Number==Number){
     Scene_type = DATAS[i].type;
