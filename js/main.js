@@ -22,6 +22,7 @@ function Load(width,height){
   core.preload("image/背景/left.png");
   core.preload("image/異議あり！.png");
   core.preload("sound/異議あり！.wav");
+  core.preload("image/カットイン.png");
   core.preload("image/背景/stand.png");
   core.preload("image/背景/Black.png");
   core.preload("image/背景/right.png");
@@ -29,6 +30,7 @@ function Load(width,height){
   core.preload("image/背景/留置所.png");
   core.preload("image/Background.png");
   core.preload("image/背景/透明.png");
+  core.preload("image/背景/カットイン.png");
 
   for (var i = 1; i <= 7; i++){
     core.preload("image/背景/"+i+".png");
@@ -355,6 +357,27 @@ function Load(width,height){
       Background.x = (Background.scaleX*xxx/2)-xxx/2;
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);//背景
+
+      if(Datas[0]=="カットイン"){
+        var ccx = core.assets["image/背景/"+ Datas[0] +".png"].width*3;
+        var ccy = core.assets["image/背景/"+ Datas[0] +".png"].height;
+        var Cut_in = new Sprite(ccx,ccy);
+        Cut_in.scaleX = width/ccx*3;
+        Cut_in.scaleY = width/16*9/ccy;
+        Cut_in.image = core.assets["image/"+ Datas[0] +".png"];
+        Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2;
+        Cut_in.y = (Cut_in.scaleY*ccy/2)-ccy/2;
+        scene.addChild(Cut_in);//背景
+        var Cut_in_time = 0;
+        Cut_in.addEventListener("enterframe",function(){
+          Cut_in_time += 10;
+          Cut_in.x -= 10;
+          if(Cut_in_time>width*2){
+            Cut_in_time = 0;
+            Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2;
+          }
+        })
+      }
 
       if(Datas[3]!=false){
         var xxx = core.assets["image/人物/"+Datas[3]+".png"].width;
@@ -2653,7 +2676,6 @@ function Load(width,height){
 
       return scene;
     }
-
     core.replaceScene(TitleScene());  // ゲームの_rootSceneをスタートシーンに置き換える
   }
   core.start()
