@@ -32,13 +32,13 @@ function Load(width,height){
   core.preload("image/背景/透明.png");
   core.preload("image/背景/カットイン.png");
 
-  for (var i = 1; i <= 8; i++){
+  for (var i = 1; i <= 10; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 20; i++){
+  for (var i = 1; i <= 26; i++){
     core.preload("image/正方形/"+i+".png");
   }
-  for (var i = 1; i <= 28; i++){
+  for (var i = 1; i <= 30; i++){
     core.preload("image/人物/"+i+".png");
   }
   for (var i = 0; i <= 1; i++){
@@ -95,8 +95,6 @@ function Load(width,height){
       Sound_ON("Choice",true);
       switch (Scene_type) {
         case "読み込みエラー":
-          core.replaceScene(MainScene(Return));
-          break;
         case "メイン":
           core.replaceScene(MainScene(Return));
           break;
@@ -141,6 +139,7 @@ function Load(width,height){
           BGM_Stop(true);
           Scene_loads2(Load_Datas(),Item);
           switch (Scene_type) {
+            case "読み込みエラー":
             case "メイン":
               core.replaceScene(MainScene(Return));
               break;
@@ -309,9 +308,9 @@ function Load(width,height){
       for (var i = 0; i < Text.length; i++){
         Text[i].addEventListener('touchstart',function(e){
           if(Data) Load_Datas();
-          if(this.text == "▶ 最初から") Scene_loads(1,false,false);
+          if(this.text == "▶ 最初から") Scene_loads("最初から",false,false);
           if(this.text == "▶ 続きから") Scene_loads("セーブ読み込み",false,false);
-          if(this.text == "▶ 説明") Scene_loads(-1,false,false);
+          if(this.text == "▶ 説明") Scene_loads("説明",false,false);
           if(this.text == "▶ データ初期化"){
             core.pushScene(ClearScene());
             Scene_kazu++;
@@ -2461,7 +2460,6 @@ function Load(width,height){
           this.width = width;
           this.height = (width/20);
           this.text = a;
-          i++;
           scene.addChild(this);
         }
       });
@@ -2470,7 +2468,22 @@ function Load(width,height){
 
       Text[0] = new Texts("▶ 閉じる");
 
-      if(Number.length!=11){
+      if(Number.length==11){
+        var Video = new Entity()
+        Video.visible =  true;
+        Video._element = document.createElement('div')
+        Video.x = (width/15)+(width/30);
+        Video.y = Numbers+(width/5);
+        Video._element.innerHTML = '<iframe src="https://www.youtube.com/embed/'+Number+'?enablejsapi=1&controls=0&showinfo=0&autoplay=0&rel=0&vq=small"  width="'+(width*0.8)+'" height="'+(width/16*9*0.8)+'" frameborder="0" id="player"></iframe>'
+        scene.addChild(Video);
+      }
+      else if (Number.length > 12) {
+        var S_Text = Number.split("↓");
+        for (var i = 1; i < S_Text.length+1; i++) {
+          Text[i] = new Texts(S_Text[i-1]);
+        }
+      }
+      else{
         var xxx = core.assets["image/アイテム詳細/"+Number+".png"].width;
         var yyy = core.assets["image/アイテム詳細/"+Number+".png"].height;
         var Item = new Sprite(xxx,yyy);
@@ -2480,15 +2493,6 @@ function Load(width,height){
         Item.x = (Item.scaleX*xxx/2)-xxx/2+(width/15)+(width/30);
         Item.y = (Item.scaleY*yyy/2)-yyy/2+Numbers+(width/15);
         scene.addChild(Item);
-      }
-      else{
-        var Video = new Entity()
-        Video.visible =  true;
-        Video._element = document.createElement('div')
-        Video.x = (width/15)+(width/30);
-        Video.y = Numbers+(width/5);
-        Video._element.innerHTML = '<iframe src="https://www.youtube.com/embed/'+Number+'?enablejsapi=1&controls=0&showinfo=0&autoplay=0&rel=0&vq=small"  width="'+(width*0.8)+'" height="'+(width/16*9*0.8)+'" frameborder="0" id="player"></iframe>'
-        scene.addChild(Video);
       }
 
       Text[0].addEventListener('touchstart',function(e){

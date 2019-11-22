@@ -160,11 +160,6 @@ return;
 
 function Scene_loads2(Number,Item,get){
 console.log(Number);
-if(Number==1){
-  Item_Flag = [];
-  Character_Flag = [];
-  Flag_reset();
-}
 var Name = Flag[0];
 var Gender = Flag[2];
 var Surname = Flag[1];
@@ -172,10 +167,12 @@ if(Gender=="男"){
 var www = ["僕","俺"];
 var Person = www[rand(1)];
 var S_image = 1;
+var S_image2 = 29;
 }
 else{
 var Person = "私";
 var S_image = 2;
+var S_image2 = 30;
 }
 if(Item){
 Number = Item+Number;
@@ -245,7 +242,7 @@ Scene_type = "チョイス";
 return;
 }
 if(DATAS==undefined){
-  console.log("エラー");
+  console.log("読み込み失敗");
   Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",0,0,0,0,0];
   Scene_type = "読み込みエラー";
   return;
@@ -276,7 +273,7 @@ if(Number.length>2){
     T_Name = "";
     Text = "ここでは使えないようだ。";
     if(Scene_type == "メイン"){
-    Datas = [Datas[0],Datas[2],0,Datas[4],0,Datas[6],0,"",Text,0,0,0,Flag[4],0];
+    Datas = [Datas[0],Datas[1],0,Datas[3],0,Datas[5],0,"",Text,0,0,0,Flag[4],0];
     }
     if(Scene_type == "チョイス"){
     Datas = [Datas[0],Datas[1],0,Datas[2],0,Datas[3],0,"",Text,0,0,0,Flag[4],0];
@@ -310,6 +307,9 @@ if(Scene_type=="メイン"){
   if(Datas[1]=="主人公") Datas[1] = Datas[1] = S_image;
   if(Datas[3]=="主人公") Datas[3] = Datas[3] = S_image;
   if(Datas[5]=="主人公") Datas[5] = Datas[5] = S_image;
+  if(Datas[1]=="主人公カットイン") Datas[1] = Datas[1] = S_image2;
+  if(Datas[3]=="主人公カットイン") Datas[3] = Datas[3] = S_image2;
+  if(Datas[5]=="主人公カットイン") Datas[5] = Datas[5] = S_image2;
 }
 else if(Scene_type=="チョイス"){
   Datas[0] = DATAS[i].Datas0;
@@ -366,10 +366,19 @@ else{
 }
 if(DATAS[i].get!=false){
   GET = DATAS[i].get.split("\n");
+  console.log(GET);
     for (var l = 0; l < GET.length; l++) {
       switch(GET[l]){
         case "フラグリセット":
           Flag_reset();
+          continue;
+          break;
+      case "アイテムリセット":
+        Item_Flag = [];
+        continue;
+        break;
+        case "人物リセット":
+          Character_Flag = [];
           continue;
           break;
         case "ダメージ":
@@ -381,7 +390,10 @@ if(DATAS[i].get!=false){
         break;
       }
       for (var k = 0; k < DATAS.length; k++) {
-        if(DATAS[k].Number==GET[l]) break;
+        if(DATAS[k].Number==GET[l]){
+          console.log(GET[l]);
+          break;
+        }
       }
       Get_ICF(DATAS[k].type,DATAS[k].Datas0,DATAS[k].Datas1.replace(/\n/g,"↓").replace(/\(一人称\)/g,Person),DATAS[k].Datas2,DATAS[k].Datas3,DATAS[k].Datas4);
     }
