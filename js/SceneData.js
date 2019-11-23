@@ -365,8 +365,8 @@ else{
   Datas[1] = DATAS[i].Datas1;
 }
 if(DATAS[i].get!=false){
-  GET = DATAS[i].get.split("\n");
-  console.log(GET);
+  GET = DATAS[i].get.replace(/↓/g,"\n");
+  GET = GET.split("\n");
     for (var l = 0; l < GET.length; l++) {
       switch(GET[l]){
         case "フラグリセット":

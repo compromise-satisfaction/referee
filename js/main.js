@@ -35,7 +35,7 @@ function Load(width,height){
   for (var i = 1; i <= 10; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 26; i++){
+  for (var i = 1; i <= 29; i++){
     core.preload("image/正方形/"+i+".png");
   }
   for (var i = 1; i <= 30; i++){
