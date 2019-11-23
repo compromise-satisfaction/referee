@@ -386,12 +386,12 @@ if(DATAS[i].get!=false){
           continue;
           break;
         default:
-        console.log(GET[l]);
+        //console.log(GET[l]);
         break;
       }
       for (var k = 0; k < DATAS.length; k++) {
         if(DATAS[k].Number==GET[l]){
-          console.log(GET[l]);
+          //console.log(GET[l]);
           break;
         }
       }
