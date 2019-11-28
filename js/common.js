@@ -74,6 +74,7 @@ $(function(){
     el: '#app',
     mounted () {
       fetch(
+        /*
         //*
         'https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec',
         /*/
@@ -89,8 +90,10 @@ $(function(){
   })
 
   //ゲーム内の画面サイズ
+  var gameWidth = 405;
   var gameWidth = 1072;
   var gameWidth = 1072/4;
+  var gameHeight = 720;
   var gameHeight = 1560;
   var gameHeight = 1560/4;
   //回転時の処理
