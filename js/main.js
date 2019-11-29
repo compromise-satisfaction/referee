@@ -51,6 +51,18 @@ function Load(width,height){
     var XXX = width;
     var YYY = width/16*9;
 
+    function vue(){
+          fetch(
+            "https://script.google.com/macros/s/AKfycbzSdN3_6l87Bbn58AFWgq7lFnI27blOi7jWn0JdWYVRaGZWwOSd/exec",
+          )
+          .then(res => res.json())
+          .then(result => {
+            var game = enchant.Core.instance;
+            DATAS = result;
+          },);
+          return;
+    }
+
     function BGM_Stop(Pause){
       return;
       if(Pause){
@@ -499,8 +511,9 @@ function Load(width,height){
     }
     if(DATAS==undefined){
       //DATAS = DATAS2;
+      vue();
       console.log("読み込み失敗");
-      Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",0,0,0,0,0];
+      Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",0,0,Number,0,0];
       Scene_type = "読み込みエラー";
       return;
     }
