@@ -57,10 +57,8 @@ function Load(width,height){
           )
           .then(res => res.json())
           .then(result => {
-            var game = enchant.Core.instance;
             DATAS = result;
           },);
-          return;
     }
 
     function BGM_Stop(Pause){
@@ -101,7 +99,10 @@ function Load(width,height){
     }
 
     function Scene_loads(Number,Return,Item){
-      if(DATAS==0) DATAS = core.scene_datas;
+      if(DATAS==0){
+        DATAS = core.scene_datas;
+        if(DATAS==undefined) vue();
+      }
       if(Number=="セーブ読み込み") Scene_type = Number;
       else Scene_loads2(Number,Item);
       //console.log(Scene_type);
@@ -512,7 +513,6 @@ function Load(width,height){
     if(DATAS==undefined){
       //DATAS = DATAS2;
       vue();
-      console.log("読み込み失敗");
       Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",0,0,Number,0,0];
       Scene_type = "読み込みエラー";
       return;
