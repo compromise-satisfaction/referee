@@ -36,7 +36,7 @@ function Load(width,height){
   for (var i = 1; i <= 10; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 30; i++){
+  for (var i = 1; i <= 31; i++){
     core.preload("image/正方形/"+i+".png");
   }
   for (var i = 1; i <= 30; i++){
@@ -103,6 +103,7 @@ function Load(width,height){
         DATAS = core.scene_datas;
         if(DATAS==undefined) vue();
       }
+      if(Number=="リバーシ") return;
       if(Number=="セーブ読み込み") Scene_type = Number;
       else Scene_loads2(Number,Item);
       //console.log(Scene_type);
@@ -286,6 +287,7 @@ function Load(width,height){
     var Scene_kazu = 1;
     var Get = false;
     var Moves = 0;
+    var OASOBI = false;
 
     function have(Item){
     for (var i = 0; i < Item_Flag.length; i++) {
@@ -778,6 +780,18 @@ function Load(width,height){
           console.log("Scene数",Scene_kazu);
         }
       })
+
+      var Set_button = new Sprite(195,95);
+      Set_button.image = core.assets["image/Set_button.png"];
+      Set_button.x = 105;
+      Set_button.y = 455;
+      Set_button.frame = 15;
+      scene.addChild(Set_button);
+      Set_button.addEventListener('touchstart',function(e){
+        core.pushScene(ReversiScene());
+        Scene_kazu++;
+        console.log("Scene数",Scene_kazu);
+      });
 
       return scene;
     };
@@ -1825,49 +1839,9 @@ function Load(width,height){
               Scene_loads("セーブ読み込み",false,false);
               break;
               case "設定する":
+              Flag[0] = S_Input2._element.value;
+              Flag[1] = S_Input._element.value;
               if(Round.x == Man.x+(Round.scaleX*xxx/2)-xxx/2){
-                Flag[0] = S_Input2._element.value;
-                Flag[1] = S_Input._element.value;
-                if(S_Input2._element.value=="チート移動"){
-                  core.popScene();
-                  core.popScene();
-                  Scene_kazu--;
-                  Scene_kazu--;
-                  console.log("Scene数",Scene_kazu);
-                  Number = S_Input._element.value;
-                  if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
-                  Scene_loads(Number,false,false);
-                  return;
-                }
-                else if(S_Input2._element.value=="チートアイテム"){
-                  Item_Flag[Item_Flag.length] = [S_Input._element.value,"チートで生み出したアイテム。"];
-                  Sound_ON("Item",true);
-                  Text12.text = S_Input._element.value;
-                  scene.addChild(Text12);
-                  return;
-                }
-                else if(S_Input2._element.value=="チート体力"){
-                  Flag[6] = S_Input._element.value*1;
-                  Sound_ON("Item",true);
-                  Text12.text = "残り回数 = "+S_Input._element.value;
-                  scene.addChild(Text12);
-                  return;
-                }
-                else if(S_Input2._element.value=="チートフラグ"){
-                  for (var i = 10; i < Flag.length; i++){
-                    if(Flag[i]==S_Input._element.value){
-                      Flag[i] = false;
-                      Text12.text = S_Input._element.value+" 消去";
-                      scene.addChild(Text12);
-                      return;
-                    }
-                  }
-                  Flag[Flag.length] = S_Input._element.value;
-                  Sound_ON("Item",true);
-                  Text12.text = S_Input._element.value;
-                  scene.addChild(Text12);
-                  return;
-                }
                 Flag[2] = "男";
                 if(S_Input._element.value=="") Flag[1] = "若辻";
                 if(S_Input2._element.value=="") Flag[0] = "俛人";
@@ -1877,9 +1851,52 @@ function Load(width,height){
                 if(S_Input._element.value=="") Flag[1] = "防人";
                 if(S_Input2._element.value=="") Flag[0] = "玲奈";
               }
+              if(S_Input2._element.value=="チート移動"){
+                core.popScene();
+                core.popScene();
+                Scene_kazu--;
+                Scene_kazu--;
+                console.log("Scene数",Scene_kazu);
+                Number = S_Input._element.value;
+                if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
+                Scene_loads(Number,false,false);
+                return;
+              }
+              else if(S_Input2._element.value=="チートアイテム"){
+                Item_Flag[Item_Flag.length] = S_Input._element.value.split(",");
+                if(Item_Flag[Item_Flag.length-1].length==2){
+                  Item_Flag[Item_Flag.length-1][2] = 27;
+                }
+                if(Item_Flag[Item_Flag.length-1].length==1){
+                  Item_Flag[Item_Flag.length-1][1] = "チートで生み出したアイテム。↓見た目は強欲な壺。";
+                  Item_Flag[Item_Flag.length-1][2] = 27;
+                }
+                Sound_ON("Item",true);
+                Text[11].text = "アイテムゲット "+Item_Flag[Item_Flag.length-1][0];
+                return;
+              }
+              else if(S_Input2._element.value=="チート体力"){
+                Flag[6] = S_Input._element.value*1;
+                Sound_ON("Item",true);
+                Text[11].text = "残り回数 = "+S_Input._element.value;
+                return;
+              }
+              else if(S_Input2._element.value=="チートフラグ"){
+                for (var i = 10; i < Flag.length; i++){
+                  if(Flag[i]==S_Input._element.value){
+                    Flag[i] = false;
+                    Text[11].text = S_Input._element.value+" 消去";
+                    return;
+                  }
+                }
+                Flag[Flag.length] = S_Input._element.value;
+                Sound_ON("Item",true);
+                Text[11].text = S_Input._element.value;
+                return;
+              }
               Sound_ON("Item",true);
               Text[11].text = "設定しました。";
-                break;
+              break;
           }
         });
       }
@@ -2436,7 +2453,11 @@ function Load(width,height){
         console.log("Scene数",Scene_kazu);
         if(this.text=="▶ 使う") Scene_loads(Number,true,"使う"+Choice_Item);
         else{
-          if(Ig==Choice_Item){
+          if(Ig==Choice_Item||(Ig!="日常"&&Choice_Item=="強欲な壺")){
+            if(Choice_Item=="強欲な壺"){
+              Get_ICF("アイテム","強欲な壺","消失");
+              Item_Flag[Item_Flag.length] = ["強欲なカケラ","強欲な壺を使った証。",31];
+            }
             core.pushScene(PopScene(Number,"異議あり！"));
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
@@ -2477,6 +2498,7 @@ function Load(width,height){
           Inspect_loads(Number,Choice_Item);
         }
         else if(this.text=="▶ 遊ぶ"){
+          OASOBI = true;
           core.popScene();
           core.pushScene(ReversiScene());
         }
@@ -3814,11 +3836,19 @@ function Load(width,height){
             if(V_or_D.frame==1){
               V_or_D.frame = 4;
               if(Saikyo) V_or_D.frame = 5;
+              if(OASOBI) OASOBI = "エクセレント";
             }
           }
           scene.addChild(V_or_D);
           console.log(Black_Number);
           console.log(White_Number);
+          if(OASOBI=="エクセレント"){
+            OASOBI = true;
+            core.pushScene(ItemgetScene(27,"おめでとうございます！↓賞品として強欲な壺をプレゼント！","リバーシ"));
+            Item_Flag[Item_Flag.length] = ["強欲な壺","チーター(強)に勝って貰った賞品。↓尋問時につきつけると先へ進める。↓その後強欲な壺が一つ無くなり↓強欲なカケラを入手する。",27];
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+          }
       }
 
       scene.on("touchstart",function(e){
@@ -3976,6 +4006,7 @@ function Load(width,height){
       Set_button1.frame = 14;
       scene.addChild(Set_button1);
       Set_button1.addEventListener('touchstart',function(e){
+        OASOBI = false;
         core.popScene();
         core.popScene();
         Scene_kazu--;
