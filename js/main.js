@@ -2,6 +2,7 @@ enchant()
 
 function Load(width,height){
   var core = new Core(width, height);
+  core.preload("image/融合.png");
   core.preload("sound/Item.wav");
   core.preload("image/left.png");
   core.preload("image/Round.png");
@@ -36,20 +37,18 @@ function Load(width,height){
   for (var i = 1; i <= 10; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 31; i++){
+  for (var i = 1; i <= 32; i++){
     core.preload("image/正方形/"+i+".png");
   }
-  for (var i = 1; i <= 30; i++){
+  for (var i = 1; i <= 31; i++){
     core.preload("image/人物/"+i+".png");
-  }
-  for (var i = 0; i <= 1; i++){
-    core.preload("image/アイテム詳細/"+i+".png");
   }
   core.fps = 10;
   core.onload = function(){
 
     var XXX = width;
     var YYY = width/16*9;
+    var Rotation_Y = 0;
 
     function vue(){
           fetch(
@@ -109,6 +108,9 @@ function Load(width,height){
       //console.log(Scene_type);
       Sound_ON("Choice",true);
       switch (Scene_type) {
+        case "直前":
+          Scene_loads(Flag[4],false,false);
+          break;
         case "読み込みエラー":
         case "メイン":
           core.replaceScene(MainScene(Return));
@@ -256,10 +258,10 @@ function Load(width,height){
       for (var i = 3; i < Flag.length; i++){
         if(Flag[i]=="true") Flag[i] = true;
         else if(Flag[i]=="false") Flag[i] = false
-        else if(Flag[i].replace(/\d/g,"").replace(/\./g,"")=="") Flag[i] = Flag[i] *1;
+        else if(Flag[i].replace(/\d/g,"").replace(/\./g,"")=="") Flag[i] = Flag[i]*1;
       }
       for (var i = 0; i < Datas.length; i++){
-        if(Datas[i].replace(/\d/g,"").replace(/\./g,"")=="") Datas[i] = Datas[i] *1;
+        if(Datas[i].replace(/\d/g,"").replace(/\./g,"")=="") Datas[i] = Datas[i]*1;
       }
       Pages = Flag[7].split("乙");
       Pages2 = Pages[1]*1;
@@ -515,7 +517,7 @@ function Load(width,height){
     if(DATAS==undefined){
       //DATAS = DATAS2;
       vue();
-      Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",0,0,Number,0,0];
+      Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",0,0,0,"タイトルに戻る",0];
       Scene_type = "読み込みエラー";
       return;
     }
@@ -805,6 +807,7 @@ function Load(width,height){
           if(Datas[11].substring(0,2)=="使う") OK = false;
           if(Datas[11].length>2){
             if(Datas[11].substring(0,3)=="調べる") OK = false;
+            if(Datas[11].substring(0,3)=="ヒント") OK = false;
             if(Datas[11].length>4){
               if(Datas[11].substring(0,5)=="つきつける") OK = false;
             }
@@ -816,15 +819,35 @@ function Load(width,height){
         }
       }
 
-      var xxx = core.assets["image/背景/"+ Datas[0] +".png"].width;
-      var yyy = core.assets["image/背景/"+ Datas[0] +".png"].height;
-      var Background = new Sprite(xxx,yyy);
-      Background.scaleX = width/xxx;
-      Background.scaleY = width/16*9/yyy;
-      Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
-      Background.x = (Background.scaleX*xxx/2)-xxx/2;
-      Background.y = (Background.scaleY*yyy/2)-yyy/2;
-      scene.addChild(Background);//背景
+      if(Datas[0]=="ヒント"){
+        var xxx = core.assets["image/融合.png"].width;
+        var yyy = core.assets["image/融合.png"].height;
+        var Background = new Sprite(xxx,yyy);
+        Background.image = core.assets["image/融合.png"];
+        Background.scaleX = width/xxx*1.2;
+        Background.scaleY = width/yyy*1.2;
+        Background.x = (width-xxx)/2;
+        Background.y = -(width-xxx)/2;
+        Rotation_Y -= 10;
+        Background.rotation = Rotation_Y;
+        scene.addChild(Background);//背景
+        Background.addEventListener("enterframe",function(){
+          Rotation_Y -= 10;
+          Background.rotation = Rotation_Y;
+          if(Rotation_Y==-360) Rotation_Y = 0;
+        })
+      }
+      else{
+        var xxx = core.assets["image/背景/"+ Datas[0] +".png"].width;
+        var yyy = core.assets["image/背景/"+ Datas[0] +".png"].height;
+        var Background = new Sprite(xxx,yyy);
+        Background.scaleX = width/xxx;
+        Background.scaleY = width/16*9/yyy;
+        Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
+        Background.x = (Background.scaleX*xxx/2)-xxx/2;
+        Background.y = (Background.scaleY*yyy/2)-yyy/2;
+        scene.addChild(Background);//背景
+      }
 
       if(Datas[0]=="カットイン"){
         var ccx = core.assets["image/背景/"+ Datas[0] +".png"].width*3;
@@ -1253,7 +1276,7 @@ function Load(width,height){
       }
       scene.addChild(Background);//背景
 
-      var Background2 = new Sprite(width,height-(width/16)*9);
+      var Background2 = new Sprite(width,height);
       Background2.image = core.assets["image/white.png"];
       Background2.x = 0;
       Background2.y = (width/16)*9;
@@ -1301,29 +1324,57 @@ function Load(width,height){
 
       var OK = true;
       //console.log(Datas[6]);
-      if(Datas[6].length>1){
-        if(Datas[6].substring(0,2)=="使う") OK = false;
-        if(Datas[6].length>2){
-          if(Datas[6].substring(0,3)=="調べる") OK = false;
-          if(Datas[6].length>4){
-            if(Datas[6].substring(0,5)=="つきつける") OK = false;
+      if(Datas[6]!=false){
+        if(Datas[6].length>1){
+          if(Datas[6].substring(0,2)=="使う") OK = false;
+          if(Datas[6].length>2){
+            if(Datas[6].substring(0,3)=="調べる") OK = false;
+            if(Datas[6].substring(0,3)=="ヒント") OK = false;
+            if(Datas[6].length>4){
+              if(Datas[6].substring(0,5)=="つきつける") OK = false;
+            }
           }
         }
-      }
-      if(OK) Flag[4] = Datas[6];
-      if(Flag[8]&&Datas[6]!="ゲームオーバー"){
-        Save(Datas[6]);
+        if(OK) Flag[4] = Datas[6];
+        if(Flag[8]&&Datas[6]!="ゲームオーバー"){
+          Save(Datas[6]);
+        }
       }
 
-      var xxx = core.assets["image/背景/"+ Datas[0] +".png"].width;
-      var yyy = core.assets["image/背景/"+ Datas[0] +".png"].height;
-      var Background = new Sprite(xxx,yyy);
-      Background.scaleX = ((width)/xxx);
-      Background.scaleY = (((width/16)*9)/yyy);
-      Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
-      Background.x = (Background.scaleX*xxx/2)-xxx/2;
-      Background.y = (Background.scaleY*yyy/2)-yyy/2;
-      scene.addChild(Background);
+      if(Datas[0]=="ヒント"){
+        var xxx = core.assets["image/融合.png"].width;
+        var yyy = core.assets["image/融合.png"].height;
+        var Background = new Sprite(xxx,yyy);
+        Background.image = core.assets["image/融合.png"];
+        Background.scaleX = width/xxx*1.2;
+        Background.scaleY = width/yyy*1.2;
+        Background.x = (width-xxx)/2;
+        Background.y = -(width-xxx)/2;
+        Rotation_Y -= 10;
+        Background.rotation = Rotation_Y;
+        scene.addChild(Background);//背景
+        var Background2 = new Sprite(width,height);
+        Background2.image = core.assets["image/white.png"];
+        Background2.x = 0;
+        Background2.y = (width/16)*9;
+        scene.addChild(Background2);//白地
+        Background.addEventListener("enterframe",function(){
+          Rotation_Y -= 10;
+          Background.rotation = Rotation_Y;
+          if(Rotation_Y==-360) Rotation_Y = 0;
+        })
+      }
+      else{
+        var xxx = core.assets["image/背景/"+ Datas[0] +".png"].width;
+        var yyy = core.assets["image/背景/"+ Datas[0] +".png"].height;
+        var Background = new Sprite(xxx,yyy);
+        Background.scaleX = ((width)/xxx);
+        Background.scaleY = (((width/16)*9)/yyy);
+        Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
+        Background.x = (Background.scaleX*xxx/2)-xxx/2;
+        Background.y = (Background.scaleY*yyy/2)-yyy/2;
+        scene.addChild(Background);
+      }
 
       if(Datas[2]!=false){
         var xxx = core.assets["image/人物/"+Datas[2]+".png"].width;
@@ -2453,7 +2504,11 @@ function Load(width,height){
         console.log("Scene数",Scene_kazu);
         if(this.text=="▶ 使う") Scene_loads(Number,true,"使う"+Choice_Item);
         else{
-          if(Ig==Choice_Item||(Ig!="日常"&&Choice_Item=="強欲な壺")){
+          if(Ig==Choice_Item||(Ig!="日常"&&(Choice_Item=="強欲な壺")||Choice_Item=="ヒントカード")){
+            if(Choice_Item=="ヒントカード"){
+              Scene_loads("ヒント"+Number,false,false);
+              return;
+            }
             if(Choice_Item=="強欲な壺"){
               Get_ICF("アイテム","強欲な壺","消失");
               Item_Flag[Item_Flag.length] = ["強欲なカケラ","強欲な壺を使った証。",31];
@@ -2934,7 +2989,7 @@ function Load(width,height){
           Numbers += (width/20)+(width/25);
           this.font  = (width/20)+"px monospace";
           this.color = 'black';
-          this.x = (width/15);
+          this.x = (width/12);
           this.y = Numbers;
           this.width = width;
           this.height = (width/20);
@@ -2951,27 +3006,45 @@ function Load(width,height){
         var Video = new Entity()
         Video.visible =  true;
         Video._element = document.createElement('div')
-        Video.x = (width/15)+(width/30);
+        Video.x = (width/15);
         Video.y = Numbers+(width/5);
         Video._element.innerHTML = '<iframe src="https://www.youtube.com/embed/'+Number+'?enablejsapi=1&controls=0&showinfo=0&autoplay=0&rel=0&vq=small"  width="'+(width*0.8)+'" height="'+(width/16*9*0.8)+'" frameborder="0" id="player"></iframe>'
         scene.addChild(Video);
       }
-      else if (Number.length > 12) {
-        var S_Text = Number.split("↓");
+      else{
+        var S_Text = Number.replace(/\n/g,"↓").split("↓");
         for (var i = 1; i < S_Text.length+1; i++) {
           Text[i] = new Texts(S_Text[i-1]);
+          if(i==13) break;
         }
       }
-      else{
-        var xxx = core.assets["image/アイテム詳細/"+Number+".png"].width;
-        var yyy = core.assets["image/アイテム詳細/"+Number+".png"].height;
-        var Item = new Sprite(xxx,yyy);
-        Item.image = core.assets["image/アイテム詳細/"+Number+".png"];
-        Item.scaleX = (width/xxx*0.8);
-        Item.scaleY = (width/yyy*0.8);
-        Item.x = (Item.scaleX*xxx/2)-xxx/2+(width/15)+(width/30);
-        Item.y = (Item.scaleY*yyy/2)-yyy/2+Numbers+(width/15);
-        scene.addChild(Item);
+
+      var Pages3 = -1;
+
+      for (var i = 1; i < Text.length; i++) {
+        Text[i].addEventListener('touchstart',function(e){
+          if(this.text=="▶ 次のページ"){
+            Pages3 += 13;
+            for (var i = 1; i < Text.length; i++) {
+              if(S_Text[Pages3+i]) Text[i].text = S_Text[Pages3+i];
+              else Text[i].text = "";
+            }
+          }
+          else if(this.text=="▶ 前のページ"){
+            Pages3 -= 13;
+            for (var i = 1; i < Text.length; i++) {
+              if(S_Text[Pages3+i]) Text[i].text = S_Text[Pages3+i];
+              else Text[i].text = "";
+            }
+          }
+          else if(this.text=="▶ 最初のページ"){
+            Pages3 = -1;
+            for (var i = 1; i < 14; i++) {
+              if(S_Text[Pages3+i]) Text[i].text = S_Text[Pages3+i];
+              else Text[i].text = "";
+            }
+          }
+        });
       }
 
       Text[0].addEventListener('touchstart',function(e){
@@ -3824,19 +3897,26 @@ function Load(width,height){
           V_or_D.y = 40;
           if(Black_Number>White_Number){
             if(AI == 1)V_or_D.frame = 2;
-            if(AI == 2)V_or_D.frame = 1;
+            if(AI == 2){
+              V_or_D.frame = 1;
+              if(OASOBI) OASOBI = "勝ち";
+            }
           }
           else if(Black_Number<White_Number){
-            if(AI == 1)V_or_D.frame = 1;
+            if(AI == 1){
+              V_or_D.frame = 1;
+              if(OASOBI) OASOBI = "勝ち";
+            }
             if(AI == 2)V_or_D.frame = 2;
           }
           else V_or_D.frame = 3;
           if(Hand.frame==6||Hand.frame==8){
             if(V_or_D.frame==2) V_or_D.frame = 0;
+            if(OASOBI) OASOBI = "勝ち";
             if(V_or_D.frame==1){
               V_or_D.frame = 4;
               if(Saikyo) V_or_D.frame = 5;
-              if(OASOBI) OASOBI = "エクセレント";
+              if(OASOBI=="勝ち") OASOBI = "エクセレント";
             }
           }
           scene.addChild(V_or_D);
@@ -3846,6 +3926,13 @@ function Load(width,height){
             OASOBI = true;
             core.pushScene(ItemgetScene(27,"おめでとうございます！↓賞品として強欲な壺をプレゼント！","リバーシ"));
             Item_Flag[Item_Flag.length] = ["強欲な壺","チーター(強)に勝って貰った賞品。↓尋問時につきつけると先へ進める。↓その後強欲な壺が一つ無くなり↓強欲なカケラを入手する。",27];
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+          }
+          else if(OASOBI=="勝ち"){
+            OASOBI = true;
+            core.pushScene(ItemgetScene(32,"おめでとうございます！↓賞品としてヒントカードをプレゼント！","リバーシ"));
+            Item_Flag[Item_Flag.length] = ["ヒントカード","AIに勝って貰った賞品。↓尋問時につきつけると↓ヒントと交換してもらえる。",32];
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
           }
