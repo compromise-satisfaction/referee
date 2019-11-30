@@ -1000,7 +1000,7 @@ function Load(width,height){
         scene.addChild(Item);
       }//アイテム
 
-      var Background2 = new Sprite(width,(width/16)*9);
+      var Background2 = new Sprite(width,height);
       Background2.image = core.assets["image/white.png"];
       Background2.x = 0;
       Background2.y = (width/16)*9;
