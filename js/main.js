@@ -37,7 +37,7 @@ function Load(width,height){
   for (var i = 1; i <= 10; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 32; i++){
+  for (var i = 1; i <= 33; i++){
     core.preload("image/正方形/"+i+".png");
   }
   for (var i = 1; i <= 31; i++){
@@ -3925,7 +3925,7 @@ function Load(width,height){
           if(OASOBI=="エクセレント"){
             OASOBI = true;
             core.pushScene(ItemgetScene(27,"おめでとうございます！↓賞品として強欲な壺をプレゼント！","リバーシ"));
-            Item_Flag[Item_Flag.length] = ["強欲な壺","チーター(強)に勝って貰った賞品。↓尋問時につきつけると先へ進める。↓その後強欲な壺が一つ無くなり↓強欲なカケラを入手する。",27];
+            Item_Flag[Item_Flag.length] = ["強欲な壺","チーター(強)に勝って貰った賞品。↓尋問時につきつけると先へ進める。↓その後強欲な壺が一つ無くなり↓強欲なカケラを入手する。",33];
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
           }
