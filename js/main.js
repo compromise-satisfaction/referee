@@ -3006,7 +3006,7 @@ function Load(width,height){
         var Video = new Entity()
         Video.visible =  true;
         Video._element = document.createElement('div')
-        Video.x = (width/15);
+        Video.x = (width/10);
         Video.y = Numbers+(width/5);
         Video._element.innerHTML = '<iframe src="https://www.youtube.com/embed/'+Number+'?enablejsapi=1&controls=0&showinfo=0&autoplay=0&rel=0&vq=small"  width="'+(width*0.8)+'" height="'+(width/16*9*0.8)+'" frameborder="0" id="player"></iframe>'
         scene.addChild(Video);
