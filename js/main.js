@@ -3912,7 +3912,6 @@ function Load(width,height){
           else V_or_D.frame = 3;
           if(Hand.frame==6||Hand.frame==8){
             if(V_or_D.frame==2) V_or_D.frame = 0;
-            if(OASOBI) OASOBI = "勝ち";
             if(V_or_D.frame==1){
               V_or_D.frame = 4;
               if(Saikyo) V_or_D.frame = 5;
