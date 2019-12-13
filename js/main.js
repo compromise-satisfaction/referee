@@ -20,17 +20,18 @@ function Load(width,height){
   //core.preload("sound/永遠の灯.wav");
   //core.preload("sound/偶然、必然。.wav");
   core.preload("image/Trophies.png");
+  core.preload("image/背景/透明.png");
   core.preload("image/背景/left.png");
   core.preload("image/異議あり！.png");
   core.preload("sound/異議あり！.wav");
   core.preload("image/カットイン.png");
+  core.preload("image/Explosion.png");
   core.preload("image/背景/stand.png");
   core.preload("image/背景/Black.png");
   core.preload("image/背景/right.png");
   core.preload("image/背景/裁判長.png");
   core.preload("image/背景/留置所.png");
   core.preload("image/Background.png");
-  core.preload("image/背景/透明.png");
   core.preload("image/背景/カットイン.png");
   core.preload("image/Set_button.png","image/stone.png","image/Hand.png","image/V_or_D.png");
 
@@ -40,7 +41,7 @@ function Load(width,height){
   for (var i = 1; i <= 33; i++){
     core.preload("image/正方形/"+i+".png");
   }
-  for (var i = 1; i <= 31; i++){
+  for (var i = 1; i <= 32; i++){
     core.preload("image/人物/"+i+".png");
   }
   core.fps = 10;
@@ -870,6 +871,19 @@ function Load(width,height){
         })
       }
 
+      var xxx = 80;
+      var yyy = 80;
+      var Explosion = new Sprite(xxx,yyy);
+      Explosion.scaleX = ((width/2)/xxx);
+      Explosion.scaleY = (((width/16)*9)/yyy);
+      Explosion.image = core.assets["image/Explosion.png"];
+      Explosion.frame = 11;
+      Explosion.y = (Explosion.scaleX*yyy/2)-yyy/2;
+      scene.addChild(Explosion);
+      Explosion.addEventListener("enterframe",function(){
+        if(Explosion.frame!=11) Explosion.frame++;
+      })
+
       if(Datas[3]!=false){
         var xxx = core.assets["image/人物/"+Datas[3]+".png"].width;
         var yyy = core.assets["image/人物/"+Datas[3]+".png"].height;
@@ -1051,6 +1065,21 @@ function Load(width,height){
         var s = true;
         if(Datas[8].substring(Time,Time+1)=="→"){
           s = false;
+        }
+        else if(Datas[8].substring(Time,Time+1)=="㊨"){
+          s = false;
+          Explosion.x = (Explosion.scaleX*80/2)-80/2+(width/2);
+          Explosion.frame = 0;
+        }
+        else if(Datas[8].substring(Time,Time+1)=="㊥"){
+          s = false;
+          Explosion.x = (Explosion.scaleX*80/2)-80/2+(width/4);
+          Explosion.frame = 0;
+        }
+        else if(Datas[8].substring(Time,Time+1)=="㊧"){
+          s = false;
+          Explosion.x = (Explosion.scaleX*80/2)-80/2;
+          Explosion.frame = 0;
         }
         Time ++;
         if(s){
