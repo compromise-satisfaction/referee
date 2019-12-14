@@ -35,7 +35,7 @@ function Load(width,height){
   core.preload("image/背景/カットイン.png");
   core.preload("image/Set_button.png","image/stone.png","image/Hand.png","image/V_or_D.png");
 
-  for (var i = 1; i <= 10; i++){
+  for (var i = 1; i <= 11; i++){
     core.preload("image/背景/"+i+".png");
   }
   for (var i = 1; i <= 34; i++){
