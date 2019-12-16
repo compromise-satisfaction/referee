@@ -577,7 +577,7 @@ function Load(width,height){
         return;
       }
     }
-    if(Flag[4]) Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。" + DATAS[0].Datas14,0,0,0,"未完成",0];
+    if(Flag[4]) Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + DATAS[0].Datas14,0,0,0,"未完成",0];
     else Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。",0,0,0,"タイトルに戻る",0];
     Scene_type = "メイン";
     return;
