@@ -1939,63 +1939,68 @@ function Load(width,height){
               Scene_loads("セーブ読み込み",false,false);
               break;
               case "設定する":
-              Flag[0] = S_Input2._element.value;
-              Flag[1] = S_Input._element.value;
-              if(Round.x == Man.x+(Round.scaleX*xxx/2)-xxx/2){
-                Flag[2] = "男";
-                if(S_Input._element.value=="") Flag[1] = "若辻";
-                if(S_Input2._element.value=="") Flag[0] = "俛人";
+              if(S_Input._element.value.replace(/[^,]/g,"")!=""||S_Input2._element.value.replace(/[^,]/g,"")!=""){
+                Text[11].text = ",(カンマ)は使用できません。";
               }
               else{
-                Flag[2] = "女";
-                if(S_Input._element.value=="") Flag[1] = "防人";
-                if(S_Input2._element.value=="") Flag[0] = "玲奈";
-              }
-              if(S_Input2._element.value=="チート移動"){
-                core.popScene();
-                core.popScene();
-                Scene_kazu--;
-                Scene_kazu--;
-                console.log("Scene数",Scene_kazu);
-                Number = S_Input._element.value;
-                if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
-                Scene_loads(Number,false,false);
-                return;
-              }
-              else if(S_Input2._element.value=="チートアイテム"){
-                Item_Flag[Item_Flag.length] = S_Input._element.value.split(",");
-                if(Item_Flag[Item_Flag.length-1].length==2){
-                  Item_Flag[Item_Flag.length-1][2] = 27;
+                Flag[0] = S_Input2._element.value;
+                Flag[1] = S_Input._element.value;
+                if(Round.x == Man.x+(Round.scaleX*xxx/2)-xxx/2){
+                  Flag[2] = "男";
+                  if(S_Input._element.value=="") Flag[1] = "若辻";
+                  if(S_Input2._element.value=="") Flag[0] = "俛人";
                 }
-                if(Item_Flag[Item_Flag.length-1].length==1){
-                  Item_Flag[Item_Flag.length-1][1] = "チートで生み出したアイテム。↓見た目は強欲な壺。";
-                  Item_Flag[Item_Flag.length-1][2] = 27;
+                else{
+                  Flag[2] = "女";
+                  if(S_Input._element.value=="") Flag[1] = "防人";
+                  if(S_Input2._element.value=="") Flag[0] = "玲奈";
                 }
-                Sound_ON("Item",true);
-                Text[11].text = "アイテムゲット "+Item_Flag[Item_Flag.length-1][0];
-                return;
-              }
-              else if(S_Input2._element.value=="チート体力"){
-                Flag[6] = S_Input._element.value*1;
-                Sound_ON("Item",true);
-                Text[11].text = "残り回数 = "+S_Input._element.value;
-                return;
-              }
-              else if(S_Input2._element.value=="チートフラグ"){
-                for (var i = 10; i < Flag.length; i++){
-                  if(Flag[i]==S_Input._element.value){
-                    Flag[i] = false;
-                    Text[11].text = S_Input._element.value+" 消去";
-                    return;
+                if(S_Input2._element.value=="チート移動"){
+                  core.popScene();
+                  core.popScene();
+                  Scene_kazu--;
+                  Scene_kazu--;
+                  console.log("Scene数",Scene_kazu);
+                  Number = S_Input._element.value;
+                  if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
+                  Scene_loads(Number,false,false);
+                  return;
+                }
+                else if(S_Input2._element.value=="チートアイテム"){
+                  Item_Flag[Item_Flag.length] = S_Input._element.value.split(",");
+                  if(Item_Flag[Item_Flag.length-1].length==2){
+                    Item_Flag[Item_Flag.length-1][2] = 27;
                   }
+                  if(Item_Flag[Item_Flag.length-1].length==1){
+                    Item_Flag[Item_Flag.length-1][1] = "チートで生み出したアイテム。↓見た目は強欲な壺。";
+                    Item_Flag[Item_Flag.length-1][2] = 27;
+                  }
+                  Sound_ON("Item",true);
+                  Text[11].text = "アイテムゲット "+Item_Flag[Item_Flag.length-1][0];
+                  return;
                 }
-                Flag[Flag.length] = S_Input._element.value;
+                else if(S_Input2._element.value=="チート体力"){
+                  Flag[6] = S_Input._element.value*1;
+                  Sound_ON("Item",true);
+                  Text[11].text = "残り回数 = "+S_Input._element.value;
+                  return;
+                }
+                else if(S_Input2._element.value=="チートフラグ"){
+                  for (var i = 10; i < Flag.length; i++){
+                    if(Flag[i]==S_Input._element.value){
+                      Flag[i] = false;
+                      Text[11].text = S_Input._element.value+" 消去";
+                      return;
+                    }
+                  }
+                  Flag[Flag.length] = S_Input._element.value;
+                  Sound_ON("Item",true);
+                  Text[11].text = S_Input._element.value;
+                  return;
+                }
                 Sound_ON("Item",true);
-                Text[11].text = S_Input._element.value;
-                return;
+                Text[11].text = "設定しました。";
               }
-              Sound_ON("Item",true);
-              Text[11].text = "設定しました。";
               break;
           }
         });
