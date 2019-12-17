@@ -533,7 +533,7 @@ function Load(width,height){
       if(Number.substring(0,10)=="つきつけるデフォルト"){
         T_Name = "";
         Text = "反応がない。";
-        if(Scene_type == "メイン"){
+        if(Scene_type == "メイン"||Scene_type == "アイテム"){
         Datas = [Datas[0],Datas[2],0,Datas[4],0,Datas[6],0,"",Text,0,0,0,Flag[4],0];
         }
         if(Scene_type == "チョイス"){
@@ -547,7 +547,7 @@ function Load(width,height){
       if(Number.substring(0,7)=="使うデフォルト"){
         T_Name = "";
         Text = "ここでは使えないようだ。";
-        if(Scene_type == "メイン"){
+        if(Scene_type == "メイン"||Scene_type == "アイテム"){
         Datas = [Datas[0],Datas[1],0,Datas[3],0,Datas[5],0,"",Text,0,0,0,Flag[4],0];
         }
         if(Scene_type == "チョイス"){
@@ -565,15 +565,7 @@ function Load(width,height){
     }
     if(Number.length>2){
       if(Number.substring(0,2)=="使う"){
-        T_Name = "";
-        Text = "ここでは使えないようだ。";
-        if(Scene_type == "メイン"){
-        Datas = [Datas[0],Datas[1],0,Datas[3],0,Datas[5],0,"",Text,0,0,0,Flag[4],0];
-        }
-        if(Scene_type == "チョイス"){
-        Datas = [Datas[0],Datas[1],0,Datas[2],0,Datas[3],0,"",Text,0,0,0,Flag[4],0];
-        }
-        Scene_type = "メイン";
+        Scene_loads2(Flag[4],"使うデフォルト",false);
         return;
       }
     }
