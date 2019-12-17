@@ -1,25 +1,14 @@
 enchant()
 
-function aaa(){
-  fetch(
-    "https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",
-  )
-  .then(res => res.json())
-  .then(result => {
-    ImageDATAS = result;
-  },);
-}
-
 function Load(width,height){
   var game = new Core(width, height);
-  aaa();
 
   var loadScene = new Scene();
 	game.loadingScene = loadScene;
 
   var label = new Label();
   var progress = 0;
-  var eee = true;
+  var III = [];
 
 	loadScene.addEventListener('progress', function(e){
 
@@ -37,7 +26,6 @@ function Load(width,height){
 
 	});
 	loadScene.addEventListener('load', function(e) {
-    bbb();
     var xxx = game.assets["image/Buttons.png"].width/8;
     var yyy = game.assets["image/Buttons.png"].height;
     var Enter1 = new Sprite(xxx,yyy);
@@ -86,21 +74,31 @@ function Load(width,height){
   game.preload("image/Background.png");
   game.preload("image/背景/カットイン.png");
   game.preload("image/Set_button.png","image/stone.png","image/Hand.png","image/V_or_D.png");
+  var def = [];
   for (var i = 1; i <= 11; i++){
-    game.preload("image/背景/"+i+".png");
+    def[def.length] = "image/背景/"+i+".png";
   }
-  for (var i = 1; i <= 35; i++){
-    game.preload("image/正方形/"+i+".png");
+  for (var i = 1; i <= 36; i++){
+    def[def.length] = "image/正方形/"+i+".png";
   }
-  for (var i = 1; i <= 32; i++){
-    game.preload("image/人物/"+i+".png");
+  for (var i = 1; i <= 33; i++){
+    def[def.length] = "image/人物/"+i+".png";
   }
-
-  function bbb(){
-    for (var i = 0; i < ImageDATAS.length; i++){
-      game.preload(ImageDATAS[i].url);
+  game.preload(def);
+  fetch(
+    "https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",
+  )
+  .then(res => res.json())
+  .then(result => {
+    III = [];
+    ImageDATAS = result;
+    for (var i = 0; i < ImageDATAS.length; i++) {
+      III[i] = ImageDATAS[i].url
     }
-  }
+    console.log(III);
+    console.log(def);
+    game.preload(III);
+  },);
 
   game.fps = 10;
   game.onload = function(){
