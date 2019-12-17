@@ -1,51 +1,90 @@
 enchant()
 
+function aaa(){
+  fetch(
+    "https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",
+  )
+  .then(res => res.json())
+  .then(result => {
+    ImageDATAS = result;
+  },);
+}
+
 function Load(width,height){
-  var core = new Core(width, height);
-  core.preload("image/融合.png");
-  core.preload("sound/Item.wav");
-  core.preload("image/left.png");
-  core.preload("image/Round.png");
-  core.preload("image/title.png");
-  core.preload("image/right.png");
-  core.preload("image/white.png");
-  core.preload("image/stand.png");
-  core.preload("image/留置所.png");
-  core.preload("sound/Choice.wav");
-  core.preload("image/Buttons.png");
-  core.preload("image/待った！.png");
-  core.preload("sound/待った！.wav");
-  core.preload("sound/Trophies.wav");
-  //core.preload("sound/プライド.wav");
-  //core.preload("sound/永遠の灯.wav");
-  //core.preload("sound/偶然、必然。.wav");
-  core.preload("image/Trophies.png");
-  core.preload("image/背景/透明.png");
-  core.preload("image/背景/left.png");
-  core.preload("image/異議あり！.png");
-  core.preload("sound/異議あり！.wav");
-  core.preload("image/カットイン.png");
-  core.preload("image/Explosion.png");
-  core.preload("image/背景/stand.png");
-  core.preload("image/背景/Black.png");
-  core.preload("image/背景/right.png");
-  core.preload("image/背景/裁判長.png");
-  core.preload("image/背景/留置所.png");
-  core.preload("image/Background.png");
-  core.preload("image/背景/カットイン.png");
-  core.preload("image/Set_button.png","image/stone.png","image/Hand.png","image/V_or_D.png");
+  var game = new Core(width, height);
+
+  var loadScene = new Scene();
+	game.loadingScene = loadScene;
+
+	game.preload("image/読み込み中.png");
+	loadScene.addEventListener('progress', function(e){
+		var progress = e.loaded / e.total;
+		progress *= 100;
+		progress = Math.round(progress);
+
+		var loadImg = new Sprite(405,600);
+		loadImg.image = game.assets["image/読み込み中.png"];
+		loadScene.addChild(loadImg);
+
+		var label = new Label();
+		label.moveTo(200,290);
+		label.text = "LOADING..." + progress;
+		label.color = 'white';
+    label.font  = "30px monospace";
+		loadScene.addChild(label);
+	});
+	loadScene.addEventListener('load', function(e) {
+
+  	var core = enchant.Core.instance;
+  	core.removeScene(core.loadingScene);
+  	core.dispatchEvent(e);
+
+	});
+  game.preload("image/融合.png");
+  game.preload("sound/Item.wav");
+  game.preload("image/left.png");
+  game.preload("image/Round.png");
+  game.preload("image/title.png");
+  game.preload("image/right.png");
+  game.preload("image/white.png");
+  game.preload("image/stand.png");
+  game.preload("image/留置所.png");
+  game.preload("sound/Choice.wav");
+  game.preload("image/Buttons.png");
+  game.preload("image/待った！.png");
+  game.preload("sound/待った！.wav");
+  game.preload("sound/Trophies.wav");
+  //game.preload("sound/プライド.wav");
+  //game.preload("sound/永遠の灯.wav");
+  //game.preload("sound/偶然、必然。.wav");
+  game.preload("image/Trophies.png");
+  game.preload("image/背景/透明.png");
+  game.preload("image/背景/left.png");
+  game.preload("image/異議あり！.png");
+  game.preload("sound/異議あり！.wav");
+  game.preload("image/カットイン.png");
+  game.preload("image/Explosion.png");
+  game.preload("image/背景/stand.png");
+  game.preload("image/背景/Black.png");
+  game.preload("image/背景/right.png");
+  game.preload("image/背景/裁判長.png");
+  game.preload("image/背景/留置所.png");
+  game.preload("image/Background.png");
+  game.preload("image/背景/カットイン.png");
+  game.preload("image/Set_button.png","image/stone.png","image/Hand.png","image/V_or_D.png");
 
   for (var i = 1; i <= 11; i++){
-    core.preload("image/背景/"+i+".png");
+    game.preload("image/背景/"+i+".png");
   }
   for (var i = 1; i <= 35; i++){
-    core.preload("image/正方形/"+i+".png");
+    game.preload("image/正方形/"+i+".png");
   }
   for (var i = 1; i <= 32; i++){
-    core.preload("image/人物/"+i+".png");
+    game.preload("image/人物/"+i+".png");
   }
-  core.fps = 10;
-  core.onload = function(){
+  
+  game.fps = 10;
+  game.onload = function(){
 
     var XXX = width;
     var YYY = width/16*9;
@@ -65,9 +104,9 @@ function Load(width,height){
       return;
       if(Pause){
         console.log("BGM_pause");
-        core.assets["sound/プライド.wav"].pause();
-        core.assets["sound/永遠の灯.wav"].pause();
-        core.assets["sound/偶然、必然。.wav"].pause();
+        game.assets["sound/プライド.wav"].pause();
+        game.assets["sound/永遠の灯.wav"].pause();
+        game.assets["sound/偶然、必然。.wav"].pause();
       }
       return;
     }
@@ -93,14 +132,14 @@ function Load(width,height){
           break;
       }
       if(Play) console.log(Sound_Name);
-      if(Play) core.assets["sound/"+Sound_Name+".wav"].play();
-      //else core.assets["sound/"+Sound_Name+".wav"].pause();
+      if(Play) game.assets["sound/"+Sound_Name+".wav"].play();
+      //else game.assets["sound/"+Sound_Name+".wav"].pause();
       return;
     }
 
     function Scene_loads(Number,Return,Item){
       if(DATAS==0){
-        DATAS = core.scene_datas;
+        DATAS = game.scene_datas;
         if(DATAS==undefined) vue();
       }
       if(Number=="リバーシ") return;
@@ -114,19 +153,19 @@ function Load(width,height){
           break;
         case "読み込みエラー":
         case "メイン":
-          core.replaceScene(MainScene(Return));
+          game.replaceScene(MainScene(Return));
           break;
         case "アイテム":
-          core.replaceScene(MainScene(false));
+          game.replaceScene(MainScene(false));
           break;
           case "移動":
-            core.pushScene(MoveScene(10));
+            game.pushScene(MoveScene(10));
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
             break;
         case "フェードイン":
           Scene_loads(Moves,false,false);
-          core.pushScene(MoveScene(-10));
+          game.pushScene(MoveScene(-10));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
           break;
@@ -145,13 +184,13 @@ function Load(width,height){
           Inspect_loads(Flag[4],false);
           break;
         case "チョイス":
-          core.replaceScene(ChoiceScene());
+          game.replaceScene(ChoiceScene());
           break;
         case "尋問":
-          core.replaceScene(InterrogationScene());
+          game.replaceScene(InterrogationScene());
           break;
         case "タイトルに戻る":
-          core.replaceScene(TitleScene());
+          game.replaceScene(TitleScene());
           break;
         case "セーブ読み込み":
           BGM_Stop(true);
@@ -159,10 +198,10 @@ function Load(width,height){
           switch (Scene_type) {
             case "読み込みエラー":
             case "メイン":
-              core.replaceScene(MainScene(Return));
+              game.replaceScene(MainScene(Return));
               break;
             case "アイテム":
-              core.replaceScene(MainScene(false));
+              game.replaceScene(MainScene(false));
               break;
             case "調べる":
               if(Number.length>5){
@@ -179,26 +218,26 @@ function Load(width,height){
               Inspect_loads(Flag[4],false);
               break;
             case "チョイス":
-              core.replaceScene(ChoiceScene());
+              game.replaceScene(ChoiceScene());
               break;
             case "尋問":
-              core.replaceScene(InterrogationScene());
+              game.replaceScene(InterrogationScene());
               break;
           }
           break;
           case "異議あり！":
-          core.pushScene(PopScene(Datas[0],"異議あり！"));
+          game.pushScene(PopScene(Datas[0],"異議あり！"));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
             break;
             case "待った！":
-            core.pushScene(PopScene(Datas[0],"待った！"));
+            game.pushScene(PopScene(Datas[0],"待った！"));
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
               break;
         default:
           if(Scene_type.length==3){
-            core.pushScene(ItemgetScene(Scene_type[0],Scene_type[1],Scene_type[2]));
+            game.pushScene(ItemgetScene(Scene_type[0],Scene_type[1],Scene_type[2]));
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
             return;
@@ -212,8 +251,8 @@ function Load(width,height){
     }
 
     function Inspect_loads(Number,Item){
-      if(Item) core.replaceScene(InspectScene(Inspect_loads2("アイテム使用"+Item+","+Number),false));
-      else core.replaceScene(InspectScene(Inspect_loads2(Number),false));
+      if(Item) game.replaceScene(InspectScene(Inspect_loads2("アイテム使用"+Item+","+Number),false));
+      else game.replaceScene(InspectScene(Inspect_loads2(Number),false));
       return;
     }
 
@@ -734,10 +773,10 @@ function Load(width,height){
         BGM_Stop(true);
       }
 
-      var xxx = core.assets["image/title.png"].width;
-      var yyy = core.assets["image/title.png"].height;
+      var xxx = game.assets["image/title.png"].width;
+      var yyy = game.assets["image/title.png"].height;
       var Title = new Sprite(xxx,yyy);
-      Title.image = core.assets["image/title.png"];
+      Title.image = game.assets["image/title.png"];
       Title.scaleX = width/xxx;
       Title.scaleY = width/16*9/yyy;
       Title.x = (Title.scaleX*xxx/2)-xxx/2;
@@ -782,7 +821,7 @@ function Load(width,height){
           if(this.text == "▶ 続きから") Scene_loads("セーブ読み込み",false,false);
           if(this.text == "▶ 説明") Scene_loads("説明",false,false);
           if(this.text == "▶ データ初期化"){
-            core.pushScene(ClearScene());
+            game.pushScene(ClearScene());
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
           }
@@ -790,21 +829,21 @@ function Load(width,height){
       }
 
       Title.addEventListener("enterframe",function(){
-        if(core.input.up){
-          core.popScene();
+        if(game.input.up){
+          game.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
         }
       })
 
       var Set_button = new Sprite(195,95);
-      Set_button.image = core.assets["image/Set_button.png"];
+      Set_button.image = game.assets["image/Set_button.png"];
       Set_button.x = 105;
       Set_button.y = 455;
       Set_button.frame = 15;
       scene.addChild(Set_button);
       Set_button.addEventListener('touchstart',function(e){
-        core.pushScene(ReversiScene());
+        game.pushScene(ReversiScene());
         Scene_kazu++;
         console.log("Scene数",Scene_kazu);
       });
@@ -834,10 +873,10 @@ function Load(width,height){
       }
 
       if(Datas[0]=="ヒント"){
-        var xxx = core.assets["image/融合.png"].width;
-        var yyy = core.assets["image/融合.png"].height;
+        var xxx = game.assets["image/融合.png"].width;
+        var yyy = game.assets["image/融合.png"].height;
         var Background = new Sprite(xxx,yyy);
-        Background.image = core.assets["image/融合.png"];
+        Background.image = game.assets["image/融合.png"];
         Background.scaleX = width/xxx*1.2;
         Background.scaleY = width/yyy*1.2;
         Background.x = (width-xxx)/2;
@@ -852,24 +891,24 @@ function Load(width,height){
         })
       }
       else{
-        var xxx = core.assets["image/背景/"+ Datas[0] +".png"].width;
-        var yyy = core.assets["image/背景/"+ Datas[0] +".png"].height;
+        var xxx = game.assets["image/背景/"+ Datas[0] +".png"].width;
+        var yyy = game.assets["image/背景/"+ Datas[0] +".png"].height;
         var Background = new Sprite(xxx,yyy);
         Background.scaleX = width/xxx;
         Background.scaleY = width/16*9/yyy;
-        Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
+        Background.image = game.assets["image/背景/"+ Datas[0] +".png"];
         Background.x = (Background.scaleX*xxx/2)-xxx/2;
         Background.y = (Background.scaleY*yyy/2)-yyy/2;
         scene.addChild(Background);//背景
       }
 
       if(Datas[0]=="カットイン"){
-        var ccx = core.assets["image/背景/"+ Datas[0] +".png"].width*3;
-        var ccy = core.assets["image/背景/"+ Datas[0] +".png"].height;
+        var ccx = game.assets["image/背景/"+ Datas[0] +".png"].width*3;
+        var ccy = game.assets["image/背景/"+ Datas[0] +".png"].height;
         var Cut_in = new Sprite(ccx,ccy);
         Cut_in.scaleX = width/ccx*3;
         Cut_in.scaleY = width/16*9/ccy;
-        Cut_in.image = core.assets["image/"+ Datas[0] +".png"];
+        Cut_in.image = game.assets["image/"+ Datas[0] +".png"];
         Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2;
         Cut_in.y = (Cut_in.scaleY*ccy/2)-ccy/2;
         scene.addChild(Cut_in);//背景
@@ -889,7 +928,7 @@ function Load(width,height){
       var Explosion = new Sprite(xxx,yyy);
       Explosion.scaleX = ((width/2)/xxx);
       Explosion.scaleY = (((width/16)*9)/yyy);
-      Explosion.image = core.assets["image/Explosion.png"];
+      Explosion.image = game.assets["image/Explosion.png"];
       Explosion.frame = 11;
       Explosion.y = (Explosion.scaleX*yyy/2)-yyy/2;
       scene.addChild(Explosion);
@@ -898,12 +937,12 @@ function Load(width,height){
       })
 
       if(Datas[3]!=false){
-        var xxx = core.assets["image/人物/"+Datas[3]+".png"].width;
-        var yyy = core.assets["image/人物/"+Datas[3]+".png"].height;
+        var xxx = game.assets["image/人物/"+Datas[3]+".png"].width;
+        var yyy = game.assets["image/人物/"+Datas[3]+".png"].height;
         var Character2 = new Sprite(xxx,yyy);
         Character2.scaleX = ((width/2)/xxx);
         Character2.scaleY = (((width/16)*9)/yyy);
-        Character2.image = core.assets["image/人物/"+Datas[3]+".png"];
+        Character2.image = game.assets["image/人物/"+Datas[3]+".png"];
         Character2.x = (Character2.scaleX*xxx/2)-xxx/2+(width/4);
         Character2.y = (Character2.scaleX*yyy/2)-yyy/2;
         if(Datas[4]!=0){
@@ -926,12 +965,12 @@ function Load(width,height){
       switch (Datas[0]) {
         case "stand":
         case "留置所":
-          var xxx = core.assets["image/"+ Datas[0] +".png"].width;
-          var yyy = core.assets["image/"+ Datas[0] +".png"].height;
+          var xxx = game.assets["image/"+ Datas[0] +".png"].width;
+          var yyy = game.assets["image/"+ Datas[0] +".png"].height;
           var Stand = new Sprite(xxx,yyy);
           Stand.scaleX = width/xxx;
           Stand.scaleY = width/16*9/yyy;
-          Stand.image = core.assets["image/"+ Datas[0] +".png"];
+          Stand.image = game.assets["image/"+ Datas[0] +".png"];
           Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
           Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
@@ -941,12 +980,12 @@ function Load(width,height){
       }
 
       if(Datas[1]!=false){
-        var xxx = core.assets["image/人物/"+Datas[1]+".png"].width;
-        var yyy = core.assets["image/人物/"+Datas[1]+".png"].height;
+        var xxx = game.assets["image/人物/"+Datas[1]+".png"].width;
+        var yyy = game.assets["image/人物/"+Datas[1]+".png"].height;
         var Character1 = new Sprite(xxx,yyy);
         Character1.scaleX = ((width/2)/xxx);
         Character1.scaleY = (((width/16)*9)/yyy);
-        Character1.image = core.assets["image/人物/"+Datas[1]+".png"];
+        Character1.image = game.assets["image/人物/"+Datas[1]+".png"];
         Character1.x = (Character1.scaleX*xxx/2)-xxx/2;
         Character1.y = (Character1.scaleX*yyy/2)-yyy/2;
         if(Datas[2]!=0){
@@ -967,12 +1006,12 @@ function Load(width,height){
       }//キャラ左
 
       if(Datas[5]!=false){
-        var xxx = core.assets["image/人物/"+Datas[5]+".png"].width;
-        var yyy = core.assets["image/人物/"+Datas[5]+".png"].height;
+        var xxx = game.assets["image/人物/"+Datas[5]+".png"].width;
+        var yyy = game.assets["image/人物/"+Datas[5]+".png"].height;
         var Character3 = new Sprite(xxx,yyy);
         Character3.scaleX = ((width/2)/xxx);
         Character3.scaleY = (((width/16)*9)/yyy);
-        Character3.image = core.assets["image/人物/"+Datas[5]+".png"];
+        Character3.image = game.assets["image/人物/"+Datas[5]+".png"];
         Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/2);
         Character3.y = (Character3.scaleX*yyy/2)-yyy/2;
         if(Datas[6]!=0){
@@ -995,12 +1034,12 @@ function Load(width,height){
       switch (Datas[0]) {
         case "right":
         case "left":
-          var xxx = core.assets["image/"+ Datas[0] +".png"].width;
-          var yyy = core.assets["image/"+ Datas[0] +".png"].height;
+          var xxx = game.assets["image/"+ Datas[0] +".png"].width;
+          var yyy = game.assets["image/"+ Datas[0] +".png"].height;
           var Stand = new Sprite(xxx,yyy);
           Stand.scaleX = width/xxx;
           Stand.scaleY = width/16*9/yyy;
-          Stand.image = core.assets["image/"+ Datas[0] +".png"];
+          Stand.image = game.assets["image/"+ Datas[0] +".png"];
           Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
           Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
@@ -1011,12 +1050,12 @@ function Load(width,height){
       //  Datas = [1,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 
       if(Datas[14]!=undefined&&Datas[14]!=false){
-        var xxx = core.assets["image/正方形/"+Datas[15]+".png"].width;
-        var yyy = core.assets["image/正方形/"+Datas[15]+".png"].height;
+        var xxx = game.assets["image/正方形/"+Datas[15]+".png"].width;
+        var yyy = game.assets["image/正方形/"+Datas[15]+".png"].height;
         var Item = new Sprite(xxx,yyy);
         Item.scaleX = ((width/4)/xxx);
         Item.scaleY = ((width/4)/yyy);
-        Item.image = core.assets["image/正方形/"+Datas[15]+".png"];
+        Item.image = game.assets["image/正方形/"+Datas[15]+".png"];
         Item.x = ((Item.scaleX*xxx/2)-xxx/2)+Datas[14].substring(0,4)*(width/1600);
         Item.y = ((Item.scaleY*yyy/2)-yyy/2)+Datas[14].substring(5,9)*(width/16/100);
         if(Return!=true&&Datas[14].substring(11,12)*1!=0){
@@ -1028,7 +1067,7 @@ function Load(width,height){
       }//アイテム
 
       var Background2 = new Sprite(width,height);
-      Background2.image = core.assets["image/white.png"];
+      Background2.image = game.assets["image/white.png"];
       Background2.x = 0;
       Background2.y = (width/16)*9;
       scene.addChild(Background2);//白地
@@ -1153,10 +1192,10 @@ function Load(width,height){
         }
 
       if(Datas[9]!=false){
-        var xxx = core.assets["image/Buttons.png"].width/8;
-        var yyy = core.assets["image/Buttons.png"].height;
+        var xxx = game.assets["image/Buttons.png"].width/8;
+        var yyy = game.assets["image/Buttons.png"].height;
         var Return1 = new Sprite(xxx,yyy);
-        Return1.image = core.assets["image/Buttons.png"];
+        Return1.image = game.assets["image/Buttons.png"];
         Return1.scaleX = ((width/5)/xxx);
         Return1.scaleY = (((width/5))/yyy);//ココが変換した場所
         Return1.x = (Return1.scaleX*xxx/2)-xxx/2;
@@ -1169,10 +1208,10 @@ function Load(width,height){
       } //戻る1
 
       if(Datas[10]!=false){
-        var xxx = core.assets["image/Buttons.png"].width/8;
-        var yyy = core.assets["image/Buttons.png"].height;
+        var xxx = game.assets["image/Buttons.png"].width/8;
+        var yyy = game.assets["image/Buttons.png"].height;
         var Return2 = new Sprite(xxx,yyy);
-        Return2.image = core.assets["image/Buttons.png"];
+        Return2.image = game.assets["image/Buttons.png"];
         Return2.scaleX = ((width/5)/xxx);
         Return2.scaleY = (((width/5))/yyy);//ココが変換した場所
         Return2.x = (Return2.scaleX*xxx/2)-xxx/2+(width/5)*1;
@@ -1185,10 +1224,10 @@ function Load(width,height){
       }//戻る2
 
       if(Datas[11]!=false){
-        var xxx = core.assets["image/Buttons.png"].width/8;
-        var yyy = core.assets["image/Buttons.png"].height;
+        var xxx = game.assets["image/Buttons.png"].width/8;
+        var yyy = game.assets["image/Buttons.png"].height;
         var Settings = new Sprite(xxx,yyy);
-        Settings.image = core.assets["image/Buttons.png"];
+        Settings.image = game.assets["image/Buttons.png"];
         Settings.scaleX = ((width/5)/xxx);
         Settings.scaleY = (((width/5))/yyy);//ココが変換した場所
         Settings.x = (Settings.scaleX*xxx/2)-xxx/2+(width/5)*2;
@@ -1196,17 +1235,17 @@ function Load(width,height){
         Settings.frame = 4;
         scene.addChild(Settings);
         Settings.addEventListener('touchstart',function(e){
-          core.pushScene(ItemScene(Datas[11],false));
+          game.pushScene(ItemScene(Datas[11],false));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
         });
       }//アイテム画面
 
       if(Datas[12]!=false){
-        var xxx = core.assets["image/Buttons.png"].width/8;
-        var yyy = core.assets["image/Buttons.png"].height;
+        var xxx = game.assets["image/Buttons.png"].width/8;
+        var yyy = game.assets["image/Buttons.png"].height;
         var Enter1 = new Sprite(xxx,yyy);
-        Enter1.image = core.assets["image/Buttons.png"];
+        Enter1.image = game.assets["image/Buttons.png"];
         Enter1.scaleX = ((width/5)/xxx);
         Enter1.scaleY = (((width/5))/yyy);//ココが変換した場所
         Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
@@ -1231,10 +1270,10 @@ function Load(width,height){
       }//進む1
 
       if(Datas[13]!=false){
-        var xxx = core.assets["image/Buttons.png"].width/8;
-        var yyy = core.assets["image/Buttons.png"].height;
+        var xxx = game.assets["image/Buttons.png"].width/8;
+        var yyy = game.assets["image/Buttons.png"].height;
         var Enter2 = new Sprite(xxx,yyy);
-        Enter2.image = core.assets["image/Buttons.png"];
+        Enter2.image = game.assets["image/Buttons.png"];
         Enter2.scaleX = ((width/5)/xxx);
         Enter2.scaleY = (((width/5))/yyy);//ココが変換した場所
         Enter2.x = (Enter2.scaleX*xxx/2)-xxx/2+(width/5)*4;
@@ -1250,10 +1289,10 @@ function Load(width,height){
         if(window.localStorage.getItem(Datas[16])==undefined){
           if(Datas[11]>0) window.localStorage.setItem(Datas[16],"獲得！");
           var Time = 0;
-          var xxx = core.assets["image/Trophies.png"].width;
-          var yyy = core.assets["image/Trophies.png"].height;
+          var xxx = game.assets["image/Trophies.png"].width;
+          var yyy = game.assets["image/Trophies.png"].height;
           var Trophies = new Sprite(xxx,yyy);
-          Trophies.image = core.assets["image/Trophies.png"];
+          Trophies.image = game.assets["image/Trophies.png"];
           Trophies.scaleX = ((width/3.61)/xxx);
           Trophies.scaleY = (((width/14.15))/yyy);//ココが変換した場所
           Trophies.x = (Trophies.scaleX*xxx/2)-xxx/2+(width-(width/3.5));
@@ -1261,10 +1300,10 @@ function Load(width,height){
           Trophies.opacity = 0;
           Trophies.tl.fadeIn(50);
           scene.addChild(Trophies);
-          var xxx = core.assets["image/正方形/"+Datas[17]+".png"].width;
-          var yyy = core.assets["image/正方形/"+Datas[17]+".png"].height;
+          var xxx = game.assets["image/正方形/"+Datas[17]+".png"].width;
+          var yyy = game.assets["image/正方形/"+Datas[17]+".png"].height;
           var Trophies_image = new Sprite(xxx,yyy);
-          Trophies_image.image = core.assets["image/正方形/"+Datas[17]+".png"];
+          Trophies_image.image = game.assets["image/正方形/"+Datas[17]+".png"];
           Trophies_image.scaleX = ((width/18.82)/xxx);
           Trophies_image.scaleY = ((width/18.82)/yyy);
           Trophies_image.x = (Trophies_image.scaleX*xxx/2)-xxx/2+(width-(width/3.6));
@@ -1299,12 +1338,12 @@ function Load(width,height){
     var MoveScene = function(Out){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var xxx = core.assets["image/背景/Black.png"].width;
-      var yyy = core.assets["image/背景/Black.png"].height;
+      var xxx = game.assets["image/背景/Black.png"].width;
+      var yyy = game.assets["image/背景/Black.png"].height;
       var Background = new Sprite(xxx,yyy);
       Background.scaleX = width/xxx;
       Background.scaleY = width/16*9/yyy;
-      Background.image = core.assets["image/背景/Black.png"];
+      Background.image = game.assets["image/背景/Black.png"];
       Background.x = (Background.scaleX*xxx/2)-xxx/2;
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       if(Out!=0){
@@ -1319,15 +1358,15 @@ function Load(width,height){
       scene.addChild(Background);//背景
 
       var Background2 = new Sprite(width,height);
-      Background2.image = core.assets["image/white.png"];
+      Background2.image = game.assets["image/white.png"];
       Background2.x = 0;
       Background2.y = (width/16)*9;
       scene.addChild(Background2);//白地
 
-      var xxx = core.assets["image/Buttons.png"].width/8;
-      var yyy = core.assets["image/Buttons.png"].height;
+      var xxx = game.assets["image/Buttons.png"].width/8;
+      var yyy = game.assets["image/Buttons.png"].height;
       var Enter1 = new Sprite(xxx,yyy);
-      Enter1.image = core.assets["image/Buttons.png"];
+      Enter1.image = game.assets["image/Buttons.png"];
       Enter1.scaleX = ((width/5)/xxx);
       Enter1.scaleY = (((width/5))/yyy);//ココが変換した場所
       Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
@@ -1336,7 +1375,7 @@ function Load(width,height){
       scene.addChild(Enter1);
 
       Enter1.addEventListener('touchstart',function(e){
-        core.popScene();
+        game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
         Scene_loads(Moves,false,false);
@@ -1344,16 +1383,16 @@ function Load(width,height){
 
       Background.addEventListener("enterframe",function(){
         if(Background.opacity == 1 && Out>0){
-          core.popScene();
+          game.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
           Scene_loads(Moves,false,false);
-          core.pushScene(MoveScene(-10));
+          game.pushScene(MoveScene(-10));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
         }
         if(Background.opacity == 0 && Out<0){
-          core.popScene();
+          game.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
         }
@@ -1384,10 +1423,10 @@ function Load(width,height){
       }
 
       if(Datas[0]=="ヒント"){
-        var xxx = core.assets["image/融合.png"].width;
-        var yyy = core.assets["image/融合.png"].height;
+        var xxx = game.assets["image/融合.png"].width;
+        var yyy = game.assets["image/融合.png"].height;
         var Background = new Sprite(xxx,yyy);
-        Background.image = core.assets["image/融合.png"];
+        Background.image = game.assets["image/融合.png"];
         Background.scaleX = width/xxx*1.2;
         Background.scaleY = width/yyy*1.2;
         Background.x = (width-xxx)/2;
@@ -1396,7 +1435,7 @@ function Load(width,height){
         Background.rotation = Rotation_Y;
         scene.addChild(Background);//背景
         var Background2 = new Sprite(width,height);
-        Background2.image = core.assets["image/white.png"];
+        Background2.image = game.assets["image/white.png"];
         Background2.x = 0;
         Background2.y = (width/16)*9;
         scene.addChild(Background2);//白地
@@ -1407,24 +1446,24 @@ function Load(width,height){
         })
       }
       else{
-        var xxx = core.assets["image/背景/"+ Datas[0] +".png"].width;
-        var yyy = core.assets["image/背景/"+ Datas[0] +".png"].height;
+        var xxx = game.assets["image/背景/"+ Datas[0] +".png"].width;
+        var yyy = game.assets["image/背景/"+ Datas[0] +".png"].height;
         var Background = new Sprite(xxx,yyy);
         Background.scaleX = ((width)/xxx);
         Background.scaleY = (((width/16)*9)/yyy);
-        Background.image = core.assets["image/背景/"+ Datas[0] +".png"];
+        Background.image = game.assets["image/背景/"+ Datas[0] +".png"];
         Background.x = (Background.scaleX*xxx/2)-xxx/2;
         Background.y = (Background.scaleY*yyy/2)-yyy/2;
         scene.addChild(Background);
       }
 
       if(Datas[2]!=false){
-        var xxx = core.assets["image/人物/"+Datas[2]+".png"].width;
-        var yyy = core.assets["image/人物/"+Datas[2]+".png"].height;
+        var xxx = game.assets["image/人物/"+Datas[2]+".png"].width;
+        var yyy = game.assets["image/人物/"+Datas[2]+".png"].height;
         var Character2 = new Sprite(xxx,yyy);
         Character2.scaleX = ((width/2)/xxx);
         Character2.scaleY = (((width/16)*9)/yyy);
-        Character2.image = core.assets["image/人物/"+Datas[2]+".png"];
+        Character2.image = game.assets["image/人物/"+Datas[2]+".png"];
         Character2.x = (Character2.scaleX*xxx/2)-xxx/2+(width/4);
         Character2.y = (Character2.scaleX*yyy/2)-yyy/2;
         scene.addChild(Character2);
@@ -1433,12 +1472,12 @@ function Load(width,height){
       switch (Datas[0]) {
         case "stand":
         case "留置所":
-          var xxx = core.assets["image/"+ Datas[0] +".png"].width;
-          var yyy = core.assets["image/"+ Datas[0] +".png"].height;
+          var xxx = game.assets["image/"+ Datas[0] +".png"].width;
+          var yyy = game.assets["image/"+ Datas[0] +".png"].height;
           var Stand = new Sprite(xxx,yyy);
           Stand.scaleX = width/xxx;
           Stand.scaleY = width/16*9/yyy;
-          Stand.image = core.assets["image/"+ Datas[0] +".png"];
+          Stand.image = game.assets["image/"+ Datas[0] +".png"];
           Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
           Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
@@ -1448,24 +1487,24 @@ function Load(width,height){
       }
 
       if(Datas[1]!=false){
-        var xxx = core.assets["image/人物/"+Datas[1]+".png"].width;
-        var yyy = core.assets["image/人物/"+Datas[1]+".png"].height;
+        var xxx = game.assets["image/人物/"+Datas[1]+".png"].width;
+        var yyy = game.assets["image/人物/"+Datas[1]+".png"].height;
         var Character1 = new Sprite(xxx,yyy);
         Character1.scaleX = ((width/2)/xxx);
         Character1.scaleY = (((width/16)*9)/yyy);
-        Character1.image = core.assets["image/人物/"+Datas[1]+".png"];
+        Character1.image = game.assets["image/人物/"+Datas[1]+".png"];
         Character1.x = (Character1.scaleX*xxx/2)-xxx/2;
         Character1.y = (Character1.scaleX*yyy/2)-yyy/2;
         scene.addChild(Character1);
       }//キャラ左
 
       if(Datas[3]!=false){
-        var xxx = core.assets["image/人物/"+Datas[3]+".png"].width;
-        var yyy = core.assets["image/人物/"+Datas[3]+".png"].height;
+        var xxx = game.assets["image/人物/"+Datas[3]+".png"].width;
+        var yyy = game.assets["image/人物/"+Datas[3]+".png"].height;
         var Character3 = new Sprite(xxx,yyy);
         Character3.scaleX = ((width/2)/xxx);
         Character3.scaleY = (((width/16)*9)/yyy);
-        Character3.image = core.assets["image/人物/"+Datas[3]+".png"];
+        Character3.image = game.assets["image/人物/"+Datas[3]+".png"];
         Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/2);
         Character3.y = (Character3.scaleX*yyy/2)-yyy/2;
         scene.addChild(Character3);
@@ -1474,12 +1513,12 @@ function Load(width,height){
       switch (Datas[0]) {
         case "right":
         case "left":
-          var xxx = core.assets["image/"+ Datas[0] +".png"].width;
-          var yyy = core.assets["image/"+ Datas[0] +".png"].height;
+          var xxx = game.assets["image/"+ Datas[0] +".png"].width;
+          var yyy = game.assets["image/"+ Datas[0] +".png"].height;
           var Stand = new Sprite(xxx,yyy);
           Stand.scaleX = width/xxx;
           Stand.scaleY = width/16*9/yyy;
-          Stand.image = core.assets["image/"+ Datas[0] +".png"];
+          Stand.image = game.assets["image/"+ Datas[0] +".png"];
           Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
           Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
@@ -1510,7 +1549,7 @@ function Load(width,height){
           this.addEventListener('touchstart',function(e){
             if(this.text == "▶ 調べる") Inspect_loads(Datas[6],false);
             else if (this.text == "▶ つきつける"){
-              core.pushScene(ItemScene(Datas[6],"日常"));
+              game.pushScene(ItemScene(Datas[6],"日常"));
               Scene_kazu++;
               console.log("Scene数",Scene_kazu);
             }
@@ -1526,10 +1565,10 @@ function Load(width,height){
         }
 
       if(Datas[4]!=false){
-        var xxx = core.assets["image/Buttons.png"].width/8;
-        var yyy = core.assets["image/Buttons.png"].height;
+        var xxx = game.assets["image/Buttons.png"].width/8;
+        var yyy = game.assets["image/Buttons.png"].height;
         var Return1 = new Sprite(xxx,yyy);
-        Return1.image = core.assets["image/Buttons.png"];
+        Return1.image = game.assets["image/Buttons.png"];
         Return1.scaleX = ((width/5)/xxx);
         Return1.scaleY = (((width/5))/yyy);//ココが変換した場所
         Return1.x = (Return1.scaleX*xxx/2)-xxx/2;
@@ -1542,10 +1581,10 @@ function Load(width,height){
       } //戻る1
 
       if(Datas[5]!=false){
-        var xxx = core.assets["image/Buttons.png"].width/8;
-        var yyy = core.assets["image/Buttons.png"].height;
+        var xxx = game.assets["image/Buttons.png"].width/8;
+        var yyy = game.assets["image/Buttons.png"].height;
         var Return2 = new Sprite(xxx,yyy);
-        Return2.image = core.assets["image/Buttons.png"];
+        Return2.image = game.assets["image/Buttons.png"];
         Return2.scaleX = ((width/5)/xxx);
         Return2.scaleY = (((width/5))/yyy);//ココが変換した場所
         Return2.x = (Return2.scaleX*xxx/2)-xxx/2+(width/5)*1;
@@ -1558,10 +1597,10 @@ function Load(width,height){
       }//戻る2
 
       if(Datas[6]!=false&&Datas[6]!="ゲームオーバー"){
-        var xxx = core.assets["image/Buttons.png"].width/8;
-        var yyy = core.assets["image/Buttons.png"].height;
+        var xxx = game.assets["image/Buttons.png"].width/8;
+        var yyy = game.assets["image/Buttons.png"].height;
         var Settings = new Sprite(xxx,yyy);
-        Settings.image = core.assets["image/Buttons.png"];
+        Settings.image = game.assets["image/Buttons.png"];
         Settings.scaleX = ((width/5)/xxx);
         Settings.scaleY = (((width/5))/yyy);//ココが変換した場所
         Settings.x = (Settings.scaleX*xxx/2)-xxx/2+(width/5)*2;
@@ -1569,7 +1608,7 @@ function Load(width,height){
         Settings.frame = 4;
         scene.addChild(Settings);
         Settings.addEventListener('touchstart',function(e){
-          core.pushScene(ItemScene(Datas[6],false));
+          game.pushScene(ItemScene(Datas[6],false));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
         });
@@ -1579,10 +1618,10 @@ function Load(width,height){
     var PopScene = function(Number,Type){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var xxx = core.assets["image/"+Type+".png"].width;
-      var yyy = core.assets["image/"+Type+".png"].height;
+      var xxx = game.assets["image/"+Type+".png"].width;
+      var yyy = game.assets["image/"+Type+".png"].height;
       var Pop = new Sprite(xxx,yyy);
-      Pop.image = core.assets["image/"+Type+".png"];
+      Pop.image = game.assets["image/"+Type+".png"];
       Pop.scaleX = width/xxx;
       Pop.scaleY = width/16*9/yyy;
       Pop.x = (Pop.scaleX*xxx/2)-xxx/2;
@@ -1608,7 +1647,7 @@ function Load(width,height){
             Pop.y = ((Pop.scaleY*yyy/2)-yyy/2)+20;
             break;
           case 15:
-            core.popScene();
+            game.popScene();
             Scene_kazu--;
             console.log("Scene数",Scene_kazu);
             Scene_loads(Number,false,false);
@@ -1631,32 +1670,32 @@ function Load(width,height){
 
       Flag[4] = Datas[5];
 
-      var xxx = core.assets["image/背景/stand.png"].width;
-      var yyy = core.assets["image/背景/stand.png"].height;
+      var xxx = game.assets["image/背景/stand.png"].width;
+      var yyy = game.assets["image/背景/stand.png"].height;
       var Background = new Sprite(xxx,yyy);
       Background.scaleX = width/xxx;
       Background.scaleY = width/16*9/yyy;
-      Background.image = core.assets["image/背景/stand.png"];
+      Background.image = game.assets["image/背景/stand.png"];
       Background.x = (Background.scaleX*xxx/2)-xxx/2;
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);//証言席
 
-      var xxx = core.assets["image/人物/"+Datas[0]+".png"].width;
-      var yyy = core.assets["image/人物/"+Datas[0]+".png"].height;
+      var xxx = game.assets["image/人物/"+Datas[0]+".png"].width;
+      var yyy = game.assets["image/人物/"+Datas[0]+".png"].height;
       var Character = new Sprite(xxx,yyy);
       Character.scaleX = ((width/2)/xxx);
       Character.scaleY = (((width/16)*9)/yyy);
-      Character.image = core.assets["image/人物/"+Datas[0]+".png"];
+      Character.image = game.assets["image/人物/"+Datas[0]+".png"];
       Character.x = (Character.scaleX*xxx/2)-xxx/2+(width/4);
       Character.y = (Character.scaleX*yyy/2)-yyy/2;
       scene.addChild(Character);//キャラ
 
-      var xxx = core.assets["image/stand.png"].width;
-      var yyy = core.assets["image/stand.png"].height;
+      var xxx = game.assets["image/stand.png"].width;
+      var yyy = game.assets["image/stand.png"].height;
       var Stand = new Sprite(xxx,yyy);
       Stand.scaleX = width/xxx;
       Stand.scaleY = width/16*9/yyy;
-      Stand.image = core.assets["image/stand.png"];
+      Stand.image = game.assets["image/stand.png"];
       Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
       Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
       scene.addChild(Stand);//証言台
@@ -1705,10 +1744,10 @@ function Load(width,height){
         }
       }
 
-      var xxx = core.assets["image/Buttons.png"].width/8;
-      var yyy = core.assets["image/Buttons.png"].height;
+      var xxx = game.assets["image/Buttons.png"].width/8;
+      var yyy = game.assets["image/Buttons.png"].height;
       var Button1 = new Sprite(xxx,yyy);
-      Button1.image = core.assets["image/Buttons.png"];
+      Button1.image = game.assets["image/Buttons.png"];
       Button1.scaleX = ((width/5)/xxx);
       Button1.scaleY = (((width/5))/yyy);//ココが変換した場所
       Button1.x = (Button1.scaleX*xxx/2)-xxx/2;
@@ -1716,16 +1755,16 @@ function Load(width,height){
       Button1.frame = 0;
       scene.addChild(Button1);
       Button1.addEventListener('touchstart',function(e){
-        core.pushScene(PopScene(Datas[3],"待った！"));
+        game.pushScene(PopScene(Datas[3],"待った！"));
         Scene_kazu++;
         console.log("Scene数",Scene_kazu);
       });//ゆさぶる
 
       if(Datas[4]!=false){
-        var xxx = core.assets["image/Buttons.png"].width/8;
-        var yyy = core.assets["image/Buttons.png"].height;
+        var xxx = game.assets["image/Buttons.png"].width/8;
+        var yyy = game.assets["image/Buttons.png"].height;
         var Button2 = new Sprite(xxx,yyy);
-        Button2.image = core.assets["image/Buttons.png"];
+        Button2.image = game.assets["image/Buttons.png"];
         Button2.scaleX = ((width/5)/xxx);
         Button2.scaleY = (((width/5))/yyy);//ココが変換した場所
         Button2.x = (Button2.scaleX*xxx/2)-xxx/2+(width/5);
@@ -1737,10 +1776,10 @@ function Load(width,height){
         });
       }//戻る
 
-      var xxx = core.assets["image/Buttons.png"].width/8;
-      var yyy = core.assets["image/Buttons.png"].height;
+      var xxx = game.assets["image/Buttons.png"].width/8;
+      var yyy = game.assets["image/Buttons.png"].height;
       var Button3 = new Sprite(xxx,yyy);
-      Button3.image = core.assets["image/Buttons.png"];
+      Button3.image = game.assets["image/Buttons.png"];
       Button3.scaleX = ((width/5)/xxx);
       Button3.scaleY = (((width/5))/yyy);//ココが変換した場所
       Button3.x = (Button3.scaleX*xxx/2)-xxx/2+(width/5)*2;
@@ -1748,15 +1787,15 @@ function Load(width,height){
       Button3.frame = 3;
       scene.addChild(Button3);
       Button3.addEventListener('touchstart',function(e){
-        core.pushScene(SettingScene(Datas[5]));
+        game.pushScene(SettingScene(Datas[5]));
         Scene_kazu++;
         console.log("Scene数",Scene_kazu);
       });//設定
 
-      var xxx = core.assets["image/Buttons.png"].width/8;
-      var yyy = core.assets["image/Buttons.png"].height;
+      var xxx = game.assets["image/Buttons.png"].width/8;
+      var yyy = game.assets["image/Buttons.png"].height;
       var Button4 = new Sprite(xxx,yyy);
-      Button4.image = core.assets["image/Buttons.png"];
+      Button4.image = game.assets["image/Buttons.png"];
       Button4.scaleX = ((width/5)/xxx);
       Button4.scaleY = (((width/5))/yyy);//ココが変換した場所
       Button4.x = (Button4.scaleX*xxx/2)-xxx/2+(width/5)*3;
@@ -1767,10 +1806,10 @@ function Load(width,height){
         Scene_loads(Datas[6],false,false);
       });//進む
 
-      var xxx = core.assets["image/Buttons.png"].width/8;
-      var yyy = core.assets["image/Buttons.png"].height;
+      var xxx = game.assets["image/Buttons.png"].width/8;
+      var yyy = game.assets["image/Buttons.png"].height;
       var Button5 = new Sprite(xxx,yyy);
-      Button5.image = core.assets["image/Buttons.png"];
+      Button5.image = game.assets["image/Buttons.png"];
       Button5.scaleX = ((width/5)/xxx);
       Button5.scaleY = (((width/5))/yyy);//ココが変換した場所
       Button5.x = (Button5.scaleX*xxx/2)-xxx/2+(width/5)*4;
@@ -1778,7 +1817,7 @@ function Load(width,height){
       Button5.frame = 7;
       scene.addChild(Button5);
       Button5.addEventListener('touchstart',function(e){
-        core.pushScene(ItemScene(Datas[7],Datas[8]));
+        game.pushScene(ItemScene(Datas[7],Datas[8]));
         Scene_kazu++;
         console.log("Scene数",Scene_kazu);
       });//つきつける
@@ -1788,12 +1827,12 @@ function Load(width,height){
     var SettingScene = function(Number){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var xxx = core.assets["image/Background.png"].width;
-      var yyy = core.assets["image/Background.png"].height;
+      var xxx = game.assets["image/Background.png"].width;
+      var yyy = game.assets["image/Background.png"].height;
       var Background = new Sprite(xxx,yyy);
       Background.scaleX = ((width)/xxx);
       Background.scaleY = ((height)/yyy);
-      Background.image = core.assets["image/Background.png"];
+      Background.image = game.assets["image/Background.png"];
       Background.x = (Background.scaleX*xxx/2)-xxx/2;
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
@@ -1870,12 +1909,12 @@ function Load(width,height){
       S_Input2._element.placeholder = "名前を入力";
       scene.addChild(S_Input2);
 
-      var xxx = core.assets["image/Round.png"].width;
-      var yyy = core.assets["image/Round.png"].height;
+      var xxx = game.assets["image/Round.png"].width;
+      var yyy = game.assets["image/Round.png"].height;
       var Round = new Sprite(xxx,yyy);
       Round.scaleX = ((width/20)/xxx);
       Round.scaleY = ((width/20)/yyy);
-      Round.image = core.assets["image/Round.png"];
+      Round.image = game.assets["image/Round.png"];
       if(Flag[2]=="男"){
         Round.x = Man.x+(Round.scaleX*xxx/2)-xxx/2;
         Round.y = Man.y+(Round.scaleY*yyy/2)-yyy/2;
@@ -1890,20 +1929,20 @@ function Load(width,height){
         Text[i].addEventListener('touchstart',function(e){
           switch (this.text.substring(2)){
             case "設定を閉じる":
-            core.popScene();
+            game.popScene();
             Scene_kazu--;
             console.log("Scene数",Scene_kazu);
             break;
             case "タイトルに戻る":
-            core.popScene();
-            core.popScene();
+            game.popScene();
+            game.popScene();
             Scene_kazu--;
             Scene_kazu--;
             console.log("Scene数",Scene_kazu);
             Scene_loads("タイトルに戻る",false,false,false);
             break;
             case "サウンド設定":
-            core.pushScene(SoundScene());
+            game.pushScene(SoundScene());
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
             break;
@@ -1924,8 +1963,8 @@ function Load(width,height){
               }
               break;
               case "セーブデータ読み込み":
-              core.popScene();
-              core.popScene();
+              game.popScene();
+              game.popScene();
               Scene_kazu--;
               Scene_kazu--;
               console.log("Scene数",Scene_kazu);
@@ -1949,8 +1988,8 @@ function Load(width,height){
                   if(S_Input2._element.value=="") Flag[0] = "玲奈";
                 }
                 if(S_Input2._element.value=="チート移動"){
-                  core.popScene();
-                  core.popScene();
+                  game.popScene();
+                  game.popScene();
                   Scene_kazu--;
                   Scene_kazu--;
                   console.log("Scene数",Scene_kazu);
@@ -2019,7 +2058,7 @@ function Load(width,height){
 
       /*
       Text13.addEventListener('touchstart',function(e){
-        core.pushScene(TrophiesScene());
+        game.pushScene(TrophiesScene());
         Scene_kazu++;
         console.log("Scene数",Scene_kazu);
         return;
@@ -2031,7 +2070,7 @@ function Load(width,height){
       var scene = new Scene();                                // 新しいシーンを作る
 
       var Background = new Sprite(width,height);
-      Background.image = core.assets["image/Background.png"];
+      Background.image = game.assets["image/Background.png"];
       Background.x = 0;
       Background.y = 0;
       scene.addChild(Background);
@@ -2087,7 +2126,7 @@ function Load(width,height){
       Text[5] = new Texts("気高さ刻み込め","プライドを布教しよう。","ちなみに渡そうと思えば何回でも渡せる。");
 
       Text1.addEventListener('touchstart',function(e){
-        core.popScene();
+        game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
         return;
@@ -2121,12 +2160,12 @@ function Load(width,height){
       var scene = new Scene();                                // 新しいシーンを作る
 
 
-    var xxx = core.assets["image/背景/"+ Datas[0] +".png"].width;
-    var yyy = core.assets["image/背景/"+ Datas[0] +".png"].height;
+    var xxx = game.assets["image/背景/"+ Datas[0] +".png"].width;
+    var yyy = game.assets["image/背景/"+ Datas[0] +".png"].height;
     var Background = new Sprite(xxx,yyy);
     Background.scaleX = width/xxx;
     Background.scaleY = width/16*9/yyy;
-    Background.image = core.assets["image/背景/"+ Inspect[0] +".png"];
+    Background.image = game.assets["image/背景/"+ Inspect[0] +".png"];
     Background.x = (Background.scaleX*xxx/2)-xxx/2;
     Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
@@ -2140,7 +2179,7 @@ function Load(width,height){
           Sprite.call(this,width1*Background.scaleX,height1*Background.scaleY);
           this.x = x*Background.scaleX;
           this.y = y*Background.scaleY;
-          this.image = core.assets["image/背景/透明.png"];
+          this.image = game.assets["image/背景/透明.png"];
           scene.addChild(this);
           this.addEventListener('touchstart',function(e){
             Scene_loads(Number,false,Item);
@@ -2185,7 +2224,7 @@ function Load(width,height){
       BGM_Stop(true);
 
       var Background = new Sprite(width,height-(width/16)*9);
-      Background.image = core.assets["image/white.png"];
+      Background.image = game.assets["image/white.png"];
       Background.x = 0;
       Background.y = (width/16)*9;
       scene.addChild(Background);
@@ -2274,10 +2313,10 @@ function Load(width,height){
         T_D();
       })
 
-      var xxx = core.assets["image/Buttons.png"].width/8;
-      var yyy = core.assets["image/Buttons.png"].height;
+      var xxx = game.assets["image/Buttons.png"].width/8;
+      var yyy = game.assets["image/Buttons.png"].height;
       var Enter1 = new Sprite(xxx,yyy);
-      Enter1.image = core.assets["image/Buttons.png"];
+      Enter1.image = game.assets["image/Buttons.png"];
       Enter1.scaleX = ((width/5)/xxx);
       Enter1.scaleY = (((width/5))/yyy);//ココが変換した場所
       Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
@@ -2285,12 +2324,12 @@ function Load(width,height){
       Enter1.frame = 5;
       scene.addChild(Enter1);
 
-      var xxx = core.assets["image/正方形/"+a+".png"].width;
-      var yyy = core.assets["image/正方形/"+a+".png"].height;
+      var xxx = game.assets["image/正方形/"+a+".png"].width;
+      var yyy = game.assets["image/正方形/"+a+".png"].height;
       var Item = new Sprite(xxx,yyy);
       Item.scaleX = ((width/2)/xxx);
       Item.scaleY = ((width/2)/yyy);
-      Item.image = core.assets["image/正方形/"+a+".png"];
+      Item.image = game.assets["image/正方形/"+a+".png"];
       var X_0 = (Item.scaleX*xxx/2)-xxx/2;
       var Y_0 = (Item.scaleY*yyy/2)-yyy/2;
       Item.x = X_0 + width;
@@ -2306,7 +2345,7 @@ function Load(width,height){
           Item.x = X_0+width/2-width/4;
         }
         if(Item.x<X_0-width/2){
-          core.popScene();
+          game.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
           Scene_loads(c,false,false);
@@ -2319,7 +2358,7 @@ function Load(width,height){
         }
         else if(Item.x==X_0+width/2-width/4) Item.x -= width/18+1;
         else{
-          core.popScene();
+          game.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
           Scene_loads(c,false,false);
@@ -2331,12 +2370,12 @@ function Load(width,height){
 
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var xxx = core.assets["image/Background.png"].width;
-      var yyy = core.assets["image/Background.png"].height;
+      var xxx = game.assets["image/Background.png"].width;
+      var yyy = game.assets["image/Background.png"].height;
       var Background = new Sprite(xxx,yyy);
       Background.scaleX = ((width)/xxx);
       Background.scaleY = ((height)/yyy);
-      Background.image = core.assets["image/Background.png"];
+      Background.image = game.assets["image/Background.png"];
       Background.x = (Background.scaleX*xxx/2)-xxx/2;
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
@@ -2474,12 +2513,12 @@ function Load(width,height){
 
       var Item_image = Class.create(Sprite,{
           initialize: function(a) {
-              var xxx = core.assets["image/正方形/"+a+".png"].width;
-              var yyy = core.assets["image/正方形/"+a+".png"].height;
+              var xxx = game.assets["image/正方形/"+a+".png"].width;
+              var yyy = game.assets["image/正方形/"+a+".png"].height;
               Sprite.call(this,xxx,yyy);
               this.scaleX = ((width/4)/xxx);
               this.scaleY = ((width/4)/yyy);
-              this.image = core.assets["image/正方形/"+a+".png"];
+              this.image = game.assets["image/正方形/"+a+".png"];
               this.x = (this.scaleX*xxx/2)-xxx/2+(width/1.6);
               this.y = (this.scaleY*yyy/2)-yyy/2+(width/4)+(width/20)+(width/25);
           }
@@ -2531,7 +2570,7 @@ function Load(width,height){
       }
 
       Text1.addEventListener('touchstart',function(e){
-        core.popScene();
+        game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
         return;
@@ -2539,7 +2578,7 @@ function Load(width,height){
 
       Text2.addEventListener('touchstart',function(e){
         if(Text2.text=="▶ 設定を開く"){
-          core.pushScene(SettingScene(Number));
+          game.pushScene(SettingScene(Number));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
         }
@@ -2547,12 +2586,12 @@ function Load(width,height){
       });
 
       Text21.addEventListener('touchstart',function(e){
-        core.replaceScene(CharacterScene(Number,Ig));
+        game.replaceScene(CharacterScene(Number,Ig));
         return;
       });
 
       Text3.addEventListener('touchstart',function(e){
-        core.popScene();
+        game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
         if(this.text=="▶ 使う") Scene_loads(Number,true,"使う"+Choice_Item);
@@ -2566,13 +2605,13 @@ function Load(width,height){
               Get_ICF("アイテム","強欲な壺","消失");
               Item_Flag[Item_Flag.length] = ["強欲なカケラ","強欲な壺を使った証。",31];
             }
-            core.pushScene(PopScene(Number,"異議あり！"));
+            game.pushScene(PopScene(Number,"異議あり！"));
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
           }
           else if(Ig=="日常") Scene_loads(Number,true,"つきつける"+Choice_Item);
           else{
-            core.pushScene(PopScene("つきつけ失敗","異議あり！"));
+            game.pushScene(PopScene("つきつけ失敗","異議あり！"));
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
           }
@@ -2587,7 +2626,7 @@ function Load(width,height){
           for (var i = 0; i < Item_Flag.length; i++) {
             if(Item_Flag[i][0]==Choice_Item) break;
           }
-          core.popScene();
+          game.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
         }
@@ -2596,25 +2635,25 @@ function Load(width,height){
           for (var i = 0; i < Item_Flag.length; i++) {
             if(Item_Flag[i][0]==Choice_Item) break;
           }
-          core.popScene();
+          game.popScene();
           console.log("Scene数",Scene_kazu);
         }
         else if(this.text=="▶ 調べる"){
-          core.popScene();
+          game.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
           Inspect_loads(Number,Choice_Item);
         }
         else if(this.text=="▶ 遊ぶ"){
           OASOBI = true;
-          core.popScene();
-          core.pushScene(ReversiScene());
+          game.popScene();
+          game.pushScene(ReversiScene());
         }
         else {
           for (var i = 0; i < Item.length; i++) {
             if(Item[i].text.substring(2)==Choice_Item) break;
           }
-          core.pushScene(DetailsScene(Item[i].syousai));
+          game.pushScene(DetailsScene(Item[i].syousai));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
         }
@@ -2627,7 +2666,7 @@ function Load(width,height){
           if(Item_Flag.length%5==0) Pages-=5;
         }
         else Pages-=5;
-        core.replaceScene(ItemScene(Number,Ig));
+        game.replaceScene(ItemScene(Number,Ig));
         return;
       });
 
@@ -2637,7 +2676,7 @@ function Load(width,height){
           Pages+=5;
           if(Pages==Item_Flag.length) Pages = 0;
         }
-        core.replaceScene(ItemScene(Number,Ig));
+        game.replaceScene(ItemScene(Number,Ig));
         return;
       });
 
@@ -2684,12 +2723,12 @@ function Load(width,height){
 
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var xxx = core.assets["image/Background.png"].width;
-      var yyy = core.assets["image/Background.png"].height;
+      var xxx = game.assets["image/Background.png"].width;
+      var yyy = game.assets["image/Background.png"].height;
       var Background = new Sprite(xxx,yyy);
       Background.scaleX = ((width)/xxx);
       Background.scaleY = ((height)/yyy);
-      Background.image = core.assets["image/Background.png"];
+      Background.image = game.assets["image/Background.png"];
       Background.x = (Background.scaleX*xxx/2)-xxx/2;
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
@@ -2827,12 +2866,12 @@ function Load(width,height){
 
       var Character_image = Class.create(Sprite,{
           initialize: function(a) {
-              var xxx = core.assets["image/正方形/"+a+".png"].width;
-              var yyy = core.assets["image/正方形/"+a+".png"].height;
+              var xxx = game.assets["image/正方形/"+a+".png"].width;
+              var yyy = game.assets["image/正方形/"+a+".png"].height;
               Sprite.call(this,xxx,yyy);
               this.scaleX = ((width/4)/xxx);
               this.scaleY = ((width/4)/yyy);
-              this.image = core.assets["image/正方形/"+a+".png"];
+              this.image = game.assets["image/正方形/"+a+".png"];
               this.x = (this.scaleX*xxx/2)-xxx/2+(width/1.6);
               this.y = (this.scaleY*yyy/2)-yyy/2+(width/4)+(width/20)+(width/25);
           }
@@ -2884,7 +2923,7 @@ function Load(width,height){
       }
 
       Text1.addEventListener('touchstart',function(e){
-        core.popScene();
+        game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
         return;
@@ -2892,7 +2931,7 @@ function Load(width,height){
 
       Text2.addEventListener('touchstart',function(e){
         if(Text2.text=="▶ 設定を開く"){
-          core.pushScene(SettingScene(Number));
+          game.pushScene(SettingScene(Number));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
         }
@@ -2900,24 +2939,24 @@ function Load(width,height){
       });
 
       Text21.addEventListener('touchstart',function(e){
-        core.replaceScene(ItemScene(Number,Ig));
+        game.replaceScene(ItemScene(Number,Ig));
         return;
       });
 
       Text3.addEventListener('touchstart',function(e){
-        core.popScene();
+        game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
         if(this.text=="▶ 使う") Scene_loads(Number,true,"使う"+Choice_Character);
         else{
           if(Ig==Choice_Character){
-            core.pushScene(PopScene(Number,"異議あり！"));
+            game.pushScene(PopScene(Number,"異議あり！"));
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
           }
           else if(Ig=="日常") Scene_loads(Number,true,"つきつける"+Choice_Character);
           else{
-            core.pushScene(PopScene("つきつけ失敗","異議あり！"));
+            game.pushScene(PopScene("つきつけ失敗","異議あり！"));
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
           }
@@ -2932,7 +2971,7 @@ function Load(width,height){
           for (var i = 0; i < Character_Flag.length; i++) {
             if(Character_Flag[i][0]==Choice_Character) break;
           }
-          core.popScene();
+          game.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
         }
@@ -2941,12 +2980,12 @@ function Load(width,height){
           for (var i = 0; i < Character_Flag.length; i++) {
             if(Character_Flag[i][0]==Choice_Character) break;
           }
-          core.popScene();
+          game.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
         }
         else if(this.text=="▶ 調べる"){
-          core.popScene();
+          game.popScene();
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
           Inspect_loads(Number,Choice_Character);
@@ -2955,7 +2994,7 @@ function Load(width,height){
           for (var i = 0; i < Character.length; i++) {
             if(Character[i].text.substring(2)==Choice_Character) break;
           }
-          core.pushScene(DetailsScene(Character[i].syousai));
+          game.pushScene(DetailsScene(Character[i].syousai));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
         }
@@ -2968,7 +3007,7 @@ function Load(width,height){
           if(Character_Flag.length%5==0) Pages2-=5;
         }
         else Pages2-=5;
-        core.replaceScene(CharacterScene(Number,Ig));
+        game.replaceScene(CharacterScene(Number,Ig));
         return;
       });
 
@@ -2978,7 +3017,7 @@ function Load(width,height){
           Pages2+=5;
           if(Pages2==Character_Flag.length) Pages2 = 0;
         }
-        core.replaceScene(CharacterScene(Number,Ig));
+        game.replaceScene(CharacterScene(Number,Ig));
         return;
       });
 
@@ -3024,12 +3063,12 @@ function Load(width,height){
     var DetailsScene = function(Number){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var xxx = core.assets["image/Background.png"].width;
-      var yyy = core.assets["image/Background.png"].height;
+      var xxx = game.assets["image/Background.png"].width;
+      var yyy = game.assets["image/Background.png"].height;
       var Background = new Sprite(xxx,yyy);
       Background.scaleX = ((width)/xxx);
       Background.scaleY = ((height)/yyy);
-      Background.image = core.assets["image/Background.png"];
+      Background.image = game.assets["image/Background.png"];
       Background.x = (Background.scaleX*xxx/2)-xxx/2;
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
@@ -3101,7 +3140,7 @@ function Load(width,height){
       }
 
       Text[0].addEventListener('touchstart',function(e){
-        core.popScene();
+        game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
         return;
@@ -3112,12 +3151,12 @@ function Load(width,height){
     var SoundScene = function(){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var xxx = core.assets["image/Background.png"].width;
-      var yyy = core.assets["image/Background.png"].height;
+      var xxx = game.assets["image/Background.png"].width;
+      var yyy = game.assets["image/Background.png"].height;
       var Background = new Sprite(xxx,yyy);
       Background.scaleX = ((width)/xxx);
       Background.scaleY = ((height)/yyy);
-      Background.image = core.assets["image/Background.png"];
+      Background.image = game.assets["image/Background.png"];
       Background.x = (Background.scaleX*xxx/2)-xxx/2;
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
@@ -3208,7 +3247,7 @@ function Load(width,height){
       }
 
       Text1.addEventListener('touchstart',function(e){
-        core.popScene();
+        game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
         return;
@@ -3219,12 +3258,12 @@ function Load(width,height){
     var ClearScene = function(){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var xxx = core.assets["image/Background.png"].width;
-      var yyy = core.assets["image/Background.png"].height;
+      var xxx = game.assets["image/Background.png"].width;
+      var yyy = game.assets["image/Background.png"].height;
       var Background = new Sprite(xxx,yyy);
       Background.scaleX = ((width)/xxx);
       Background.scaleY = ((height)/yyy);
-      Background.image = core.assets["image/Background.png"];
+      Background.image = game.assets["image/Background.png"];
       Background.x = (Background.scaleX*xxx/2)-xxx/2;
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
@@ -3254,7 +3293,7 @@ function Load(width,height){
       Text[2] = new Texts("▶ いいえ");
 
       Text[1].addEventListener('touchstart',function(e){
-        core.popScene();
+        game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
         Data = false;
@@ -3275,12 +3314,12 @@ function Load(width,height){
         Scene_type = "メイン";
         Scene_kazu = 1;
         Get = false;
-        core.replaceScene(TitleScene());
+        game.replaceScene(TitleScene());
         return;
       });
 
       Text[2].addEventListener('touchstart',function(e){
-        core.popScene();
+        game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
         return;
@@ -3310,58 +3349,58 @@ function Load(width,height){
       var White_Number = 0;
 
       var Pointer = new Sprite(1,1);
-      Pointer.image = core.assets["image/Hand.png"];
+      Pointer.image = game.assets["image/Hand.png"];
 
       var White = new Sprite(405,600);
-      White.image = core.assets["image/white.png"];
+      White.image = game.assets["image/white.png"];
       scene.addChild(White);
 
       var Reversi = new Sprite(405,405);
-      Reversi.image = core.assets["image/正方形/30.png"];
+      Reversi.image = game.assets["image/正方形/30.png"];
       Reversi.x = 0;
       Reversi.y = 40;
       scene.addChild(Reversi);
 
       var Set_button = new Sprite(195,95);
-      Set_button.image = core.assets["image/Set_button.png"];
+      Set_button.image = game.assets["image/Set_button.png"];
       Set_button.x = 105;
       Set_button.y = 195;
       scene.addChild(Set_button);
 
       var Set_button1 = new Sprite(195,95);
-      Set_button1.image = core.assets["image/Set_button.png"];
+      Set_button1.image = game.assets["image/Set_button.png"];
       Set_button1.x = 5;
       Set_button1.y = 295;
       Set_button1.frame = 1;
       scene.addChild(Set_button1);
 
       var Set_button2 = new Sprite(195,95);
-      Set_button2.image = core.assets["image/Set_button.png"];
+      Set_button2.image = game.assets["image/Set_button.png"];
       Set_button2.x = 205;
       Set_button2.y = 295;
       Set_button2.frame = 2;
       scene.addChild(Set_button2);
 
       var Set_button3 = new Sprite(195,95);
-      Set_button3.image = core.assets["image/Set_button.png"];
+      Set_button3.image = game.assets["image/Set_button.png"];
       Set_button3.x = 205;
       Set_button3.y = 145;
       Set_button3.frame = 9;
 
       var Set_button4 = new Sprite(195,95);
-      Set_button4.image = core.assets["image/Set_button.png"];
+      Set_button4.image = game.assets["image/Set_button.png"];
       Set_button4.x = 105;
       Set_button4.y = 455;
       Set_button4.frame = 13;
       scene.addChild(Set_button4);
       Set_button4.addEventListener('touchstart',function(e){
-        core.pushScene(ReturnScene());
+        game.pushScene(ReturnScene());
         Scene_kazu++;
         console.log("Scene数",Scene_kazu);
       });
 
       var Set_button5 = new Sprite(195,95);
-      Set_button5.image = core.assets["image/Set_button.png"];
+      Set_button5.image = game.assets["image/Set_button.png"];
       Set_button5.x = 105;
       Set_button5.y = 245;
       Set_button5.frame = 11;
@@ -3371,7 +3410,7 @@ function Load(width,height){
           Sprite.call(this, 45, 45);
           this.x = 50*x+5;
           this.y = 50*y+45;
-          this.image = core.assets['image/stone.png'];
+          this.image = game.assets['image/stone.png'];
           //scene.addChild(this);
           this.ura = z;
           if(z==3) z = 1;
@@ -3489,7 +3528,7 @@ function Load(width,height){
       }
 
       var Hand = new Sprite(280,370);
-      Hand.image = core.assets["image/Hand.png"];
+      Hand.image = game.assets["image/Hand.png"];
 
       /*var label = new Label();
       label.x = 5;
@@ -3945,7 +3984,7 @@ function Load(width,height){
       function W_D(){
           if(Time_R_ensyutu!=0||AI == 100) return;
           var V_or_D = new Sprite(405,405);
-          V_or_D.image = core.assets["image/V_or_D.png"];
+          V_or_D.image = game.assets["image/V_or_D.png"];
           V_or_D.x = 0;
           V_or_D.y = 40;
           if(Black_Number>White_Number){
@@ -3976,14 +4015,14 @@ function Load(width,height){
           console.log(White_Number);
           if(OASOBI=="エクセレント"){
             OASOBI = true;
-            core.pushScene(ItemgetScene(27,"おめでとうございます！↓賞品として強欲な壺をプレゼント！","リバーシ"));
+            game.pushScene(ItemgetScene(27,"おめでとうございます！↓賞品として強欲な壺をプレゼント！","リバーシ"));
             Item_Flag[Item_Flag.length] = ["強欲な壺","チーター(強)に勝って貰った賞品。↓尋問時につきつけると先へ進める。↓その後強欲な壺が一つ無くなり↓強欲なカケラを入手する。",33];
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
           }
           else if(OASOBI=="勝ち"){
             OASOBI = true;
-            core.pushScene(ItemgetScene(32,"おめでとうございます！↓賞品としてヒントカードをプレゼント！","リバーシ"));
+            game.pushScene(ItemgetScene(32,"おめでとうございます！↓賞品としてヒントカードをプレゼント！","リバーシ"));
             Item_Flag[Item_Flag.length] = ["ヒントカード","AIに勝って貰った賞品。↓尋問時につきつけると↓ヒントと交換してもらえる。",32];
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
@@ -4123,51 +4162,51 @@ function Load(width,height){
       var scene = new Scene();                                // 新しいシーンを作る
 
       var White = new Sprite(405,600);
-      White.image = core.assets["image/white.png"];
+      White.image = game.assets["image/white.png"];
       scene.addChild(White);
 
       var Set_button = new Sprite(195,95);
-      Set_button.image = core.assets["image/Set_button.png"];
+      Set_button.image = game.assets["image/Set_button.png"];
       Set_button.x = 105;
       Set_button.y = 195;
       Set_button.frame = 12;
       scene.addChild(Set_button);
       Set_button.addEventListener('touchstart',function(e){
-        core.popScene();
-        core.replaceScene(ReversiScene());
+        game.popScene();
+        game.replaceScene(ReversiScene());
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
       });
 
       var Set_button1 = new Sprite(195,95);
-      Set_button1.image = core.assets["image/Set_button.png"];
+      Set_button1.image = game.assets["image/Set_button.png"];
       Set_button1.x = 105;
       Set_button1.frame = 14;
       scene.addChild(Set_button1);
       Set_button1.addEventListener('touchstart',function(e){
         OASOBI = false;
-        core.popScene();
-        core.popScene();
+        game.popScene();
+        game.popScene();
         Scene_kazu--;
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
       });
 
       var Set_button2 = new Sprite(195,95);
-      Set_button2.image = core.assets["image/Set_button.png"];
+      Set_button2.image = game.assets["image/Set_button.png"];
       Set_button2.x = 105;
       Set_button2.y = 455;
       Set_button2.frame = 10;
       scene.addChild(Set_button2);
       Set_button2.addEventListener('touchstart',function(e){
-        core.popScene();
+        game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
       });
 
       return scene;
     };
-    core.replaceScene(TitleScene());  // ゲームの_rootSceneをスタートシーンに置き換える
+    game.replaceScene(TitleScene());  // ゲームの_rootSceneをスタートシーンに置き換える
   }
-  core.start()
+  game.start();
 }
