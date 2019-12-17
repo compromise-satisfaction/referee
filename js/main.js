@@ -38,7 +38,7 @@ function Load(width,height){
   for (var i = 1; i <= 11; i++){
     core.preload("image/背景/"+i+".png");
   }
-  for (var i = 1; i <= 34; i++){
+  for (var i = 1; i <= 35; i++){
     core.preload("image/正方形/"+i+".png");
   }
   for (var i = 1; i <= 32; i++){
@@ -359,6 +359,7 @@ function Load(width,height){
     k++;
     }
     console.log(Flag2);
+    console.log(Datas);
     }//セーブ
 
     function rand(n) {
@@ -1975,6 +1976,12 @@ function Load(width,height){
                   Flag[6] = S_Input._element.value*1;
                   Sound_ON("Item",true);
                   Text[11].text = "残り回数 = "+S_Input._element.value;
+                  return;
+                }
+                else if(S_Input2._element.value=="データ修正"){
+                  Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",Flag[4],Flag[4],Flag[4],Flag[4],Flag[4]];
+                  Sound_ON("Item",true);
+                  Text[11].text = "データ修正";
                   return;
                 }
                 else if(S_Input2._element.value=="チートフラグ"){
