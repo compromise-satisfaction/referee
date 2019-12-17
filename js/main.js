@@ -12,33 +12,47 @@ function aaa(){
 
 function Load(width,height){
   var game = new Core(width, height);
+  aaa();
 
   var loadScene = new Scene();
 	game.loadingScene = loadScene;
 
-	game.preload("image/読み込み中.png");
+  var label = new Label();
+  var progress = 0;
+  var eee = true;
+
 	loadScene.addEventListener('progress', function(e){
-		var progress = e.loaded / e.total;
+
+    label.moveTo(100,290);
+    label.color = 'Black';
+    label.font  = "30px monospace";
+    loadScene.addChild(label);
+
+		progress = e.loaded / e.total;
 		progress *= 100;
 		progress = Math.round(progress);
+    if(progress<10) progress = "00" + progress;
+    else if(progress<100) progress = "0" + progress;
+    label.text = "LOADING..." + progress + "％";
 
-		var loadImg = new Sprite(405,600);
-		loadImg.image = game.assets["image/読み込み中.png"];
-		loadScene.addChild(loadImg);
-
-		var label = new Label();
-		label.moveTo(200,290);
-		label.text = "LOADING..." + progress;
-		label.color = 'white';
-    label.font  = "30px monospace";
-		loadScene.addChild(label);
 	});
 	loadScene.addEventListener('load', function(e) {
-
-  	var core = enchant.Core.instance;
-  	core.removeScene(core.loadingScene);
-  	core.dispatchEvent(e);
-
+    bbb();
+    var xxx = game.assets["image/Buttons.png"].width/8;
+    var yyy = game.assets["image/Buttons.png"].height;
+    var Enter1 = new Sprite(xxx,yyy);
+    Enter1.image = game.assets["image/Buttons.png"];
+    Enter1.scaleX = ((width/5)/xxx);
+    Enter1.scaleY = (((width/5))/yyy);//ココが変換した場所
+    Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
+    Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
+    Enter1.frame = 5;
+    loadScene.addChild(Enter1);
+    Enter1.addEventListener('touchstart',function(){
+      var core = enchant.Core.instance;
+      core.removeScene(core.loadingScene);
+      core.dispatchEvent(e);
+    });
 	});
   game.preload("image/融合.png");
   game.preload("sound/Item.wav");
@@ -72,7 +86,6 @@ function Load(width,height){
   game.preload("image/Background.png");
   game.preload("image/背景/カットイン.png");
   game.preload("image/Set_button.png","image/stone.png","image/Hand.png","image/V_or_D.png");
-
   for (var i = 1; i <= 11; i++){
     game.preload("image/背景/"+i+".png");
   }
@@ -82,7 +95,13 @@ function Load(width,height){
   for (var i = 1; i <= 32; i++){
     game.preload("image/人物/"+i+".png");
   }
-  
+
+  function bbb(){
+    for (var i = 0; i < ImageDATAS.length; i++){
+      game.preload(ImageDATAS[i].url);
+    }
+  }
+
   game.fps = 10;
   game.onload = function(){
 
@@ -891,12 +910,12 @@ function Load(width,height){
         })
       }
       else{
-        var xxx = game.assets["image/背景/"+ Datas[0] +".png"].width;
-        var yyy = game.assets["image/背景/"+ Datas[0] +".png"].height;
+        var xxx = game.assets["image/背景/"+Datas[0]+".png"].width;
+        var yyy = game.assets["image/背景/"+Datas[0]+".png"].height;
         var Background = new Sprite(xxx,yyy);
         Background.scaleX = width/xxx;
         Background.scaleY = width/16*9/yyy;
-        Background.image = game.assets["image/背景/"+ Datas[0] +".png"];
+        Background.image = game.assets["image/背景/"+Datas[0]+".png"];
         Background.x = (Background.scaleX*xxx/2)-xxx/2;
         Background.y = (Background.scaleY*yyy/2)-yyy/2;
         scene.addChild(Background);//背景
