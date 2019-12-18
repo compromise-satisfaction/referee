@@ -120,6 +120,7 @@ function Load(width,height){
     var XXX = width;
     var YYY = width/16*9;
     var Rotation_Y = 0;
+    var Cut_in_time = 0;
 
     function vue(){
           fetch(
@@ -965,10 +966,10 @@ function Load(width,height){
         Cut_in.scaleX = width/ccx*3;
         Cut_in.scaleY = width/16*9/ccy;
         Cut_in.image = game.assets["image/カットイン.png"];
-        Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2;
+        Cut_in_time += 10;
+        Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2-Cut_in_time;
         Cut_in.y = (Cut_in.scaleY*ccy/2)-ccy/2;
         scene.addChild(Cut_in);//背景
-        var Cut_in_time = 0;
         Cut_in.addEventListener("enterframe",function(){
           Cut_in_time += 10;
           Cut_in.x -= 10;
