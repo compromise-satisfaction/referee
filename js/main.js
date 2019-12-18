@@ -2078,11 +2078,11 @@ function Load(width,height){
                 else if(S_Input2._element.value=="チートアイテム"){
                   Item_Flag[Item_Flag.length] = S_Input._element.value.split(",");
                   if(Item_Flag[Item_Flag.length-1].length==2){
-                    Item_Flag[Item_Flag.length-1][2] = 27;
+                    Item_Flag[Item_Flag.length-1][2] = "強欲な壺";
                   }
                   if(Item_Flag[Item_Flag.length-1].length==1){
                     Item_Flag[Item_Flag.length-1][1] = "チートで生み出したアイテム。↓見た目は強欲な壺。";
-                    Item_Flag[Item_Flag.length-1][2] = 27;
+                    Item_Flag[Item_Flag.length-1][2] = "強欲な壺";
                   }
                   Sound_ON("Item",true);
                   Text[11].text = "アイテムゲット "+Item_Flag[Item_Flag.length-1][0];
@@ -2682,7 +2682,7 @@ function Load(width,height){
             }
             if(Choice_Item=="強欲な壺"){
               Get_ICF("アイテム","強欲な壺","消失");
-              Item_Flag[Item_Flag.length] = ["強欲なカケラ","強欲な壺を使った証。",31];
+              Item_Flag[Item_Flag.length] = ["強欲なカケラ","強欲な壺を使った証。","強欲なカケラ"];
             }
             game.pushScene(PopScene(Number,"異議あり！"));
             Scene_kazu++;
@@ -4095,15 +4095,15 @@ function Load(width,height){
           console.log(White_Number);
           if(OASOBI=="エクセレント"){
             OASOBI = true;
-            game.pushScene(ItemgetScene(27,"おめでとうございます！↓賞品として強欲な壺をプレゼント！","リバーシ"));
-            Item_Flag[Item_Flag.length] = ["強欲な壺","チーター(強)に勝って貰った賞品。↓尋問時につきつけると先へ進める。↓その後強欲な壺が一つ無くなり↓強欲なカケラを入手する。",33];
+            game.pushScene(ItemgetScene("強欲な壺","おめでとうございます！↓賞品として強欲な壺をプレゼント！","リバーシ"));
+            Item_Flag[Item_Flag.length] = ["強欲な壺","チーター(強)に勝って貰った賞品。↓尋問時につきつけると先へ進める。↓その後強欲な壺が一つ無くなり↓強欲なカケラを入手する。","強欲な壺"];
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
           }
           else if(OASOBI=="勝ち"){
             OASOBI = true;
-            game.pushScene(ItemgetScene(32,"おめでとうございます！↓賞品としてヒントカードをプレゼント！","リバーシ"));
-            Item_Flag[Item_Flag.length] = ["ヒントカード","AIに勝って貰った賞品。↓尋問時につきつけると↓ヒントと交換してもらえる。",32];
+            game.pushScene(ItemgetScene("ヒントカード","おめでとうございます！↓賞品としてヒントカードをプレゼント！","リバーシ"));
+            Item_Flag[Item_Flag.length] = ["ヒントカード","AIに勝って貰った賞品。↓尋問時につきつけると↓ヒントと交換してもらえる。","ヒントカード"];
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
           }
