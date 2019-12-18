@@ -8,7 +8,8 @@ function Images(width,height){
   .then(result => {
     III = [];
     ImageDATAS = result;
-    for (var i = 0; i < ImageDATAS.length; i++) {
+    for (var i = 0; i < ImageDATAS.length; i++){
+      if(ImageDATAS[i].name=="最終更新日時") continue;
       III[i] = ImageDATAS[i].url
     }
     Load(width,height)
@@ -25,6 +26,29 @@ function Load(width,height){
 
   var label = new Label();
   var progress = 0;
+
+  var Texts = Class.create(Label, {
+    initialize: function(a,b) {
+      Label.call(this);
+      this.font  = "30px monospace";
+      this.color = 'black';
+      this.x = 10;
+      this.y = 100 + 40*b;
+      this.width = width;
+      this.height = 30;
+      this.text = a;
+      loadScene.addChild(this);
+    }
+  });
+
+  var kousin = [];
+  for (var i = 0; i < ImageDATAS.length; i++) {
+    if(ImageDATAS[i].name=="最終更新日時") break;
+  }
+  var kousin2 = ImageDATAS[i].url.split("↓");
+  for (var i = 0; i < kousin2.length; i++) {
+    kousin[i] = new Texts(kousin2[i],i);
+  }
 
 	loadScene.addEventListener('progress', function(e){
 
@@ -2589,7 +2613,7 @@ function Load(width,height){
 
       var Item_image = Class.create(Sprite,{
           initialize: function(a) {
-              console.log(a);
+
               a = Image_conversion(a);
               var xxx = game.assets[a].width;
               var yyy = game.assets[a].height;
