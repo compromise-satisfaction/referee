@@ -1,5 +1,22 @@
 enchant()
 
+function Images(width,height){
+  fetch(
+    "https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",
+  )
+  .then(res => res.json())
+  .then(result => {
+    III = [];
+    ImageDATAS = result;
+    for (var i = 0; i < ImageDATAS.length; i++) {
+      III[i] = ImageDATAS[i].url
+    }
+    Load(width,height)
+  },);
+}
+
+var III = false;
+
 function Load(width,height){
   var game = new Core(width, height);
 
@@ -8,7 +25,6 @@ function Load(width,height){
 
   var label = new Label();
   var progress = 0;
-  var III = [];
 
 	loadScene.addEventListener('progress', function(e){
 
@@ -46,7 +62,6 @@ function Load(width,height){
   game.preload("sound/Item.wav");
   game.preload("image/left.png");
   game.preload("image/Round.png");
-  game.preload("image/title.png");
   game.preload("image/right.png");
   game.preload("image/white.png");
   game.preload("image/stand.png");
@@ -60,45 +75,20 @@ function Load(width,height){
   //game.preload("sound/永遠の灯.wav");
   //game.preload("sound/偶然、必然。.wav");
   game.preload("image/Trophies.png");
-  game.preload("image/背景/透明.png");
-  game.preload("image/背景/left.png");
   game.preload("image/異議あり！.png");
   game.preload("sound/異議あり！.wav");
   game.preload("image/カットイン.png");
   game.preload("image/Explosion.png");
-  game.preload("image/背景/stand.png");
   game.preload("image/背景/Black.png");
+  game.preload("image/背景/left.png");
   game.preload("image/背景/right.png");
+  game.preload("image/背景/stand.png");
   game.preload("image/背景/裁判長.png");
+  game.preload("image/背景/透明.png");
   game.preload("image/背景/留置所.png");
   game.preload("image/Background.png");
-  game.preload("image/背景/カットイン.png");
   game.preload("image/Set_button.png","image/stone.png","image/Hand.png","image/V_or_D.png");
-  var def = [];
-  for (var i = 1; i <= 11; i++){
-    def[def.length] = "image/背景/"+i+".png";
-  }
-  for (var i = 1; i <= 36; i++){
-    def[def.length] = "image/正方形/"+i+".png";
-  }
-  for (var i = 1; i <= 33; i++){
-    def[def.length] = "image/人物/"+i+".png";
-  }
-  game.preload(def);
-  fetch(
-    "https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",
-  )
-  .then(res => res.json())
-  .then(result => {
-    III = [];
-    ImageDATAS = result;
-    for (var i = 0; i < ImageDATAS.length; i++) {
-      III[i] = ImageDATAS[i].url
-    }
-    console.log(III);
-    console.log(def);
-    game.preload(III);
-  },);
+  game.preload(III);
 
   game.fps = 10;
   game.onload = function(){
@@ -115,6 +105,13 @@ function Load(width,height){
           .then(result => {
             DATAS = result;
           },);
+    }
+
+    function Image_conversion(name){
+      for (var i = 0; i < ImageDATAS.length; i++) {
+        if(ImageDATAS[i].name==name) return(ImageDATAS[i].url);
+      }
+      return(name);
     }
 
     function BGM_Stop(Pause){
@@ -497,13 +494,11 @@ function Load(width,height){
     if(Gender=="男"){
     var www = ["僕","俺"];
     var Person = www[rand(1)];
-    var S_image = 1;
-    var S_image2 = 29;
+    var S_image = Image_conversion("男主人公");
     }
     else{
     var Person = "私";
-    var S_image = 2;
-    var S_image2 = 30;
+    var S_image = Image_conversion("女主人公");
     }
     if(Item){
     Number = Item+Number;
@@ -632,12 +627,12 @@ function Load(width,height){
     return;
     }
     if(Scene_type=="メイン"){
-      Datas[0] = DATAS[i].Datas0;
-      Datas[1] = DATAS[i].Datas1;
+      Datas[0] = Image_conversion(DATAS[i].Datas0);
+      Datas[1] = Image_conversion(DATAS[i].Datas1);
       Datas[2] = DATAS[i].Datas2;
-      Datas[3] = DATAS[i].Datas3;
+      Datas[3] = Image_conversion(DATAS[i].Datas3);
       Datas[4] = DATAS[i].Datas4;
-      Datas[5] = DATAS[i].Datas5;
+      Datas[5] = Image_conversion(DATAS[i].Datas5);
       Datas[6] = DATAS[i].Datas6;
       Datas[7] = DATAS[i].Datas7.replace(/\(主人公苗字\)/g,Surname).replace(/\(主人公名前\)/,Name);
       Datas[8] = DATAS[i].Datas8.replace(/\n/g,"↓").replace(/\(主人公苗字\)/g,Surname).replace(/\(主人公名前\)/g,Name).replace(/\(一人称\)/g,Person).replace(/\(残りライフ\)/g,Flag[6]);
@@ -647,20 +642,17 @@ function Load(width,height){
       Datas[12] = DATAS[i].Datas12;
       Datas[13] = DATAS[i].Datas13;
       Datas[14] = DATAS[i].Datas14;
-      Datas[15] = DATAS[i].Datas15;
+      Datas[15] = Image_conversion(DATAS[i].Datas15);
       Datas[16] = DATAS[i].Datas16;
-      if(Datas[1]=="主人公") Datas[1] = Datas[1] = S_image;
-      if(Datas[3]=="主人公") Datas[3] = Datas[3] = S_image;
-      if(Datas[5]=="主人公") Datas[5] = Datas[5] = S_image;
-      if(Datas[1]=="主人公カットイン") Datas[1] = Datas[1] = S_image2;
-      if(Datas[3]=="主人公カットイン") Datas[3] = Datas[3] = S_image2;
-      if(Datas[5]=="主人公カットイン") Datas[5] = Datas[5] = S_image2;
+      if(Datas[1]=="主人公") Datas[1] = S_image;
+      if(Datas[3]=="主人公") Datas[3] = S_image;
+      if(Datas[5]=="主人公") Datas[5] = S_image;
     }
     else if(Scene_type=="チョイス"){
-      Datas[0] = DATAS[i].Datas0;
-      Datas[1] = DATAS[i].Datas1;
-      Datas[2] = DATAS[i].Datas2;
-      Datas[3] = DATAS[i].Datas3;
+      Datas[0] = Image_conversion(DATAS[i].Datas0);
+      Datas[1] = Image_conversion(DATAS[i].Datas1);
+      Datas[2] = Image_conversion(DATAS[i].Datas2);
+      Datas[3] = Image_conversion(DATAS[i].Datas3);
       Datas[4] = DATAS[i].Datas4;
       Datas[5] = DATAS[i].Datas5;
       Datas[6] = DATAS[i].Datas6;
@@ -674,9 +666,9 @@ function Load(width,height){
       Datas[14] = DATAS[i].Datas14;
       Datas[15] = DATAS[i].Datas15;
       Datas[16] = DATAS[i].Datas16;
-      if(Datas[1]=="主人公") Datas[1] = Datas[1] = S_image;
-      if(Datas[2]=="主人公") Datas[2] = Datas[3] = S_image;
-      if(Datas[3]=="主人公") Datas[3] = Datas[5] = S_image;
+      if(Datas[1]=="主人公") Datas[1] = S_image;
+      if(Datas[2]=="主人公") Datas[2] = S_image;
+      if(Datas[3]=="主人公") Datas[3] = S_image;
     }
     else if(Scene_type=="分岐"){
       if(have(DATAS[i].Datas0)){
@@ -700,10 +692,10 @@ function Load(width,height){
       Move(DATAS[i].Datas0);
     }
     else if (Scene_type=="尋問") {
-      Datas = [DATAS[i].Datas0,DATAS[i].Datas1,DATAS[i].Datas2,DATAS[i].Datas3,DATAS[i].Datas4,DATAS[i].Datas5,DATAS[i].Datas6,DATAS[i].Datas7,DATAS[i].Datas8];
+      Datas = [Image_conversion(DATAS[i].Datas0),DATAS[i].Datas1,DATAS[i].Datas2,DATAS[i].Datas3,DATAS[i].Datas4,DATAS[i].Datas5,DATAS[i].Datas6,DATAS[i].Datas7,DATAS[i].Datas8];
     }
     else if(Scene_type=="アイテムゲット"){
-      Scene_type = [DATAS[i].Datas0,DATAS[i].Datas1,DATAS[i].Datas2];
+      Scene_type = [Image_conversion(DATAS[i].Datas0),DATAS[i].Datas1,DATAS[i].Datas2];
     }
     else{
       Datas[0] = DATAS[i].Datas0;
@@ -762,7 +754,7 @@ function Load(width,height){
     var Inspect = ["背景ナンバー","(幅,高さ,x座標,y座標,シーンナンバー)"];
     for (var i = 0; i < DATAS.length; i++) {
       if(DATAS[i].Number=="調べる"+Number){
-        Inspect = [DATAS[i].type,DATAS[i].Datas0,DATAS[i].Datas1,DATAS[i].Datas2,DATAS[i].Datas3,DATAS[i].Datas4,DATAS[i].Datas5,DATAS[i].Datas6,DATAS[i].Datas7,DATAS[i].Datas8,DATAS[i].Datas9];
+        Inspect = [Image_conversion(DATAS[i].type),DATAS[i].Datas0,DATAS[i].Datas1,DATAS[i].Datas2,DATAS[i].Datas3,DATAS[i].Datas4,DATAS[i].Datas5,DATAS[i].Datas6,DATAS[i].Datas7,DATAS[i].Datas8,DATAS[i].Datas9];
         break;
       }
     }
@@ -790,10 +782,10 @@ function Load(width,height){
         BGM_Stop(true);
       }
 
-      var xxx = game.assets["image/title.png"].width;
-      var yyy = game.assets["image/title.png"].height;
+      var xxx = game.assets[Image_conversion("タイトル画面")].width;
+      var yyy = game.assets[Image_conversion("タイトル画面")].height;
       var Title = new Sprite(xxx,yyy);
-      Title.image = game.assets["image/title.png"];
+      Title.image = game.assets[Image_conversion("タイトル画面")];
       Title.scaleX = width/xxx;
       Title.scaleY = width/16*9/yyy;
       Title.x = (Title.scaleX*xxx/2)-xxx/2;
@@ -889,43 +881,68 @@ function Load(width,height){
         }
       }
 
-      if(Datas[0]=="ヒント"){
-        var xxx = game.assets["image/融合.png"].width;
-        var yyy = game.assets["image/融合.png"].height;
-        var Background = new Sprite(xxx,yyy);
-        Background.image = game.assets["image/融合.png"];
-        Background.scaleX = width/xxx*1.2;
-        Background.scaleY = width/yyy*1.2;
-        Background.x = (width-xxx)/2;
-        Background.y = -(width-xxx)/2;
-        Rotation_Y -= 10;
-        Background.rotation = Rotation_Y;
-        scene.addChild(Background);//背景
-        Background.addEventListener("enterframe",function(){
+      switch (Datas[0]) {
+        case "ヒント":
+          var xxx = game.assets["image/融合.png"].width;
+          var yyy = game.assets["image/融合.png"].height;
+          var Background = new Sprite(xxx,yyy);
+          Background.image = game.assets["image/融合.png"];
+          Background.scaleX = width/xxx*1.2;
+          Background.scaleY = width/yyy*1.2;
+          Background.x = (width-xxx)/2;
+          Background.y = -(width-xxx)/2;
           Rotation_Y -= 10;
           Background.rotation = Rotation_Y;
-          if(Rotation_Y==-360) Rotation_Y = 0;
-        })
-      }
-      else{
-        var xxx = game.assets["image/背景/"+Datas[0]+".png"].width;
-        var yyy = game.assets["image/背景/"+Datas[0]+".png"].height;
-        var Background = new Sprite(xxx,yyy);
-        Background.scaleX = width/xxx;
-        Background.scaleY = width/16*9/yyy;
-        Background.image = game.assets["image/背景/"+Datas[0]+".png"];
-        Background.x = (Background.scaleX*xxx/2)-xxx/2;
-        Background.y = (Background.scaleY*yyy/2)-yyy/2;
-        scene.addChild(Background);//背景
+          scene.addChild(Background);//背景
+          var Background2 = new Sprite(width,height);
+          Background2.image = game.assets["image/white.png"];
+          Background2.x = 0;
+          Background2.y = (width/16)*9;
+          scene.addChild(Background2);//白地
+          Background.addEventListener("enterframe",function(){
+            Rotation_Y -= 10;
+            Background.rotation = Rotation_Y;
+            if(Rotation_Y==-360) Rotation_Y = 0;
+          })
+          break;
+          case "Black":
+          case "left":
+          case "right":
+          case "stand":
+          case "裁判長":
+          case "留置所":
+          var xxx = game.assets["image/背景/"+Datas[0]+".png"].width;
+          var yyy = game.assets["image/背景/"+Datas[0]+".png"].height;
+          var Background = new Sprite(xxx,yyy);
+          Background.scaleX = ((width)/xxx);
+          Background.scaleY = (((width/16)*9)/yyy);
+          Background.image = game.assets["image/背景/"+Datas[0]+".png"];
+          Background.x = (Background.scaleX*xxx/2)-xxx/2;
+          Background.y = (Background.scaleY*yyy/2)-yyy/2;
+          scene.addChild(Background);
+          break;
+        case "カットイン":
+          break;
+        default:
+          var xxx = game.assets[Datas[0]].width;
+          var yyy = game.assets[Datas[0]].height;
+          var Background = new Sprite(xxx,yyy);
+          Background.scaleX = ((width)/xxx);
+          Background.scaleY = (((width/16)*9)/yyy);
+          Background.image = game.assets[Datas[0]];
+          Background.x = (Background.scaleX*xxx/2)-xxx/2;
+          Background.y = (Background.scaleY*yyy/2)-yyy/2;
+          scene.addChild(Background);
+          break;
       }
 
       if(Datas[0]=="カットイン"){
-        var ccx = game.assets["image/背景/"+ Datas[0] +".png"].width*3;
-        var ccy = game.assets["image/背景/"+ Datas[0] +".png"].height;
+        var ccx = game.assets["image/カットイン.png"].width*3;
+        var ccy = game.assets["image/カットイン.png"].height;
         var Cut_in = new Sprite(ccx,ccy);
         Cut_in.scaleX = width/ccx*3;
         Cut_in.scaleY = width/16*9/ccy;
-        Cut_in.image = game.assets["image/"+ Datas[0] +".png"];
+        Cut_in.image = game.assets["image/カットイン.png"];
         Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2;
         Cut_in.y = (Cut_in.scaleY*ccy/2)-ccy/2;
         scene.addChild(Cut_in);//背景
@@ -954,14 +971,22 @@ function Load(width,height){
       })
 
       if(Datas[3]!=false){
-        var xxx = game.assets["image/人物/"+Datas[3]+".png"].width;
-        var yyy = game.assets["image/人物/"+Datas[3]+".png"].height;
+        var xxx = game.assets[Datas[3]].width;
+        var yyy = game.assets[Datas[3]].height;
         var Character2 = new Sprite(xxx,yyy);
         Character2.scaleX = ((width/2)/xxx);
         Character2.scaleY = (((width/16)*9)/yyy);
-        Character2.image = game.assets["image/人物/"+Datas[3]+".png"];
-        Character2.x = (Character2.scaleX*xxx/2)-xxx/2+(width/4);
-        Character2.y = (Character2.scaleX*yyy/2)-yyy/2;
+        Character2.image = game.assets[Datas[3]];
+        if(Datas[0]=="カットイン"){
+          Character2.scaleX *= 2;
+          Character2.scaleY *= 2;
+          Character2.x = (Character2.scaleX*xxx/2)-xxx/2;
+          Character2.y = (Character2.scaleX*yyy/2)-yyy/2;
+        }
+        else {
+          Character2.x = (Character2.scaleX*xxx/2)-xxx/2+(width/4);
+          Character2.y = (Character2.scaleX*yyy/2)-yyy/2;
+        }
         if(Datas[4]!=0){
           if(Datas[4]>0){
             if(Return!=true){
@@ -982,12 +1007,12 @@ function Load(width,height){
       switch (Datas[0]) {
         case "stand":
         case "留置所":
-          var xxx = game.assets["image/"+ Datas[0] +".png"].width;
-          var yyy = game.assets["image/"+ Datas[0] +".png"].height;
+          var xxx = game.assets["image/"+Datas[0]+".png"].width;
+          var yyy = game.assets["image/"+Datas[0]+".png"].height;
           var Stand = new Sprite(xxx,yyy);
           Stand.scaleX = width/xxx;
           Stand.scaleY = width/16*9/yyy;
-          Stand.image = game.assets["image/"+ Datas[0] +".png"];
+          Stand.image = game.assets["image/"+Datas[0]+".png"];
           Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
           Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
@@ -997,14 +1022,22 @@ function Load(width,height){
       }
 
       if(Datas[1]!=false){
-        var xxx = game.assets["image/人物/"+Datas[1]+".png"].width;
-        var yyy = game.assets["image/人物/"+Datas[1]+".png"].height;
+        var xxx = game.assets[Datas[1]].width;
+        var yyy = game.assets[Datas[1]].height;
         var Character1 = new Sprite(xxx,yyy);
         Character1.scaleX = ((width/2)/xxx);
         Character1.scaleY = (((width/16)*9)/yyy);
-        Character1.image = game.assets["image/人物/"+Datas[1]+".png"];
-        Character1.x = (Character1.scaleX*xxx/2)-xxx/2;
-        Character1.y = (Character1.scaleX*yyy/2)-yyy/2;
+        Character1.image = game.assets[Datas[1]];
+        if(Datas[0]=="カットイン"){
+          Character1.scaleX *= 2;
+          Character1.scaleY *= 2;
+          Character1.x = (Character1.scaleX*xxx/2)-xxx/2-(width/4);
+          Character1.y = (Character1.scaleX*yyy/2)-yyy/2;
+        }
+        else {
+          Character1.x = (Character1.scaleX*xxx/2)-xxx/2;
+          Character1.y = (Character1.scaleX*yyy/2)-yyy/2;
+        }
         if(Datas[2]!=0){
           if(Datas[2]>0){
             if(Return!=true){
@@ -1023,14 +1056,22 @@ function Load(width,height){
       }//キャラ左
 
       if(Datas[5]!=false){
-        var xxx = game.assets["image/人物/"+Datas[5]+".png"].width;
-        var yyy = game.assets["image/人物/"+Datas[5]+".png"].height;
+        var xxx = game.assets[Datas[5]].width;
+        var yyy = game.assets[Datas[5]].height;
         var Character3 = new Sprite(xxx,yyy);
         Character3.scaleX = ((width/2)/xxx);
         Character3.scaleY = (((width/16)*9)/yyy);
-        Character3.image = game.assets["image/人物/"+Datas[5]+".png"];
-        Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/2);
-        Character3.y = (Character3.scaleX*yyy/2)-yyy/2;
+        Character3.image = game.assets[Datas[5]];
+        if(Datas[0]=="カットイン"){
+          Character3.scaleX *= 2;
+          Character3.scaleY *= 2;
+          Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/4);
+          Character3.y = (Character3.scaleX*yyy/2)-yyy/2;
+        }
+        else {
+          Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/2);
+          Character3.y = (Character3.scaleX*yyy/2)-yyy/2;
+        }
         if(Datas[6]!=0){
           if(Datas[6]>0){
             if(Return!=true){
@@ -1051,12 +1092,12 @@ function Load(width,height){
       switch (Datas[0]) {
         case "right":
         case "left":
-          var xxx = game.assets["image/"+ Datas[0] +".png"].width;
-          var yyy = game.assets["image/"+ Datas[0] +".png"].height;
+          var xxx = game.assets["image/"+Datas[0]+".png"].width;
+          var yyy = game.assets["image/"+Datas[0]+".png"].height;
           var Stand = new Sprite(xxx,yyy);
           Stand.scaleX = width/xxx;
           Stand.scaleY = width/16*9/yyy;
-          Stand.image = game.assets["image/"+ Datas[0] +".png"];
+          Stand.image = game.assets["image/"+Datas[0]+".png"];
           Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
           Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
@@ -1067,12 +1108,12 @@ function Load(width,height){
       //  Datas = [1,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 
       if(Datas[14]!=undefined&&Datas[14]!=false){
-        var xxx = game.assets["image/正方形/"+Datas[15]+".png"].width;
-        var yyy = game.assets["image/正方形/"+Datas[15]+".png"].height;
+        var xxx = game.assets[Datas[15]].width;
+        var yyy = game.assets[Datas[15]].height;
         var Item = new Sprite(xxx,yyy);
         Item.scaleX = ((width/4)/xxx);
         Item.scaleY = ((width/4)/yyy);
-        Item.image = game.assets["image/正方形/"+Datas[15]+".png"];
+        Item.image = game.assets[Datas[15]];
         Item.x = ((Item.scaleX*xxx/2)-xxx/2)+Datas[14].substring(0,4)*(width/1600);
         Item.y = ((Item.scaleY*yyy/2)-yyy/2)+Datas[14].substring(5,9)*(width/16/100);
         if(Return!=true&&Datas[14].substring(11,12)*1!=0){
@@ -1317,10 +1358,10 @@ function Load(width,height){
           Trophies.opacity = 0;
           Trophies.tl.fadeIn(50);
           scene.addChild(Trophies);
-          var xxx = game.assets["image/正方形/"+Datas[17]+".png"].width;
-          var yyy = game.assets["image/正方形/"+Datas[17]+".png"].height;
+          var xxx = game.assets[Datas[17]].width;
+          var yyy = game.assets[Datas[17]].height;
           var Trophies_image = new Sprite(xxx,yyy);
-          Trophies_image.image = game.assets["image/正方形/"+Datas[17]+".png"];
+          Trophies_image.image = game.assets[Datas[17]];
           Trophies_image.scaleX = ((width/18.82)/xxx);
           Trophies_image.scaleY = ((width/18.82)/yyy);
           Trophies_image.x = (Trophies_image.scaleX*xxx/2)-xxx/2+(width-(width/3.6));
@@ -1439,48 +1480,67 @@ function Load(width,height){
         }
       }
 
-      if(Datas[0]=="ヒント"){
-        var xxx = game.assets["image/融合.png"].width;
-        var yyy = game.assets["image/融合.png"].height;
-        var Background = new Sprite(xxx,yyy);
-        Background.image = game.assets["image/融合.png"];
-        Background.scaleX = width/xxx*1.2;
-        Background.scaleY = width/yyy*1.2;
-        Background.x = (width-xxx)/2;
-        Background.y = -(width-xxx)/2;
-        Rotation_Y -= 10;
-        Background.rotation = Rotation_Y;
-        scene.addChild(Background);//背景
-        var Background2 = new Sprite(width,height);
-        Background2.image = game.assets["image/white.png"];
-        Background2.x = 0;
-        Background2.y = (width/16)*9;
-        scene.addChild(Background2);//白地
-        Background.addEventListener("enterframe",function(){
+
+      switch (Datas[0]) {
+        case "ヒント":
+          var xxx = game.assets["image/融合.png"].width;
+          var yyy = game.assets["image/融合.png"].height;
+          var Background = new Sprite(xxx,yyy);
+          Background.image = game.assets["image/融合.png"];
+          Background.scaleX = width/xxx*1.2;
+          Background.scaleY = width/yyy*1.2;
+          Background.x = (width-xxx)/2;
+          Background.y = -(width-xxx)/2;
           Rotation_Y -= 10;
           Background.rotation = Rotation_Y;
-          if(Rotation_Y==-360) Rotation_Y = 0;
-        })
-      }
-      else{
-        var xxx = game.assets["image/背景/"+ Datas[0] +".png"].width;
-        var yyy = game.assets["image/背景/"+ Datas[0] +".png"].height;
-        var Background = new Sprite(xxx,yyy);
-        Background.scaleX = ((width)/xxx);
-        Background.scaleY = (((width/16)*9)/yyy);
-        Background.image = game.assets["image/背景/"+ Datas[0] +".png"];
-        Background.x = (Background.scaleX*xxx/2)-xxx/2;
-        Background.y = (Background.scaleY*yyy/2)-yyy/2;
-        scene.addChild(Background);
+          scene.addChild(Background);//背景
+          var Background2 = new Sprite(width,height);
+          Background2.image = game.assets["image/white.png"];
+          Background2.x = 0;
+          Background2.y = (width/16)*9;
+          scene.addChild(Background2);//白地
+          Background.addEventListener("enterframe",function(){
+            Rotation_Y -= 10;
+            Background.rotation = Rotation_Y;
+            if(Rotation_Y==-360) Rotation_Y = 0;
+          })
+          break;
+          case "Black":
+          case "left":
+          case "right":
+          case "stand":
+          case "裁判長":
+          case "留置所":
+          var xxx = game.assets["image/背景/"+Datas[0]+".png"].width;
+          var yyy = game.assets["image/背景/"+Datas[0]+".png"].height;
+          var Background = new Sprite(xxx,yyy);
+          Background.scaleX = ((width)/xxx);
+          Background.scaleY = (((width/16)*9)/yyy);
+          Background.image = game.assets["image/背景/"+Datas[0]+".png"];
+          Background.x = (Background.scaleX*xxx/2)-xxx/2;
+          Background.y = (Background.scaleY*yyy/2)-yyy/2;
+          scene.addChild(Background);
+          break;
+        default:
+          var xxx = game.assets[Datas[0]].width;
+          var yyy = game.assets[Datas[0]].height;
+          var Background = new Sprite(xxx,yyy);
+          Background.scaleX = ((width)/xxx);
+          Background.scaleY = (((width/16)*9)/yyy);
+          Background.image = game.assets[Datas[0]];
+          Background.x = (Background.scaleX*xxx/2)-xxx/2;
+          Background.y = (Background.scaleY*yyy/2)-yyy/2;
+          scene.addChild(Background);
+          break;
       }
 
       if(Datas[2]!=false){
-        var xxx = game.assets["image/人物/"+Datas[2]+".png"].width;
-        var yyy = game.assets["image/人物/"+Datas[2]+".png"].height;
+        var xxx = game.assets[Datas[2]].width;
+        var yyy = game.assets[Datas[2]].height;
         var Character2 = new Sprite(xxx,yyy);
         Character2.scaleX = ((width/2)/xxx);
         Character2.scaleY = (((width/16)*9)/yyy);
-        Character2.image = game.assets["image/人物/"+Datas[2]+".png"];
+        Character2.image = game.assets[Datas[2]];
         Character2.x = (Character2.scaleX*xxx/2)-xxx/2+(width/4);
         Character2.y = (Character2.scaleX*yyy/2)-yyy/2;
         scene.addChild(Character2);
@@ -1489,12 +1549,12 @@ function Load(width,height){
       switch (Datas[0]) {
         case "stand":
         case "留置所":
-          var xxx = game.assets["image/"+ Datas[0] +".png"].width;
-          var yyy = game.assets["image/"+ Datas[0] +".png"].height;
+          var xxx = game.assets["image/"+Datas[0]+".png"].width;
+          var yyy = game.assets["image/"+Datas[0]+".png"].height;
           var Stand = new Sprite(xxx,yyy);
           Stand.scaleX = width/xxx;
           Stand.scaleY = width/16*9/yyy;
-          Stand.image = game.assets["image/"+ Datas[0] +".png"];
+          Stand.image = game.assets["image/"+Datas[0]+".png"];
           Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
           Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
@@ -1504,24 +1564,24 @@ function Load(width,height){
       }
 
       if(Datas[1]!=false){
-        var xxx = game.assets["image/人物/"+Datas[1]+".png"].width;
-        var yyy = game.assets["image/人物/"+Datas[1]+".png"].height;
+        var xxx = game.assets[Datas[1]].width;
+        var yyy = game.assets[Datas[1]].height;
         var Character1 = new Sprite(xxx,yyy);
         Character1.scaleX = ((width/2)/xxx);
         Character1.scaleY = (((width/16)*9)/yyy);
-        Character1.image = game.assets["image/人物/"+Datas[1]+".png"];
+        Character1.image = game.assets[Datas[1]];
         Character1.x = (Character1.scaleX*xxx/2)-xxx/2;
         Character1.y = (Character1.scaleX*yyy/2)-yyy/2;
         scene.addChild(Character1);
       }//キャラ左
 
       if(Datas[3]!=false){
-        var xxx = game.assets["image/人物/"+Datas[3]+".png"].width;
-        var yyy = game.assets["image/人物/"+Datas[3]+".png"].height;
+        var xxx = game.assets[Datas[3]].width;
+        var yyy = game.assets[Datas[3]].height;
         var Character3 = new Sprite(xxx,yyy);
         Character3.scaleX = ((width/2)/xxx);
         Character3.scaleY = (((width/16)*9)/yyy);
-        Character3.image = game.assets["image/人物/"+Datas[3]+".png"];
+        Character3.image = game.assets[Datas[3]];
         Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/2);
         Character3.y = (Character3.scaleX*yyy/2)-yyy/2;
         scene.addChild(Character3);
@@ -1530,12 +1590,12 @@ function Load(width,height){
       switch (Datas[0]) {
         case "right":
         case "left":
-          var xxx = game.assets["image/"+ Datas[0] +".png"].width;
-          var yyy = game.assets["image/"+ Datas[0] +".png"].height;
+          var xxx = game.assets["image/"+Datas[0]+".png"].width;
+          var yyy = game.assets["image/"+Datas[0]+".png"].height;
           var Stand = new Sprite(xxx,yyy);
           Stand.scaleX = width/xxx;
           Stand.scaleY = width/16*9/yyy;
-          Stand.image = game.assets["image/"+ Datas[0] +".png"];
+          Stand.image = game.assets["image/"+Datas[0]+".png"];
           Stand.x = (Stand.scaleX*xxx/2)-xxx/2;
           Stand.y = (Stand.scaleY*yyy/2)-yyy/2;
           scene.addChild(Stand);
@@ -1697,12 +1757,12 @@ function Load(width,height){
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);//証言席
 
-      var xxx = game.assets["image/人物/"+Datas[0]+".png"].width;
-      var yyy = game.assets["image/人物/"+Datas[0]+".png"].height;
+      var xxx = game.assets[Datas[0]].width;
+      var yyy = game.assets[Datas[0]].height;
       var Character = new Sprite(xxx,yyy);
       Character.scaleX = ((width/2)/xxx);
       Character.scaleY = (((width/16)*9)/yyy);
-      Character.image = game.assets["image/人物/"+Datas[0]+".png"];
+      Character.image = game.assets[Datas[0]];
       Character.x = (Character.scaleX*xxx/2)-xxx/2+(width/4);
       Character.y = (Character.scaleX*yyy/2)-yyy/2;
       scene.addChild(Character);//キャラ
@@ -2176,13 +2236,14 @@ function Load(width,height){
     var InspectScene = function(Inspect,Item){
       var scene = new Scene();                                // 新しいシーンを作る
 
-
-    var xxx = game.assets["image/背景/"+ Datas[0] +".png"].width;
-    var yyy = game.assets["image/背景/"+ Datas[0] +".png"].height;
+    if(Datas[0]=="留置所") var ryu = "image/背景/留置所.png";
+    else var ryu = Datas[0];
+    var xxx = game.assets[ryu].width;
+    var yyy = game.assets[ryu].height;
     var Background = new Sprite(xxx,yyy);
     Background.scaleX = width/xxx;
     Background.scaleY = width/16*9/yyy;
-    Background.image = game.assets["image/背景/"+ Inspect[0] +".png"];
+    Background.image = game.assets[Inspect[0]];
     Background.x = (Background.scaleX*xxx/2)-xxx/2;
     Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
@@ -2341,12 +2402,12 @@ function Load(width,height){
       Enter1.frame = 5;
       scene.addChild(Enter1);
 
-      var xxx = game.assets["image/正方形/"+a+".png"].width;
-      var yyy = game.assets["image/正方形/"+a+".png"].height;
+      var xxx = game.assets[a].width;
+      var yyy = game.assets[a].height;
       var Item = new Sprite(xxx,yyy);
       Item.scaleX = ((width/2)/xxx);
       Item.scaleY = ((width/2)/yyy);
-      Item.image = game.assets["image/正方形/"+a+".png"];
+      Item.image = game.assets[a];
       var X_0 = (Item.scaleX*xxx/2)-xxx/2;
       var Y_0 = (Item.scaleY*yyy/2)-yyy/2;
       Item.x = X_0 + width;
@@ -2530,12 +2591,13 @@ function Load(width,height){
 
       var Item_image = Class.create(Sprite,{
           initialize: function(a) {
-              var xxx = game.assets["image/正方形/"+a+".png"].width;
-              var yyy = game.assets["image/正方形/"+a+".png"].height;
+              a = Image_conversion(a);
+              var xxx = game.assets[a].width;
+              var yyy = game.assets[a].height;
               Sprite.call(this,xxx,yyy);
               this.scaleX = ((width/4)/xxx);
               this.scaleY = ((width/4)/yyy);
-              this.image = game.assets["image/正方形/"+a+".png"];
+              this.image = game.assets[a];
               this.x = (this.scaleX*xxx/2)-xxx/2+(width/1.6);
               this.y = (this.scaleY*yyy/2)-yyy/2+(width/4)+(width/20)+(width/25);
           }
@@ -2883,12 +2945,13 @@ function Load(width,height){
 
       var Character_image = Class.create(Sprite,{
           initialize: function(a) {
-              var xxx = game.assets["image/正方形/"+a+".png"].width;
-              var yyy = game.assets["image/正方形/"+a+".png"].height;
+              a = Image_conversion(a);
+              var xxx = game.assets[a].width;
+              var yyy = game.assets[a].height;
               Sprite.call(this,xxx,yyy);
               this.scaleX = ((width/4)/xxx);
               this.scaleY = ((width/4)/yyy);
-              this.image = game.assets["image/正方形/"+a+".png"];
+              this.image = game.assets[a];
               this.x = (this.scaleX*xxx/2)-xxx/2+(width/1.6);
               this.y = (this.scaleY*yyy/2)-yyy/2+(width/4)+(width/20)+(width/25);
           }
@@ -3373,7 +3436,7 @@ function Load(width,height){
       scene.addChild(White);
 
       var Reversi = new Sprite(405,405);
-      Reversi.image = game.assets["image/正方形/30.png"];
+      Reversi.image = game.assets[Image_conversion("リバーシ")];
       Reversi.x = 0;
       Reversi.y = 40;
       scene.addChild(Reversi);
