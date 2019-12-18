@@ -284,7 +284,6 @@ function Load(width,height){
         var Item_Flag2 = [];
         for (var k = 1; k < Item_Flag[i].length; k++){
           Item_Flag2[k-1] = Item_Flag[i][k];
-          if(k==3) Item_Flag2[k-1] = Item_Flag2[k-1]*1;
         }
         Item_Flag[i] = Item_Flag2;
       }
@@ -300,7 +299,6 @@ function Load(width,height){
         var Character_Flag2 = [];
         for (var k = 1; k < Character_Flag[i].length; k++){
           Character_Flag2[k-1] = Character_Flag[i][k];
-          if(k==3) Character_Flag2[k-1] = Character_Flag2[k-1]*1;
         }
         Character_Flag[i] = Character_Flag2;
       }
@@ -2591,6 +2589,7 @@ function Load(width,height){
 
       var Item_image = Class.create(Sprite,{
           initialize: function(a) {
+              console.log(a);
               a = Image_conversion(a);
               var xxx = game.assets[a].width;
               var yyy = game.assets[a].height;
@@ -4095,14 +4094,14 @@ function Load(width,height){
           console.log(White_Number);
           if(OASOBI=="エクセレント"){
             OASOBI = true;
-            game.pushScene(ItemgetScene("強欲な壺","おめでとうございます！↓賞品として強欲な壺をプレゼント！","リバーシ"));
+            game.pushScene(ItemgetScene(Image_conversion("強欲な壺"),"おめでとうございます！↓賞品として強欲な壺をプレゼント！","リバーシ"));
             Item_Flag[Item_Flag.length] = ["強欲な壺","チーター(強)に勝って貰った賞品。↓尋問時につきつけると先へ進める。↓その後強欲な壺が一つ無くなり↓強欲なカケラを入手する。","強欲な壺"];
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
           }
           else if(OASOBI=="勝ち"){
             OASOBI = true;
-            game.pushScene(ItemgetScene("ヒントカード","おめでとうございます！↓賞品としてヒントカードをプレゼント！","リバーシ"));
+            game.pushScene(ItemgetScene(Image_conversion("ヒントカード"),"おめでとうございます！↓賞品としてヒントカードをプレゼント！","リバーシ"));
             Item_Flag[Item_Flag.length] = ["ヒントカード","AIに勝って貰った賞品。↓尋問時につきつけると↓ヒントと交換してもらえる。","ヒントカード"];
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
