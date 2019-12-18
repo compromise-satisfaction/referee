@@ -45,9 +45,10 @@ function Load(width,height){
   for (var i = 0; i < ImageDATAS.length; i++) {
     if(ImageDATAS[i].name=="最終更新日時") break;
   }
-  var kousin2 = ImageDATAS[i].url.split("↓");
-  for (var i = 0; i < kousin2.length; i++) {
-    kousin[i] = new Texts(kousin2[i],i);
+  var kousin2 = ImageDATAS[i].url;
+  var kousin3 = kousin2.split("↓")
+  for (var i = 0; i < kousin3.length; i++) {
+    kousin[i] = new Texts(kousin3[i],i);
   }
 
 	loadScene.addEventListener('progress', function(e){
@@ -644,8 +645,8 @@ function Load(width,height){
         return;
       }
     }
-    if(Flag[4]) Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + DATAS[4].Datas8,0,0,0,"未完成",0];
-    else Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。",0,0,0,"タイトルに戻る",0];
+    if(Flag[4]) Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + kousin2,0,0,0,"未完成",0];
+    else Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + kousin2,0,0,0,"タイトルに戻る",0];
     Scene_type = "メイン";
     return;
     }
