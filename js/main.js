@@ -8,9 +8,11 @@ function Images(width,height){
   .then(result => {
     III = [];
     ImageDATAS = result;
+    var kakaka = 0;
     for (var i = 0; i < ImageDATAS.length; i++){
       if(ImageDATAS[i].name=="最終更新日時") continue;
-      III[i] = ImageDATAS[i].url
+      III[kakaka] = ImageDATAS[i].url
+      kakaka++;
     }
     Load(width,height)
   },);
