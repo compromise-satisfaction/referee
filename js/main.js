@@ -990,7 +990,7 @@ function Load(width,height){
       Explosion.scaleY = (((width/16)*9)/yyy);
       Explosion.image = game.assets["image/Explosion.png"];
       Explosion.frame = 11;
-      Explosion.y = (Explosion.scaleX*yyy/2)-yyy/2;
+      Explosion.y = (Explosion.scaleY*yyy/2)-yyy/2;
       scene.addChild(Explosion);
       Explosion.addEventListener("enterframe",function(){
         if(Explosion.frame!=11) Explosion.frame++;
@@ -1007,11 +1007,11 @@ function Load(width,height){
           Character2.scaleX *= 2;
           Character2.scaleY *= 2;
           Character2.x = (Character2.scaleX*xxx/2)-xxx/2;
-          Character2.y = (Character2.scaleX*yyy/2)-yyy/2;
+          Character2.y = (Character2.scaleY*yyy/2)-yyy/2;
         }
         else {
           Character2.x = (Character2.scaleX*xxx/2)-xxx/2+(width/4);
-          Character2.y = (Character2.scaleX*yyy/2)-yyy/2+(width/16);
+          Character2.y = (Character2.scaleY*yyy/2)-yyy/2+(width/16);
         }
         if(Datas[4]!=0){
           if(Datas[4]>0){
@@ -1058,11 +1058,11 @@ function Load(width,height){
           Character1.scaleX *= 2;
           Character1.scaleY *= 2;
           Character1.x = (Character1.scaleX*xxx/2)-xxx/2-(width/4);
-          Character1.y = (Character1.scaleX*yyy/2)-yyy/2;
+          Character1.y = (Character1.scaleY*yyy/2)-yyy/2;
         }
         else {
           Character1.x = (Character1.scaleX*xxx/2)-xxx/2;
-          Character1.y = (Character1.scaleX*yyy/2)-yyy/2+(width/16);
+          Character1.y = (Character1.scaleY*yyy/2)-yyy/2+(width/16);
         }
         if(Datas[2]!=0){
           if(Datas[2]>0){
@@ -1092,11 +1092,11 @@ function Load(width,height){
           Character3.scaleX *= 2;
           Character3.scaleY *= 2;
           Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/4);
-          Character3.y = (Character3.scaleX*yyy/2)-yyy/2;
+          Character3.y = (Character3.scaleY*yyy/2)-yyy/2;
         }
         else {
           Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/2);
-          Character3.y = (Character3.scaleX*yyy/2)-yyy/2+(width/16);
+          Character3.y = (Character3.scaleY*yyy/2)-yyy/2+(width/16);
         }
         if(Datas[6]!=0){
           if(Datas[6]>0){
@@ -1568,7 +1568,7 @@ function Load(width,height){
         Character2.scaleY = ((width/2)/yyy);
         Character2.image = game.assets[Datas[2]];
         Character2.x = (Character2.scaleX*xxx/2)-xxx/2+(width/4);
-        Character2.y = (Character2.scaleX*yyy/2)-yyy/2+(width/16);
+        Character2.y = (Character2.scaleY*yyy/2)-yyy/2+(width/16);
         scene.addChild(Character2);
       }//キャラ真ん中
 
@@ -1597,7 +1597,7 @@ function Load(width,height){
         Character1.scaleY = ((width/2)/yyy);
         Character1.image = game.assets[Datas[1]];
         Character1.x = (Character1.scaleX*xxx/2)-xxx/2;
-        Character1.y = (Character1.scaleX*yyy/2)-yyy/2+(width/16);
+        Character1.y = (Character1.scaleY*yyy/2)-yyy/2+(width/16);
         scene.addChild(Character1);
       }//キャラ左
 
@@ -1609,7 +1609,7 @@ function Load(width,height){
         Character3.scaleY = ((width/2)/yyy);
         Character3.image = game.assets[Datas[3]];
         Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/2);
-        Character3.y = (Character3.scaleX*yyy/2)-yyy/2+(width/16);
+        Character3.y = (Character3.scaleY*yyy/2)-yyy/2+(width/16);
         scene.addChild(Character3);
       }//キャラ右
 
@@ -1787,10 +1787,10 @@ function Load(width,height){
       var yyy = game.assets[Datas[0]].height;
       var Character = new Sprite(xxx,yyy);
       Character.scaleX = ((width/2)/xxx);
-      Character.scaleY = (((width/16)*9)/yyy);
+      Character.scaleY = ((width/2)/yyy);
       Character.image = game.assets[Datas[0]];
       Character.x = (Character.scaleX*xxx/2)-xxx/2+(width/4);
-      Character.y = (Character.scaleX*yyy/2)-yyy/2;
+      Character.y = (Character.scaleY*yyy/2)-yyy/2+(width/16);
       scene.addChild(Character);//キャラ
 
       var xxx = game.assets["image/stand.png"].width;
@@ -2601,8 +2601,8 @@ function Load(width,height){
       }
       if(Text3.text==""){
         scene.addChild(Text8);
-        scene.addChild(Text2);
         scene.addChild(Text3);
+        if(Ig==false) scene.addChild(Text2);
       }
       if(Ig){
         Text3.text = "";
@@ -2956,8 +2956,8 @@ function Load(width,height){
       }
       if(Text3.text==""){
         scene.addChild(Text8);
-        scene.addChild(Text2);
         scene.addChild(Text3);
+        if(Ig==false) scene.addChild(Text2);
       }
       if(Ig){
         Text3.text = "";
