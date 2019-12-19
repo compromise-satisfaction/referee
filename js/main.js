@@ -1001,7 +1001,7 @@ function Load(width,height){
         var yyy = game.assets[Datas[3]].height;
         var Character2 = new Sprite(xxx,yyy);
         Character2.scaleX = ((width/2)/xxx);
-        Character2.scaleY = (((width/16)*9)/yyy);
+        Character2.scaleY = ((width/2)/yyy);
         Character2.image = game.assets[Datas[3]];
         if(Datas[0]=="カットイン"){
           Character2.scaleX *= 2;
@@ -1011,7 +1011,7 @@ function Load(width,height){
         }
         else {
           Character2.x = (Character2.scaleX*xxx/2)-xxx/2+(width/4);
-          Character2.y = (Character2.scaleX*yyy/2)-yyy/2;
+          Character2.y = (Character2.scaleX*yyy/2)-yyy/2+(width/16);
         }
         if(Datas[4]!=0){
           if(Datas[4]>0){
@@ -1052,7 +1052,7 @@ function Load(width,height){
         var yyy = game.assets[Datas[1]].height;
         var Character1 = new Sprite(xxx,yyy);
         Character1.scaleX = ((width/2)/xxx);
-        Character1.scaleY = (((width/16)*9)/yyy);
+        Character1.scaleY = ((width/2)/yyy);
         Character1.image = game.assets[Datas[1]];
         if(Datas[0]=="カットイン"){
           Character1.scaleX *= 2;
@@ -1062,7 +1062,7 @@ function Load(width,height){
         }
         else {
           Character1.x = (Character1.scaleX*xxx/2)-xxx/2;
-          Character1.y = (Character1.scaleX*yyy/2)-yyy/2;
+          Character1.y = (Character1.scaleX*yyy/2)-yyy/2+(width/16);
         }
         if(Datas[2]!=0){
           if(Datas[2]>0){
@@ -1086,7 +1086,7 @@ function Load(width,height){
         var yyy = game.assets[Datas[5]].height;
         var Character3 = new Sprite(xxx,yyy);
         Character3.scaleX = ((width/2)/xxx);
-        Character3.scaleY = (((width/16)*9)/yyy);
+        Character3.scaleY = ((width/2)/yyy);
         Character3.image = game.assets[Datas[5]];
         if(Datas[0]=="カットイン"){
           Character3.scaleX *= 2;
@@ -1096,7 +1096,7 @@ function Load(width,height){
         }
         else {
           Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/2);
-          Character3.y = (Character3.scaleX*yyy/2)-yyy/2;
+          Character3.y = (Character3.scaleX*yyy/2)-yyy/2+(width/16);
         }
         if(Datas[6]!=0){
           if(Datas[6]>0){
@@ -1565,10 +1565,10 @@ function Load(width,height){
         var yyy = game.assets[Datas[2]].height;
         var Character2 = new Sprite(xxx,yyy);
         Character2.scaleX = ((width/2)/xxx);
-        Character2.scaleY = (((width/16)*9)/yyy);
+        Character2.scaleY = ((width/2)/yyy);
         Character2.image = game.assets[Datas[2]];
         Character2.x = (Character2.scaleX*xxx/2)-xxx/2+(width/4);
-        Character2.y = (Character2.scaleX*yyy/2)-yyy/2;
+        Character2.y = (Character2.scaleX*yyy/2)-yyy/2+(width/16);
         scene.addChild(Character2);
       }//キャラ真ん中
 
@@ -1594,10 +1594,10 @@ function Load(width,height){
         var yyy = game.assets[Datas[1]].height;
         var Character1 = new Sprite(xxx,yyy);
         Character1.scaleX = ((width/2)/xxx);
-        Character1.scaleY = (((width/16)*9)/yyy);
+        Character1.scaleY = ((width/2)/yyy);
         Character1.image = game.assets[Datas[1]];
         Character1.x = (Character1.scaleX*xxx/2)-xxx/2;
-        Character1.y = (Character1.scaleX*yyy/2)-yyy/2;
+        Character1.y = (Character1.scaleX*yyy/2)-yyy/2+(width/16);
         scene.addChild(Character1);
       }//キャラ左
 
@@ -1606,10 +1606,10 @@ function Load(width,height){
         var yyy = game.assets[Datas[3]].height;
         var Character3 = new Sprite(xxx,yyy);
         Character3.scaleX = ((width/2)/xxx);
-        Character3.scaleY = (((width/16)*9)/yyy);
+        Character3.scaleY = ((width/2)/yyy);
         Character3.image = game.assets[Datas[3]];
         Character3.x = (Character3.scaleX*xxx/2)-xxx/2+(width/2);
-        Character3.y = (Character3.scaleX*yyy/2)-yyy/2;
+        Character3.y = (Character3.scaleX*yyy/2)-yyy/2+(width/16);
         scene.addChild(Character3);
       }//キャラ右
 
