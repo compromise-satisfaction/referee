@@ -179,6 +179,15 @@ function Load(width,height){
       return;
     }
 
+    function post(e){
+      fetch("https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec",
+        {
+            method : 'POST',
+        }
+      )
+      return;
+    }
+
     function Scene_loads(Number,Return,Item){
       if(DATAS==0){
         DATAS = game.scene_datas;
@@ -414,6 +423,7 @@ function Load(width,height){
     }
 
     function Save(Number){
+    post(Number);
     Flag[7] = Pages+"乙"+Pages2;
     window.localStorage.setItem("Flag",Flag);
     window.localStorage.setItem("Datas",Datas);
