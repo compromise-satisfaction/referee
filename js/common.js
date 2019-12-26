@@ -71,8 +71,8 @@ function resetScreen(gameWidth,gameHeight){
 $(function(){
 
   fetch(
-    'https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec',
-    //"https://script.google.com/macros/s/AKfycbzSdN3_6l87Bbn58AFWgq7lFnI27blOi7jWn0JdWYVRaGZWwOSd/exec",
+    //'https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec',
+    "https://script.google.com/macros/s/AKfycbzSdN3_6l87Bbn58AFWgq7lFnI27blOi7jWn0JdWYVRaGZWwOSd/exec",
   )
     .then(res => res.json())
     .then(result => {

@@ -179,12 +179,17 @@ function Load(width,height){
       return;
     }
 
-    function post(e){
-      fetch("https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec",
-        {
-            method : 'POST',
-        }
-      )
+    function post(value){
+        var form = document.createElement('form');
+        var request = document.createElement('input');
+        form.method = 'POST';
+        form.action = 'https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec';
+        request.type = 'hidden'; //入力フォームが表示されないように
+        request.name = "value";
+        request.value = value;
+        form.appendChild(request);
+        document.body.appendChild(form);
+        form.submit();
       return;
     }
 
@@ -423,7 +428,6 @@ function Load(width,height){
     }
 
     function Save(Number){
-    post(Number);
     Flag[7] = Pages+"乙"+Pages2;
     window.localStorage.setItem("Flag",Flag);
     window.localStorage.setItem("Datas",Datas);
@@ -449,6 +453,7 @@ function Load(width,height){
     }
     console.log(Flag2);
     console.log(Datas);
+    post(Number);
     }//セーブ
 
     function rand(n) {
