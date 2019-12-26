@@ -180,16 +180,17 @@ function Load(width,height){
     }
 
     function post(value){
-        var form = document.createElement('form');
-        var request = document.createElement('input');
-        form.method = 'POST';
-        form.action = 'https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec';
-        request.type = 'hidden'; //入力フォームが表示されないように
-        request.name = "value";
-        request.value = value;
-        form.appendChild(request);
-        document.body.appendChild(form);
-        form.submit();
+      if(Flag[8]) return;
+      var form = document.createElement('form');
+      var request = document.createElement('input');
+      form.method = 'POST';
+      form.action = 'https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec';
+      request.type = 'hidden'; //入力フォームが表示されないように
+      request.name = "value";
+      request.value = value;
+      form.appendChild(request);
+      document.body.appendChild(form);
+      form.submit();
       return;
     }
 
@@ -1203,7 +1204,7 @@ function Load(width,height){
 
       var Text =[];
 
-      for (var i = 0; i <6; i++) {
+      for (var i = 0; i < 6; i++) {
         Text[i] = new Texts("");
       }
 
@@ -1237,6 +1238,7 @@ function Load(width,height){
           Time2 ++;
           if(Time2==19){
             k++;
+            if(k==6) k = 0;
             Time2 = 0;
             if(Datas[8].substring(0,1)=="("){
               Text[k].text = " ";
