@@ -180,10 +180,18 @@ function Load(width,height){
     }
 
     function post(value){
-      if(Flag[8]) return;
+      /*
+      fetch('https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec',
+        {
+          method: 'POST',
+          body: param,
+         }
+       )
+      */
       var form = document.createElement('form');
       var request = document.createElement('input');
       form.method = 'POST';
+      form.target="_blank";
       form.action = 'https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec';
       request.type = 'hidden'; //入力フォームが表示されないように
       request.name = "value";
@@ -2114,6 +2122,7 @@ function Load(width,height){
                   Scene_kazu--;
                   console.log("Scene数",Scene_kazu);
                   Number = S_Input._element.value;
+                  if(Number=="スプレッドシート") Number = ImageDATAS[0].画像 + "";
                   if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
                   Scene_loads(Number,false,false);
                   return;
