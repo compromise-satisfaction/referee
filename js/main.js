@@ -180,14 +180,15 @@ function Load(width,height){
     }
 
     function post(value){
-      /*
+      //*
       fetch('https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec',
         {
           method: 'POST',
-          body: param,
-         }
-       )
-      */
+          body: value
+        }
+      )
+      return;
+      //*/
       var form = document.createElement('form');
       var request = document.createElement('input');
       form.method = 'POST';
@@ -872,6 +873,7 @@ function Load(width,height){
         Text[i] = new Texts("▶ 続きから");
       }
       Text[i] = new Texts("▶ 説明");
+      Text[i] = new Texts("▶ デバック用");
 
       for (var i = 0; i < Text.length; i++){
         Text[i].addEventListener('touchstart',function(e){
@@ -879,6 +881,7 @@ function Load(width,height){
           if(this.text == "▶ 最初から") Scene_loads("最初から",false,false);
           if(this.text == "▶ 続きから") Scene_loads("セーブ読み込み",false,false);
           if(this.text == "▶ 説明") Scene_loads("説明",false,false);
+          if(this.text == "▶ デバック用") Scene_loads("デバック",false,false);
           if(this.text == "▶ データ初期化"){
             game.pushScene(ClearScene());
             Scene_kazu++;
