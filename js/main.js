@@ -2824,7 +2824,7 @@ function Load(width,height){
             this.text = "|>" + this.text;
             this.color = "red";
             if(Ig) Text3.text = "|>つきつける";
-            else Text3.text = "|>使う";
+            //else Text3.text = "|>使う";//使うを非表示
             Text4.text = this.text2;
             Text5.text = this.text3;
             Text6.text = this.text4;
