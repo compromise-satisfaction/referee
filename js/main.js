@@ -1097,6 +1097,10 @@ function Load(width,height){
         if(Datas[2]!=0){
           if(Datas[2]=="点滅"){
             Character1.opacity = Syougen_time;
+            if(Syougen_time<=0){
+              Character1.opacity = 0;
+              Syougen_time2 = 1;
+            }
             scene.addChild(Character1);
             Character1.addEventListener("enterframe",function(){
               Syougen_time += 0.1 * Syougen_time2;
