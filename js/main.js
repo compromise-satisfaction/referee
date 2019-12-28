@@ -124,6 +124,8 @@ function Load(width,height){
     var YYY = width/16*9;
     var Rotation_Y = 0;
     var Cut_in_time = 0;
+    var Syougen_time = 0;
+    var Syougen_time2 = 1;
 
     function vue(){
           fetch(
@@ -1093,13 +1095,30 @@ function Load(width,height){
           Character1.y = (Character1.scaleY*yyy/2)-yyy/2+(width/16);
         }
         if(Datas[2]!=0){
-          if(Datas[2]>0){
+          if(Datas[2]=="点滅"){
+            Character1.opacity = Syougen_time;
+            scene.addChild(Character1);
+            Character1.addEventListener("enterframe",function(){
+              Syougen_time += 0.1 * Syougen_time2;
+              Character1.opacity = Syougen_time;
+              if(Syougen_time>=1) Syougen_time2 = -1;
+              if(Syougen_time<=0){
+                Character1.opacity = 0;
+                Syougen_time2 = 1;
+              }
+            })
+          }
+          else if(Datas[2]>0){
+            Syougen_time = 0;
+            Syougen_time2 = 1;
             if(Return!=true){
               Character1.opacity = 0;
               Character1.tl.fadeIn(Datas[2]);
             }
           }
           else{
+            Syougen_time = 0;
+            Syougen_time2 = 1;
             if(Return!=true){
               Character1.tl.fadeOut(Datas[2]*-1);
             }
