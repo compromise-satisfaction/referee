@@ -6,19 +6,19 @@ function Images(width,height){
   )
   .then(res => res.json())
   .then(result => {
-    III = [];
+    Image_urls = [];
     ImageDATAS = result;
     var kakaka = 0;
     for (var i = 0; i < ImageDATAS.length; i++){
       if(ImageDATAS[i].name=="最終更新日時") continue;
-      III[kakaka] = ImageDATAS[i].url
+      Image_urls[kakaka] = ImageDATAS[i].url
       kakaka++;
     }
     Load(width,height)
   },);
 }
 
-var III = false;
+var Image_urls = false;
 
 function Load(width,height){
   var game = new Core(width, height);
@@ -115,7 +115,7 @@ function Load(width,height){
   game.preload("image/背景/留置所.png");
   game.preload("image/Background.png");
   game.preload("image/Set_button.png","image/stone.png","image/Hand.png","image/V_or_D.png");
-  game.preload(III);
+  game.preload(Image_urls);
 
   game.fps = 10;
   game.onload = function(){
