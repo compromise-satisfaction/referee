@@ -180,6 +180,7 @@ function Load(width,height){
     }
 
     function post(value){
+      if(Flag[8]) return;
       //*
       fetch('https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec',
         {
