@@ -2,7 +2,7 @@ enchant()
 
 function Images(width,height){
   fetch(
-    "https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",
+    "https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",//画像GAS
   )
   .then(res => res.json())
   .then(result => {
@@ -14,13 +14,24 @@ function Images(width,height){
       Image_urls[kakaka] = ImageDATAS[i].url
       kakaka++;
     }
-    Load(width,height)
+    vue(width,height);
   },);
+}
+
+function vue(width,height){
+      fetch(
+        "https://script.google.com/macros/s/AKfycbzSdN3_6l87Bbn58AFWgq7lFnI27blOi7jWn0JdWYVRaGZWwOSd/exec",//シーンGAS
+      )
+      .then(res => res.json())
+      .then(result => {
+        DATAS = result;
+        Load(width,height,DATAS);
+      },);
 }
 
 var Image_urls = false;
 
-function Load(width,height){
+function Load(width,height,DATAS){
   var game = new Core(width, height);
 
   var loadScene = new Scene();
@@ -127,16 +138,6 @@ function Load(width,height){
     var Syougen_time = 0;
     var Syougen_time2 = 1;
 
-    function vue(){
-          fetch(
-            "https://script.google.com/macros/s/AKfycbzSdN3_6l87Bbn58AFWgq7lFnI27blOi7jWn0JdWYVRaGZWwOSd/exec",
-          )
-          .then(res => res.json())
-          .then(result => {
-            DATAS = result;
-          },);
-    }
-
     function Image_conversion(name){
       for (var i = 0; i < ImageDATAS.length; i++) {
         if(ImageDATAS[i].name==name) return(ImageDATAS[i].url);
@@ -207,10 +208,6 @@ function Load(width,height){
     }
 
     function Scene_loads(Number,Return,Item){
-      if(DATAS==0){
-        DATAS = game.scene_datas;
-        if(DATAS==undefined) vue();
-      }
       if(Number=="リバーシ") return;
       if(Number=="セーブ読み込み") Scene_type = Number;
       else Scene_loads2(Number,Item);
@@ -383,7 +380,6 @@ function Load(width,height){
     var Before = 0;
     var After = 0;
     var Datas = [];
-    var DATAS = 0;
     var Flag = ["女","主人公","女",1,1,21,10,"0乙0",true,false,false,false,false,false,false,false];
     //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
     var Item_Flag = [];//所持アイテム
@@ -620,13 +616,6 @@ function Load(width,height){
     if(Flag[8]) Datas[9] = 0;
     Scene_type = "チョイス";
     return;
-    }
-    if(DATAS==undefined){
-      //DATAS = DATAS2;
-      vue();
-      Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",0,0,0,"タイトルに戻る",0];
-      Scene_type = "読み込みエラー";
-      return;
     }
     for (var i = 0; i < DATAS.length; i++) {
       if(DATAS[i].Number==Number){
