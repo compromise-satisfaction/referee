@@ -1,8 +1,13 @@
 enchant()
 
+var GAS = [
+  "https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",//画像
+  "https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec"//シーン
+];
+
 function Images(width,height){
   fetch(
-    "https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",//画像GAS
+    GAS[0],
   )
   .then(res => res.json())
   .then(result => {
@@ -19,9 +24,7 @@ function Images(width,height){
 }
 
 function vue(width,height){
-      fetch(
-        "https://script.google.com/macros/s/AKfycbzSdN3_6l87Bbn58AFWgq7lFnI27blOi7jWn0JdWYVRaGZWwOSd/exec",//シーンGAS
-      )
+      fetch(GAS[1],)
       .then(res => res.json())
       .then(result => {
         DATAS = result;
@@ -185,7 +188,7 @@ function Load(width,height,DATAS){
     function post(value){
       if(Flag[1]=="セーブしない") return;
       //*
-      fetch('https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec',
+      fetch(GAS[1],
         {
           method: 'POST',
           body: value
@@ -197,7 +200,7 @@ function Load(width,height,DATAS){
       var request = document.createElement('input');
       form.method = 'POST';
       form.target="_blank";
-      form.action = 'https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec';
+      form.action = GAS[1];
       request.type = 'hidden'; //入力フォームが表示されないように
       request.name = "value";
       request.value = value;
