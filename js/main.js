@@ -466,7 +466,7 @@ function Load(width,height){
     }
     console.log(Flag2);
     console.log(Datas);
-    post(Number);
+    post(Datas[8]);
     }//セーブ
 
     function rand(n) {
