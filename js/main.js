@@ -870,7 +870,10 @@ function Load(width,height,DATAS){
         Text[i] = new Texts("◆ 続きから");
       }
       Text[i] = new Texts("◆ 説明");
-      //Text[i] = new Texts("◆ デバック用");
+      if(Data){
+        Flag = window.localStorage.getItem("Flag").split(",");
+        if(Flag[1]=="不動"&&Flag[0]=="遊星") Text[i] = new Texts("◆ デバック用");
+      }
 
       for (var i = 0; i < Text.length; i++){
         Text[i].addEventListener('touchstart',function(e){
