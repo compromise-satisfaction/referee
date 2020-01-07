@@ -2755,6 +2755,7 @@ function Load(width,height,DATAS){
 
       Text8.addEventListener('touchstart',function(e){
         if(this.text=="") return;
+        /*
         else if(this.text=="◆ 再生"){
           Sound_ON(Choice_Item,true);
           for (var i = 0; i < Item_Flag.length; i++) {
@@ -2777,7 +2778,7 @@ function Load(width,height,DATAS){
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
           Inspect_loads(Number,Choice_Item);
-        }
+        }*/
         else if(this.text=="◆ 遊ぶ"){
           OASOBI = true;
           game.popScene();
@@ -2787,7 +2788,7 @@ function Load(width,height,DATAS){
           for (var i = 0; i < Item.length; i++) {
             if(Item[i].text.substring(2)==Choice_Item) break;
           }
-          game.pushScene(DetailsScene(Item[i].syousai));
+          game.pushScene(DetailsScene(Item[i].syousai,Item[i].text6));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
         }
@@ -3103,7 +3104,7 @@ function Load(width,height,DATAS){
         for (var i = 0; i < Character.length; i++) {
           if(Character[i].text.substring(2)==Choice_Character) break;
         }
-        game.pushScene(DetailsScene(Character[i].syousai));
+        game.pushScene(DetailsScene(Character[i].syousai,Character[i].text6));
         Scene_kazu++;
         console.log("Scene数",Scene_kazu);
         return;
@@ -3168,7 +3169,7 @@ function Load(width,height,DATAS){
 
       return scene;
     }
-    var DetailsScene = function(Number,Photo){
+    var DetailsScene = function(Number,Type){
       var scene = new Scene();                                // 新しいシーンを作る
 
       var xxx = game.assets["image/Background.png"].width;
@@ -3202,33 +3203,36 @@ function Load(width,height,DATAS){
 
       Text[0] = new Texts("◆ 閉じる");
 
-      if(Image_conversion(Number)!=Number){
-        Number = Image_conversion(Number);
-        var xxx = game.assets[Number].width;
-        var yyy = game.assets[Number].height;
-        var Photo = new Sprite(xxx,yyy);
-        Photo.scaleX = ((width)/xxx)*0.8;
-        Photo.scaleY = ((width)/yyy)*0.8;
-        Photo.image = game.assets[Number];
-        Photo.x = (Photo.scaleX*xxx/2)-xxx/2+(width/10);
-        Photo.y = (Photo.scaleY*yyy/2)-yyy/2+Numbers+(width/5);
-        scene.addChild(Photo);
-      }
-      else if(Number.length==11){
-        var Video = new Entity()
-        Video.visible =  true;
-        Video._element = document.createElement('div')
-        Video.x = (width/10);
-        Video.y = Numbers+(width/5);
-        Video._element.innerHTML = '<iframe src="https://www.youtube.com/embed/'+Number+'?enablejsapi=1&controls=0&showinfo=0&autoplay=0&rel=0&vq=small"  width="'+(width*0.8)+'" height="'+(width/16*9*0.8)+'" frameborder="0" id="player"></iframe>'
-        scene.addChild(Video);
-      }
-      else{
-        var S_Text = Number.replace(/\n/g,"↓").split("↓");
-        for (var i = 1; i < S_Text.length+1; i++) {
-          Text[i] = new Texts(S_Text[i-1]);
-          if(i==13) break;
-        }
+      switch (Type) {
+        case "◆ 再生":
+          var Video = new Entity()
+          Video.visible =  true;
+          Video._element = document.createElement('div')
+          Video.x = (width/10);
+          Video.y = Numbers+(width/5);
+          Video._element.innerHTML = '<iframe src="https://www.youtube.com/embed/'+Number+'?enablejsapi=1&controls=0&showinfo=0&autoplay=0&rel=0&vq=small"  width="'+(width*0.8)+'" height="'+(width/16*9*0.8)+'" frameborder="0" id="player"></iframe>'
+          scene.addChild(Video);
+          break;
+          case "◆ 見る":
+          case "◆ 拡大":
+          Number = Image_conversion(Number);
+          var xxx = game.assets[Number].width;
+          var yyy = game.assets[Number].height;
+          var Photo = new Sprite(xxx,yyy);
+          Photo.scaleX = ((width)/xxx)*0.8;
+          Photo.scaleY = ((width)/yyy)*0.8;
+          Photo.image = game.assets[Number];
+          Photo.x = (Photo.scaleX*xxx/2)-xxx/2+(width/10);
+          Photo.y = (Photo.scaleY*yyy/2)-yyy/2+Numbers+(width/5);
+          scene.addChild(Photo);
+          break;
+        default:
+          var S_Text = Number.replace(/\n/g,"↓").split("↓");
+          for (var i = 1; i < S_Text.length+1; i++) {
+            Text[i] = new Texts(S_Text[i-1]);
+            if(i==13) break;
+          }
+          break;
       }
 
       var Pages3 = -1;
