@@ -3229,7 +3229,19 @@ function Load(width,height,DATAS){
 
       Text[0] = new Texts("◆ 閉じる");
 
-      if(Number.length==11){
+      if(Image_conversion(Number)!=Number){
+        Number = Image_conversion(Number);
+        var xxx = game.assets[Number].width;
+        var yyy = game.assets[Number].height;
+        var Photo = new Sprite(xxx,yyy);
+        Photo.scaleX = ((width)/xxx)*0.8;
+        Photo.scaleY = ((width)/yyy)*0.8;
+        Photo.image = game.assets[Number];
+        Photo.x = (Photo.scaleX*xxx/2)-xxx/2+(width/10);
+        Photo.y = (Photo.scaleY*yyy/2)-yyy/2+Numbers+(width/5);
+        scene.addChild(Photo);
+      }
+      else if(Number.length==11){
         var Video = new Entity()
         Video.visible =  true;
         Video._element = document.createElement('div')
