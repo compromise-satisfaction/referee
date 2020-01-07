@@ -521,7 +521,7 @@ function Load(width,height,DATAS){
       if(i==Character_Flag.length) return;
       Character_Flag[i][0] = c;
     }
-    else Character_Flag[i] = [a,b,c];
+    else Character_Flag[i] = [a,b,c,d,e];
     }
     else if(Get_Type=="フラグ"){
     for (var i = 0; i < Flag.length; i++){
@@ -3034,12 +3034,12 @@ function Load(width,height,DATAS){
           if(Syousai_text[3]) this.text5 = Syousai_text[3];
           else this.text5 = "";
           Image[Character_Number] = new Character_image(a[2]);
+          this.syousai = a[2];
           if(a[3]){
-            if(a[3]=="停止") this.text6 = "■ 停止";
-            else this.text6 = "◆ " + a[3];
+            this.text6 = "◆ " + a[3];
             this.syousai = a[4];
           }
-          else this.text6 = "";
+          else this.text6 = "◆ 拡大";
           this.image_number = Character_Number;
           scene.addChild(this);
           Character_Number ++;
@@ -3100,39 +3100,12 @@ function Load(width,height,DATAS){
       });
 
       Text8.addEventListener('touchstart',function(e){
-        if(this.text=="") return;
-        else if(this.text=="◆ 再生"){
-          Sound_ON(Choice_Character,true);
-          for (var i = 0; i < Character_Flag.length; i++) {
-            if(Character_Flag[i][0]==Choice_Character) break;
-          }
-          game.popScene();
-          Scene_kazu--;
-          console.log("Scene数",Scene_kazu);
+        for (var i = 0; i < Character.length; i++) {
+          if(Character[i].text.substring(2)==Choice_Character) break;
         }
-        else if(this.text=="■ 停止"){
-          Sound_ON(Choice_Character,false);
-          for (var i = 0; i < Character_Flag.length; i++) {
-            if(Character_Flag[i][0]==Choice_Character) break;
-          }
-          game.popScene();
-          Scene_kazu--;
-          console.log("Scene数",Scene_kazu);
-        }
-        else if(this.text=="◆ 調べる"){
-          game.popScene();
-          Scene_kazu--;
-          console.log("Scene数",Scene_kazu);
-          Inspect_loads(Number,Choice_Character);
-        }
-        else {
-          for (var i = 0; i < Character.length; i++) {
-            if(Character[i].text.substring(2)==Choice_Character) break;
-          }
-          game.pushScene(DetailsScene(Character[i].syousai));
-          Scene_kazu++;
-          console.log("Scene数",Scene_kazu);
-        }
+        game.pushScene(DetailsScene(Character[i].syousai));
+        Scene_kazu++;
+        console.log("Scene数",Scene_kazu);
         return;
       });
 
@@ -3195,7 +3168,7 @@ function Load(width,height,DATAS){
 
       return scene;
     }
-    var DetailsScene = function(Number){
+    var DetailsScene = function(Number,Photo){
       var scene = new Scene();                                // 新しいシーンを作る
 
       var xxx = game.assets["image/Background.png"].width;
