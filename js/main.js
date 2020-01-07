@@ -1880,7 +1880,7 @@ function Load(width,height,DATAS){
           this.color = 'purple';
           this.x = (width/50);
           this.y = Numbers;
-          this.width = width;
+          this.width = width*2;
           this.height = (width/20);
           this.text = a;
           scene.addChild(this);
@@ -1890,11 +1890,6 @@ function Load(width,height,DATAS){
       var Text = Datas[2].split("↓");
 
       for (var i = 0; i < Text.length; i++) {
-        if(Text[i].length>18){
-          if(Text[i+1]==undefined) Text[i+1] = Text[i].substring(18);
-          else Text[i+1] = Text[i].substring(18) + Text[i+1]+"";
-          Text[i] = Text[i].substring(0,18);
-        }
         Text[i] = new Texts(Text[i]);
       }
 
