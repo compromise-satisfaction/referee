@@ -1,11 +1,25 @@
 enchant()
 
+switch (GitHub_type) {
+case "referee":
 var GAS = [
-  "https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",//画像
-  "https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec"//シーン
+"https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",//画像
+"https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec"//シーン
 ];
-
-//function ALL(){
+break;
+case "Share":
+var GAS = [
+"https://script.google.com/macros/s/AKfycbydKeSrgciGcfdx1HbW5TXagCujRHYARr-pIrw2BzwsRq5H-U0/exec",//画像
+"https://script.google.com/macros/s/AKfycbyfEnjDE8FhsxIo97tN5hsvYF_nSW47gwYia54D0-JPgyWti0K4/exec"//シーン
+];
+break;
+case "novel_game":
+var GAS = [
+"https://script.google.com/macros/s/AKfycbwpfQNI_EdtFjQdekQERjNaYXxvRWACZMulrCXUBsC1ZayUn5A/exec",//画像
+"https://script.google.com/macros/s/AKfycbwpMKf5237VlebQuUNjHKYGvLrOi3bdGV1Oa2CKsKAMmv_-mpM/exec"//シーン
+];
+break;
+}
 
 function Images(width,height){
   fetch(
@@ -188,6 +202,7 @@ function Load(width,height,DATAS){
     }
 
     function post(value){
+      return;
       if(Flag[1]=="セーブしない") return;
       //*
       fetch(GAS[1],
@@ -196,7 +211,6 @@ function Load(width,height,DATAS){
           body: value
         }
       )
-      return;
       //*/
       var form = document.createElement('form');
       var request = document.createElement('input');
@@ -873,6 +887,22 @@ function Load(width,height,DATAS){
       if(Data){
         Flag = window.localStorage.getItem("Flag").split(",");
         if(Flag[1]=="不動"&&Flag[0]=="遊星") Text[i] = new Texts("◆ デバック用");
+        else {
+          fetch("https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec",
+            {
+              method: 'POST',
+              body: GitHub_type
+            }
+          )
+        }
+      }
+      else{
+        fetch("https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec",
+          {
+            method: 'POST',
+            body: GitHub_type
+          }
+        )
       }
 
       for (var i = 0; i < Text.length; i++){
@@ -1226,7 +1256,7 @@ function Load(width,height,DATAS){
           this.color = 'black';
           this.x = (width/50);
           this.y = Numbers;
-          this.width = width;
+          this.width = width*2;
           this.height = (width/20);
           this.text = a;
           if(a.substring(0,1)=="("&&a.substring(a.length-1)==")") this.color = "blue";
@@ -1241,7 +1271,6 @@ function Load(width,height,DATAS){
       }
 
       var Time = 0;
-      var Time2 = 0;
       var k = 0;
       var Text_defined = true;
 
@@ -1267,38 +1296,18 @@ function Load(width,height,DATAS){
         }
         Time ++;
         if(s){
-          Time2 ++;
-          if(Time2==19){
+          if(Datas[8].substring(Time-1,Time)=="↓"){
             k++;
-            if(k==6) k = 0;
-            Time2 = 0;
-            if(Datas[8].substring(0,1)=="("){
-              Text[k].text = " ";
-              Time2 ++;
-            }
-            if(Datas[8].substring(0,1)=="「"){
-              if(Datas[8].substring(Time-2,Time-1)!="」"){
-                Text[k].text = "　";
-                Time2 ++;
-              }
-            }
-          }
-          if(Datas[8].substring(Time-1,Time)=="↓"||Time2==19){
-            if(Time2>1) k++;
-            Time2 = 0;
             if(Datas[8].substring(0,1)=="("){
               Text[k].color = "blue";
               Text[k].text = " ";
-              Time2 ++;
             }
             if(Datas[8].substring(0,1)=="("){
               Text[k].text = " ";
-              Time2 ++;
             }
             if(Datas[8].substring(0,1)=="「"){
               if(Datas[8].substring(Time-2,Time-1)!="」"){
                 Text[k].text = "　";
-                Time2 ++;
               }
             }
           }
@@ -1388,11 +1397,10 @@ function Load(width,height,DATAS){
         Enter1.addEventListener('touchstart',function(e){
           if(Text_defined){
             Text_defined = false;
-            for (var i = 0; i <6; i++) {
+            for (var i = 0; i < 6; i++) {
               Text[i].text = "";
             }
             Time = 0;
-            Time2 = 0;
             k = 0;
             for (var i = 0; i < Datas[8].length+1; i++) {
               T_D();
@@ -2393,7 +2401,7 @@ function Load(width,height,DATAS){
           this.color = 'blue';
           this.x = (width/50);
           this.y = Numbers;
-          this.width = width;
+          this.width = width*2;
           this.height = (width/20);
           this.text = a;
           if(a.substring(0,1)=="("&&a.substring(a.length-1)==")") this.color = "blue";
@@ -2403,58 +2411,22 @@ function Load(width,height,DATAS){
 
       var Text =[];
 
-      for (var i = 0; i <6; i++) {
+      for (var i = 0; i < 6; i++) {
         Text[i] = new Texts("");
       }
 
       var Time = 0;
-      var Time2 = 0;
       var k = 0;
       var Text_defined = true;
 
       function T_D(){
         var s = true;
-        if(b.substring(Time,Time+1)=="→"){
-          s = false;
-        }
         Time ++;
         if(s){
-          Time2 ++;
-          if(Time2==19){
+          if(b.substring(Time-1,Time)=="↓"){
             k++;
-            Time2 = 0;
-            if(b.substring(0,1)=="("){
-              Text[k].text = " ";
-              Time2 ++;
-            }
-            if(b.substring(0,1)=="「"){
-              if(b.substring(Time-2,Time-1)!="」"){
-                Text[k].text = "　";
-                Time2 ++;
-              }
-            }
-          }
-          if(b.substring(Time-1,Time)=="↓"||Time2==19){
-            if(Time2>1) k++;
-            Time2 = 0;
-            if(b.substring(0,1)=="("){
-              Text[k].color = "blue";
-              Text[k].text = " ";
-              Time2 ++;
-            }
-            if(b.substring(0,1)=="("){
-              Text[k].text = " ";
-              Time2 ++;
-            }
-            if(b.substring(0,1)=="「"){
-              if(b.substring(Time-2,Time-1)!="」"){
-                Text[k].text = "　";
-                Time2 ++;
-              }
-            }
           }
           else if(b.substring(Time-1,Time)!=""){
-            if(Text[k].text.substring(0,1)=="("||Text[k].text.substring(0,1)==" ") Text[k].color = "blue";
             Text[k].text = Text[k].text+b.substring(Time-1,Time);
           }
           else if(b.substring(Time-1,Time)==""){
@@ -2507,6 +2479,17 @@ function Load(width,height,DATAS){
       })
 
       Enter1.addEventListener('touchstart',function(e){
+        if(Text_defined){
+          Text_defined = false;
+          for (var i = 0; i < 6; i++) {
+            Text[i].text = "";
+          }
+          Time = 0;
+          k = 0;
+          for (var i = 0; i < b.length+1; i++) {
+            T_D();
+          }
+        }
         if(Item.x>X_0+width/2-width/4){
           Item.x = X_0 + width/2 -width/4;
         }
