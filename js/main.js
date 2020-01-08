@@ -886,7 +886,7 @@ function Load(width,height,DATAS){
       Text[i] = new Texts("◆ 説明");
       if(Data){
         Flag = window.localStorage.getItem("Flag").split(",");
-        if(Flag[1]=="不動"&&Flag[0]=="遊星") Text[i] = new Texts("◆ デバック用");
+        if(Flag[1]=="不動"&&Flag[0]=="遊星") Text[i] = new Texts("◆ テスト用");
         else {
           fetch(GAS[1],
             {
@@ -911,7 +911,7 @@ function Load(width,height,DATAS){
           if(this.text == "◆ 最初から") Scene_loads("最初から",false,false);
           if(this.text == "◆ 続きから") Scene_loads("セーブ読み込み",false,false);
           if(this.text == "◆ 説明") Scene_loads("説明",false,false);
-          if(this.text == "◆ デバック用") Scene_loads("デバック",false,false);
+          if(this.text == "◆ テスト用") Scene_loads("テスト",false,false);
           if(this.text == "◆ データ初期化"){
             game.pushScene(ClearScene());
             Scene_kazu++;
