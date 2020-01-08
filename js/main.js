@@ -2755,7 +2755,6 @@ function Load(width,height,DATAS){
 
       Text8.addEventListener('touchstart',function(e){
         if(this.text=="") return;
-        /*
         else if(this.text=="◆ 再生"){
           Sound_ON(Choice_Item,true);
           for (var i = 0; i < Item_Flag.length; i++) {
@@ -2778,7 +2777,7 @@ function Load(width,height,DATAS){
           Scene_kazu--;
           console.log("Scene数",Scene_kazu);
           Inspect_loads(Number,Choice_Item);
-        }*/
+        }
         else if(this.text=="◆ 遊ぶ"){
           OASOBI = true;
           game.popScene();
@@ -3204,15 +3203,6 @@ function Load(width,height,DATAS){
       Text[0] = new Texts("◆ 閉じる");
 
       switch (Type) {
-        case "◆ 再生":
-          var Video = new Entity()
-          Video.visible =  true;
-          Video._element = document.createElement('div')
-          Video.x = (width/10);
-          Video.y = Numbers+(width/5);
-          Video._element.innerHTML = '<iframe src="https://www.youtube.com/embed/'+Number+'?enablejsapi=1&controls=0&showinfo=0&autoplay=0&rel=0&vq=small"  width="'+(width*0.8)+'" height="'+(width/16*9*0.8)+'" frameborder="0" id="player"></iframe>'
-          scene.addChild(Video);
-          break;
           case "◆ 見る":
           case "◆ 拡大":
           Number = Image_conversion(Number);
@@ -3227,10 +3217,22 @@ function Load(width,height,DATAS){
           scene.addChild(Photo);
           break;
         default:
-          var S_Text = Number.replace(/\n/g,"↓").split("↓");
-          for (var i = 1; i < S_Text.length+1; i++) {
-            Text[i] = new Texts(S_Text[i-1]);
-            if(i==13) break;
+          if(Number.substring(0,7)=="YOUTUBE"){
+            Number = Number.substring(7);
+            var Video = new Entity()
+            Video.visible =  true;
+            Video._element = document.createElement('div')
+            Video.x = (width/10);
+            Video.y = Numbers+(width/5);
+            Video._element.innerHTML = '<iframe src="https://www.youtube.com/embed/'+Number+'?enablejsapi=1&controls=0&showinfo=0&autoplay=0&rel=0&vq=small"  width="'+(width*0.8)+'" height="'+(width/16*9*0.8)+'" frameborder="0" id="player"></iframe>'
+            scene.addChild(Video);
+          }
+          else {
+            var S_Text = Number.replace(/\n/g,"↓").split("↓");
+            for (var i = 1; i < S_Text.length+1; i++) {
+              Text[i] = new Texts(S_Text[i-1]);
+              if(i==13) break;
+            }
           }
           break;
       }
