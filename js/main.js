@@ -2778,6 +2778,11 @@ function Load(width,height,DATAS){
           console.log("Scene数",Scene_kazu);
           Inspect_loads(Number,Choice_Item);
         }
+        else if(this.text=="◆ 召喚"){
+          game.popScene();
+          game.pushScene(SkyScene(true));
+          console.log("Scene数",Scene_kazu);
+        }
         else if(this.text=="◆ 遊ぶ"){
           OASOBI = true;
           game.popScene();
@@ -4329,6 +4334,157 @@ function Load(width,height,DATAS){
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
       });
+
+      return scene;
+    };
+    var SkyScene = function(a){
+      var scene = new Scene();                                // 新しいシーンを作る
+
+      if(a){
+        var xxx = game.assets["image/white.png"].width;
+        var yyy = game.assets["image/white.png"].height;
+        var White = new Sprite(xxx,yyy);
+        White.scaleX = ((width)/xxx);
+        White.scaleY = ((height)/yyy);
+        White.image = game.assets["image/white.png"];
+        White.x = (White.scaleX*xxx/2)-xxx/2;
+        White.y = (White.scaleY*yyy/2)-yyy/2;
+        White.opacity = 0;
+        White.tl.fadeIn(15);
+        scene.addChild(White);
+        White.addEventListener("enterframe",function(){
+          if(White.opacity==1){
+            game.popScene();
+            Scene_kazu--;
+            console.log("Scene数",Scene_kazu);
+            game.replaceScene(SkyScene(false));
+          }
+        })
+      }
+      else{
+        var ccx = game.assets["image/カットイン.png"].width*3;
+        var ccy = game.assets["image/カットイン.png"].height;
+        var Cut_in = new Sprite(ccx,ccy);
+        Cut_in.scaleX = width/ccx*3;
+        Cut_in.scaleY = width/16*9/ccy;
+        Cut_in.image = game.assets["image/カットイン.png"];
+        Cut_in_time += 10;
+        Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2-Cut_in_time;
+        Cut_in.y = (Cut_in.scaleY*ccy/2)-ccy/2;
+        Cut_in.opacity = 0;
+        Cut_in.tl.fadeIn(15);
+        scene.addChild(Cut_in);//背景
+
+        var xxx = game.assets[Image_conversion("タクシー")].width;
+        var yyy = game.assets[Image_conversion("タクシー")].height;
+        var Item = new Sprite(xxx,yyy);
+        Item.scaleX = ((width/2)/xxx);
+        Item.scaleY = ((width/2)/yyy);
+        Item.image = game.assets[Image_conversion("タクシー")];
+        var X_0 = (Item.scaleX*xxx/2)-xxx/2;
+        var Y_0 = (Item.scaleY*yyy/2)-yyy/2;
+        Item.x = X_0 + width/2 -width/4;
+        Item.y = Y_0 + width/32;
+        Item.opacity = 0;
+        Item.tl.fadeIn(15);
+        scene.addChild(Item);
+
+        var C_name = new Label();
+        C_name.font  = (width/20)+"px monospace";
+        C_name.color = 'black';
+        C_name.x = 0;
+        C_name.y = width/16*9+(width/25);
+        C_name.width = width;
+        C_name.height = (width/20);
+        C_name.text = "【シーンを選択】";
+        C_name.opacity = 0;
+        C_name.tl.fadeIn(15);
+        scene.addChild(C_name);//キャラ名
+
+        var Numbers = width/16*9+(width/20)+(width/25);
+
+        var Texts = Class.create(Label, {
+          initialize: function(a) {
+            Numbers += (width/20)+(width/25);
+            Label.call(this);
+            this.font  = (width/20)+"px monospace";
+            this.color = 'black';
+            this.x = (width/50);
+            this.y = Numbers;
+            this.width = width*2;
+            this.height = (width/20);
+            this.text = a;
+            this.opacity = 0;
+            this.tl.fadeIn(15);
+            scene.addChild(this);
+            this.addEventListener('touchstart',function(e){
+              Moves = this.text;
+              game.pushScene(MoveScene(10));
+              Scene_kazu++;
+              console.log("Scene数",Scene_kazu);
+            });
+          }
+        });
+
+        var Text =[];
+
+        for (var i = 0; i < 6; i++) {
+          Text[i] = new Texts(DATAS[i].Number);
+        }
+
+        var sss = 0;
+
+        var xxx = game.assets["image/Buttons.png"].width/8;
+        var yyy = game.assets["image/Buttons.png"].height;
+        var Return2 = new Sprite(xxx,yyy);
+        Return2.image = game.assets["image/Buttons.png"];
+        Return2.scaleX = ((width/5)/xxx);
+        Return2.scaleY = (((width/5))/yyy);//ココが変換した場所
+        Return2.x = (Return2.scaleX*xxx/2)-xxx/2+(width/5)*1;
+        Return2.y = (Return2.scaleY*yyy/2)-yyy/2+height-Return2.scaleY*yyy;
+        Return2.frame = 2;
+        Return2.opacity = 0;
+        Return2.tl.fadeIn(15);
+        scene.addChild(Return2);
+        Return2.addEventListener('touchstart',function(e){
+          sss -= 12;
+          if(sss<0) sss = DATAS.length-6;
+          for (var i = 0; i < 6; i++) {
+            Text[i].text = DATAS[sss].Number;
+            sss++;
+          }
+        });
+
+        var xxx = game.assets["image/Buttons.png"].width/8;
+        var yyy = game.assets["image/Buttons.png"].height;
+        var Enter1 = new Sprite(xxx,yyy);
+        Enter1.image = game.assets["image/Buttons.png"];
+        Enter1.scaleX = ((width/5)/xxx);
+        Enter1.scaleY = (((width/5))/yyy);//ココが変換した場所
+        Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
+        Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
+        Enter1.frame = 5;
+        Enter1.opacity = 0;
+        Enter1.tl.fadeIn(15);
+        scene.addChild(Enter1);
+        Enter1.addEventListener('touchstart',function(e){
+          sss += 6;
+          if(sss>DATAS.length-6) sss = 0;
+          for (var i = 0; i < 6; i++) {
+            Text[i].text = DATAS[sss].Number;
+            sss++;
+          }
+        });
+
+        Cut_in.addEventListener("enterframe",function(){
+          Cut_in_time += 10;
+          Cut_in.x -= 10;
+          if(Cut_in_time>width*2){
+            Cut_in_time = 0;
+            Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2;
+          }
+        })
+      }
 
       return scene;
     };
