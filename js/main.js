@@ -2047,8 +2047,6 @@ function Load(width,height,DATAS){
       S_Input.width = 190;
       S_Input.height = (width/20);
       S_Input._element = document.createElement('input');
-      S_Input._element.type = "text";
-      S_Input._element.name = "myText";
       S_Input._element.value = Flag[1];
       S_Input._element.placeholder = "苗字を入力";
       scene.addChild(S_Input);
@@ -2058,8 +2056,6 @@ function Load(width,height,DATAS){
       S_Input2.width = 190;
       S_Input2.height = (width/20);
       S_Input2._element = document.createElement('input');
-      S_Input2._element.type = "text";
-      S_Input2._element.name = "myText";
       S_Input2._element.value = Flag[0];
       S_Input2._element.placeholder = "名前を入力";
       scene.addChild(S_Input2);
@@ -4600,91 +4596,115 @@ function Load(width,height,DATAS){
       var Text = [];
 
       Text[0] = new Texts("◆ 改造をやめる");
-      Text[1] = new Texts("");
-      Text[2] = new Texts("◆ 設定する");
 
       Numbers += (width/20)+(width/25);
+      Numbers += (width/20)+(width/25);
+      var S_Input = new Entity();
+      S_Input.moveTo((width/10),Numbers);
+      S_Input.width = 190;
+      S_Input.height = (width/20);
+      S_Input._element = document.createElement("select");
+      scene.addChild(S_Input);
 
+      Numbers += (width/20)+(width/25);
       var S_Input1 = new Entity();
       S_Input1.moveTo((width/10),Numbers);
       S_Input1.width = 190;
       S_Input1.height = (width/20);
       S_Input1._element = document.createElement("select");
-      S_Input1._element.select = "DATAS";
-      scene.addChild(S_Input1);
-      console.log(S_Input1);
-      console.log(S_Input1._element);
 
-      for (var i = 0; i < Text.length; i++) {
-        Text[i].addEventListener('touchstart',function(e){
-          switch (this.text.substring(2)){
-            case "改造をやめる":
-            game.popScene();
-            Scene_kazu--;
-            console.log("Scene数",Scene_kazu);
-            break;
-              case "設定する":
-              if(S_Input._element.value.replace(/[^,]/g,"")!=""||S_Input2._element.value.replace(/[^,]/g,"")!=""){
-                Text[2].text = ",(カンマ)は使用できません。";
+      Numbers += (width/20)+(width/25);
+      var S_Input2 = new Entity();
+      S_Input2.moveTo((width/10),Numbers);
+      S_Input2.width = 190;
+      S_Input2.height = (width/20);
+      S_Input2._element = document.createElement('input');
+      S_Input2._element.type = "submit";
+      S_Input2._element.value = "設定する";
+      scene.addChild(S_Input2);
+
+      function Options(a,b,i){
+        Option[i] = document.createElement("option");
+        Option[i].text = a;
+        Option[i].value = b;
+        S_Input1._element.appendChild(Option[i]);
+      }
+
+      var Option = [];
+
+      for (var i = 1; i < ImageDATAS.length; i++){
+        Options(ImageDATAS[i].name,ImageDATAS[i].name,i-1)
+      }
+      scene.addChild(S_Input1);
+
+      S_Input2.addEventListener('touchstart',function(e){
+        Item_Flag[Item_Flag.length] = ["チートアイテム","チートアイテム",S_Input1._element.value];
+        return;
+      });
+
+      Text[0].addEventListener('touchstart',function(e){
+          game.popScene();
+          Scene_kazu--;
+          console.log("Scene数",Scene_kazu);
+          return;
+          if(S_Input._element.value.replace(/[^,]/g,"")!=""||S_Input2._element.value.replace(/[^,]/g,"")!=""){
+            Text[2].text = ",(カンマ)は使用できません。";
+          }
+          else{
+            if(S_Input2._element.value=="チート移動"){
+              game.popScene();
+              game.popScene();
+              Scene_kazu--;
+              Scene_kazu--;
+              console.log("Scene数",Scene_kazu);
+              Number = S_Input._element.value;
+              if(Number=="スプレッドシート") Number = ImageDATAS[0].画像 + "";
+              if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
+              Scene_loads(Number,false,false);
+              return;
+            }
+            else if(S_Input2._element.value=="チートアイテム"){
+              Item_Flag[Item_Flag.length] = S_Input._element.value.split(",");
+              if(Item_Flag[Item_Flag.length-1].length==2){
+                Item_Flag[Item_Flag.length-1][2] = "強欲な壺";
               }
-              else{
-                if(S_Input2._element.value=="チート移動"){
-                  game.popScene();
-                  game.popScene();
-                  Scene_kazu--;
-                  Scene_kazu--;
-                  console.log("Scene数",Scene_kazu);
-                  Number = S_Input._element.value;
-                  if(Number=="スプレッドシート") Number = ImageDATAS[0].画像 + "";
-                  if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
-                  Scene_loads(Number,false,false);
-                  return;
-                }
-                else if(S_Input2._element.value=="チートアイテム"){
-                  Item_Flag[Item_Flag.length] = S_Input._element.value.split(",");
-                  if(Item_Flag[Item_Flag.length-1].length==2){
-                    Item_Flag[Item_Flag.length-1][2] = "強欲な壺";
-                  }
-                  if(Item_Flag[Item_Flag.length-1].length==1){
-                    Item_Flag[Item_Flag.length-1][1] = "チートで生み出したアイテム。↓見た目は強欲な壺。";
-                    Item_Flag[Item_Flag.length-1][2] = "強欲な壺";
-                  }
-                  Sound_ON("Item",true);
-                  Text[11].text = "アイテムゲット "+Item_Flag[Item_Flag.length-1][0];
-                  return;
-                }
-                else if(S_Input2._element.value=="チート体力"){
-                  Flag[6] = S_Input._element.value*1;
-                  Sound_ON("Item",true);
-                  Text[11].text = "残り回数 = "+S_Input._element.value;
-                  return;
-                }
-                else if(S_Input2._element.value=="データ修正"){
-                  Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",Flag[4],Flag[4],Flag[4],Flag[4],Flag[4]];
-                  Sound_ON("Item",true);
-                  Text[11].text = "データ修正";
-                  return;
-                }
-                else if(S_Input2._element.value=="チートフラグ"){
-                  for (var i = 10; i < Flag.length; i++){
-                    if(Flag[i]==S_Input._element.value){
-                      Flag[i] = false;
-                      Text[11].text = S_Input._element.value+" 消去";
-                      return;
-                    }
-                  }
-                  Flag[Flag.length] = S_Input._element.value;
-                  Sound_ON("Item",true);
-                  Text[11].text = S_Input._element.value;
-                  return;
-                }
-                Sound_ON("Item",true);
-                Text[2].text = "設定しました。";
+              if(Item_Flag[Item_Flag.length-1].length==1){
+                Item_Flag[Item_Flag.length-1][1] = "チートで生み出したアイテム。↓見た目は強欲な壺。";
+                Item_Flag[Item_Flag.length-1][2] = "強欲な壺";
               }
-              break;
+              Sound_ON("Item",true);
+              Text[11].text = "アイテムゲット "+Item_Flag[Item_Flag.length-1][0];
+              return;
+            }
+            else if(S_Input2._element.value=="チート体力"){
+              Flag[6] = S_Input._element.value*1;
+              Sound_ON("Item",true);
+              Text[11].text = "残り回数 = "+S_Input._element.value;
+              return;
+            }
+            else if(S_Input2._element.value=="データ修正"){
+              Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",Flag[4],Flag[4],Flag[4],Flag[4],Flag[4]];
+              Sound_ON("Item",true);
+              Text[11].text = "データ修正";
+              return;
+            }
+            else if(S_Input2._element.value=="チートフラグ"){
+              for (var i = 10; i < Flag.length; i++){
+                if(Flag[i]==S_Input._element.value){
+                  Flag[i] = false;
+                  Text[11].text = S_Input._element.value+" 消去";
+                  return;
+                }
+              }
+              Flag[Flag.length] = S_Input._element.value;
+              Sound_ON("Item",true);
+              Text[11].text = S_Input._element.value;
+              return;
+            }
+            Sound_ON("Item",true);
+            Text[2].text = "設定しました。";
           }
         });
-      }
 
       return scene;
     };
