@@ -2786,9 +2786,7 @@ function Load(width,height,DATAS){
           console.log("Scene数",Scene_kazu);
         }
         else if(this.text=="◆ 改造"){
-          OASOBI = true;
-          game.pushScene(TransformScene());
-          Scene_kazu++;
+          game.replaceScene(TransformScene(Number,Ig));
           console.log("Scene数",Scene_kazu);
         }
         else {
@@ -4562,7 +4560,7 @@ function Load(width,height,DATAS){
 
       return scene;
     };
-    var TransformScene = function(){
+    var TransformScene = function(Number,Ig){
       var scene = new Scene();                                // 新しいシーンを作る
 
       var xxx = game.assets["image/Background.png"].width;
@@ -4643,8 +4641,7 @@ function Load(width,height,DATAS){
       });
 
       Text[0].addEventListener('touchstart',function(e){
-          game.popScene();
-          Scene_kazu--;
+          game.replaceScene(ItemScene(Number,Ig));
           console.log("Scene数",Scene_kazu);
           return;
           if(S_Input._element.value.replace(/[^,]/g,"")!=""||S_Input2._element.value.replace(/[^,]/g,"")!=""){
