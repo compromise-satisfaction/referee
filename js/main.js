@@ -201,28 +201,27 @@ function Load(width,height,DATAS){
       return;
     }
 
-    function post(value){
-      return;
+    function post(a,b){
       if(Flag[1]=="セーブしない") return;
-      //*
-      fetch(GAS[1],
-        {
-          method: 'POST',
-          body: value
-        }
-      )
-      //*/
       var form = document.createElement('form');
-      var request = document.createElement('input');
+      var input = [];
+      var inputs1 = ["苗字","名前"];
+      var inputs2 = [a,b];
+      for (var i = 0; i < inputs1.length; i++){
+        input[i] = document.createElement('input');
+        input[i].type = 'hidden'; //入力フォームが表示されないように
+        input[i].name = inputs1[i];
+        input[i].value = inputs2[i];
+        form.appendChild(input[i]);
+      }
       form.method = 'POST';
       form.target="_blank";
       form.action = GAS[1];
-      request.type = 'hidden'; //入力フォームが表示されないように
-      request.name = "value";
-      request.value = value;
-      form.appendChild(request);
+      console.log(document.body);
       document.body.appendChild(form);
+      console.log(document.body);
       form.submit();
+      console.log(document.body);
       return;
     }
 
@@ -481,7 +480,7 @@ function Load(width,height,DATAS){
     }
     console.log(Flag2);
     console.log(Datas);
-    post(Datas[8]);
+    post(Flag[1],Flag[0]);
     }//セーブ
 
     function rand(n) {
@@ -2641,7 +2640,6 @@ function Load(width,height,DATAS){
 
       var Item_image = Class.create(Sprite,{
           initialize: function(a) {
-
               a = Image_conversion(a);
               var xxx = game.assets[a].width;
               var yyy = game.assets[a].height;
