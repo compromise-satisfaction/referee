@@ -4602,6 +4602,16 @@ function Load(width,height,DATAS){
       S_Input.width = 190;
       S_Input.height = (width/20);
       S_Input._element = document.createElement("select");
+
+      var Option = [];
+      var Choice_Transform = ["することを選択","アイテム作成","フラグ追加 or 消去","体力変更","データ修正"];
+
+      for (var i = 0; i < Choice_Transform.length; i++){
+        Option[i] = document.createElement("option");
+        Option[i].text = Choice_Transform[i];
+        Option[i].value = Choice_Transform[i];
+        S_Input._element.appendChild(Option[i]);
+      }
       scene.addChild(S_Input);
 
       Numbers += (width/20)+(width/25);
@@ -4621,17 +4631,13 @@ function Load(width,height,DATAS){
       S_Input2._element.value = "設定する";
       scene.addChild(S_Input2);
 
-      function Options(a,b,i){
-        Option[i] = document.createElement("option");
-        Option[i].text = a;
-        Option[i].value = b;
-        S_Input1._element.appendChild(Option[i]);
-      }
-
-      var Option = [];
+      Option = [];
 
       for (var i = 1; i < ImageDATAS.length; i++){
-        Options(ImageDATAS[i].name,ImageDATAS[i].name,i-1)
+        Option[i-1] = document.createElement("option");
+        Option[i-1].text = ImageDATAS[i].name;
+        Option[i-1].value = ImageDATAS[i].name;
+        S_Input1._element.appendChild(Option[i-1]);
       }
       scene.addChild(S_Input1);
 
