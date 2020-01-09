@@ -4395,103 +4395,30 @@ function Load(width,height,DATAS){
         C_name.y = width/16*9+(width/25);
         C_name.width = width;
         C_name.height = (width/20);
-        C_name.text = "【シーンを選択1～6】";
+        C_name.text = "【シーンを選択】";
         C_name.opacity = 0;
         C_name.tl.fadeIn(15);
         scene.addChild(C_name);//キャラ名
 
-        var Numbers = width/16*9+(width/20)+(width/25);
+        var Numbers = width/16*9+(width/20)+(width/25)+(width/25);
 
-        var Texts = Class.create(Label, {
-          initialize: function(a) {
-            Numbers += (width/20)+(width/25);
-            Label.call(this);
-            this.font  = (width/20)+"px monospace";
-            this.color = 'black';
-            this.x = (width/50);
-            this.y = Numbers;
-            this.width = width*2;
-            this.height = (width/20);
-            this.text = a;
-            this.opacity = 0;
-            this.tl.fadeIn(15);
-            scene.addChild(this);
-            this.addEventListener('touchstart',function(e){
-              if(this.color=="red") return;
-              Moves = this.text;
-              game.pushScene(MoveScene(10));
-              Scene_kazu++;
-              console.log("Scene数",Scene_kazu);
-            });
-          }
-        });
+        var S_Input1 = new Entity();
+        S_Input1.moveTo((width/12),Numbers);
+        S_Input1.width = 190;
+        S_Input1.height = (width/20);
+        S_Input1._element = document.createElement("select");
+        S_Input1.opacity = 0;
+        S_Input1.tl.fadeIn(15);
 
-        var Text =[];
+        var Option = [];
 
-        for (var i = 0; i < 6; i++) {
-          Text[i] = new Texts(DATAS[i].Number);
-          if(DATAS[i].type=="メイン"||DATAS[i].type=="チョイス"||DATAS[i].type=="尋問"||DATAS[i].type=="アイテムゲット") Text[i].color = "Black";
-          else {
-            Text[i].text += " ×" + "typeが" + DATAS[i].type + "です。";
-            Text[i].color = "red";
-          }
+        for (var i = 0; i < DATAS.length; i++){
+          Option[i] = document.createElement("option");
+          Option[i].text = DATAS[i].Number;
+          Option[i].value = DATAS[i].Number;
+          if(DATAS[i].type=="メイン"||DATAS[i].type=="チョイス"||DATAS[i].type=="尋問") S_Input1._element.appendChild(Option[i]);
         }
-
-        var sss = 6;
-
-        var xxx = game.assets["image/Buttons.png"].width/8;
-        var yyy = game.assets["image/Buttons.png"].height;
-        var Return1 = new Sprite(xxx,yyy);
-        Return1.image = game.assets["image/Buttons.png"];
-        Return1.scaleX = ((width/5)/xxx);
-        Return1.scaleY = (((width/5))/yyy);//ココが変換した場所
-        Return1.x = (Return1.scaleX*xxx/2)-xxx/2;
-        Return1.y = (Return1.scaleY*yyy/2)-yyy/2+height-Return1.scaleY*yyy;
-        Return1.frame = 1;
-        Return1.opacity = 0;
-        Return1.tl.fadeIn(15);
-        scene.addChild(Return1);
-        Return1.addEventListener('touchstart',function(e){
-          sss -= 66;
-          if(sss<0) sss = DATAS.length-6;
-          C_name.text = "【シーンを選択"+ (sss*1+1) + "～" + (sss*1+6) +"】";
-          for (var i = 0; i < 6; i++) {
-            Text[i].text = DATAS[sss].Number;
-            if(DATAS[sss].type=="メイン"||DATAS[sss].type=="チョイス"||DATAS[sss].type=="尋問") Text[i].color = "Black";
-            else {
-              Text[i].text += " ×" + "typeが" + DATAS[sss].type + "です。";
-              Text[i].color = "red";
-            }
-            sss++;
-          }
-        });
-
-        var xxx = game.assets["image/Buttons.png"].width/8;
-        var yyy = game.assets["image/Buttons.png"].height;
-        var Return2 = new Sprite(xxx,yyy);
-        Return2.image = game.assets["image/Buttons.png"];
-        Return2.scaleX = ((width/5)/xxx);
-        Return2.scaleY = (((width/5))/yyy);//ココが変換した場所
-        Return2.x = (Return2.scaleX*xxx/2)-xxx/2+(width/5)*1;
-        Return2.y = (Return2.scaleY*yyy/2)-yyy/2+height-Return2.scaleY*yyy;
-        Return2.frame = 2;
-        Return2.opacity = 0;
-        Return2.tl.fadeIn(15);
-        scene.addChild(Return2);
-        Return2.addEventListener('touchstart',function(e){
-          sss -= 12;
-          if(sss<0) sss = DATAS.length-6;
-          C_name.text = "【シーンを選択"+ (sss*1+1) + "～" + (sss*1+6) +"】";
-          for (var i = 0; i < 6; i++) {
-            Text[i].text = DATAS[sss].Number;
-            if(DATAS[sss].type=="メイン"||DATAS[sss].type=="チョイス"||DATAS[sss].type=="尋問") Text[i].color = "Black";
-            else {
-              Text[i].text += " ×" + "typeが" + DATAS[sss].type + "です。";
-              Text[i].color = "red";
-            }
-            sss++;
-          }
-        });
+        scene.addChild(S_Input1);
 
         var xxx = game.assets["image/Buttons.png"].width/8;
         var yyy = game.assets["image/Buttons.png"].height;
@@ -4506,45 +4433,11 @@ function Load(width,height,DATAS){
         Enter1.tl.fadeIn(15);
         scene.addChild(Enter1);
         Enter1.addEventListener('touchstart',function(e){
-          if(sss>DATAS.length-6) sss = 0;
-          C_name.text = "【シーンを選択"+ (sss*1+1) + "～" + (sss*1+6) +"】";
-          for (var i = 0; i < 6; i++) {
-            Text[i].text = DATAS[sss].Number;
-            if(DATAS[sss].type=="メイン"||DATAS[sss].type=="チョイス"||DATAS[sss].type=="尋問") Text[i].color = "Black";
-            else {
-              Text[i].text += " ×" + "typeが" + DATAS[sss].type + "です。";
-              Text[i].color = "red";
-            }
-            sss++;
-          }
+          Moves = S_Input1._element.value;
+          game.pushScene(MoveScene(10));
+          Scene_kazu++;
+          console.log("Scene数",Scene_kazu);
         });
-
-        var xxx = game.assets["image/Buttons.png"].width/8;
-        var yyy = game.assets["image/Buttons.png"].height;
-        var Enter2 = new Sprite(xxx,yyy);
-        Enter2.image = game.assets["image/Buttons.png"];
-        Enter2.scaleX = ((width/5)/xxx);
-        Enter2.scaleY = (((width/5))/yyy);//ココが変換した場所
-        Enter2.x = (Enter2.scaleX*xxx/2)-xxx/2+(width/5)*4;
-        Enter2.y = (Enter2.scaleY*yyy/2)-yyy/2+height-Enter2.scaleY*yyy;
-        Enter2.frame = 6;
-        Enter2.opacity = 0;
-        Enter2.tl.fadeIn(15);
-        scene.addChild(Enter2);
-        Enter2.addEventListener('touchstart',function(e){
-          sss += 54;
-          if(sss>DATAS.length-6) sss = 0;
-          C_name.text = "【シーンを選択"+ (sss*1+1) + "～" + (sss*1+6) +"】";
-          for (var i = 0; i < 6; i++) {
-            Text[i].text = DATAS[sss].Number;
-            if(DATAS[sss].type=="メイン"||DATAS[sss].type=="チョイス"||DATAS[sss].type=="尋問") Text[i].color = "Black";
-            else {
-              Text[i].text += " ×" + "typeが" + DATAS[sss].type + "です。";
-              Text[i].color = "red";
-            }
-            sss++;
-          }
-        });//進む2
 
         Cut_in.addEventListener("enterframe",function(){
           Cut_in_time += 10;
