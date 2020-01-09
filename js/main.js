@@ -4636,7 +4636,7 @@ function Load(width,height,DATAS){
       scene.addChild(S_Input1);
 
       S_Input2.addEventListener('touchstart',function(e){
-        Item_Flag[Item_Flag.length] = ["チートアイテム","チートアイテム",S_Input1._element.value];
+        Item_Flag[Item_Flag.length] = ["チートアイテム","チートアイテム",S_Input1._element.value,"拡大",S_Input1._element.value];
         return;
       });
 
