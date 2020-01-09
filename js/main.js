@@ -4604,13 +4604,15 @@ function Load(width,height,DATAS){
       Text[2] = new Texts("◆ 設定する");
 
       Numbers += (width/20)+(width/25);
+
       var S_Input1 = new Entity();
       S_Input1.moveTo((width/10),Numbers);
       S_Input1.width = 190;
       S_Input1.height = (width/20);
       S_Input1._element = document.createElement("select");
-      S_Input1._element.name = "種類";
+      S_Input1._element.select = "DATAS";
       scene.addChild(S_Input1);
+      console.log(S_Input1);
       console.log(S_Input1._element);
 
       for (var i = 0; i < Text.length; i++) {
