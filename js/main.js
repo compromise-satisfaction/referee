@@ -1726,7 +1726,10 @@ function Load(width,height,DATAS){
         Text[submits]._element.type = "submit";
         Text[submits]._element.value = a;
         if(a) scene.addChild(Text[submits]);
-        if(have(a)) Text[submits]._element.value += " ✓";
+        if(have(a)){
+          Text[submits]._element.value += " ✓";
+          Text[submits].backgroundColor = "red";
+        }
         Text[submits].addEventListener('touchstart',function(e){
           if(this._element.value == "調べる") Inspect_loads(Datas[6],false);
           else if (this._element.value == "つきつける"){
@@ -1736,6 +1739,7 @@ function Load(width,height,DATAS){
           }
           else Scene_loads(b,false,false);
         });
+        console.log(Text[submits]);
         submits++;
         Numbers += (width/20)+(width/25)+(width/25);
       }
@@ -1757,6 +1761,20 @@ function Load(width,height,DATAS){
         Return1.x = (Return1.scaleX*xxx/2)-xxx/2;
         Return1.y = (Return1.scaleY*yyy/2)-yyy/2+height-Return1.scaleY*yyy;
         Return1.frame = 1;
+        //scene.addChild(Return1);
+        Return1.addEventListener('touchstart',function(e){
+          Scene_loads(Datas[4],true,false);
+        });
+      } //戻る1
+
+      if(Datas[4]!=false){
+        var Return1 = new Entity();
+        Return1.moveTo(0,height-(width/5));
+        Return1.width = (width/5);
+        Return1.height = (width/5);
+        Return1._element = document.createElement('input');
+        Return1._element.type = "submit";
+        Return1._element.value = "◀◀◀";
         scene.addChild(Return1);
         Return1.addEventListener('touchstart',function(e){
           Scene_loads(Datas[4],true,false);
