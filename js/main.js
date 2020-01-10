@@ -201,13 +201,14 @@ function Load(width,height,DATAS){
       return;
     }
 
-    function post(a,b){
-      if(Flag[1]=="セーブしない") return;
+    function post(a,b,c){
+      fetch(GAS[1],)
+      return;
       var form = document.createElement('form');
       var input = [];
-      var inputs1 = ["苗字","名前"];
-      var inputs2 = [a,b];
-      for (var i = 0; i < inputs1.length; i++){
+      var inputs1 = ["苗字","名前","シーンナンバー"];
+      var inputs2 = [Flag[1],Flag[0],Number];
+      for (var i = 0; i < inputs2.length; i++){
         input[i] = document.createElement('input');
         input[i].type = 'hidden'; //入力フォームが表示されないように
         input[i].name = inputs1[i];
@@ -216,12 +217,10 @@ function Load(width,height,DATAS){
       }
       form.method = 'POST';
       form.target="_blank";
+      form.name = "myform"
       form.action = GAS[1];
-      console.log(document.body);
       document.body.appendChild(form);
-      console.log(document.body);
-      form.submit();
-      console.log(document.body);
+      document.myform.submit();
       return;
     }
 
@@ -480,7 +479,7 @@ function Load(width,height,DATAS){
     }
     console.log(Flag2);
     console.log(Datas);
-    post(Flag[1],Flag[0]);
+    post(Flag[1],Flag[0],Number);
     }//セーブ
 
     function rand(n) {
@@ -704,7 +703,6 @@ function Load(width,height,DATAS){
       Datas[13] = DATAS[i].Datas13;
       Datas[14] = DATAS[i].Datas14;
       Datas[15] = Image_conversion(DATAS[i].Datas15);
-      Datas[16] = DATAS[i].Datas16;
       if(Datas[1]=="主人公") Datas[1] = S_image;
       if(Datas[3]=="主人公") Datas[3] = S_image;
       if(Datas[5]=="主人公") Datas[5] = S_image;
@@ -726,7 +724,6 @@ function Load(width,height,DATAS){
       Datas[13] = DATAS[i].Datas13;
       Datas[14] = DATAS[i].Datas14;
       Datas[15] = DATAS[i].Datas15;
-      Datas[16] = DATAS[i].Datas16;
       if(Datas[1]=="主人公") Datas[1] = S_image;
       if(Datas[2]=="主人公") Datas[2] = S_image;
       if(Datas[3]=="主人公") Datas[3] = S_image;
@@ -2136,56 +2133,6 @@ function Load(width,height,DATAS){
                   Flag[2] = "女";
                   if(S_Input._element.value=="") Flag[1] = "防人";
                   if(S_Input2._element.value=="") Flag[0] = "玲奈";
-                }
-                if(S_Input2._element.value=="チート移動"){
-                  game.popScene();
-                  game.popScene();
-                  Scene_kazu--;
-                  Scene_kazu--;
-                  console.log("Scene数",Scene_kazu);
-                  Number = S_Input._element.value;
-                  if(Number=="スプレッドシート") Number = ImageDATAS[0].画像 + "";
-                  if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
-                  Scene_loads(Number,false,false);
-                  return;
-                }
-                else if(S_Input2._element.value=="チートアイテム"){
-                  Item_Flag[Item_Flag.length] = S_Input._element.value.split(",");
-                  if(Item_Flag[Item_Flag.length-1].length==2){
-                    Item_Flag[Item_Flag.length-1][2] = "強欲な壺";
-                  }
-                  if(Item_Flag[Item_Flag.length-1].length==1){
-                    Item_Flag[Item_Flag.length-1][1] = "チートで生み出したアイテム。↓見た目は強欲な壺。";
-                    Item_Flag[Item_Flag.length-1][2] = "強欲な壺";
-                  }
-                  Sound_ON("Item",true);
-                  Text[11].text = "アイテムゲット "+Item_Flag[Item_Flag.length-1][0];
-                  return;
-                }
-                else if(S_Input2._element.value=="チート体力"){
-                  Flag[6] = S_Input._element.value*1;
-                  Sound_ON("Item",true);
-                  Text[11].text = "残り回数 = "+S_Input._element.value;
-                  return;
-                }
-                else if(S_Input2._element.value=="データ修正"){
-                  Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",Flag[4],Flag[4],Flag[4],Flag[4],Flag[4]];
-                  Sound_ON("Item",true);
-                  Text[11].text = "データ修正";
-                  return;
-                }
-                else if(S_Input2._element.value=="チートフラグ"){
-                  for (var i = 10; i < Flag.length; i++){
-                    if(Flag[i]==S_Input._element.value){
-                      Flag[i] = false;
-                      Text[11].text = S_Input._element.value+" 消去";
-                      return;
-                    }
-                  }
-                  Flag[Flag.length] = S_Input._element.value;
-                  Sound_ON("Item",true);
-                  Text[11].text = S_Input._element.value;
-                  return;
                 }
                 Sound_ON("Item",true);
                 Text[11].text = "設定しました。";
@@ -4472,12 +4419,11 @@ function Load(width,height,DATAS){
           Numbers += (width/20)+(width/25);
           this.font  = (width/20)+"px monospace";
           this.color = 'black';
-          this.x = (width/15);
+          this.x = (width/10);
           this.y = Numbers;
           this.width = width;
           this.height = (width/20);
           this.text = a;
-          i++;
           scene.addChild(this);
         }
       });
@@ -4495,7 +4441,7 @@ function Load(width,height,DATAS){
       S_Input._element = document.createElement("select");
 
       var Option = [];
-      var Choice_Transform = ["することを選択","アイテム作成","フラグ追加 or 消去","体力変更","データ修正"];
+      var Choice_Transform = ["することを選択","アイテム作成","フラグ追加 or 消去","体力変更","シーンデータ修正"];
 
       for (var i = 0; i < Choice_Transform.length; i++){
         Option[i] = document.createElement("option");
@@ -4512,15 +4458,41 @@ function Load(width,height,DATAS){
       S_Input1.height = (width/20);
       S_Input1._element = document.createElement("select");
 
+      function S_Inputs(a){
+        Numbers += (width/20)+(width/25);
+        S_Inputss[a] = new Entity();
+        S_Inputss[a].moveTo((width/10),Numbers);
+        S_Inputss[a].width = 190;
+        S_Inputss[a].height = (width/20);
+        S_Inputss[a]._element = document.createElement('input');
+        S_Inputss[a]._element.type = "text";
+        S_Inputss[a]._element.value = "ここに入力";
+        scene.addChild(S_Inputss[a]);
+      }
+
+      var S_Inputss = [];
+
+      for (var i = 0; i < 3; i++) {
+        S_Inputs(i);
+      }
+
       Numbers += (width/20)+(width/25);
-      var S_Input2 = new Entity();
-      S_Input2.moveTo((width/10),Numbers);
-      S_Input2.width = 190;
-      S_Input2.height = (width/20);
-      S_Input2._element = document.createElement('input');
-      S_Input2._element.type = "submit";
-      S_Input2._element.value = "設定する";
-      scene.addChild(S_Input2);
+      var S_Input3 = new Entity();
+      S_Input3.moveTo((width/10),Numbers);
+      S_Input3.width = 190;
+      S_Input3.height = (width/20);
+      S_Input3._element = document.createElement("select");
+
+      Option = [];
+      Choice_Transform = ["詳細","見る"];
+
+      for (var i = 0; i < Choice_Transform.length; i++){
+        Option[i] = document.createElement("option");
+        Option[i].text = Choice_Transform[i];
+        Option[i].value = Choice_Transform[i];
+        S_Input3._element.appendChild(Option[i]);
+      }
+      scene.addChild(S_Input3);
 
       Option = [];
 
@@ -4532,8 +4504,62 @@ function Load(width,height,DATAS){
       }
       scene.addChild(S_Input1);
 
+      Numbers += (width/20)+(width/25);
+      var S_Input2 = new Entity();
+      S_Input2.moveTo((width/10),Numbers);
+      S_Input2.width = 190;
+      S_Input2.height = (width/20);
+      S_Input2._element = document.createElement('input');
+      S_Input2._element.type = "submit";
+      S_Input2._element.value = "実行する";
+      scene.addChild(S_Input2);
+
+      for (var i = 1; i < 6; i++) {
+        Text[i] = new Texts("");
+      }
+
       S_Input2.addEventListener('touchstart',function(e){
-        Item_Flag[Item_Flag.length] = ["チートアイテム","チートアイテム",S_Input1._element.value,"拡大",S_Input1._element.value];
+        for (var i = 5; i > 1; i--) {
+          Text[i].text = Text[i-1].text;
+        }
+        for (var i = 0; i < 3; i++) {
+          if(S_Inputss[i]._element.value.replace(/[^,]/g,"")!=""){
+            Text[1].text = ",(カンマ)は使用できません。";
+            return;
+          }
+        }
+        switch (S_Input._element.value) {
+          case "アイテム作成":
+            Item_Flag[Item_Flag.length] = [S_Inputss[0]._element.value,S_Inputss[1]._element.value,S_Input1._element.value,S_Input3._element.value,S_Inputss[2]._element.value];
+            Text[1].text = S_Inputss[0]._element.value+" 入手。";
+            break;
+          case "シーンデータ修正":
+            game.popScene();
+            Scene_kazu--;
+            console.log("Scene数",Scene_kazu);
+            Datas = ["Black",0,0,0,0,0,0,0,"シーンデータを修正しました。",0,0,0,Flag[4],0];
+            game.replaceScene(MainScene());
+            break;
+          case "フラグ追加 or 消去":
+            for (var i = 10; i < Flag.length; i++){
+              if(Flag[i]==S_Inputss[0]._element.value){
+                Flag[i] = false;
+                Text[1].text = S_Inputss[0]._element.value+" オフ。";
+                return;
+              }
+            }
+            Flag[Flag.length] = S_Inputss[0]._element.value;
+            Text[1].text = S_Inputss[0]._element.value+" オン。";
+            break;
+          case "体力変更":
+            Flag[6] = S_Inputss[0]._element.value*1;
+            Text[1].text = "残り回数 = " + Flag[6];
+            break;
+          default:
+            Text[1].text = "することを選択してください。";
+            break;
+        }
+        Sound_ON("Item",true);
         return;
       });
 
@@ -4541,64 +4567,7 @@ function Load(width,height,DATAS){
           game.replaceScene(ItemScene(Number,Ig));
           console.log("Scene数",Scene_kazu);
           return;
-          if(S_Input._element.value.replace(/[^,]/g,"")!=""||S_Input2._element.value.replace(/[^,]/g,"")!=""){
-            Text[2].text = ",(カンマ)は使用できません。";
-          }
-          else{
-            if(S_Input2._element.value=="チート移動"){
-              game.popScene();
-              game.popScene();
-              Scene_kazu--;
-              Scene_kazu--;
-              console.log("Scene数",Scene_kazu);
-              Number = S_Input._element.value;
-              if(Number=="スプレッドシート") Number = ImageDATAS[0].画像 + "";
-              if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1
-              Scene_loads(Number,false,false);
-              return;
-            }
-            else if(S_Input2._element.value=="チートアイテム"){
-              Item_Flag[Item_Flag.length] = S_Input._element.value.split(",");
-              if(Item_Flag[Item_Flag.length-1].length==2){
-                Item_Flag[Item_Flag.length-1][2] = "強欲な壺";
-              }
-              if(Item_Flag[Item_Flag.length-1].length==1){
-                Item_Flag[Item_Flag.length-1][1] = "チートで生み出したアイテム。↓見た目は強欲な壺。";
-                Item_Flag[Item_Flag.length-1][2] = "強欲な壺";
-              }
-              Sound_ON("Item",true);
-              Text[11].text = "アイテムゲット "+Item_Flag[Item_Flag.length-1][0];
-              return;
-            }
-            else if(S_Input2._element.value=="チート体力"){
-              Flag[6] = S_Input._element.value*1;
-              Sound_ON("Item",true);
-              Text[11].text = "残り回数 = "+S_Input._element.value;
-              return;
-            }
-            else if(S_Input2._element.value=="データ修正"){
-              Datas = ["Black",0,0,0,0,0,0,"読み込みエラー","やり直してください。",Flag[4],Flag[4],Flag[4],Flag[4],Flag[4]];
-              Sound_ON("Item",true);
-              Text[11].text = "データ修正";
-              return;
-            }
-            else if(S_Input2._element.value=="チートフラグ"){
-              for (var i = 10; i < Flag.length; i++){
-                if(Flag[i]==S_Input._element.value){
-                  Flag[i] = false;
-                  Text[11].text = S_Input._element.value+" 消去";
-                  return;
-                }
-              }
-              Flag[Flag.length] = S_Input._element.value;
-              Sound_ON("Item",true);
-              Text[11].text = S_Input._element.value;
-              return;
-            }
-            Sound_ON("Item",true);
-            Text[2].text = "設定しました。";
-          }
-        });
+      });
 
       return scene;
     };
