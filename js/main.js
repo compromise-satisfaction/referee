@@ -1683,7 +1683,8 @@ function Load(width,height,DATAS){
           break;
       }
 
-      var Numbers = width/16*9+(width/20);
+//      var Numbers = width/16*9+(width/20);
+      var Numbers = width/16*9+(width/30);
 
       var Texts = Class.create(Label, {
         initialize: function(a,b) {
@@ -1714,10 +1715,36 @@ function Load(width,height,DATAS){
         }
       });
 
+
+      var submits = 0;
+      function Submit(a,b){
+        Text[submits] = new Entity();
+        Text[submits].moveTo(0,Numbers);
+        Text[submits].width = 190;
+        Text[submits].height = (width/10);
+        Text[submits]._element = document.createElement('input');
+        Text[submits]._element.type = "submit";
+        Text[submits]._element.value = a;
+        if(a) scene.addChild(Text[submits]);
+        if(have(a)) Text[submits]._element.value += " ✓";
+        Text[submits].addEventListener('touchstart',function(e){
+          if(this._element.value == "調べる") Inspect_loads(Datas[6],false);
+          else if (this._element.value == "つきつける"){
+            game.pushScene(ItemScene(Datas[6],"日常"));
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+          }
+          else Scene_loads(b,false,false);
+        });
+        submits++;
+        Numbers += (width/20)+(width/25)+(width/25);
+      }
+
       var Text = [];
         //console.log(Datas);
         for (var i = 7; i < Datas.length; i = i+2) {
-          Text = new Texts(Datas[i],Datas[i+1]);
+          //Text = new Texts(Datas[i],Datas[i+1]);
+          Submit(Datas[i],Datas[i+1]);
         }
 
       if(Datas[4]!=false){
