@@ -1329,6 +1329,46 @@ function Load(width,height,DATAS){
           }
         }
 
+      var Buttons = [];
+
+      function Button(a,b,c){
+        Buttons[a] = new Entity();
+        Buttons[a].moveTo((width/5)*a,height-(width/5));
+        Buttons[a].width = (width/5);
+        Buttons[a].height = (width/5);
+        Buttons[a]._element = document.createElement('input');
+        Buttons[a]._element.type = "submit";
+        Buttons[a]._element.value = b;
+        scene.addChild(Buttons[a]);
+        Buttons[a].addEventListener('touchstart',function(e){
+          if(a==2){
+            game.pushScene(ItemScene(c,false));
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+          }
+          else if(a==3){
+            if(Text_defined){
+              Text_defined = false;
+              for (var i = 0; i < 6; i++) {
+                Text[i].text = "";
+              }
+              Time = 0;
+              k = 0;
+              for (var i = 0; i < Datas[8].length+1; i++) {
+                T_D();
+              }
+            }
+            else Scene_loads(c,false,false);
+          }
+          else Scene_loads(c,true,false);
+        });
+      }
+      if(Datas[9]!=false) Button(0,"◀ ◀",Datas[9]);//戻る1
+      if(Datas[10]!=false) Button(1,"◀",Datas[10]);//戻る2
+      if(Datas[11]!=false) Button(2,"アイテム",Datas[11]);//設定
+      if(Datas[12]!=false) Button(3,"▶",Datas[12]);//進む1
+      if(Datas[13]!=false) Button(4,"▶ ▶",Datas[13]);//進む2
+
       if(Datas[9]!=false){
         var xxx = game.assets["image/Buttons.png"].width/8;
         var yyy = game.assets["image/Buttons.png"].height;
@@ -1339,7 +1379,7 @@ function Load(width,height,DATAS){
         Return1.x = (Return1.scaleX*xxx/2)-xxx/2;
         Return1.y = (Return1.scaleY*yyy/2)-yyy/2+height-Return1.scaleY*yyy;
         Return1.frame = 1;
-        scene.addChild(Return1);
+        //scene.addChild(Return1);
         Return1.addEventListener('touchstart',function(e){
           Scene_loads(Datas[9],true,false);
         });
@@ -1355,7 +1395,7 @@ function Load(width,height,DATAS){
         Return2.x = (Return2.scaleX*xxx/2)-xxx/2+(width/5)*1;
         Return2.y = (Return2.scaleY*yyy/2)-yyy/2+height-Return2.scaleY*yyy;
         Return2.frame = 2;
-        scene.addChild(Return2);
+        //scene.addChild(Return2);
         Return2.addEventListener('touchstart',function(e){
           Scene_loads(Datas[10],true,false);
         });
@@ -1371,7 +1411,7 @@ function Load(width,height,DATAS){
         Settings.x = (Settings.scaleX*xxx/2)-xxx/2+(width/5)*2;
         Settings.y = (Settings.scaleY*yyy/2)-yyy/2+height-Settings.scaleY*yyy;
         Settings.frame = 4;
-        scene.addChild(Settings);
+        //scene.addChild(Settings);
         Settings.addEventListener('touchstart',function(e){
           game.pushScene(ItemScene(Datas[11],false));
           Scene_kazu++;
@@ -1389,7 +1429,7 @@ function Load(width,height,DATAS){
         Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
         Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
         Enter1.frame = 5;
-        scene.addChild(Enter1);
+        //scene.addChild(Enter1);
         Enter1.addEventListener('touchstart',function(e){
           if(Text_defined){
             Text_defined = false;
@@ -1416,7 +1456,7 @@ function Load(width,height,DATAS){
         Enter2.x = (Enter2.scaleX*xxx/2)-xxx/2+(width/5)*4;
         Enter2.y = (Enter2.scaleY*yyy/2)-yyy/2+height-Enter2.scaleY*yyy;
         Enter2.frame = 6;
-        scene.addChild(Enter2);
+        //scene.addChild(Enter2);
         Enter2.addEventListener('touchstart',function(e){
           Scene_loads(Datas[13],false,false);
         });//進む2
@@ -1739,7 +1779,6 @@ function Load(width,height,DATAS){
           }
           else Scene_loads(b,false,false);
         });
-        console.log(Text[submits]);
         submits++;
         Numbers += (width/20)+(width/25)+(width/25);
       }
@@ -1750,6 +1789,30 @@ function Load(width,height,DATAS){
           //Text = new Texts(Datas[i],Datas[i+1]);
           Submit(Datas[i],Datas[i+1]);
         }
+
+      var Buttons = [];
+
+      function Button(a,b,c){
+        Buttons[a] = new Entity();
+        Buttons[a].moveTo((width/5)*a,height-(width/5));
+        Buttons[a].width = (width/5);
+        Buttons[a].height = (width/5);
+        Buttons[a]._element = document.createElement('input');
+        Buttons[a]._element.type = "submit";
+        Buttons[a]._element.value = b;
+        scene.addChild(Buttons[a]);
+        Buttons[a].addEventListener('touchstart',function(e){
+          if(a==2){
+            game.pushScene(ItemScene(c,false));
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+          }
+          else Scene_loads(c,true,false);
+        });
+      }
+      if(Datas[4]!=false) Button(0,"◀ ◀",Datas[4]);//戻る1
+      if(Datas[5]!=false) Button(1,"◀",Datas[5]);//戻る2
+      if(Datas[6]!=false&&Datas[6]!="ゲームオーバー") Button(2,"アイテム",Datas[6]);//設定
 
       if(Datas[4]!=false){
         var xxx = game.assets["image/Buttons.png"].width/8;
@@ -1767,20 +1830,6 @@ function Load(width,height,DATAS){
         });
       } //戻る1
 
-      if(Datas[4]!=false){
-        var Return1 = new Entity();
-        Return1.moveTo(0,height-(width/5));
-        Return1.width = (width/5);
-        Return1.height = (width/5);
-        Return1._element = document.createElement('input');
-        Return1._element.type = "submit";
-        Return1._element.value = "◀◀◀";
-        scene.addChild(Return1);
-        Return1.addEventListener('touchstart',function(e){
-          Scene_loads(Datas[4],true,false);
-        });
-      } //戻る1
-
       if(Datas[5]!=false){
         var xxx = game.assets["image/Buttons.png"].width/8;
         var yyy = game.assets["image/Buttons.png"].height;
@@ -1791,7 +1840,7 @@ function Load(width,height,DATAS){
         Return2.x = (Return2.scaleX*xxx/2)-xxx/2+(width/5)*1;
         Return2.y = (Return2.scaleY*yyy/2)-yyy/2+height-Return2.scaleY*yyy;
         Return2.frame = 2;
-        scene.addChild(Return2);
+        //scene.addChild(Return2);
         Return2.addEventListener('touchstart',function(e){
           Scene_loads(Datas[5],true,false);
         });
@@ -1807,7 +1856,7 @@ function Load(width,height,DATAS){
         Settings.x = (Settings.scaleX*xxx/2)-xxx/2+(width/5)*2;
         Settings.y = (Settings.scaleY*yyy/2)-yyy/2+height-Settings.scaleY*yyy;
         Settings.frame = 4;
-        scene.addChild(Settings);
+        //scene.addChild(Settings);
         Settings.addEventListener('touchstart',function(e){
           game.pushScene(ItemScene(Datas[6],false));
           Scene_kazu++;
@@ -4397,7 +4446,7 @@ function Load(width,height,DATAS){
         var S_Input1 = new Entity();
         S_Input1.moveTo((width/12),Numbers);
         S_Input1.width = 190;
-        S_Input1.height = (width/20);
+        S_Input1.height = (width/10);
         S_Input1._element = document.createElement("select");
         S_Input1.opacity = 0;
         S_Input1.tl.fadeIn(15);
