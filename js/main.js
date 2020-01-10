@@ -4532,6 +4532,7 @@ function Load(width,height,DATAS){
           case "アイテム作成":
             Item_Flag[Item_Flag.length] = [S_Inputss[0]._element.value,S_Inputss[1]._element.value,S_Input1._element.value,S_Input3._element.value,S_Inputss[2]._element.value];
             Text[1].text = S_Inputss[0]._element.value+" 入手。";
+            Sound_ON("Item",true);
             break;
           case "シーンデータ修正":
             game.popScene();
@@ -4539,27 +4540,30 @@ function Load(width,height,DATAS){
             console.log("Scene数",Scene_kazu);
             Datas = ["Black",0,0,0,0,0,0,0,"シーンデータを修正しました。",0,0,0,Flag[4],0];
             game.replaceScene(MainScene());
+            Sound_ON("Item",true);
             break;
           case "フラグ追加 or 消去":
             for (var i = 10; i < Flag.length; i++){
               if(Flag[i]==S_Inputss[0]._element.value){
                 Flag[i] = false;
                 Text[1].text = S_Inputss[0]._element.value+" オフ。";
+                Sound_ON("Item",true);
                 return;
               }
             }
             Flag[Flag.length] = S_Inputss[0]._element.value;
             Text[1].text = S_Inputss[0]._element.value+" オン。";
+            Sound_ON("Item",true);
             break;
           case "体力変更":
             Flag[6] = S_Inputss[0]._element.value*1;
             Text[1].text = "残り回数 = " + Flag[6];
+            Sound_ON("Item",true);
             break;
           default:
             Text[1].text = "することを選択してください。";
             break;
         }
-        Sound_ON("Item",true);
         return;
       });
 
