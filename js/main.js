@@ -99,21 +99,19 @@ function Load(width,height,DATAS){
 
 	});
 	loadScene.addEventListener('load', function(e) {
-    var xxx = game.assets["image/Buttons.png"].width/8;
-    var yyy = game.assets["image/Buttons.png"].height;
-    var Enter1 = new Sprite(xxx,yyy);
-    Enter1.image = game.assets["image/Buttons.png"];
-    Enter1.scaleX = ((width/5)/xxx);
-    Enter1.scaleY = (((width/5))/yyy);//ココが変換した場所
-    Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
-    Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
-    Enter1.frame = 5;
-    loadScene.addChild(Enter1);
-    Enter1.addEventListener('touchstart',function(){
+    var Buttons = new Entity();
+    Buttons.moveTo((width/5)*3,height-(width/5));
+    Buttons.width = (width/5);
+    Buttons.height = (width/5);
+    Buttons._element = document.createElement('input');
+    Buttons._element.type = "submit";
+    Buttons._element.value = "始める";
+    //loadScene.addChild(Buttons);
+    //Buttons.addEventListener('touchstart',function(){
       var core = enchant.Core.instance;
       core.removeScene(core.loadingScene);
       core.dispatchEvent(e);
-    });
+    //});
 	});
   game.preload("image/融合.png");
   game.preload("sound/Item.wav");
@@ -1549,9 +1547,18 @@ function Load(width,height,DATAS){
       Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
       Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
       Enter1.frame = 5;
-      scene.addChild(Enter1);
+      //scene.addChild(Enter1);
 
-      Enter1.addEventListener('touchstart',function(e){
+      var Buttons = new Entity();
+      Buttons.moveTo((width/5)*3,height-(width/5));
+      Buttons.width = (width/5);
+      Buttons.height = (width/5);
+      Buttons._element = document.createElement('input');
+      Buttons._element.type = "submit";
+      Buttons._element.value = "▶";
+      scene.addChild(Buttons);
+
+      Buttons.addEventListener('touchstart',function(e){
         game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
@@ -1759,8 +1766,8 @@ function Load(width,height,DATAS){
       var submits = 0;
       function Submit(a,b){
         Text[submits] = new Entity();
-        Text[submits].moveTo(0,Numbers);
-        Text[submits].width = 190;
+        Text[submits].moveTo(width/4,Numbers);
+        Text[submits].width = width/2;
         Text[submits].height = (width/10);
         Text[submits]._element = document.createElement('input');
         Text[submits]._element.type = "submit";
@@ -1989,6 +1996,46 @@ function Load(width,height,DATAS){
         }
       }
 
+      var Buttons = [];
+
+      function Button(a,b,c){
+        Buttons[a] = new Entity();
+        Buttons[a].moveTo((width/5)*a,height-(width/5));
+        Buttons[a].width = (width/5);
+        Buttons[a].height = (width/5);
+        Buttons[a]._element = document.createElement('input');
+        Buttons[a]._element.type = "submit";
+        Buttons[a]._element.value = b;
+        scene.addChild(Buttons[a]);
+        Buttons[a].addEventListener('touchstart',function(e){
+          switch (a) {
+            case 0:
+              game.pushScene(PopScene(Datas[3],"待った！"));
+              Scene_kazu++;
+              console.log("Scene数",Scene_kazu);
+              break;
+            case 2:
+              game.pushScene(SettingScene(Datas[5]));
+              Scene_kazu++;
+              console.log("Scene数",Scene_kazu);
+              break;
+            case 4:
+              game.pushScene(ItemScene(Datas[7],Datas[8]));
+              Scene_kazu++;
+              console.log("Scene数",Scene_kazu);
+              break;
+            default:
+              Scene_loads(c,false,false);
+              break;
+          }
+        });
+      }
+      Button(0,"ゆさぶる",Datas[3]);//ゆさぶる
+      if(Datas[4]!=false) Button(1,"◀",Datas[4]);//戻る
+      Button(2,"設定を開く",Datas[5]);//設定
+      Button(3,"▶",Datas[6]);//進む
+      Button(4,"つきつける",Datas[7]);//つきつける
+
       var xxx = game.assets["image/Buttons.png"].width/8;
       var yyy = game.assets["image/Buttons.png"].height;
       var Button1 = new Sprite(xxx,yyy);
@@ -1998,7 +2045,7 @@ function Load(width,height,DATAS){
       Button1.x = (Button1.scaleX*xxx/2)-xxx/2;
       Button1.y = (Button1.scaleY*yyy/2)-yyy/2+height-Button1.scaleY*yyy;
       Button1.frame = 0;
-      scene.addChild(Button1);
+      //scene.addChild(Button1);
       Button1.addEventListener('touchstart',function(e){
         game.pushScene(PopScene(Datas[3],"待った！"));
         Scene_kazu++;
@@ -2015,7 +2062,7 @@ function Load(width,height,DATAS){
         Button2.x = (Button2.scaleX*xxx/2)-xxx/2+(width/5);
         Button2.y = (Button2.scaleY*yyy/2)-yyy/2+height-Button2.scaleY*yyy;
         Button2.frame = 2;
-        scene.addChild(Button2);
+        //scene.addChild(Button2);
         Button2.addEventListener('touchstart',function(e){
           Scene_loads(Datas[4],true,false);
         });
@@ -2030,7 +2077,7 @@ function Load(width,height,DATAS){
       Button3.x = (Button3.scaleX*xxx/2)-xxx/2+(width/5)*2;
       Button3.y = (Button3.scaleY*yyy/2)-yyy/2+height-Button3.scaleY*yyy;
       Button3.frame = 3;
-      scene.addChild(Button3);
+      //scene.addChild(Button3);
       Button3.addEventListener('touchstart',function(e){
         game.pushScene(SettingScene(Datas[5]));
         Scene_kazu++;
@@ -2046,7 +2093,7 @@ function Load(width,height,DATAS){
       Button4.x = (Button4.scaleX*xxx/2)-xxx/2+(width/5)*3;
       Button4.y = (Button4.scaleY*yyy/2)-yyy/2+height-Button4.scaleY*yyy;
       Button4.frame = 5;
-      scene.addChild(Button4);
+      //scene.addChild(Button4);
       Button4.addEventListener('touchstart',function(e){
         Scene_loads(Datas[6],false,false);
       });//進む
@@ -2060,7 +2107,7 @@ function Load(width,height,DATAS){
       Button5.x = (Button5.scaleX*xxx/2)-xxx/2+(width/5)*4;
       Button5.y = (Button5.scaleY*yyy/2)-yyy/2+height-Button5.scaleY*yyy;
       Button5.frame = 7;
-      scene.addChild(Button5);
+      //scene.addChild(Button5);
       Button5.addEventListener('touchstart',function(e){
         game.pushScene(ItemScene(Datas[7],Datas[8]));
         Scene_kazu++;
@@ -2479,7 +2526,16 @@ function Load(width,height,DATAS){
       Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
       Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
       Enter1.frame = 5;
-      scene.addChild(Enter1);
+      //scene.addChild(Enter1);
+
+      var Buttons = new Entity();
+      Buttons.moveTo((width/5)*3,height-(width/5));
+      Buttons.width = (width/5);
+      Buttons.height = (width/5);
+      Buttons._element = document.createElement('input');
+      Buttons._element.type = "submit";
+      Buttons._element.value = "▶";
+      scene.addChild(Buttons);
 
       var xxx = game.assets[a].width;
       var yyy = game.assets[a].height;
@@ -2509,7 +2565,7 @@ function Load(width,height,DATAS){
         }
       })
 
-      Enter1.addEventListener('touchstart',function(e){
+      Buttons.addEventListener('touchstart',function(e){
         if(Text_defined){
           Text_defined = false;
           for (var i = 0; i < 6; i++) {
@@ -2815,7 +2871,8 @@ function Load(width,height,DATAS){
         }
         else if(this.text=="◆ 召喚"){
           game.popScene();
-          game.pushScene(SkyScene(true));
+          game.replaceScene(SkyScene(true));
+          Scene_kazu--;
           console.log("Scene数",Scene_kazu);
         }
         else if(this.text=="◆ 遊ぶ"){
@@ -4377,118 +4434,99 @@ function Load(width,height,DATAS){
 
       return scene;
     };
-    var SkyScene = function(a){
+    var SkyScene = function(){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      if(a){
-        var xxx = game.assets["image/white.png"].width;
-        var yyy = game.assets["image/white.png"].height;
-        var White = new Sprite(xxx,yyy);
-        White.scaleX = ((width)/xxx);
-        White.scaleY = ((height)/yyy);
-        White.image = game.assets["image/white.png"];
-        White.x = (White.scaleX*xxx/2)-xxx/2;
-        White.y = (White.scaleY*yyy/2)-yyy/2;
-        White.opacity = 0;
-        White.tl.fadeIn(15);
-        scene.addChild(White);
-        White.addEventListener("enterframe",function(){
-          if(White.opacity==1){
-            game.popScene();
-            Scene_kazu--;
-            console.log("Scene数",Scene_kazu);
-            game.replaceScene(SkyScene(false));
-          }
-        })
+      var ccx = game.assets["image/カットイン.png"].width*3;
+      var ccy = game.assets["image/カットイン.png"].height;
+      var Cut_in = new Sprite(ccx,ccy);
+      Cut_in.scaleX = width/ccx*3;
+      Cut_in.scaleY = width/16*9/ccy;
+      Cut_in.image = game.assets["image/カットイン.png"];
+      Cut_in_time += 10;
+      Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2-Cut_in_time;
+      Cut_in.y = (Cut_in.scaleY*ccy/2)-ccy/2;
+      scene.addChild(Cut_in);//背景
+
+      var xxx = game.assets[Image_conversion("タクシー")].width;
+      var yyy = game.assets[Image_conversion("タクシー")].height;
+      var Item = new Sprite(xxx,yyy);
+      Item.scaleX = ((width/2)/xxx);
+      Item.scaleY = ((width/2)/yyy);
+      Item.image = game.assets[Image_conversion("タクシー")];
+      var X_0 = (Item.scaleX*xxx/2)-xxx/2;
+      var Y_0 = (Item.scaleY*yyy/2)-yyy/2;
+      Item.x = X_0 + width/2 -width/4;
+      Item.y = Y_0 + width/32;
+      scene.addChild(Item);
+
+      var C_name = new Label();
+      C_name.font  = (width/20)+"px monospace";
+      C_name.color = 'black';
+      C_name.x = 0;
+      C_name.y = width/16*9+(width/25);
+      C_name.width = width;
+      C_name.height = (width/20);
+      C_name.text = "【シーンを選択】";
+      scene.addChild(C_name);//キャラ名
+
+      var Numbers = width/16*9+(width/20)+(width/25)+(width/25);
+
+      var S_Input1 = new Entity();
+      S_Input1.moveTo((width/4),Numbers);
+      S_Input1.width = width/2;
+      S_Input1.height = (width/10);
+      S_Input1._element = document.createElement("select");
+
+      var Option = [];
+
+      for (var i = 0; i < DATAS.length; i++){
+      Option[i] = document.createElement("option");
+      Option[i].text = DATAS[i].Number;
+      Option[i].value = DATAS[i].Number;
+      if(DATAS[i].type=="メイン"||DATAS[i].type=="チョイス"||DATAS[i].type=="尋問") S_Input1._element.appendChild(Option[i]);
       }
-      else{
-        var ccx = game.assets["image/カットイン.png"].width*3;
-        var ccy = game.assets["image/カットイン.png"].height;
-        var Cut_in = new Sprite(ccx,ccy);
-        Cut_in.scaleX = width/ccx*3;
-        Cut_in.scaleY = width/16*9/ccy;
-        Cut_in.image = game.assets["image/カットイン.png"];
-        Cut_in_time += 10;
-        Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2-Cut_in_time;
-        Cut_in.y = (Cut_in.scaleY*ccy/2)-ccy/2;
-        Cut_in.opacity = 0;
-        Cut_in.tl.fadeIn(15);
-        scene.addChild(Cut_in);//背景
+      scene.addChild(S_Input1);
 
-        var xxx = game.assets[Image_conversion("タクシー")].width;
-        var yyy = game.assets[Image_conversion("タクシー")].height;
-        var Item = new Sprite(xxx,yyy);
-        Item.scaleX = ((width/2)/xxx);
-        Item.scaleY = ((width/2)/yyy);
-        Item.image = game.assets[Image_conversion("タクシー")];
-        var X_0 = (Item.scaleX*xxx/2)-xxx/2;
-        var Y_0 = (Item.scaleY*yyy/2)-yyy/2;
-        Item.x = X_0 + width/2 -width/4;
-        Item.y = Y_0 + width/32;
-        Item.opacity = 0;
-        Item.tl.fadeIn(15);
-        scene.addChild(Item);
+      var xxx = game.assets["image/Buttons.png"].width/8;
+      var yyy = game.assets["image/Buttons.png"].height;
+      var Enter1 = new Sprite(xxx,yyy);
+      Enter1.image = game.assets["image/Buttons.png"];
+      Enter1.scaleX = ((width/5)/xxx);
+      Enter1.scaleY = (((width/5))/yyy);//ココが変換した場所
+      Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
+      Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
+      Enter1.frame = 5;
+      Enter1.addEventListener('touchstart',function(e){
+      Moves = S_Input1._element.value;
+      game.pushScene(MoveScene(10));
+      Scene_kazu++;
+      console.log("Scene数",Scene_kazu);
+      });
 
-        var C_name = new Label();
-        C_name.font  = (width/20)+"px monospace";
-        C_name.color = 'black';
-        C_name.x = 0;
-        C_name.y = width/16*9+(width/25);
-        C_name.width = width;
-        C_name.height = (width/20);
-        C_name.text = "【シーンを選択】";
-        C_name.opacity = 0;
-        C_name.tl.fadeIn(15);
-        scene.addChild(C_name);//キャラ名
+      var Buttons = new Entity();
+      Buttons.moveTo(width/4,Numbers + (width/5));
+      Buttons.width = width/2;
+      Buttons.height = width/10;
+      Buttons._element = document.createElement('input');
+      Buttons._element.type = "submit";
+      Buttons._element.value = "決定";
+      scene.addChild(Buttons);
+      Buttons.addEventListener('touchstart',function(e){
+      Moves = S_Input1._element.value;
+      game.pushScene(MoveScene(10));
+      Scene_kazu++;
+      console.log("Scene数",Scene_kazu);
+      });
 
-        var Numbers = width/16*9+(width/20)+(width/25)+(width/25);
-
-        var S_Input1 = new Entity();
-        S_Input1.moveTo((width/12),Numbers);
-        S_Input1.width = 190;
-        S_Input1.height = (width/10);
-        S_Input1._element = document.createElement("select");
-        S_Input1.opacity = 0;
-        S_Input1.tl.fadeIn(15);
-
-        var Option = [];
-
-        for (var i = 0; i < DATAS.length; i++){
-          Option[i] = document.createElement("option");
-          Option[i].text = DATAS[i].Number;
-          Option[i].value = DATAS[i].Number;
-          if(DATAS[i].type=="メイン"||DATAS[i].type=="チョイス"||DATAS[i].type=="尋問") S_Input1._element.appendChild(Option[i]);
-        }
-        scene.addChild(S_Input1);
-
-        var xxx = game.assets["image/Buttons.png"].width/8;
-        var yyy = game.assets["image/Buttons.png"].height;
-        var Enter1 = new Sprite(xxx,yyy);
-        Enter1.image = game.assets["image/Buttons.png"];
-        Enter1.scaleX = ((width/5)/xxx);
-        Enter1.scaleY = (((width/5))/yyy);//ココが変換した場所
-        Enter1.x = (Enter1.scaleX*xxx/2)-xxx/2+(width/5)*3;
-        Enter1.y = (Enter1.scaleY*yyy/2)-yyy/2+height-Enter1.scaleY*yyy;
-        Enter1.frame = 5;
-        Enter1.opacity = 0;
-        Enter1.tl.fadeIn(15);
-        scene.addChild(Enter1);
-        Enter1.addEventListener('touchstart',function(e){
-          Moves = S_Input1._element.value;
-          game.pushScene(MoveScene(10));
-          Scene_kazu++;
-          console.log("Scene数",Scene_kazu);
-        });
-
-        Cut_in.addEventListener("enterframe",function(){
-          Cut_in_time += 10;
-          Cut_in.x -= 10;
-          if(Cut_in_time>width*2){
-            Cut_in_time = 0;
-            Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2;
-          }
-        })
+      Cut_in.addEventListener("enterframe",function(){
+      Cut_in_time += 10;
+      Cut_in.x -= 10;
+      if(Cut_in_time>width*2){
+      Cut_in_time = 0;
+      Cut_in.x = (Cut_in.scaleX*ccx/2)-ccx/2;
       }
+      })
 
       return scene;
     };
