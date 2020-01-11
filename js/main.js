@@ -743,6 +743,8 @@ function Load(width,height,DATAS){
       Datas[13] = DATAS[i].Datas13;
       Datas[14] = DATAS[i].Datas14;
       Datas[15] = DATAS[i].Datas15;
+      Datas[16] = "";
+      Datas[17] = "";
       if(Datas[1]=="主人公") Datas[1] = S_image;
       if(Datas[2]=="主人公") Datas[2] = S_image;
       if(Datas[3]=="主人公") Datas[3] = S_image;
@@ -1528,8 +1530,8 @@ function Load(width,height,DATAS){
 
       if(Datas[16]!=undefined){
         if(window.localStorage.getItem(Datas[16])==undefined){
-          if(Datas[11]>0) window.localStorage.setItem(Datas[16],"獲得！");
-          var Time = 0;
+          if(Datas[11]!=false) window.localStorage.setItem(Datas[16],"獲得！");
+          var Trophies_Time = 0;
           var xxx = game.assets["image/Trophies.png"].width;
           var yyy = game.assets["image/Trophies.png"].height;
           var Trophies = new Sprite(xxx,yyy);
@@ -1539,7 +1541,7 @@ function Load(width,height,DATAS){
           Trophies.x = (Trophies.scaleX*xxx/2)-xxx/2+(width-(width/3.5));
           Trophies.y = (Trophies.scaleY*yyy/2)-yyy/2+(width/80);
           Trophies.opacity = 0;
-          Trophies.tl.fadeIn(50);
+          Trophies.tl.fadeIn(5);
           scene.addChild(Trophies);
           var xxx = game.assets[Datas[17]].width;
           var yyy = game.assets[Datas[17]].height;
@@ -1550,7 +1552,7 @@ function Load(width,height,DATAS){
           Trophies_image.x = (Trophies_image.scaleX*xxx/2)-xxx/2+(width-(width/3.6));
           Trophies_image.y = (Trophies_image.scaleY*yyy/2)-yyy/2+(width/50);
           Trophies_image.opacity = 0;
-          Trophies_image.tl.fadeIn(50);
+          Trophies_image.tl.fadeIn(5);
           scene.addChild(Trophies_image);
           var Trophies_text = new Label();
           Trophies_text.font  = (width/40)+"px monospace";
@@ -1560,16 +1562,16 @@ function Load(width,height,DATAS){
           Trophies_text.width = width;
           Trophies_text.height = (width/40);
           Trophies_text.opacity = 0;
-          Trophies_text.tl.fadeIn(50);
+          Trophies_text.tl.fadeIn(5);
           Trophies_text.text = Datas[16];
           scene.addChild(Trophies_text);
           Sound_ON("Trophies",true);
           Trophies.addEventListener("enterframe",function(){
-            Time++;
-            if(Time==200){
-              Trophies.tl.fadeOut(50);
-              Trophies_image.tl.fadeOut(50);
-              Trophies_text.tl.fadeOut(50);
+            Trophies_Time++;
+            if(Trophies_Time==20){
+              Trophies.tl.fadeOut(5);
+              Trophies_image.tl.fadeOut(5);
+              Trophies_text.tl.fadeOut(5);
             }
           })
         }
