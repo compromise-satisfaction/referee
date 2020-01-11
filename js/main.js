@@ -698,7 +698,8 @@ function Load(width,height,DATAS){
     if(Flag[10]){
       for (var k = 0; k < ImageDATAS.length; k++){
         if(ImageDATAS[k].画像=="音"){
-          if(DATAS[i].BGM!=ImageDATAS[k].name) game.assets[ImageDATAS[k].url].stop();
+          //if(DATAS[i].BGM!=ImageDATAS[k].name) game.assets[ImageDATAS[k].url].stop();
+          if(DATAS[i].BGM!=ImageDATAS[k].name) game.assets[ImageDATAS[k].url].pause();
         }
       }
       if(DATAS[i].BGM!=false){
