@@ -954,7 +954,7 @@ function Load(width,height,DATAS){
 
       for (var i = 0; i < Text.length; i++){
         Text[i].addEventListener('touchstart',function(e){
-          if(Data) Load_Datas();
+          if(this.text != "◆ データ初期化"&&Data) Load_Datas();
           if(this.text == "◆ 最初から") Scene_loads("最初から",false,false);
           if(this.text == "◆ 続きから") Scene_loads("セーブ読み込み",false,false);
           if(this.text == "◆ 説明") Scene_loads("説明",false,false);
