@@ -695,11 +695,10 @@ function Load(width,height,DATAS){
     Scene_type = "メイン";
     return;
     }
-    //ここにBGM処理を書く予定
     if(Flag[10]){
       for (var k = 0; k < ImageDATAS.length; k++){
         if(ImageDATAS[k].画像=="音"){
-          game.assets[Image_conversion(ImageDATAS[k].url)].pause();
+          if(DATAS[i].BGM!=ImageDATAS[k].name) game.assets[ImageDATAS[k].url].stop();
         }
       }
       if(DATAS[i].BGM!=false){
