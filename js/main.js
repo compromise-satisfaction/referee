@@ -125,11 +125,11 @@ function Load(width,height,DATAS){
   game.preload("image/Buttons.png");
   game.preload("image/待った！.png");
   game.preload("sound/待った！.wav");
-  game.preload("sound/Trophies.wav");
+  game.preload("sound/Trophy.wav");
   //game.preload("sound/プライド.wav");
   //game.preload("sound/永遠の灯.wav");
   //game.preload("sound/偶然、必然。.wav");
-  game.preload("image/Trophies.png");
+  game.preload("image/Trophy.png");
   game.preload("image/異議あり！.png");
   game.preload("sound/異議あり！.wav");
   game.preload("image/カットイン.png");
@@ -178,7 +178,7 @@ function Load(width,height,DATAS){
         case "Choice":
           if(Flag[10]==false) Play = false;
           break;
-        case "Trophies":
+        case "Trophy":
           if(Flag[11]==false) Play = false;
           break;
         case "Item":
@@ -317,6 +317,7 @@ function Load(width,height,DATAS){
       Number = window.localStorage.getItem("Number");
       if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1;
       Item_Flag = window.localStorage.getItem("Item").split("端");
+      Trophy_Flag = window.localStorage.getItem("Trophy").split("端");
       Character_Flag = window.localStorage.getItem("Character").split("端");
       for (var i = 0; i < Item_Flag.length; i++){
         Item_Flag[i] = Item_Flag[i].split(",");
@@ -348,6 +349,21 @@ function Load(width,height,DATAS){
       }
       Character_Flag = Character_Flag2;
       if(Character_Flag == undefined) Character_Flag = [];
+      for (var i = 0; i < Trophy_Flag.length; i++){
+        Trophy_Flag[i] = Trophy_Flag[i].split(",");
+      }
+      for (var i = 1; i < Trophy_Flag.length; i++){
+        var Trophy_Flag2 = [];
+        for (var k = 1; k < Trophy_Flag[i].length; k++){
+          Trophy_Flag2[k-1] = Trophy_Flag[i][k];
+        }
+        Trophy_Flag[i] = Trophy_Flag2;
+      }
+      for (var i = 0; i < Trophy_Flag.length-1; i++) {
+        Trophy_Flag2[i] = Trophy_Flag[i];
+      }
+      Trophy_Flag = Trophy_Flag2;
+      if(Trophy_Flag == undefined) Trophy_Flag = [];
       for (var i = 3; i < Flag.length; i++){
         if(Flag[i]=="true") Flag[i] = true;
         else if(Flag[i]=="false") Flag[i] = false
@@ -357,6 +373,7 @@ function Load(width,height,DATAS){
         if(Datas[i].replace(/\d/g,"").replace(/\./g,"")=="") Datas[i] = Datas[i]*1;
       }
       Pages = Flag[7].split("乙");
+      Pages4 = Pages[2]*1;
       Pages2 = Pages[1]*1;
       Pages = Pages[0]*1;
       //console.log(Number);
@@ -369,12 +386,14 @@ function Load(width,height,DATAS){
     var Before = 0;
     var After = 0;
     var Datas = [];
-    var Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0",true,false,false,false,false,false,false,false];
+    var Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,false,false,false,false,false,false];
     //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
     var Item_Flag = [];//所持アイテム
     var Character_Flag = [];//人物
+    var Trophy_Flag = [];//トロフィー
     var Pages = 0;//アイテムのページ
     var Pages2 = 0;//人物のページ
+    var Pages4 = 0;//トロフィーのページ
     T_Name = "";
     Text = "";
     var Scene_type = "メイン";
@@ -386,6 +405,9 @@ function Load(width,height,DATAS){
     function have(Item){
     for (var i = 0; i < Item_Flag.length; i++) {
     if(Item_Flag[i][0]==Item) return(true);
+    }
+    for (var i = 0; i < Trophy_Flag.length; i++) {
+    if(Trophy_Flag[i][0]==Item) return(true);
     }
     for (var i = 10; i < Flag.length; i++) {
     if(Flag[i]==Item) return(true);
@@ -426,7 +448,7 @@ function Load(width,height,DATAS){
     }
 
     function Save(Number){
-    Flag[7] = Pages+"乙"+Pages2;
+    Flag[7] = Pages+"乙"+Pages2+"乙"+Pages4;
     window.localStorage.setItem("Flag",Flag);
     window.localStorage.setItem("Datas",Datas);
     window.localStorage.setItem("Number",Number);
@@ -442,6 +464,12 @@ function Load(width,height,DATAS){
     }
     if(Character_Flag2==[]) Character_Flag2 = [[]+"端"]
     window.localStorage.setItem("Character",Character_Flag2);
+    var Trophy_Flag2 = [];
+    for (var i = 0; i < Trophy_Flag.length; i++) {
+    Trophy_Flag2[i] = Trophy_Flag[i] + "端";
+    }
+    if(Trophy_Flag2==[]) Trophy_Flag2 = [[]+"端"]
+    window.localStorage.setItem("Trophy",Trophy_Flag2);
     window.localStorage.setItem("syoken",false);
     var Flag2 = [];
     var k = 0;
@@ -721,7 +749,8 @@ function Load(width,height,DATAS){
       Datas[14] = DATAS[i].Datas14;
       Datas[15] = Image_conversion(DATAS[i].Datas15);
       Datas[16] = DATAS[i].トロフィー;
-      Datas[17] = Image_conversion(DATAS[i].トロフィー画像);
+      Datas[17] = DATAS[i].トロフィー画像;
+      Datas[18] = DATAS[i].トロフィー内容.replace(/\n/g,"↓");
       if(Datas[1]=="主人公") Datas[1] = S_image;
       if(Datas[3]=="主人公") Datas[3] = S_image;
       if(Datas[5]=="主人公") Datas[5] = S_image;
@@ -745,6 +774,7 @@ function Load(width,height,DATAS){
       Datas[15] = DATAS[i].Datas15;
       Datas[16] = "";
       Datas[17] = "";
+      Datas[18] = "";
       if(Datas[1]=="主人公") Datas[1] = S_image;
       if(Datas[2]=="主人公") Datas[2] = S_image;
       if(Datas[3]=="主人公") Datas[3] = S_image;
@@ -1528,54 +1558,56 @@ function Load(width,height,DATAS){
         });//進む2
       }
 
-      if(Datas[16]!=undefined){
-        if(window.localStorage.getItem(Datas[16])==undefined){
-          if(Datas[11]!=false) window.localStorage.setItem(Datas[16],"獲得！");
-          var Trophies_Time = 0;
-          var xxx = game.assets["image/Trophies.png"].width;
-          var yyy = game.assets["image/Trophies.png"].height;
-          var Trophies = new Sprite(xxx,yyy);
-          Trophies.image = game.assets["image/Trophies.png"];
-          Trophies.scaleX = ((width/3.61)/xxx);
-          Trophies.scaleY = (((width/14.15))/yyy);//ココが変換した場所
-          Trophies.x = (Trophies.scaleX*xxx/2)-xxx/2+(width-(width/3.5));
-          Trophies.y = (Trophies.scaleY*yyy/2)-yyy/2+(width/80);
-          Trophies.opacity = 0;
-          Trophies.tl.fadeIn(5);
-          scene.addChild(Trophies);
-          var xxx = game.assets[Datas[17]].width;
-          var yyy = game.assets[Datas[17]].height;
-          var Trophies_image = new Sprite(xxx,yyy);
-          Trophies_image.image = game.assets[Datas[17]];
-          Trophies_image.scaleX = ((width/18.82)/xxx);
-          Trophies_image.scaleY = ((width/18.82)/yyy);
-          Trophies_image.x = (Trophies_image.scaleX*xxx/2)-xxx/2+(width-(width/3.6));
-          Trophies_image.y = (Trophies_image.scaleY*yyy/2)-yyy/2+(width/50);
-          Trophies_image.opacity = 0;
-          Trophies_image.tl.fadeIn(5);
-          scene.addChild(Trophies_image);
-          var Trophies_text = new Label();
-          Trophies_text.font  = (width/40)+"px monospace";
-          Trophies_text.color = 'white';
-          Trophies_text.x = (width-(width/5));
-          Trophies_text.y = (width/28)+(width/80);
-          Trophies_text.width = width;
-          Trophies_text.height = (width/40);
-          Trophies_text.opacity = 0;
-          Trophies_text.tl.fadeIn(5);
-          Trophies_text.text = Datas[16];
-          scene.addChild(Trophies_text);
-          Sound_ON("Trophies",true);
-          Trophies.addEventListener("enterframe",function(){
-            Trophies_Time++;
-            if(Trophies_Time==20){
-              Trophies.tl.fadeOut(5);
-              Trophies_image.tl.fadeOut(5);
-              Trophies_text.tl.fadeOut(5);
+      if(Datas[16]!=false){
+        if(have(Datas[16])==false){
+          if(Datas[11]!=false){
+            Trophy_Flag[Trophy_Flag.length] = [Datas[16],Datas[18],Datas[17]];
+          }
+          var Trophy_Time = 0;
+          var xxx = game.assets["image/Trophy.png"].width;
+          var yyy = game.assets["image/Trophy.png"].height;
+          var Trophy = new Sprite(xxx,yyy);
+          Trophy.image = game.assets["image/Trophy.png"];
+          Trophy.scaleX = ((width/3.61)/xxx);
+          Trophy.scaleY = (((width/14.15))/yyy);//ココが変換した場所
+          Trophy.x = (Trophy.scaleX*xxx/2)-xxx/2+(width-(width/3.5));
+          Trophy.y = (Trophy.scaleY*yyy/2)-yyy/2+(width/80);
+          Trophy.opacity = 0;
+          Trophy.tl.fadeIn(5);
+          scene.addChild(Trophy);
+          var xxx = game.assets[Image_conversion(Datas[17])].width;
+          var yyy = game.assets[Image_conversion(Datas[17])].height;
+          var Trophy_image = new Sprite(xxx,yyy);
+          Trophy_image.image = game.assets[Image_conversion(Datas[17])];
+          Trophy_image.scaleX = ((width/18.82)/xxx);
+          Trophy_image.scaleY = ((width/18.82)/yyy);
+          Trophy_image.x = (Trophy_image.scaleX*xxx/2)-xxx/2+(width-(width/3.6));
+          Trophy_image.y = (Trophy_image.scaleY*yyy/2)-yyy/2+(width/50);
+          Trophy_image.opacity = 0;
+          Trophy_image.tl.fadeIn(5);
+          scene.addChild(Trophy_image);
+          var Trophy_text = new Label();
+          Trophy_text.font  = (width/40)+"px monospace";
+          Trophy_text.color = 'white';
+          Trophy_text.x = (width-(width/5));
+          Trophy_text.y = (width/28)+(width/80);
+          Trophy_text.width = width;
+          Trophy_text.height = (width/40);
+          Trophy_text.opacity = 0;
+          Trophy_text.tl.fadeIn(5);
+          Trophy_text.text = Datas[16];
+          scene.addChild(Trophy_text);
+          Sound_ON("Trophy",true);
+          Trophy.addEventListener("enterframe",function(){
+            Trophy_Time++;
+            if(Trophy_Time==20){
+              Trophy.tl.fadeOut(5);
+              Trophy_image.tl.fadeOut(5);
+              Trophy_text.tl.fadeOut(5);
             }
           })
         }
-      }//トロフィー*/
+      }//トロフィー
       return scene;
     };
     var MoveScene = function(Out){
@@ -2351,104 +2383,6 @@ function Load(width,height,DATAS){
         });
       }
 
-      /*
-      Text13.addEventListener('touchstart',function(e){
-        game.pushScene(TrophiesScene());
-        Scene_kazu++;
-        console.log("Scene数",Scene_kazu);
-        return;
-      });*/
-
-      return scene;
-    };
-    var TrophiesScene = function(){
-      var scene = new Scene();                                // 新しいシーンを作る
-
-      var Background = new Sprite(width,height);
-      Background.image = game.assets["image/Background.png"];
-      Background.x = 0;
-      Background.y = 0;
-      scene.addChild(Background);
-
-      var Text1 = new Label();
-      Text1.font  = (width/20)+"px monospace";
-      Text1.color = 'black';
-      Text1.x = (width/8);
-      Text1.y = (height/8);
-      Text1.width = width;
-      Text1.height = (width/20);
-      Text1.text = "◆ 戻る";
-      scene.addChild(Text1);
-
-      var Text2 = new Label();
-      Text2.font  = (width/20)+"px monospace";
-      Text2.color = 'black';
-      Text2.x = (width/8);
-      Text2.y = 1100;
-      Text2.width = 1200;
-      Text2.height = 180;
-      Text2.text = "";
-      scene.addChild(Text2);
-
-      var Numbers = 300;
-
-      var Texts = Class.create(Label, {
-        initialize: function(a,b,c) {
-          Label.call(this);
-          this.font  = (width/20)+"px monospace";
-          this.color = 'black';
-          this.x = (width/8);
-          this.y = Numbers;
-          this.width = width;
-          this.height = (width/20);
-          this.text = "未獲得";
-          this.syousai = b;
-          if(window.localStorage.getItem(a)=="獲得！"){
-            this.text = a;
-            this.syousai = c;
-          }
-          Numbers += 100;
-          scene.addChild(this);
-        }
-      });
-
-      var Text = [];
-      Text[0] = new Texts("即決！","すぐさまフレンズを結成しよう。","実際にこれぐらいの勢いがあれば友達もっといるんだろうなぁ。あ、みおちゃんの話だよ。");
-      Text[1] = new Texts("カレン強奪事件","復習は大事","ラブミーティアの結成秘話。実際には噂が一人歩きしたものである。そういう意味では神話というのは正しいのかもしれない。ちなみに、カレンさんもこの話がお気に入りである。");
-      Text[2] = new Texts("犯行の手口","実際にやるなよ。","あいねちゃんを監視するための手段。実際にはリフレクトムーンの目撃情報の集計である。ネットリテラシーの欠片もない。");
-      Text[3] = new Texts("電話","そんなこと電話で済ますか…？","夜分遅くに電話かけるのはよくないよ。あいねちゃんだから許してくれるけど。");
-      Text[4] = new Texts("やっぱり必要だった","命は預けた。","アイカツカードはちゃんと持っとかないと。");
-      Text[5] = new Texts("気高さ刻み込め","プライドを布教しよう。","ちなみに渡そうと思えば何回でも渡せる。");
-
-      Text1.addEventListener('touchstart',function(e){
-        game.popScene();
-        Scene_kazu--;
-        console.log("Scene数",Scene_kazu);
-        return;
-      });
-
-      for (var i = 0; i < Text.length; i++){
-        Text[i].addEventListener('touchstart',function(e){
-          if(this.color=="black"){
-            this.text = "◆ " + this.text;
-            this.color = "red";
-            Text2.text = this.syousai;
-          }
-          else{
-            this.text = this.text.substring(2);
-            this.color = "black";
-            Text2.text = "";
-          }
-          for (var k = 0; k < Text.length; k++){
-            if(Text[k].color=="red"&&this!=Text[k]){
-              Text[k].text = Text[k].text.substring(2);
-              Text[k].color = "black";
-            }
-          }
-          return;
-        });
-      }
-
       return scene;
     };
     var InspectScene = function(Inspect,Item){
@@ -3050,7 +2984,7 @@ function Load(width,height,DATAS){
       Text21.y = (width/6);
       Text21.width = width;
       Text21.height = (width/20);
-      Text21.text = "◆ 持物";
+      Text21.text = "◆ 実績";
       scene.addChild(Text21);
 
       var Text3 = new Label();
@@ -3143,7 +3077,9 @@ function Load(width,height,DATAS){
         scene.addChild(Text8);
         scene.addChild(Text3);
         if(Ig==false) scene.addChild(Text2);
+        else Text21.text = "◆ 持物";
       }
+      else Text21.text = "◆ 持物";
       if(Ig){
         Text3.text = "";
         scene.addChild(Text3);
@@ -3231,7 +3167,8 @@ function Load(width,height,DATAS){
       });
 
       Text21.addEventListener('touchstart',function(e){
-        game.replaceScene(ItemScene(Number,Ig));
+        if(this.text=="◆ 持物") game.replaceScene(ItemScene(Number,Ig));
+        else game.replaceScene(TrophyScene(Number,Ig));
         return;
       });
 
@@ -3317,6 +3254,270 @@ function Load(width,height,DATAS){
               scene.removeChild(Image[k]);
               Character[k].text = Character[k].text.substring(2);
               Character[k].color = "black";
+            }
+          }
+          return;
+        });
+      }
+
+      return scene;
+    }
+    var TrophyScene = function(Number,Ig){
+
+      var scene = new Scene();                                // 新しいシーンを作る
+
+      var xxx = game.assets["image/Background.png"].width;
+      var yyy = game.assets["image/Background.png"].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = ((width)/xxx);
+      Background.scaleY = ((height)/yyy);
+      Background.image = game.assets["image/Background.png"];
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
+      scene.addChild(Background);
+
+      var Text1 = new Label();
+      Text1.font  = (width/20)+"px monospace";
+      Text1.color = 'black';
+      Text1.x = (width/8);
+      Text1.y = (width/6);
+      Text1.width = width;
+      Text1.height = (width/20);
+      Text1.text = "◆ 閉じる";
+      scene.addChild(Text1);
+
+      var Text2 = new Label();
+      Text2.font  = (width/20)+"px monospace";
+      Text2.color = 'black';
+      Text2.x = (width/1.6);
+      Text2.y = (width/6);
+      Text2.width = width;
+      Text2.height = (width/20);
+      Text2.text = "◆ 設定を開く";
+      scene.addChild(Text2);
+
+      var Text21 = new Label();
+      Text21.font  = (width/20)+"px monospace";
+      Text21.color = 'black';
+      Text21.x = (width/2.5);
+      Text21.y = (width/6);
+      Text21.width = width;
+      Text21.height = (width/20);
+      Text21.text = "◆ 持物";
+      scene.addChild(Text21);
+
+      var Text4 = new Label();
+      Text4.font  = (width/20)+"px monospace";
+      Text4.color = 'black';
+      Text4.x = (width/8);
+      Text4.y = (width/4) + ((width/20)+(width/25)*18);
+      Text4.width = width;
+      Text4.height = (width/20);
+      Text4.text = "";
+      scene.addChild(Text4);
+
+      var Text5 = new Label();
+      Text5.font  = (width/20)+"px monospace";
+      Text5.color = 'black';
+      Text5.x = (width/8);
+      Text5.y = (width/4) + ((width/20)+(width/25)*20);
+      Text5.width = width;
+      Text5.height = (width/20);
+      Text5.text = "";
+      scene.addChild(Text5);
+
+      var Text6 = new Label();
+      Text6.font  = (width/20)+"px monospace";
+      Text6.color = 'black';
+      Text6.x = (width/8);
+      Text6.y = (width/4) + ((width/20)+(width/25)*22);
+      Text6.width = width;
+      Text6.height = (width/20);
+      Text6.text = "";
+      scene.addChild(Text6);
+
+      var Text7 = new Label();
+      Text7.font  = (width/20)+"px monospace";
+      Text7.color = 'black';
+      Text7.x = (width/8);
+      Text7.y = (width/4) + ((width/20)+(width/25)*24);
+      Text7.width = width;
+      Text7.height = (width/20);
+      Text7.text = "";
+      scene.addChild(Text7);
+
+      var Text8 = new Label();
+      Text8.font  = (width/20)+"px monospace";
+      Text8.color = 'black';
+      Text8.x = (width/1.4);
+      Text8.y = (width/4) + ((width/20)+(width/25)*10);
+      Text8.width = width;
+      Text8.height = (width/20);
+      Text8.text = "";
+      scene.addChild(Text8);
+
+      var Text9 = new Label();
+      Text9.font  = (width/20)+"px monospace";
+      Text9.color = 'black';
+      Text9.x = (width/8);
+      Text9.y = (width/4) + ((width/20)+(width/25)*14);
+      Text9.width = width;
+      Text9.height = (width/20);
+      Text9.text = "◆ 前";
+
+      var Text10 = new Label();
+      Text10.font  = (width/20)+"px monospace";
+      Text10.color = 'black';
+      Text10.x = (width/2.5);
+      Text10.y = (width/4) + ((width/20)+(width/25)*14);
+      Text10.width = width;
+      Text10.height = (width/20);
+      Text10.text = "次 ◆";
+
+      if(Trophy_Flag.length>5){
+        scene.addChild(Text9);
+        scene.addChild(Text10);
+      }
+      else Pages4 = 0;
+
+      var Trophy_image = Class.create(Sprite,{
+          initialize: function(a) {
+              a = Image_conversion(a);
+              var xxx = game.assets[a].width;
+              var yyy = game.assets[a].height;
+              Sprite.call(this,xxx,yyy);
+              this.scaleX = ((width/4)/xxx);
+              this.scaleY = ((width/4)/yyy);
+              this.image = game.assets[a];
+              this.x = (this.scaleX*xxx/2)-xxx/2+(width/1.6);
+              this.y = (this.scaleY*yyy/2)-yyy/2+(width/4)+(width/20)+(width/25);
+          }
+      });
+
+      var Numbers = (width/4);
+      var Trophys = Class.create(Label, {
+        initialize: function(a) {
+          Label.call(this);
+          Numbers += (width/20)+(width/25);
+          this.font  = (width/20)+"px monospace";
+          this.color = 'black';
+          this.x = (width/8);
+          this.y = Numbers;
+          this.width = width;
+          this.height = (width/20);
+          this.text = a[0];
+          var Syousai_text = a[1].split("↓");
+          if(Syousai_text[0]) this.text2 = Syousai_text[0];
+          else this.text2 = "";
+          if(Syousai_text[1]) this.text3 = Syousai_text[1];
+          else this.text3 = "";
+          if(Syousai_text[2]) this.text4 = Syousai_text[2];
+          else this.text4 = "";
+          if(Syousai_text[3]) this.text5 = Syousai_text[3];
+          else this.text5 = "";
+          Image[Trophy_Number] = new Trophy_image(a[2]);
+          this.syousai = a[2];
+          if(a[3]){
+            this.text6 = "◆ " + a[3];
+            this.syousai = a[4];
+          }
+          else this.text6 = "◆ 拡大";
+          this.image_number = Trophy_Number;
+          scene.addChild(this);
+          Trophy_Number ++;
+        }
+      });
+
+      var Trophy = [];
+      var Image = [];
+      var Choice_Trophy = "未設定";
+      var Trophy_Number = 0;
+
+      for (var i = 0; i < 5; i++) {
+        if(Trophy_Flag[i+Pages4]){
+          Trophy[Trophy_Number] = new Trophys(Trophy_Flag[i+Pages4]);
+        };
+      }
+
+      Text1.addEventListener('touchstart',function(e){
+        game.popScene();
+        Scene_kazu--;
+        console.log("Scene数",Scene_kazu);
+        return;
+      });
+
+      Text2.addEventListener('touchstart',function(e){
+        if(Text2.text=="◆ 設定を開く"){
+          game.pushScene(SettingScene(Number));
+          Scene_kazu++;
+          console.log("Scene数",Scene_kazu);
+        }
+        return;
+      });
+
+      Text21.addEventListener('touchstart',function(e){
+        game.replaceScene(ItemScene(Number,Ig));
+        return;
+      });
+
+      Text8.addEventListener('touchstart',function(e){
+        for (var i = 0; i < Trophy.length; i++) {
+          if(Trophy[i].text.substring(2)==Choice_Trophy) break;
+        }
+        game.pushScene(DetailsScene(Trophy[i].syousai,Trophy[i].text6));
+        Scene_kazu++;
+        console.log("Scene数",Scene_kazu);
+        return;
+      });
+
+      Text9.addEventListener('touchstart',function(e){
+        if(Pages4==0){
+          Pages4 = Trophy_Flag.length-Trophy_Flag.length%5;
+          if(Trophy_Flag.length%5==0) Pages4-=5;
+        }
+        else Pages4-=5;
+        game.replaceScene(TrophyScene(Number,Ig));
+        return;
+      });
+
+      Text10.addEventListener('touchstart',function(e){
+        if(Pages4 == Trophy_Flag.length-Trophy_Flag.length%5) Pages4 = 0;
+        else{
+          Pages4+=5;
+          if(Pages4==Trophy_Flag.length) Pages4 = 0;
+        }
+        game.replaceScene(TrophyScene(Number,Ig));
+        return;
+      });
+
+      for (var i = 0; i < Trophy.length; i++){
+        Trophy[i].addEventListener('touchstart',function(e){
+          if(this.color=="black"){
+            scene.addChild(Image[this.image_number]);
+            Choice_Trophy = this.text;
+            this.text = "◆ " + this.text;
+            this.color = "red";
+            Text4.text = this.text2;
+            Text5.text = this.text3;
+            Text6.text = this.text4;
+            Text7.text = this.text5;
+            Text8.text = this.text6;
+          }
+          else{
+            scene.removeChild(Image[this.image_number]);
+            this.text = this.text.substring(2);
+            this.color = "black";
+            Text4.text = "";
+            Text5.text = "";
+            Text6.text = "";
+            Text7.text = "";
+            Text8.text = "";
+          }
+          for (var k = 0; k < Trophy.length; k++){
+            if(Trophy[k].color=="red"&&this!=Trophy[k]){
+              scene.removeChild(Image[k]);
+              Trophy[k].text = Trophy[k].text.substring(2);
+              Trophy[k].color = "black";
             }
           }
           return;
@@ -3514,7 +3715,7 @@ function Load(width,height,DATAS){
               Sound_ON("Choice",true);
               break;
             case 11:
-              Sound_ON("Trophies",true);
+              Sound_ON("Trophy",true);
               break;
             case 12:
               Sound_ON("Item",true);
@@ -3587,12 +3788,14 @@ function Load(width,height,DATAS){
         Before = 0;
         After = 0;
         Datas = [];
-        Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0",true,false,false,false,false,false,false,false];
+        Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,false,false,false,false,false,false];
         //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
         Item_Flag = [];//所持アイテム
         Character_Flag = [];//人物
+        Trophy_Flag = [];//トロフィー
         Pages = 0;//アイテムのページ
         Pages2 = 0;//人物のページ
+        Pages4 = 0;//トロフィーのページ
         T_Name = "";
         Text = "";
         Scene_type = "メイン";
@@ -4533,7 +4736,7 @@ function Load(width,height,DATAS){
       S_Input._element = document.createElement("select");
 
       var Option = [];
-      var Choice_Transform = ["することを選択","アイテム作成","フラグ追加 or 消去","体力変更","シーンデータ修正","アイテムリセット","人物リセット","フラグリセット"];
+      var Choice_Transform = ["することを選択","アイテム作成","フラグ追加 or 消去","体力変更","シーンデータ修正","アイテムリセット","人物リセット","フラグリセット","トロフィーリセット"];
 
       for (var i = 0; i < Choice_Transform.length; i++){
         Option[i] = document.createElement("option");
@@ -4681,6 +4884,11 @@ function Load(width,height,DATAS){
             break;
           case "人物リセット":
             Character_Flag = [];
+            Text[1].text = S_Input._element.value;
+            Sound_ON("Item",true);
+            break;
+          case "トロフィーリセット":
+            Trophy_Flag = [];
             Text[1].text = S_Input._element.value;
             Sound_ON("Item",true);
             break;
