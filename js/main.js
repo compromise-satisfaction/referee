@@ -719,8 +719,8 @@ function Load(width,height,DATAS){
       Datas[12] = DATAS[i].Datas12;
       Datas[13] = DATAS[i].Datas13;
       Datas[14] = DATAS[i].Datas14;
-      Datas[15] = Image_conversion(DATAS[i].トロフィー);
-      Datas[16] = DATAS[i].Datas16;
+      Datas[15] = Image_conversion(DATAS[i].Datas15);
+      Datas[16] = DATAS[i].トロフィー;
       Datas[17] = Image_conversion(DATAS[i].トロフィー画像);
       if(Datas[1]=="主人公") Datas[1] = S_image;
       if(Datas[3]=="主人公") Datas[3] = S_image;
