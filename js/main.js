@@ -369,7 +369,7 @@ function Load(width,height,DATAS){
     var Before = 0;
     var After = 0;
     var Datas = [];
-    var Flag = ["女","主人公","女",1,1,21,10,"0乙0",true,false,false,false,false,false,false,false];
+    var Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0",true,false,false,false,false,false,false,false];
     //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
     var Item_Flag = [];//所持アイテム
     var Character_Flag = [];//人物
@@ -719,7 +719,9 @@ function Load(width,height,DATAS){
       Datas[12] = DATAS[i].Datas12;
       Datas[13] = DATAS[i].Datas13;
       Datas[14] = DATAS[i].Datas14;
-      Datas[15] = Image_conversion(DATAS[i].Datas15);
+      Datas[15] = Image_conversion(DATAS[i].トロフィー);
+      Datas[16] = DATAS[i].Datas16;
+      Datas[17] = Image_conversion(DATAS[i].トロフィー画像);
       if(Datas[1]=="主人公") Datas[1] = S_image;
       if(Datas[3]=="主人公") Datas[3] = S_image;
       if(Datas[5]=="主人公") Datas[5] = S_image;
