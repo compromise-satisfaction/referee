@@ -177,6 +177,7 @@ function Load(width,height,DATAS){
       switch (Sound_Name) {
         case "Choice":
           if(Flag[10]==false) Play = false;
+          Play = false;//ボタン音はオフ
           break;
         case "Trophy":
           if(Flag[11]==false) Play = false;
@@ -695,42 +696,16 @@ function Load(width,height,DATAS){
     return;
     }
     //ここにBGM処理を書く予定
-    /*
-    if(DATAS[i].get!=false){
-      GET = DATAS[i].get.replace(/↓/g,"\n");
-      GET = GET.split("\n");
-        for (var l = 0; l < GET.length; l++) {
-          switch(GET[l]){
-            case "フラグリセット":
-              Flag_reset();
-              continue;
-              break;
-          case "アイテムリセット":
-            Item_Flag = [];
-            continue;
-            break;
-            case "人物リセット":
-              Character_Flag = [];
-              continue;
-              break;
-            case "ダメージ":
-              Flag[6]--;
-              continue;
-              break;
-            default:
-            //console.log(GET[l]);
-            break;
-          }
-          for (var k = 0; k < DATAS.length; k++) {
-            if(DATAS[k].Number==GET[l]){
-              //console.log(GET[l]);
-              break;
-            }
-          }
-          Get_ICF(DATAS[k].type,DATAS[k].Datas0,DATAS[k].Datas1.replace(/\n/g,"↓").replace(/\(一人称\)/g,Person),DATAS[k].Datas2,DATAS[k].Datas3,DATAS[k].Datas4);
+    if(Flag[10]){
+      for (var k = 0; k < ImageDATAS.length; k++){
+        if(ImageDATAS[k].画像=="音"){
+          game.assets[Image_conversion(ImageDATAS[k].url)].pause();
         }
       }
-    */
+      if(DATAS[i].BGM!=false){
+          game.assets[Image_conversion(DATAS[i].BGM)].play();
+      }
+    }
     if(Scene_type=="メイン"){
       Datas[0] = Image_conversion(DATAS[i].Datas0);
       Datas[1] = Image_conversion(DATAS[i].Datas1);
@@ -3694,7 +3669,7 @@ function Load(width,height,DATAS){
         }
       });
 
-      Text[Text_Number] = new Texts("ボタン");
+      Text[Text_Number] = new Texts("BGM");
       Text[Text_Number] = new Texts("トロフィー");
       Text[Text_Number] = new Texts("アイテム");
       Text[Text_Number] = new Texts("異議あり！");
@@ -3712,7 +3687,7 @@ function Load(width,height,DATAS){
           }
           switch (this.c) {
             case 10:
-              Sound_ON("Choice",true);
+              //Sound_ON("Choice",true);
               break;
             case 11:
               Sound_ON("Trophy",true);
