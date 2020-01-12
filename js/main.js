@@ -684,8 +684,6 @@ function Load(width,height,DATAS){
     return;
     }
     if(Flag[10]){
-      console.log(game.assets[Image_conversion("ぼくのフレンド")]);
-      console.log(game.assets[Image_conversion("ぼくのフレンド")]._gain);
       for (var k = 0; k < ImageDATAS.length; k++){
         if(ImageDATAS[k].画像=="音"){
           if(DATAS[i].BGM!=ImageDATAS[k].name){
