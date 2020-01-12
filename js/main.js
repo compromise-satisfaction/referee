@@ -696,6 +696,7 @@ function Load(width,height,DATAS){
     return;
     }
     if(Flag[10]){
+      console.log(game.assets["sound/ぼくのフレンド.wav"]);
       for (var k = 0; k < ImageDATAS.length; k++){
         if(ImageDATAS[k].画像=="音"){
           if(DATAS[i].BGM!=ImageDATAS[k].name){
