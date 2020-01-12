@@ -685,7 +685,7 @@ function Load(width,height,DATAS){
     }
     if(Flag[10]){
       for (var k = 0; k < ImageDATAS.length; k++){
-        if(ImageDATAS[k].画像=="音"){
+        if(ImageDATAS[k].画像.substring(0,1)=="音"){
           if(DATAS[i].BGM!=ImageDATAS[k].name&&game.assets[ImageDATAS[k].url].状態=="再生中"){
             console.log([ImageDATAS[k].url]+"ストップ");
             game.assets[ImageDATAS[k].url].stop();
@@ -696,8 +696,20 @@ function Load(width,height,DATAS){
       if(DATAS[i].BGM!=false&&game.assets[Image_conversion(DATAS[i].BGM)].状態!="再生中"){
         game.assets[Image_conversion(DATAS[i].BGM)].play();
         game.assets[Image_conversion(DATAS[i].BGM)].状態 = "再生中";
-        console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
-        console.log(game.assets[Image_conversion(DATAS[i].BGM)].src);
+        if(game.assets[Image_conversion(DATAS[i].BGM)].src==undefined){
+          game.assets[Image_conversion(DATAS[i].BGM)]._element.loop = true;
+          console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
+        }
+        else{
+          for (var k = 0; k < ImageDATAS.length; k++){
+            if(ImageDATAS[k].name==DATAS[i].BGM) break;
+          }
+          var Loop = ImageDATAS[k].画像.split("↓");
+          game.assets[Image_conversion(DATAS[i].BGM)].loop = true;
+          game.assets[Image_conversion(DATAS[i].BGM)].loopStart = Loop[1];
+          game.assets[Image_conversion(DATAS[i].BGM)].loopEnd = Loop[2];
+          console.log(game.assets[Image_conversion(DATAS[i].BGM)].src);
+        }
       }
     }
     if(Scene_type=="メイン"){
