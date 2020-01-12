@@ -375,7 +375,7 @@ function Load(width,height,DATAS){
     var Before = 0;
     var After = 0;
     var Datas = [];
-    var Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,false,false,false,false,false,false];
+    var Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,true,true,true,true,true,false];
     //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
     var Item_Flag = [];//所持アイテム
     var Character_Flag = [];//人物
@@ -3766,7 +3766,7 @@ function Load(width,height,DATAS){
         Before = 0;
         After = 0;
         Datas = [];
-        Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,false,false,false,false,false,false];
+        Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,true,true,true,true,true,false];
         //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
         Item_Flag = [];//所持アイテム
         Character_Flag = [];//人物
