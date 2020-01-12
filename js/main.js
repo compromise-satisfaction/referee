@@ -162,17 +162,6 @@ function Load(width,height,DATAS){
       return(name);
     }
 
-    function BGM_Stop(Pause){
-      return;
-      if(Pause){
-        console.log("BGM_pause");
-        game.assets["sound/プライド.wav"].pause();
-        game.assets["sound/永遠の灯.wav"].pause();
-        game.assets["sound/偶然、必然。.wav"].pause();
-      }
-      return;
-    }
-
     function Sound_ON(Sound_Name,Play){
       switch (Sound_Name) {
         case "Choice":
@@ -275,7 +264,6 @@ function Load(width,height,DATAS){
           game.replaceScene(TitleScene());
           break;
         case "セーブ読み込み":
-          BGM_Stop(true);
           Moves = Load_Datas();
           game.pushScene(MoveScene(10));
           Scene_kazu++;
@@ -709,6 +697,8 @@ function Load(width,height,DATAS){
       }
       if(DATAS[i].BGM!=false){
           game.assets[Image_conversion(DATAS[i].BGM)].play();
+          console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
+          console.log(game.assets[Image_conversion(DATAS[i].BGM)].buffer);
           if(game.assets[Image_conversion(DATAS[i].BGM)].buffer==undefined){
               game.assets[Image_conversion(DATAS[i].BGM)]._element.loop = true;
           }
@@ -871,7 +861,6 @@ function Load(width,height,DATAS){
       }
       else{
         var Data = true;
-        BGM_Stop(true);
       }
 
       var xxx = game.assets[Image_conversion("タイトル画面")].width;
@@ -2433,8 +2422,6 @@ function Load(width,height,DATAS){
     };
     var ItemgetScene = function(a,b,c){
       var scene = new Scene();                                // 新しいシーンを作る
-
-      BGM_Stop(true);
 
       var Background = new Sprite(width,height-(width/16)*9);
       Background.image = game.assets["image/white.png"];
