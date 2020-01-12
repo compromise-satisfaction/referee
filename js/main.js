@@ -696,19 +696,21 @@ function Load(width,height,DATAS){
     return;
     }
     if(Flag[10]){
-      console.log(game.assets["sound/ぼくのフレンド.wav"]);
+      console.log(game.assets[Image_conversion("ぼくのフレンド")].buffer);
       for (var k = 0; k < ImageDATAS.length; k++){
         if(ImageDATAS[k].画像=="音"){
           if(DATAS[i].BGM!=ImageDATAS[k].name){
             game.assets[ImageDATAS[k].url].volume = 0;
+            game.assets[ImageDATAS[k].url]._element.loop = false;
           }
         }
       }
       if(DATAS[i].BGM!=false){
           game.assets[Image_conversion(DATAS[i].BGM)].play();
-          if(game.assets[Image_conversion(DATAS[i].BGM)].volume ==0){
+          if(game.assets[Image_conversion(DATAS[i].BGM)].volume == 0){
             game.assets[Image_conversion(DATAS[i].BGM)].volume = 1;
             game.assets[Image_conversion(DATAS[i].BGM)].currentTime = 0;
+            game.assets[Image_conversion(DATAS[i].BGM)]._element.loop = true;
           }
       }
     }
