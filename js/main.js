@@ -1,4 +1,4 @@
-enchant()
+enchant();
 
 switch (GitHub_type) {
 case "referee":
@@ -697,6 +697,7 @@ function Load(width,height,DATAS){
         game.assets[Image_conversion(DATAS[i].BGM)].play();
         game.assets[Image_conversion(DATAS[i].BGM)].状態 = "再生中";
         console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
+        console.log(game.assets[Image_conversion(DATAS[i].BGM)].src);
       }
     }
     if(Scene_type=="メイン"){
