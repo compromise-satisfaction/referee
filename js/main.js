@@ -685,11 +685,11 @@ function Load(width,height,DATAS){
     }
     if(Flag[10]){
       console.log(game.assets[Image_conversion("ぼくのフレンド")]);
-      console.log(game.assets[Image_conversion("ぼくのフレンド")].buffer);
+      console.log(game.assets[Image_conversion("ぼくのフレンド")]._gain);
       for (var k = 0; k < ImageDATAS.length; k++){
         if(ImageDATAS[k].画像=="音"){
           if(DATAS[i].BGM!=ImageDATAS[k].name){
-            if(game.assets[ImageDATAS[k].url].buffer==undefined){
+            if(game.assets[ImageDATAS[k].url]._gain==undefined){
               game.assets[ImageDATAS[k].url].stop();
             }
           }
@@ -698,7 +698,7 @@ function Load(width,height,DATAS){
       if(DATAS[i].BGM!=false){
           game.assets[Image_conversion(DATAS[i].BGM)].play();
           console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
-          console.log(game.assets[Image_conversion(DATAS[i].BGM)].buffer);
+          console.log(game.assets[Image_conversion(DATAS[i].BGM)]._gain);
           if(game.assets[Image_conversion(DATAS[i].BGM)].buffer==undefined){
               game.assets[Image_conversion(DATAS[i].BGM)]._element.loop = true;
           }
