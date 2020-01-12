@@ -687,7 +687,7 @@ function Load(width,height,DATAS){
       for (var k = 0; k < ImageDATAS.length; k++){
         if(ImageDATAS[k].画像=="音"){
           if(DATAS[i].BGM!=ImageDATAS[k].name){
-            if(game.assets[ImageDATAS[k].url]._gain==undefined){
+            if(game.assets[ImageDATAS[k].url].buffer==undefined){
               game.assets[ImageDATAS[k].url].stop();
             }
           }
