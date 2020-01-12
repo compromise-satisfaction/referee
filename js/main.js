@@ -683,7 +683,7 @@ function Load(width,height,DATAS){
     Scene_type = "メイン";
     return;
     }
-    if(Flag[10]){
+    if(Flag[10]&&DATAS[i].BGM!="変化無し"){
       for (var k = 0; k < ImageDATAS.length; k++){
         if(ImageDATAS[k].画像.substring(0,1)=="音"){
           if(DATAS[i].BGM!=ImageDATAS[k].name&&game.assets[ImageDATAS[k].url].状態=="再生中"){
