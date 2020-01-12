@@ -687,6 +687,7 @@ function Load(width,height,DATAS){
       for (var k = 0; k < ImageDATAS.length; k++){
         if(ImageDATAS[k].画像=="音"){
           if(DATAS[i].BGM!=ImageDATAS[k].name&&game.assets[ImageDATAS[k].url].状態=="再生中"){
+            console.log([ImageDATAS[k].url]+"ストップ");
             game.assets[ImageDATAS[k].url].stop();
             game.assets[ImageDATAS[k].url].状態 = "停止";
           }
