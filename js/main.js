@@ -706,8 +706,8 @@ function Load(width,height,DATAS){
           }
           var Loop = ImageDATAS[k].画像.split("↓");
           game.assets[Image_conversion(DATAS[i].BGM)].loop = true;
-          game.assets[Image_conversion(DATAS[i].BGM)].loopStart = Loop[1];
-          game.assets[Image_conversion(DATAS[i].BGM)].loopEnd = Loop[2];
+          game.assets[Image_conversion(DATAS[i].BGM)].loopStart = Loop[1]*1;
+          game.assets[Image_conversion(DATAS[i].BGM)].loopEnd = Loop[2]*1;
           console.log(game.assets[Image_conversion(DATAS[i].BGM)].src);
         }
       }
