@@ -700,14 +700,14 @@ function Load(width,height,DATAS){
       for (var k = 0; k < ImageDATAS.length; k++){
         if(ImageDATAS[k].画像=="音"){
           if(DATAS[i].BGM!=ImageDATAS[k].name){
-            game.assets[ImageDATAS[k].url]._element.muted = true;
+            game.assets[ImageDATAS[k].url]._element.volume = 0;
           }
         }
       }
       if(DATAS[i].BGM!=false){
           game.assets[Image_conversion(DATAS[i].BGM)].play();
-          if(game.assets[Image_conversion(DATAS[i].BGM)]._element.muted==true){
-            game.assets[Image_conversion(DATAS[i].BGM)]._element.muted = false;
+          if(game.assets[Image_conversion(DATAS[i].BGM)]._element.muted==0){
+            game.assets[Image_conversion(DATAS[i].BGM)]._element.volume = 1;
             game.assets[Image_conversion(DATAS[i].BGM)]._element.currentTime = 0;
           }
       }
