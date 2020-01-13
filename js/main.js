@@ -1367,18 +1367,24 @@ function Load(width,height,DATAS){
         }
         else if(Datas[8].substring(Time,Time+1)=="㊨"){
           s = false;
-          Explosion.x = (Explosion.scaleX*80/2)-80/2+(width/2);
-          Explosion.frame = 0;
+          if(Text_defined){
+            Explosion.x = (Explosion.scaleX*80/2)-80/2+(width/2);
+            Explosion.frame = 0;
+          }
         }
         else if(Datas[8].substring(Time,Time+1)=="㊥"){
           s = false;
-          Explosion.x = (Explosion.scaleX*80/2)-80/2+(width/4);
-          Explosion.frame = 0;
+          if(Text_defined){
+            Explosion.x = (Explosion.scaleX*80/2)-80/2+(width/4);
+            Explosion.frame = 0;
+          }
         }
         else if(Datas[8].substring(Time,Time+1)=="㊧"){
           s = false;
-          Explosion.x = (Explosion.scaleX*80/2)-80/2;
-          Explosion.frame = 0;
+          if(Text_defined){
+            Explosion.x = (Explosion.scaleX*80/2)-80/2;
+            Explosion.frame = 0;
+          }
         }
         Time ++;
         if(s){
