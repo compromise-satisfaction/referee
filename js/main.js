@@ -50,6 +50,9 @@ function vue(width,height){
 
 var Image_urls = false;
 
+var Button_time_next = 1;
+var Button_time = Button_time_next;
+
 function Load(width,height,DATAS){
   var game = new Core(width, height);
 
@@ -149,12 +152,28 @@ function Load(width,height,DATAS){
   game.fps = 10;
   game.onload = function(){
 
+  	game.addEventListener("enterframe", function(){
+      if(Button_time==Button_time_next) return;
+      else Button_time++;
+      console.log(Button_time);
+      return;
+    });
+
     var XXX = width;
     var YYY = width/16*9;
     var Rotation_Y = 0;
     var Cut_in_time = 0;
     var Syougen_time = 0;
     var Syougen_time2 = 1;
+
+    function Button_push(){
+      if(Button_time==Button_time_next){
+        Button_time = 0;
+        Sound_ON("Choice",true);
+        return(false);
+      }
+      else return(true);
+    }
 
     function Image_conversion(name){
       for (var i = 0; i < ImageDATAS.length; i++) {
@@ -165,10 +184,6 @@ function Load(width,height,DATAS){
 
     function Sound_ON(Sound_Name,Play){
       switch (Sound_Name) {
-        case "Choice":
-          if(Flag[10]==false) Play = false;
-          Play = false;//ボタン音はオフ
-          break;
         case "Trophy":
           if(Flag[11]==false) Play = false;
           break;
@@ -180,6 +195,9 @@ function Load(width,height,DATAS){
           break;
         case "待った！":
           if(Flag[14]==false) Play = false;
+          break;
+        case "Choice":
+          if(Flag[15]==false) Play = false;
           break;
           default:
           break;
@@ -217,8 +235,6 @@ function Load(width,height,DATAS){
       if(Number=="リバーシ") return;
       if(Number=="セーブ読み込み") Scene_type = Number;
       else Scene_loads2(Number,Item);
-      //console.log(Scene_type);
-      Sound_ON("Choice",true);
       switch (Scene_type) {
         case "直前":
           Scene_loads(Flag[4],false,false);
@@ -376,7 +392,7 @@ function Load(width,height,DATAS){
     var Before = 0;
     var After = 0;
     var Datas = [];
-    var Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,true,true,true,true,true,"これなんじゃい"];
+    var Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,true,true,true,true,true,true];
     //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
     var Item_Flag = [];//所持アイテム
     var Character_Flag = [];//人物
@@ -1249,7 +1265,6 @@ function Load(width,height,DATAS){
         Item.x = ((Item.scaleX*xxx/2)-xxx/2)+Datas[14].substring(0,4)*(width/1600);
         Item.y = ((Item.scaleY*yyy/2)-yyy/2)+Datas[14].substring(5,9)*(width/16/100);
         if(Return!=true&&Datas[14].substring(11,12)*1!=0){
-          Sound_ON("Choice",true);
           Item.opacity = 0;
           Item.tl.fadeIn(Datas[14].substring(11,12)*1);
         }
@@ -1418,6 +1433,7 @@ function Load(width,height,DATAS){
         Buttons[a]._element.value = b;
         scene.addChild(Buttons[a]);
         Buttons[a].addEventListener('touchstart',function(e){
+          if(Button_push()) return;
           if(a==2){
             game.pushScene(ItemScene(c,false));
             Scene_kazu++;
@@ -3690,9 +3706,6 @@ function Load(width,height,DATAS){
             Text2[this.c].text = "現在はオンです。";
           }
           switch (this.c) {
-            case 10:
-              //Sound_ON("Choice",true);
-              break;
             case 11:
               Sound_ON("Trophy",true);
               break;
@@ -3767,7 +3780,7 @@ function Load(width,height,DATAS){
         Before = 0;
         After = 0;
         Datas = [];
-        Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,true,true,true,true,true,"これなんじゃい"];
+        Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,true,true,true,true,true,true];
         //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
         Item_Flag = [];//所持アイテム
         Character_Flag = [];//人物
