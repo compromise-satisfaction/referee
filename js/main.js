@@ -1367,21 +1367,21 @@ function Load(width,height,DATAS){
         }
         else if(Datas[8].substring(Time,Time+1)=="㊨"){
           s = false;
-          if(Text_defined){
+          if(Return!=false){
             Explosion.x = (Explosion.scaleX*80/2)-80/2+(width/2);
             Explosion.frame = 0;
           }
         }
         else if(Datas[8].substring(Time,Time+1)=="㊥"){
           s = false;
-          if(Text_defined){
+          if(Return!=false){
             Explosion.x = (Explosion.scaleX*80/2)-80/2+(width/4);
             Explosion.frame = 0;
           }
         }
         else if(Datas[8].substring(Time,Time+1)=="㊧"){
           s = false;
-          if(Text_defined){
+          if(Return!=false){
             Explosion.x = (Explosion.scaleX*80/2)-80/2;
             Explosion.frame = 0;
           }
@@ -1406,7 +1406,7 @@ function Load(width,height,DATAS){
           else if(Datas[8].substring(Time-1,Time)!=""){
             if(Text[k].text.substring(0,1)=="("||Text[k].text.substring(0,1)==" ") Text[k].color = "blue";
             Text[k].text = Text[k].text+Datas[8].substring(Time-1,Time);
-            if(Text_defined) Sound_ON("ポ",true);
+            if(Return!=false) Sound_ON("ポ",true);
           }
           else if(Datas[8].substring(Time-1,Time)==""){
             Text_defined = false;
@@ -1446,6 +1446,7 @@ function Load(width,height,DATAS){
           }
           else if(a==3){
             if(Text_defined){
+              Return = true;
               Text_defined = false;
               for (var i = 0; i < 6; i++) {
                 Text[i].text = "";
