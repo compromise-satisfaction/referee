@@ -194,10 +194,10 @@ function Load(width,height,DATAS){
       switch (Sound_Name) {
         case "異議あり！":
         case "待った！":
-        if(Flag[11]==false) Play = false;
+        if(Flag[12]==false) Play = false;
           break;
         default:
-          if(Flag[12]==false) Play = false;
+          if(Flag[11]==false) Play = false;
           break;
       }
       //if(Play) console.log(Sound_Name);
@@ -3689,8 +3689,8 @@ function Load(width,height,DATAS){
       });
 
       Text[Text_Number] = new Texts("BGM");
-      Text[Text_Number] = new Texts("ボイス");
       Text[Text_Number] = new Texts("効果音");
+      Text[Text_Number] = new Texts("音声");
 
       for (var i = 10; i < Text.length; i++) {
         Text[i].addEventListener('touchstart',function(e){
@@ -3707,10 +3707,10 @@ function Load(width,height,DATAS){
               Sound_ON("Trophy",true);
               break;
             case 11:
-              Sound_ON("異議あり！",true);
+              Sound_ON("Item",true);
               break;
             case 12:
-              Sound_ON("Item",true);
+              Sound_ON("異議あり！",true);
               break;
           }
           return;
