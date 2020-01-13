@@ -969,7 +969,7 @@ function Load(width,height,DATAS){
           this.height = (width/20);
           this.text = a;
           i++;
-          scene.addChild(this);
+          //scene.addChild(this);
         }
       });
 
@@ -981,9 +981,70 @@ function Load(width,height,DATAS){
         Text[i] = new Texts("◆ 続きから");
       }
       Text[i] = new Texts("◆ 説明");
+
+      for (var i = 0; i < Text.length; i++){
+        Text[i].addEventListener('touchstart',function(e){
+          if(this.text != "◆ データ初期化"&&Data) Load_Datas();
+          if(this.text == "◆ 最初から") Scene_loads("最初から",false,false);
+          if(this.text == "◆ 続きから") Scene_loads("セーブ読み込み",false,false);
+          if(this.text == "◆ 説明") Scene_loads("説明",false,false);
+          if(this.text == "◆ テスト用") Scene_loads("テスト",false,false);
+          if(this.text == "◆ データ初期化"){
+            game.pushScene(ClearScene());
+            Scene_kazu++;
+            console.log("Scene数",Scene_kazu);
+          }
+        });
+      }
+
+      var Button = [];
+      var submits = 0;
+      var Numbers = width/16*9+(width/30);
+      function Submit(a){
+        Button[submits] = new Entity();
+        if(a=="データ初期化"){
+          Button[submits].moveTo(width/4,0);
+        }
+        else{
+          Button[submits].moveTo(width/4,Numbers);
+          Numbers += (width/20)+(width/25)+(width/25);
+        }
+        Button[submits].width = width/2;
+        Button[submits].height = (width/10);
+        Button[submits]._element = document.createElement('input');
+        Button[submits]._element.type = "submit";
+        Button[submits]._element.value = a;
+        scene.addChild(Button[submits]);
+        Button[submits].addEventListener('touchstart',function(e){
+          if(Button_push("選択音")) return;
+          if(a!="データ初期化"&&Data) Load_Datas();
+          switch (a) {
+            case "続きから":
+              Scene_loads("セーブ読み込み",false,false);
+              break;
+            case "データ初期化":
+              game.pushScene(ClearScene());
+              Scene_kazu++;
+              console.log("Scene数",Scene_kazu);
+              break;
+            default:
+              Scene_loads(a,false,false);
+              break;
+          }
+        });
+        submits++;
+      }
+
+      Button[submits] = Submit("最初から");
+      if(Data){
+        Button[submits] = Submit("データ初期化");
+        Button[submits] = Submit("続きから");
+      }
+      Button[submits] = Submit("説明");
+
       if(Data){
         Flag = window.localStorage.getItem("Flag").split(",");
-        if(Flag[1]=="不動"&&Flag[0]=="遊星"&&Flag[2]=="男") Text[i] = new Texts("◆ テスト用");
+        if(Flag[1]=="不動"&&Flag[0]=="遊星"&&Flag[2]=="男") Button[submits] = Submit("テスト用");
         else {
           fetch(GAS[1],
             {
@@ -1000,21 +1061,6 @@ function Load(width,height,DATAS){
             body: GitHub_type
           }
         )
-      }
-
-      for (var i = 0; i < Text.length; i++){
-        Text[i].addEventListener('touchstart',function(e){
-          if(this.text != "◆ データ初期化"&&Data) Load_Datas();
-          if(this.text == "◆ 最初から") Scene_loads("最初から",false,false);
-          if(this.text == "◆ 続きから") Scene_loads("セーブ読み込み",false,false);
-          if(this.text == "◆ 説明") Scene_loads("説明",false,false);
-          if(this.text == "◆ テスト用") Scene_loads("テスト",false,false);
-          if(this.text == "◆ データ初期化"){
-            game.pushScene(ClearScene());
-            Scene_kazu++;
-            console.log("Scene数",Scene_kazu);
-          }
-        });
       }
 
       Title.addEventListener("enterframe",function(){
