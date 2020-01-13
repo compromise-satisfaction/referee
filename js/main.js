@@ -50,7 +50,7 @@ function vue(width,height){
 
 var Image_urls = false;
 
-var Button_time_next = 2;
+var Button_time_next = 3;
 var Button_time = Button_time_next;
 
 function Load(width,height,DATAS){
@@ -178,6 +178,8 @@ function Load(width,height,DATAS){
   game.preload("sound/ン.wav");
   game.preload("sound/ポ.wav");
   game.preload("sound/メニュー.wav");
+  game.preload("sound/戻る.wav");
+  game.preload("sound/選択音.wav");
   game.preload("sound/Trophy.wav");
   //game.preload("sound/プライド.wav");
   //game.preload("sound/永遠の灯.wav");
@@ -218,6 +220,10 @@ function Load(width,height,DATAS){
       if(Button_time==Button_time_next){
         Button_time = 0;
         switch (expression) {
+          case "戻る":
+          case "選択音":
+            Sound_ON(expression,true);
+            break;
           case "アイテム":
             Sound_ON("メニュー",true);
             break;
@@ -1987,8 +1993,11 @@ function Load(width,height,DATAS){
           Text[submits].backgroundColor = "red";
         }
         Text[submits].addEventListener('touchstart',function(e){
-          if(this._element.value == "調べる") Inspect_loads(Datas[6],false);
-          else if (this._element.value == "つきつける"){
+          if(a=="戻る") var sss = "戻る";
+          else var sss = "選択音";
+          if(Button_push(sss)) return;
+          if(a == "調べる") Inspect_loads(Datas[6],false);
+          else if (a == "つきつける"){
             game.pushScene(ItemScene(Datas[6],"日常"));
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
@@ -2018,7 +2027,8 @@ function Load(width,height,DATAS){
         Buttons[a]._element.value = b;
         scene.addChild(Buttons[a]);
         Buttons[a].addEventListener('touchstart',function(e){
-          if(a==2){
+          if(Button_push(b)) return;
+          if(b=="アイテム"){
             game.pushScene(ItemScene(c,false));
             Scene_kazu++;
             console.log("Scene数",Scene_kazu);
