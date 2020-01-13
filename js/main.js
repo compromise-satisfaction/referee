@@ -157,7 +157,6 @@ function Load(width,height,DATAS){
   	game.addEventListener("enterframe", function(){
       if(Button_time==Button_time_next) return;
       else Button_time++;
-      console.log(Button_time);
       return;
     });
 
