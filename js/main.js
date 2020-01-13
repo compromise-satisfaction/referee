@@ -1554,7 +1554,8 @@ function Load(width,height,DATAS){
         });//進む2
       }
 
-      if(Datas[16]!=false){
+      if(Datas[16]!=false&&Datas[16]!=undefined){
+        console.log(Datas[16]);
         if(have(Datas[16])==false){
           if(Datas[11]!=false){
             Trophy_Flag[Trophy_Flag.length] = [Datas[16],Datas[18],Datas[17]];
