@@ -134,6 +134,7 @@ function Load(width,height,DATAS){
   game.preload("sound/う.wav");
   game.preload("sound/え.wav");
   game.preload("sound/お.wav");
+  game.preload("sound/ポ.wav");
   game.preload("sound/メニュー.wav");
   game.preload("sound/Trophy.wav");
   //game.preload("sound/プライド.wav");
@@ -1420,8 +1421,8 @@ function Load(width,height,DATAS){
                   Sound_ON(Text[k].text.substring(Text[k].text.length-1,true));
                   break;
                 default:
-                Sound_ON("ポ",true);
-                break;
+                  Sound_ON("ポ",true);
+                  break;
               }
             }
           }
