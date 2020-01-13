@@ -2521,6 +2521,7 @@ function Load(width,height,DATAS){
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
       Background.addEventListener('touchstart',function(e){
+        Sound_ON("選択音",true);
         if(Inspect=="Black") Scene_loads("調べる出来てない",false,Item);
         else Scene_loads("調べる何もない",false,Item);
       });
@@ -2533,6 +2534,7 @@ function Load(width,height,DATAS){
           this.image = game.assets["image/背景/透明.png"];
           scene.addChild(this);
           this.addEventListener('touchstart',function(e){
+            Sound_ON("選択音",true);
             Scene_loads(Number,false,Item);
             return;
           });
@@ -2573,7 +2575,7 @@ function Load(width,height,DATAS){
       Modoru.height = (width/10);
       Modoru._element = document.createElement('input');
       Modoru._element.type = "submit";
-      Modoru._element.value = a;
+      Modoru._element.value = "戻る";
       scene.addChild(Modoru);
       Modoru.addEventListener('touchstart',function(e){
         if(Button_push("戻る")) return;
