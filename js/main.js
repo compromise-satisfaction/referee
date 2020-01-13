@@ -192,20 +192,11 @@ function Load(width,height,DATAS){
 
     function Sound_ON(Sound_Name,Play){
       switch (Sound_Name) {
-        case "Trophy":
+        case "異議あり！":
+        case "待った！":
           if(Flag[11]==false) Play = false;
           break;
-        case "Item":
-          if(Flag[12]==false) Play = false;
-          break;
-        case "異議あり！":
-          if(Flag[13]==false) Play = false;
-          break;
-        case "待った！":
-          if(Flag[14]==false) Play = false;
-          break;
         default:
-          if(Flag[15]==false) Play = false;
           break;
       }
       //if(Play) console.log(Sound_Name);
@@ -3697,10 +3688,8 @@ function Load(width,height,DATAS){
       });
 
       Text[Text_Number] = new Texts("BGM");
-      Text[Text_Number] = new Texts("トロフィー");
-      Text[Text_Number] = new Texts("アイテム");
-      Text[Text_Number] = new Texts("異議あり！");
-      Text[Text_Number] = new Texts("待った！");
+      Text[Text_Number] = new Texts("ボイス");
+      Text[Text_Number] = new Texts("効果音");
 
       for (var i = 10; i < Text.length; i++) {
         Text[i].addEventListener('touchstart',function(e){
@@ -3713,17 +3702,14 @@ function Load(width,height,DATAS){
             Text2[this.c].text = "現在はオンです。";
           }
           switch (this.c) {
-            case 11:
+            case 10:
               Sound_ON("Trophy",true);
+              break;
+            case 11:
+              Sound_ON("異議あり！",true);
               break;
             case 12:
               Sound_ON("Item",true);
-              break;
-            case 13:
-              Sound_ON("異議あり！",true);
-              break;
-            case 14:
-              Sound_ON("待った！",true);
               break;
           }
           return;
