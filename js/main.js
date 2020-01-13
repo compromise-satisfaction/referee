@@ -2742,6 +2742,7 @@ function Load(width,height,DATAS){
       })
 
       Buttons.addEventListener('touchstart',function(e){
+        if(Button_push("進む")) return;
         if(Text_defined){
           Text_defined = false;
           for (var i = 0; i < 6; i++) {
@@ -2756,7 +2757,9 @@ function Load(width,height,DATAS){
         if(Item.x>X_0+width/2-width/4){
           Item.x = X_0 + width/2 -width/4;
         }
-        else if(Item.x==X_0+width/2-width/4) Item.x -= width/18+1;
+        else if(Item.x==X_0+width/2-width/4){
+          Item.x -= width/18+1;
+        }
         else{
           game.popScene();
           Scene_kazu--;
