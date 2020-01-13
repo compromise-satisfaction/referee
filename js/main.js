@@ -1417,7 +1417,7 @@ function Load(width,height,DATAS){
                 case "う":
                 case "え":
                 case "お":
-                  Sound_ON(Text[k].text.substring(Text[k].text.length-1,true);
+                  Sound_ON(Text[k].text.substring(Text[k].text.length-1,true));
                   break;
                 default:
                 Sound_ON("ポ",true);
