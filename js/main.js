@@ -227,6 +227,8 @@ function Load(width,height,DATAS){
           case "アイテム":
             Sound_ON("メニュー",true);
             break;
+          case "音無し":
+            break;
           default:
             Sound_ON("進む",true);
             break;
@@ -2229,23 +2231,27 @@ function Load(width,height,DATAS){
         Buttons[a]._element.value = b;
         scene.addChild(Buttons[a]);
         Buttons[a].addEventListener('touchstart',function(e){
-          switch (a) {
-            case 0:
+          switch (b) {
+            case "ゆさぶる":
+              if(Button_push("音無し")) return;
               game.pushScene(PopScene(Datas[3],"待った！"));
               Scene_kazu++;
               console.log("Scene数",Scene_kazu);
               break;
-            case 2:
+            case "設定を開く":
+              if(Button_push("アイテム")) return;
               game.pushScene(SettingScene(Datas[5]));
               Scene_kazu++;
               console.log("Scene数",Scene_kazu);
               break;
-            case 4:
+            case "つきつける":
+              if(Button_push("アイテム")) return;
               game.pushScene(ItemScene(Datas[7],Datas[8]));
               Scene_kazu++;
               console.log("Scene数",Scene_kazu);
               break;
             default:
+              if(Button_push("進む")) return;
               Scene_loads(c,false,false);
               break;
           }
