@@ -125,7 +125,7 @@ function Load(width,height,DATAS){
   game.preload("image/ユベル.png");
   game.preload("image/留置所.png");
   game.preload("image/背景/留置所背景.png");
-  game.preload("sound/Choice.wav");
+  game.preload("sound/進む.wav");
   game.preload("image/Buttons.png");
   game.preload("image/待った！.png");
   game.preload("sound/待った！.wav");
@@ -228,7 +228,7 @@ function Load(width,height,DATAS){
             Sound_ON("メニュー",true);
             break;
           default:
-            Sound_ON("Choice",true);
+            Sound_ON("進む",true);
             break;
         }
         return(false);
