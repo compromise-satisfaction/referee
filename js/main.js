@@ -1774,6 +1774,7 @@ function Load(width,height,DATAS){
       scene.addChild(Buttons);
 
       Buttons.addEventListener('touchstart',function(e){
+        if(Button_push("進む")) return;
         game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
@@ -1994,6 +1995,7 @@ function Load(width,height,DATAS){
         }
         Text[submits].addEventListener('touchstart',function(e){
           if(a=="戻る") var sss = "戻る";
+          else if(a == "つきつける") var sss = "アイテム";
           else var sss = "選択音";
           if(Button_push(sss)) return;
           if(a == "調べる") Inspect_loads(Datas[6],false);
@@ -2553,7 +2555,7 @@ function Load(width,height,DATAS){
       Text.width = width;
       Text.height = (width/20);
       Text.text = "◆ 戻る";
-      scene.addChild(Text);
+      //scene.addChild(Text);
       Text.addEventListener('touchstart',function(e){
         if(Flag[4].length>5){
           if(Flag[4].substring(0,6)=="アイテム使用"){
@@ -2562,6 +2564,19 @@ function Load(width,height,DATAS){
             if(Flag[4].replace(/\d/g,"").replace(/\./g,"")=="") Flag[4] = Flag[4]*1;
           }
         }
+        Scene_loads(Flag[4],true,Item);
+      });
+
+      var Modoru = new Entity();
+      Modoru.moveTo(width/4,width/16*9+(width/30));
+      Modoru.width = width/2;
+      Modoru.height = (width/10);
+      Modoru._element = document.createElement('input');
+      Modoru._element.type = "submit";
+      Modoru._element.value = a;
+      scene.addChild(Modoru);
+      Modoru.addEventListener('touchstart',function(e){
+        if(Button_push("戻る")) return;
         Scene_loads(Flag[4],true,Item);
       });
 
