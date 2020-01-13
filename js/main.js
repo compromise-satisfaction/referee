@@ -50,7 +50,7 @@ function vue(width,height){
 
 var Image_urls = false;
 
-var Button_time_next = 1;
+var Button_time_next = 2;
 var Button_time = Button_time_next;
 
 function Load(width,height,DATAS){
@@ -1412,18 +1412,21 @@ function Load(width,height,DATAS){
             if(Text[k].text.substring(0,1)=="("||Text[k].text.substring(0,1)==" ") Text[k].color = "blue";
             Text[k].text = Text[k].text+Datas[8].substring(Time-1,Time);
             if(Return==false){
-              switch(Text[k].text.substring(Text[k].text.length-1)){
-                case "あ":
-                case "い":
-                case "う":
-                case "え":
-                case "お":
-                  Sound_ON(Text[k].text.substring(Text[k].text.length-1),true);
-                  break;
-                default:
-                  Sound_ON("ポ",true);
-                  break;
+              if(Datas[7]=="メカ"){
+                switch(Text[k].text.substring(Text[k].text.length-1)){
+                  case "あ":
+                  case "い":
+                  case "う":
+                  case "え":
+                  case "お":
+                    Sound_ON(Text[k].text.substring(Text[k].text.length-1),true);
+                    break;
+                  default:
+                    Sound_ON("ポ",true);
+                    break;
+                }
               }
+              else Sound_ON("ポ",true);
             }
           }
           else if(Datas[8].substring(Time-1,Time)==""){
