@@ -205,7 +205,7 @@ function Load(width,height,DATAS){
           if(Flag[11]==false) Play = false;
           break;
       }
-      //if(Play) console.log(Sound_Name);
+      if(Play&&Sound_Name!="ポ") console.log(Sound_Name);
       if(Play) game.assets["sound/"+Sound_Name+".wav"].play();
       //else game.assets["sound/"+Sound_Name+".wav"].pause();
       return;
@@ -1418,7 +1418,7 @@ function Load(width,height,DATAS){
                 case "う":
                 case "え":
                 case "お":
-                  Sound_ON(Text[k].text.substring(Text[k].text.length-1,true));
+                  Sound_ON(Text[k].text.substring(Text[k].text.length-1),true);
                   break;
                 default:
                   Sound_ON("ポ",true);
