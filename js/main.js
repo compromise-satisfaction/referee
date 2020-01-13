@@ -1400,7 +1400,7 @@ function Load(width,height,DATAS){
           else if(Datas[8].substring(Time-1,Time)!=""){
             if(Text[k].text.substring(0,1)=="("||Text[k].text.substring(0,1)==" ") Text[k].color = "blue";
             Text[k].text = Text[k].text+Datas[8].substring(Time-1,Time);
-            if(Return==false) Sound_ON("ポ",true);
+            if(Text_defined) Sound_ON("ポ",true);
           }
           else if(Datas[8].substring(Time-1,Time)==""){
             Text_defined = false;
@@ -1410,7 +1410,6 @@ function Load(width,height,DATAS){
 
       Background2.addEventListener("enterframe",function(){
         if(Return!=true&&Text_defined){
-          Return==true;
           T_D();
         }
       })
