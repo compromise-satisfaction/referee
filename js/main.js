@@ -129,7 +129,11 @@ function Load(width,height,DATAS){
   game.preload("image/Buttons.png");
   game.preload("image/待った！.png");
   game.preload("sound/待った！.wav");
-  game.preload("sound/ポ.wav");
+  game.preload("sound/あ.wav");
+  game.preload("sound/い.wav");
+  game.preload("sound/う.wav");
+  game.preload("sound/え.wav");
+  game.preload("sound/お.wav");
   game.preload("sound/メニュー.wav");
   game.preload("sound/Trophy.wav");
   //game.preload("sound/プライド.wav");
@@ -1406,7 +1410,20 @@ function Load(width,height,DATAS){
           else if(Datas[8].substring(Time-1,Time)!=""){
             if(Text[k].text.substring(0,1)=="("||Text[k].text.substring(0,1)==" ") Text[k].color = "blue";
             Text[k].text = Text[k].text+Datas[8].substring(Time-1,Time);
-            if(Return==false) Sound_ON("ポ",true);
+            if(Return==false){
+              switch(Text[k].text.substring(Text[k].text.length-1)){
+                case "あ":
+                case "い":
+                case "う":
+                case "え":
+                case "お":
+                  Sound_ON(Text[k].text.substring(Text[k].text.length-1,true);
+                  break;
+                default:
+                Sound_ON("ポ",true);
+                break;
+              }
+            }
           }
           else if(Datas[8].substring(Time-1,Time)==""){
             Text_defined = false;
