@@ -121,6 +121,7 @@ function Load(width,height,DATAS){
   game.preload("image/stand.png");
   game.preload("image/ユベル.png");
   game.preload("image/留置所.png");
+  game.preload("image/背景/留置所背景.png");
   game.preload("sound/Choice.wav");
   game.preload("image/Buttons.png");
   game.preload("image/待った！.png");
@@ -2368,16 +2369,16 @@ function Load(width,height,DATAS){
     var InspectScene = function(Inspect,Item){
       var scene = new Scene();                                // 新しいシーンを作る
 
-    if(Datas[0]=="留置所") var ryu = "image/背景/留置所.png";
-    else var ryu = Datas[0];
-    var xxx = game.assets[ryu].width;
-    var yyy = game.assets[ryu].height;
-    var Background = new Sprite(xxx,yyy);
-    Background.scaleX = width/xxx;
-    Background.scaleY = width/16*9/yyy;
-    Background.image = game.assets[Inspect[0]];
-    Background.x = (Background.scaleX*xxx/2)-xxx/2;
-    Background.y = (Background.scaleY*yyy/2)-yyy/2;
+      if(Datas[0]=="留置所") var ryu = "image/背景/留置所背景.png";
+      else var ryu = Image_conversion(Datas[0]);
+      var xxx = game.assets[ryu].width;
+      var yyy = game.assets[ryu].height;
+      var Background = new Sprite(xxx,yyy);
+      Background.scaleX = width/xxx;
+      Background.scaleY = width/16*9/yyy;
+      Background.image = game.assets[ryu];
+      Background.x = (Background.scaleX*xxx/2)-xxx/2;
+      Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
       Background.addEventListener('touchstart',function(e){
         if(Inspect=="Black") Scene_loads("調べる出来てない",false,Item);
