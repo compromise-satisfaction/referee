@@ -1035,16 +1035,16 @@ function Load(width,height,DATAS){
         submits++;
       }
 
-      Button[submits] = Submit("最初から");
+      Submit("最初から");
       if(Data){
-        Button[submits] = Submit("データ初期化");
-        Button[submits] = Submit("続きから");
+        Submit("データ初期化");
+        Submit("続きから");
       }
-      Button[submits] = Submit("説明");
+      Submit("説明");
 
       if(Data){
         Flag = window.localStorage.getItem("Flag").split(",");
-        if(Flag[1]=="不動"&&Flag[0]=="遊星"&&Flag[2]=="男") Button[submits] = Submit("テスト用");
+        if(Flag[1]=="不動"&&Flag[0]=="遊星"&&Flag[2]=="男") Submit("テスト用");
         else {
           fetch(GAS[1],
             {
@@ -3949,13 +3949,33 @@ function Load(width,height,DATAS){
         }
       });
 
+      var Button = [];
+      var submits = 0;
+      var Numbers = width/16*9+(width/30);
+      function Submit(a){
+        Button[submits] = new Entity();
+        Button[submits].moveTo(width/4,Numbers);
+        Numbers += (width/20)+(width/25)+(width/25)+(width/25)+(width/25)+(width/25);
+        Button[submits].width = width/2;
+        Button[submits].height = (width/10);
+        Button[submits]._element = document.createElement('input');
+        Button[submits]._element.type = "submit";
+        Button[submits]._element.value = a;
+        scene.addChild(Button[submits]);
+        submits++;
+      }
+
       var Text = [];
 
-      Text[0] = new Texts("データを初期化する？");
-      Text[1] = new Texts("◆ はい");
-      Text[2] = new Texts("◆ いいえ");
+      Submit("データ初期化実行");
+      Submit("戻る");
 
-      Text[1].addEventListener('touchstart',function(e){
+      //Text[0] = new Texts("データを初期化する？");
+      //Text[1] = new Texts("◆ はい");
+      //Text[2] = new Texts("◆ いいえ");
+
+      Button[0].addEventListener('touchstart',function(e){
+        if(Button_push("選択音")) return;
         game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
@@ -3983,7 +4003,8 @@ function Load(width,height,DATAS){
         return;
       });
 
-      Text[2].addEventListener('touchstart',function(e){
+      Button[1].addEventListener('touchstart',function(e){
+        if(Button_push("戻る")) return;
         game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
