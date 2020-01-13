@@ -194,9 +194,10 @@ function Load(width,height,DATAS){
       switch (Sound_Name) {
         case "異議あり！":
         case "待った！":
-          if(Flag[11]==false) Play = false;
+        if(Flag[11]==false) Play = false;
           break;
         default:
+          if(Flag[12]==false) Play = false;
           break;
       }
       //if(Play) console.log(Sound_Name);
