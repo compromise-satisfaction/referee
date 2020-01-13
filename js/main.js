@@ -1414,15 +1414,57 @@ function Load(width,height,DATAS){
             if(Return==false){
               if(Datas[7]=="メカ"){
                 switch(Text[k].text.substring(Text[k].text.length-1)){
-                  case "あ":
-                  case "い":
-                  case "う":
-                  case "え":
-                  case "お":
+                  case "ア":
+                  case "イ":
+                  case "ウ":
+                  case "エ":
+                  case "オ":
+                  case "カ":
+                  case "キ":
+                  case "ク":
+                  case "ケ":
+                  case "コ":
+                  case "サ":
+                  case "シ":
+                  case "ス":
+                  case "セ":
+                  case "ソ":
+                  case "タ":
+                  case "チ":
+                  case "ツ":
+                  case "テ":
+                  case "ト":
+                  case "ナ":
+                  case "ニ":
+                  case "ヌ":
+                  case "ネ":
+                  case "ノ":
+                  case "ハ":
+                  case "ヒ":
+                  case "フ":
+                  case "ヘ":
+                  case "ホ":
+                  case "マ":
+                  case "ミ":
+                  case "ム":
+                  case "メ":
+                  case "モ":
+                  case "ヤ":
+                  case "ユ":
+                  case "ヨ":
+                  case "ラ":
+                  case "ラ":
+                  case "リ":
+                  case "ル":
+                  case "レ":
+                  case "ロ":
+                  case "ワ":
+                  case "ヲ":
+                  case "ン":
                     Sound_ON(Text[k].text.substring(Text[k].text.length-1),true);
                     break;
                   default:
-                    Sound_ON("ポ",true);
+                    //Sound_ON("ポ",true);
                     break;
                 }
               }
