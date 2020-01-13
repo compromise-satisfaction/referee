@@ -129,6 +129,8 @@ function Load(width,height,DATAS){
   game.preload("image/Buttons.png");
   game.preload("image/待った！.png");
   game.preload("sound/待った！.wav");
+  game.preload("sound/ポ.wav");
+  game.preload("sound/メニュー.wav");
   game.preload("sound/Trophy.wav");
   //game.preload("sound/プライド.wav");
   //game.preload("sound/永遠の灯.wav");
@@ -166,10 +168,17 @@ function Load(width,height,DATAS){
     var Syougen_time = 0;
     var Syougen_time2 = 1;
 
-    function Button_push(){
+    function Button_push(expression){
       if(Button_time==Button_time_next){
         Button_time = 0;
-        Sound_ON("Choice",true);
+        switch (expression) {
+          case "アイテム":
+            Sound_ON("メニュー",true);
+            break;
+          default:
+            Sound_ON("Choice",true);
+            break;
+        }
         return(false);
       }
       else return(true);
@@ -196,13 +205,11 @@ function Load(width,height,DATAS){
         case "待った！":
           if(Flag[14]==false) Play = false;
           break;
-        case "Choice":
+        default:
           if(Flag[15]==false) Play = false;
           break;
-          default:
-          break;
       }
-      if(Play) console.log(Sound_Name);
+      //if(Play) console.log(Sound_Name);
       if(Play) game.assets["sound/"+Sound_Name+".wav"].play();
       //else game.assets["sound/"+Sound_Name+".wav"].pause();
       return;
@@ -1402,6 +1409,7 @@ function Load(width,height,DATAS){
           else if(Datas[8].substring(Time-1,Time)!=""){
             if(Text[k].text.substring(0,1)=="("||Text[k].text.substring(0,1)==" ") Text[k].color = "blue";
             Text[k].text = Text[k].text+Datas[8].substring(Time-1,Time);
+            Sound_ON("ポ",true);
           }
           else if(Datas[8].substring(Time-1,Time)==""){
             Text_defined = false;
@@ -1433,7 +1441,7 @@ function Load(width,height,DATAS){
         Buttons[a]._element.value = b;
         scene.addChild(Buttons[a]);
         Buttons[a].addEventListener('touchstart',function(e){
-          if(Button_push()) return;
+          if(Button_push(b)) return;
           if(a==2){
             game.pushScene(ItemScene(c,false));
             Scene_kazu++;
