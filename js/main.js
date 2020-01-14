@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "var 2.3";
+var Version = "var 2.4";
 
 switch (GitHub_type) {
 case "referee":
@@ -2533,14 +2533,19 @@ function Load(width,height,DATAS){
               for (var k = 0; k < ImageDATAS.length; k++){
                 if(ImageDATAS[k].画像.substring(0,1)=="音"){
                   if(game.assets[ImageDATAS[k].url].状態=="再生中"){
+                    game.assets[ImageDATAS[k].url].pause();
                     if(game.assets[ImageDATAS[k].url].src==undefined){
                       game.assets[ImageDATAS[k].url].volume = Flag[10]/10;
                     }
                     else{
+                      var Loop = ImageDATAS[k].画像.split("↓");
+                      //game.assets[ImageDATAS[k].url].src.loop = true;
+                      //game.assets[ImageDATAS[k].url].src.loopStart = Loop[1]*1;
+                      //game.assets[ImageDATAS[k].url].src.loopEnd = Loop[2]*1;
                       game.assets[ImageDATAS[k].url]._volume = Flag[10]/10;
-                      game.assets[ImageDATAS[k].url].play();
-                      if(Flag[10]==0) game.assets[ImageDATAS[k].url].stop();
                     }
+                    game.assets[ImageDATAS[k].url].play();
+                    if(Flag[10]==0) game.assets[ImageDATAS[k].url].stop();
                   }
                 }
               }
