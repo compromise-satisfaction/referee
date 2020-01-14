@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "var 2";
+var Version = "var 2.1";
 
 switch (GitHub_type) {
 case "referee":
@@ -788,6 +788,7 @@ function Load(width,height,DATAS){
           game.assets[Image_conversion(DATAS[i].BGM)].src.loop = true;
           game.assets[Image_conversion(DATAS[i].BGM)].src.loopStart = Loop[1]*1;
           game.assets[Image_conversion(DATAS[i].BGM)].src.loopEnd = Loop[2]*1;
+          game.assets[Image_conversion(DATAS[i].BGM)]._volume = Flag[10]/10;
           console.log(game.assets[Image_conversion(DATAS[i].BGM)].src);
         }
       }
