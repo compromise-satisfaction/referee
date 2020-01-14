@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 2.9";
+var Version = "バージョン 3.0";
 
 switch (GitHub_type) {
 case "referee":
@@ -2541,7 +2541,7 @@ function Load(width,height,DATAS){
                     }
                     else{
                       var Loop = ImageDATAS[k].画像.split("↓");
-                      game.assets[ImageDATAS[k].url].currentTime = basyo;
+                      game.assets[ImageDATAS[k].url]._currentTime = basyo;
                       game.assets[ImageDATAS[k].url]._volume = Flag[10]/10;
                       game.assets[ImageDATAS[k].url].play();
                       game.assets[ImageDATAS[k].url].src.loop = true;
