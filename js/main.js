@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 3.2";
+var Version = "バージョン 3.3";
 
 switch (GitHub_type) {
 case "referee":
@@ -491,6 +491,7 @@ function Load(width,height,DATAS){
     window.localStorage.setItem("Flag",Flag);
     window.localStorage.setItem("Datas",Datas);
     window.localStorage.setItem("Number",Number);
+    window.localStorage.setItem("Version",Version);
     window.localStorage.setItem("Setting_Flag",Setting_Flag);
     var Item_Flag2 = [];
     for (var i = 0; i < Item_Flag.length; i++) {
@@ -892,6 +893,10 @@ function Load(width,height,DATAS){
         var Data = false;
       }
       else{
+        if(window.localStorage.getItem("Version")==Version){
+          var Version_new = true;
+        }
+        else var Version_new = false;
         var Data = true;
       }
 
@@ -933,12 +938,13 @@ function Load(width,height,DATAS){
               break;
           }
           if(Button_push(ooo)) return;
-          if(a!="データ初期化"&&Data) Load_Datas();
+          if(a!="データ初期化"&&a!="データ初期化(推奨)"&&Data) Load_Datas();
           switch (a) {
             case "続きから":
               Scene_loads("セーブ読み込み",false,false);
               break;
-            case "データ初期化":
+              case "データ初期化":
+              case "データ初期化(推奨)":
               game.pushScene(ClearScene());
               Scene_kazu++;
               console.log("Scene数",Scene_kazu);
@@ -953,12 +959,13 @@ function Load(width,height,DATAS){
 
       Submit("最初から");
       if(Data){
-        Submit("データ初期化");
+        if(Version_new) Submit("データ初期化");
+        else Submit("データ初期化(推奨)")
         Submit("続きから");
       }
       Submit("説明");
 
-      if(Data){
+      if(Version_new){
         Setting_Flag = window.localStorage.getItem("Setting_Flag").split(",");
         if(Setting_Flag[1]=="不動"&&Setting_Flag[0]=="遊星"&&Setting_Flag[2]=="男") Submit("テスト用");
         else {
@@ -2190,6 +2197,7 @@ function Load(width,height,DATAS){
                 scene.addChild(Button[7]);
                 scene.removeChild(Button[6]);
               }
+              window.localStorage.setItem("Setting_Flag",Setting_Flag);
               break;
               case "プレイヤー設定":
                 Scene_kazu++;
@@ -2203,32 +2211,6 @@ function Load(width,height,DATAS){
               Scene_kazu--;
               console.log("Scene数",Scene_kazu);
               Scene_loads("セーブ読み込み",false,false);
-              break;
-              case "設定する":
-              if(S_Input1._element.value.replace(/[^,]/g,"")!=""||S_Input2._element.value.replace(/[^,]/g,"")!=""){
-                Text[11].text = ",(カンマ)は使用できません。";
-              }
-              else{
-                Setting_Flag[0] = S_Input2._element.value;
-                Setting_Flag[1] = S_Input1._element.value;
-                if(Gender._element.value=="男"){
-                  Setting_Flag[2] = "男";
-                  if(S_Input1._element.value=="") Setting_Flag[1] = "若辻";
-                  if(S_Input2._element.value=="") Setting_Flag[0] = "俛人";
-                }
-                else if(Gender._element.value=="女"){
-                  Setting_Flag[2] = "女";
-                  if(S_Input1._element.value=="") Setting_Flag[1] = "防人";
-                  if(S_Input2._element.value=="") Setting_Flag[0] = "玲奈";
-                }
-                else{
-                  Setting_Flag[2] = "未設定";
-                  if(S_Input1._element.value=="") Setting_Flag[1] = "カードの精霊";
-                  if(S_Input2._element.value=="") Setting_Flag[0] = "ユベル";
-                }
-                Sound_ON("Item",true);
-                Text[11].text = "設定しました。";
-              }
               break;
           }
         });
@@ -2352,6 +2334,7 @@ function Load(width,height,DATAS){
             Scene_kazu--;
             console.log("Scene数",Scene_kazu);
           }
+          window.localStorage.setItem("Setting_Flag",Setting_Flag);
         });
         submits++;
       }
@@ -2462,6 +2445,7 @@ function Load(width,height,DATAS){
         scene.addChild(Button2[submits]);
         Button2[submits].addEventListener('touchstart',function(e){
           if(Button_push("音無し")) return;
+          window.localStorage.setItem("Setting_Flag",Setting_Flag);
           switch (b) {
             case Text[10].y:
               if(c=="+"){
