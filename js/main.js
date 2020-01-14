@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "var 1.4";
+var Version = "var 1.5";
 
 switch (GitHub_type) {
 case "referee":
@@ -2485,7 +2485,8 @@ function Load(width,height,DATAS){
           this.width = width;
           this.height = (width/10);
           this.c = Text_Number;
-          this.text = a;
+          if(a==10) this.text = a;
+          else this.text = " " + a;
           scene.addChild(this);
           Numbers += (width/4);
           Text_Number++;
