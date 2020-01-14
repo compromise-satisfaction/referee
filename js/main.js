@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "var 1.3";
+var Version = "var 1.4";
 
 switch (GitHub_type) {
 case "referee":
@@ -2517,7 +2517,7 @@ function Load(width,height,DATAS){
               else{
                 if(Flag[10]!=0) Flag[10] --;
               }
-              if(Flag[10]!=10) Text[13].text = Flag[10];
+              if(Flag[10]==10) Text[13].text = Flag[10];
               else Text[13].text = " "+Flag[10];
               break;
             case Text[11].y:
@@ -2527,7 +2527,7 @@ function Load(width,height,DATAS){
               else{
                 if(Flag[11]!=0) Flag[11] --;
               }
-              if(Flag[11]!=10) Text[14].text = Flag[11];
+              if(Flag[11]==10) Text[14].text = Flag[11];
               else Text[14].text = " "+Flag[11];
               Sound_ON("進む",true);
               break;
@@ -2538,7 +2538,7 @@ function Load(width,height,DATAS){
               else{
                 if(Flag[12]!=0) Flag[12] --;
               }
-              if(Flag[12]!=10) Text[15].text = Flag[12];
+              if(Flag[12]==10) Text[15].text = Flag[12];
               else Text[15].text = " "+Flag[12];
               Sound_ON("音量調整用",true);
               break;
