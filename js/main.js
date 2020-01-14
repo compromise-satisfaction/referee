@@ -272,7 +272,7 @@ function Load(width,height,DATAS){
         }
         else{
           console.log(game.assets["sound/"+Sound_Name+".wav"]);
-          game.assets["sound/"+Sound_Name+".wav"].src.volume = Volume;
+          game.assets["sound/"+Sound_Name+".wav"].src.playbackRate.volume = Volume;
         }
         game.assets["sound/"+Sound_Name+".wav"].play();
       }
