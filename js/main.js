@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "var 2.1";
+var Version = "var 2.2";
 
 switch (GitHub_type) {
 case "referee":
@@ -271,7 +271,6 @@ function Load(width,height,DATAS){
           game.assets["sound/"+Sound_Name+".wav"].volume = Volume;
         }
         else{
-          console.log(game.assets["sound/"+Sound_Name+".wav"]);
           game.assets["sound/"+Sound_Name+".wav"]._volume = Volume;
         }
         game.assets["sound/"+Sound_Name+".wav"].play();
@@ -773,7 +772,6 @@ function Load(width,height,DATAS){
         }
       }
       if(DATAS[i].BGM!=false&&game.assets[Image_conversion(DATAS[i].BGM)].状態!="再生中"){
-        game.assets[Image_conversion(DATAS[i].BGM)].play();
         game.assets[Image_conversion(DATAS[i].BGM)].状態 = "再生中";
         if(game.assets[Image_conversion(DATAS[i].BGM)].src==undefined){
           game.assets[Image_conversion(DATAS[i].BGM)].volume = Flag[10]/10;
@@ -791,6 +789,7 @@ function Load(width,height,DATAS){
           game.assets[Image_conversion(DATAS[i].BGM)]._volume = Flag[10]/10;
           console.log(game.assets[Image_conversion(DATAS[i].BGM)].src);
         }
+        game.assets[Image_conversion(DATAS[i].BGM)].play();
       }
     }
     if(Scene_type=="メイン"){
