@@ -104,8 +104,8 @@ function Load(width,height,DATAS){
 	});
 	loadScene.addEventListener('load', function(e) {
     var Buttons = new Entity();
-    Buttons.moveTo((width/5)*3,height-(width/5));
-    Buttons.width = (width/5);
+    Buttons.moveTo(100,330);
+    Buttons.width = (width/2);
     Buttons.height = (width/5);
     Buttons._element = document.createElement('input');
     Buttons._element.type = "submit";
@@ -716,10 +716,10 @@ function Load(width,height,DATAS){
         }
       }
       if(DATAS[i].BGM!=false&&game.assets[Image_conversion(DATAS[i].BGM)].状態!="再生中"){
-        game.assets[Image_conversion(DATAS[i].BGM)].play();
         game.assets[Image_conversion(DATAS[i].BGM)].状態 = "再生中";
         if(game.assets[Image_conversion(DATAS[i].BGM)].src==undefined){
           game.assets[Image_conversion(DATAS[i].BGM)].volume = Setting_Flag[9]/10;
+          game.assets[Image_conversion(DATAS[i].BGM)].play();
           game.assets[Image_conversion(DATAS[i].BGM)]._element.loop = true;
           console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
         }
@@ -728,10 +728,11 @@ function Load(width,height,DATAS){
             if(ImageDATAS[k].name==DATAS[i].BGM) break;
           }
           var Loop = ImageDATAS[k].画像.split("↓");
+          game.assets[Image_conversion(DATAS[i].BGM)]._volume = Setting_Flag[9]/10;
+          game.assets[Image_conversion(DATAS[i].BGM)].play();
           game.assets[Image_conversion(DATAS[i].BGM)].src.loop = true;
           game.assets[Image_conversion(DATAS[i].BGM)].src.loopStart = Loop[1]*1;
           game.assets[Image_conversion(DATAS[i].BGM)].src.loopEnd = Loop[2]*1;
-          game.assets[Image_conversion(DATAS[i].BGM)]._volume = Setting_Flag[9]/10;
         }
         console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
         if(Setting_Flag[9]==0)game.assets[Image_conversion(DATAS[i].BGM)].stop();
