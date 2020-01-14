@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "var 2.6";
+var Version = "var 2.7";
 
 switch (GitHub_type) {
 case "referee":
@@ -772,6 +772,7 @@ function Load(width,height,DATAS){
         }
       }
       if(DATAS[i].BGM!=false&&game.assets[Image_conversion(DATAS[i].BGM)].状態!="再生中"){
+        game.assets[Image_conversion(DATAS[i].BGM)].play();
         game.assets[Image_conversion(DATAS[i].BGM)].状態 = "再生中";
         if(game.assets[Image_conversion(DATAS[i].BGM)].src==undefined){
           game.assets[Image_conversion(DATAS[i].BGM)].volume = Flag[10]/10;
@@ -787,9 +788,7 @@ function Load(width,height,DATAS){
           game.assets[Image_conversion(DATAS[i].BGM)].src.loopStart = Loop[1]*1;
           game.assets[Image_conversion(DATAS[i].BGM)].src.loopEnd = Loop[2]*1;
           game.assets[Image_conversion(DATAS[i].BGM)]._volume = Flag[10]/10;
-          console.log(game.assets[Image_conversion(DATAS[i].BGM)].src);
         }
-        game.assets[Image_conversion(DATAS[i].BGM)].play();
         console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
         if(Flag[10]==0)game.assets[Image_conversion(DATAS[i].BGM)].stop();
       }
@@ -2537,15 +2536,16 @@ function Load(width,height,DATAS){
                     game.assets[ImageDATAS[k].url].pause();
                     if(game.assets[ImageDATAS[k].url].src==undefined){
                       game.assets[ImageDATAS[k].url].volume = Flag[10]/10;
+                      game.assets[ImageDATAS[k].url].play();
                     }
                     else{
                       var Loop = ImageDATAS[k].画像.split("↓");
+                      game.assets[ImageDATAS[k].url]._volume = Flag[10]/10;
+                      game.assets[ImageDATAS[k].url].play();
                       game.assets[ImageDATAS[k].url].src.loop = true;
                       game.assets[ImageDATAS[k].url].src.loopStart = Loop[1]*1;
                       game.assets[ImageDATAS[k].url].src.loopEnd = Loop[2]*1;
-                      game.assets[ImageDATAS[k].url]._volume = Flag[10]/10;
                     }
-                    game.assets[ImageDATAS[k].url].play();
                     console.log(game.assets[ImageDATAS[k].url]);
                     if(Flag[10]==0) game.assets[ImageDATAS[k].url].stop();
                   }
