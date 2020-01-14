@@ -119,6 +119,7 @@ function Load(width,height,DATAS){
   game.preload("image/融合.png");
   game.preload("sound/Item.wav");
   game.preload("sound/セーブ.wav");
+  game.preload("sound/音量調整用.wav");
   game.preload("sound/お任せなのだ.wav");
   game.preload("image/left.png");
   game.preload("image/right.png");
@@ -225,6 +226,7 @@ function Load(width,height,DATAS){
           case "戻る":
           case "選択音":
           case "セーブ":
+          case "音量調整用":
           case "お任せなのだ":
             Sound_ON(expression,true);
             break;
@@ -254,15 +256,23 @@ function Load(width,height,DATAS){
         case "異議あり！":
         case "待った！":
         case "お任せなのだ":
-        if(Flag[12]==0) Play = false;
+        case "音量調整用":
+          if(Flag[12]==0) Play = false;
+          else var Volume = Flag[12]/10;
           break;
         default:
           if(Flag[11]==0) Play = false;
+          else var Volume = Flag[11]/10;
           break;
       }
       if(Play&&Sound_Name!="ポ") console.log(Sound_Name);
       if(Play){
-        console.log(game.assets["sound/"+Sound_Name+".wav"]);
+        if(game.assets["sound/"+Sound_Name+".wav"].src==undefined){
+          game.assets["sound/"+Sound_Name+".wav"].volume = Volume;
+        }
+        else{
+          game.assets["sound/"+Sound_Name+".wav"].volume = Volume;
+        }
         game.assets["sound/"+Sound_Name+".wav"].play();
       }
       return;
@@ -452,7 +462,7 @@ function Load(width,height,DATAS){
     var Before = 0;
     var After = 0;
     var Datas = [];
-    var Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,true,true,true,true,true,true];
+    var Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,5,5,5,true,true,true];
     //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
     var Item_Flag = [];//所持アイテム
     var Character_Flag = [];//人物
@@ -2497,19 +2507,55 @@ function Load(width,height,DATAS){
         Button2[submits]._element.value = c;
         scene.addChild(Button2[submits]);
         Button2[submits].addEventListener('touchstart',function(e){
-          if(Button_push("進む")) return;
-
+          switch (b) {
+            case Text[12].y:
+              var ooo = "音量調整用";
+              break;
+            default:
+              var ooo = "進む";
+              break;
+          }
+          if(Button_push(ooo)) return;
+          switch (b) {
+            case Text[10].y:
+              if(c=="+"){
+                if(Flag[10]!=10) Flag[10] ++;
+              }
+              else{
+                if(Flag[10]!=0) Flag[10] --;
+              }
+              Text[13].text = Flag[10];
+              break;
+            case Text[11].y:
+              if(c=="+"){
+                if(Flag[11]!=10) Flag[11] ++;
+              }
+              else{
+                if(Flag[11]!=0) Flag[11] --;
+              }
+              Text[14].text = Flag[11];
+              break;
+            case Text[12].y:
+              if(c=="+"){
+                if(Flag[12]!=10) Flag[12] ++;
+              }
+              else{
+                if(Flag[12]!=0) Flag[12] --;
+              }
+              Text[15].text = Flag[12];
+              break;
+          }
         });
         submits++;
       }
       Submit2(width/2,Text[10].y,"-");
-      Text[Text_Number] = new Texts(Flag[10]*10,width/2+width/8,Text[10].y);
+      Text[Text_Number] = new Texts(Flag[10],width/2+width/8,Text[10].y);
       Submit2(width/2+width/4,Text[10].y,"+");
       Submit2(width/2,Text[11].y,"-");
-      Text[Text_Number] = new Texts(Flag[11]*10,width/2+width/8,Text[11].y);
+      Text[Text_Number] = new Texts(Flag[11],width/2+width/8,Text[11].y);
       Submit2(width/2+width/4,Text[11].y,"+");
       Submit2(width/2,Text[12].y,"-");
-      Text[Text_Number] = new Texts(Flag[12]*10,width/2+width/8,Text[12].y);
+      Text[Text_Number] = new Texts(Flag[12],width/2+width/8,Text[12].y);
       Submit2(width/2+width/4,Text[12].y,"+");
 
       return scene;
@@ -3846,7 +3892,7 @@ function Load(width,height,DATAS){
         Before = 0;
         After = 0;
         Datas = [];
-        Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,true,true,true,true,true,true];
+        Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,5,5,5,true,true,true];
         //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
         Item_Flag = [];//所持アイテム
         Character_Flag = [];//人物
