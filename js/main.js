@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 3.1";
+var Version = "バージョン 3.2";
 
 switch (GitHub_type) {
 case "referee":
@@ -185,9 +185,6 @@ function Load(width,height,DATAS){
   game.preload("sound/戻る.wav");
   game.preload("sound/選択音.wav");
   game.preload("sound/Trophy.wav");
-  //game.preload("sound/プライド.wav");
-  //game.preload("sound/永遠の灯.wav");
-  //game.preload("sound/偶然、必然。.wav");
   game.preload("image/Trophy.png");
   game.preload("image/異議あり！.png");
   game.preload("sound/異議あり！.wav");
@@ -257,12 +254,12 @@ function Load(width,height,DATAS){
         case "待った！":
         case "お任せなのだ":
         case "音量調整用":
-          if(Flag[12]==0) Play = false;
-          else var Volume = Flag[12]/10;
+          if(Setting_Flag[11]==0) Play = false;
+          else var Volume = Setting_Flag[11]/10;
           break;
         default:
-          if(Flag[11]==0) Play = false;
-          else var Volume = Flag[11]/10;
+          if(Setting_Flag[10]==0) Play = false;
+          else var Volume = Setting_Flag[10]/10;
           break;
       }
       if(Play&&Sound_Name!="ポ") console.log(Sound_Name);
@@ -288,7 +285,7 @@ function Load(width,height,DATAS){
       var form = document.createElement('form');
       var input = [];
       var inputs1 = ["苗字","名前","シーンナンバー"];
-      var inputs2 = [Flag[1],Flag[0],Number];
+      var inputs2 = [Setting_Flag[1],Setting_Flag[0],Number];
       for (var i = 0; i < inputs2.length; i++){
         input[i] = document.createElement('input');
         input[i].type = 'hidden'; //入力フォームが表示されないように
@@ -311,7 +308,7 @@ function Load(width,height,DATAS){
       else Scene_loads2(Number,Item);
       switch (Scene_type) {
         case "直前":
-          Scene_loads(Flag[4],false,false);
+          Scene_loads(Setting_Flag[4],false,false);
           break;
         case "読み込みエラー":
         case "メイン":
@@ -335,15 +332,14 @@ function Load(width,height,DATAS){
           if(Number.length>5){
             if(Number.substring(0,6)=="アイテム使用"){
               Number = Number.substring(6).split(",");
-              Flag[4] = Number[1];
-              if(Flag[4].replace(/\d/g,"").replace(/\./g,"")=="") Flag[4] = Flag[4]*1;
+              Setting_Flag[4] = Number[1];
+              if(Setting_Flag[4].replace(/\d/g,"").replace(/\./g,"")=="") Setting_Flag[4] = Setting_Flag[4]*1;
               Number = Number[0];
-              //console.log(Number);
               Inspect_loads(Number,false);
               return;
             }
           }
-          Inspect_loads(Flag[4],false);
+          Inspect_loads(Setting_Flag[4],false);
           break;
         case "チョイス":
           game.replaceScene(ChoiceScene());
@@ -382,7 +378,6 @@ function Load(width,height,DATAS){
           }
           break;
       }
-      //console.log(Flag[4]);
     }
 
     function Inspect_loads(Number,Item){
@@ -393,6 +388,7 @@ function Load(width,height,DATAS){
 
     function Load_Datas(){
       Flag = window.localStorage.getItem("Flag").split(",");
+      Setting_Flag = window.localStorage.getItem("Setting_Flag").split(",");
       Datas = window.localStorage.getItem("Datas").split(",");
       Number = window.localStorage.getItem("Number");
       if(Number.replace(/\d/g,"").replace(/\./g,"")=="") Number = Number*1;
@@ -444,38 +440,28 @@ function Load(width,height,DATAS){
       }
       Trophy_Flag = Trophy_Flag2;
       if(Trophy_Flag == undefined) Trophy_Flag = [];
-      for (var i = 3; i < Flag.length; i++){
-        if(Flag[i]=="true") Flag[i] = true;
-        else if(Flag[i]=="false") Flag[i] = false
-        else if(Flag[i].replace(/\d/g,"").replace(/\./g,"")=="") Flag[i] = Flag[i]*1;
+      for (var i = 3; i < Setting_Flag.length; i++){
+        if(Setting_Flag[i]=="true") Setting_Flag[i] = true;
+        else if(Setting_Flag[i]=="false") Setting_Flag[i] = false
+        else if(Setting_Flag[i].replace(/\d/g,"").replace(/\./g,"")=="") Setting_Flag[i] = Setting_Flag[i]*1;
+        //[0名前,1苗字,2性別,3体力,4直前,5アイテムページ,6人物ページ,7トロフィーページ,8オートセーブ,9BGM音量,10効果音音量,11音声音量];
       }
       for (var i = 0; i < Datas.length; i++){
         if(Datas[i].replace(/\d/g,"").replace(/\./g,"")=="") Datas[i] = Datas[i]*1;
       }
-      Pages = Flag[7].split("乙");
-      Pages4 = Pages[2]*1;
-      Pages2 = Pages[1]*1;
-      Pages = Pages[0]*1;
-      //console.log(Number);
       return(Number);
     }
 
-    //console.log(DATAS2);
-    var Rewind = 0;
-    var Skip = 0;
-    var Before = 0;
-    var After = 0;
     var Datas = [];
-    var Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,5,5,5,true,true,true];
-    //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
+    var Setting_Flag = ["名前","苗字","未設定",10,"最初から",0,0,0,true,5,5,5];
+    //[0名前,1苗字,2性別,3体力,4直前,5アイテムページ,6人物ページ,7トロフィーページ,8オートセーブ,9BGM音量,10効果音音量,11音声音量];
+    var Flag = [];//フラグ
     var Item_Flag = [];//所持アイテム
     var Character_Flag = [];//人物
     var Trophy_Flag = [];//トロフィー
     var Pages = 0;//アイテムのページ
     var Pages2 = 0;//人物のページ
     var Pages4 = 0;//トロフィーのページ
-    T_Name = "";
-    Text = "";
     var Scene_type = "メイン";
     var Scene_kazu = 1;
     var Get = false;
@@ -489,7 +475,7 @@ function Load(width,height,DATAS){
     for (var i = 0; i < Trophy_Flag.length; i++) {
     if(Trophy_Flag[i][0]==Item) return(true);
     }
-    for (var i = 10; i < Flag.length; i++) {
+    for (var i = 0; i < Flag.length; i++) {
     if(Flag[i]==Item) return(true);
     }
     return(false);
@@ -501,37 +487,11 @@ function Load(width,height,DATAS){
       if(fade) Scene_type = "フェードイン";
     }
 
-    function Last(){
-      After = Skip;
-      Skip = 0;
-    }
-
-    function B_A(b,a){
-      Before = b;
-      After = a;
-    }
-
-    function Flag_reset(){
-      var Flag2 = [];
-      Flag2[0] = Flag[0];
-      Flag2[1] = Flag[1];
-      Flag2[2] = Flag[2];
-      Flag2[8] = Flag[8];
-      Flag2[9] = Flag[9];
-      Flag2[10] = Flag[10];
-      Flag2[11] = Flag[11];
-      Flag2[12] = Flag[12];
-      Flag2[13] = Flag[13];
-      Flag2[14] = Flag[14];
-      Flag = Flag2;
-      Flag[6] = 10;
-    }
-
     function Save(Number){
-    Flag[7] = Pages+"乙"+Pages2+"乙"+Pages4;
     window.localStorage.setItem("Flag",Flag);
     window.localStorage.setItem("Datas",Datas);
     window.localStorage.setItem("Number",Number);
+    window.localStorage.setItem("Setting_Flag",Setting_Flag);
     var Item_Flag2 = [];
     for (var i = 0; i < Item_Flag.length; i++) {
     Item_Flag2[i] = Item_Flag[i] + "端";
@@ -551,15 +511,8 @@ function Load(width,height,DATAS){
     if(Trophy_Flag2==[]) Trophy_Flag2 = [[]+"端"]
     window.localStorage.setItem("Trophy",Trophy_Flag2);
     window.localStorage.setItem("syoken",false);
-    var Flag2 = [];
-    var k = 0;
-    for (var i = 15; i < Flag.length; i++) {
-    Flag2[k] = Flag[i];
-    k++;
-    }
-    console.log(Flag2);
     console.log(Datas);
-    post(Flag[1],Flag[0],Number);
+    post(Setting_Flag[1],Setting_Flag[0],Number);
     }//セーブ
 
     function rand(n) {
@@ -626,14 +579,14 @@ function Load(width,height,DATAS){
 
     function Scene_loads2(Number,Item,get){
     console.log(Number);
-    var Name = Flag[0];
-    var Gender = Flag[2];
-    var Surname = Flag[1];
+    var Name = Setting_Flag[0];
+    var Gender = Setting_Flag[2];
+    var Surname = Setting_Flag[1];
     if(Gender=="男"){
     var www = ["僕","俺"];
     var Person = www[rand(1)];
     var S_image = Image_conversion("男主人公");
-    if(Flag[1]=="不動"&&Flag[0]=="遊星"){
+    if(Setting_Flag[1]=="不動"&&Setting_Flag[0]=="遊星"){
       var Person = "俺";
       var S_image = Image_conversion("蟹");
     }
@@ -653,12 +606,6 @@ function Load(width,height,DATAS){
     Scene_type = "アイテム";
     return;
     }
-    Rewind = Flag[3];
-    Skip = Flag[5];
-    Before = Number-1;
-    After = Number+1;
-    if(Rewind==Before) Rewind = 0;
-    if(Skip==After) Skip = 0;
     if(Number=="タイトルに戻る"){
     Scene_type = Number;
     return;
@@ -669,8 +616,6 @@ function Load(width,height,DATAS){
     return;
     }
     if(Number=="調べる出来てない"){
-      T_Name = "";
-      Text = "データが存在しないようだ。";
       Datas[0] = "Black";
       Datas[1] = 0;
       Datas[2] = 0;
@@ -679,7 +624,7 @@ function Load(width,height,DATAS){
       Datas[5] = 0;
       Datas[6] = 0;
       Datas[7] = "";
-      Datas[8] = Text;
+      Datas[8] = "データが存在しないようだ。";
       Datas[9] = 0;
       Datas[10] = 0;
       Datas[11] = Number;
@@ -689,8 +634,6 @@ function Load(width,height,DATAS){
       return;
     }
     if(Number=="調べる何もない"){
-      T_Name = "";
-      Text = "特に気になるものはない。";
       Datas[1] = 0;
       Datas[2] = 0;
       Datas[3] = 0;
@@ -698,7 +641,7 @@ function Load(width,height,DATAS){
       Datas[5] = 0;
       Datas[6] = 0;
       Datas[7] = "";
-      Datas[8] = Text;
+      Datas[8] = "特に気になるものはない。";
       Datas[9] = 0;
       Datas[10] = 0;
       Datas[11] = Number;
@@ -709,7 +652,7 @@ function Load(width,height,DATAS){
     }
     if(Number=="ゲームオーバー"){
     Datas = ["stand",0,0,0,0,0,Number,"タイトルに戻る","タイトルに戻る","セーブ読み込み","セーブ読み込み"];
-    if(Flag[8]) Datas[9] = 0;
+    if(Setting_Flag[8]) Datas[9] = 0;
     Scene_type = "チョイス";
     return;
     }
@@ -722,13 +665,11 @@ function Load(width,height,DATAS){
     if(i==DATAS.length){
     if(Number.length>10){
       if(Number.substring(0,10)=="つきつけるデフォルト"){
-        T_Name = "";
-        Text = "反応がない。";
         if(Scene_type == "メイン"||Scene_type == "アイテム"){
-        Datas = [Datas[0],Datas[2],0,Datas[4],0,Datas[6],0,"",Text,0,0,0,Flag[4],0];
+        Datas = [Datas[0],Datas[2],0,Datas[4],0,Datas[6],0,"","反応がない。",0,0,0,Setting_Flag[4],0];
         }
         if(Scene_type == "チョイス"){
-        Datas = [Datas[0],Datas[1],0,Datas[2],0,Datas[3],0,"",Text,0,0,0,Flag[4],0];
+        Datas = [Datas[0],Datas[1],0,Datas[2],0,Datas[3],0,"","反応がない。",0,0,0,Setting_Flag[4],0];
         }
         Scene_type = "メイン";
         return;
@@ -736,13 +677,11 @@ function Load(width,height,DATAS){
     }
     if(Number.length>7){
       if(Number.substring(0,7)=="使うデフォルト"){
-        T_Name = "";
-        Text = "ここでは使えないようだ。";
         if(Scene_type == "メイン"||Scene_type == "アイテム"){
-        Datas = [Datas[0],Datas[1],0,Datas[3],0,Datas[5],0,"",Text,0,0,0,Flag[4],0];
+        Datas = [Datas[0],Datas[1],0,Datas[3],0,Datas[5],0,"","ここでは使えないようだ。",0,0,0,Setting_Flag[4],0];
         }
         if(Scene_type == "チョイス"){
-        Datas = [Datas[0],Datas[1],0,Datas[2],0,Datas[3],0,"",Text,0,0,0,Flag[4],0];
+        Datas = [Datas[0],Datas[1],0,Datas[2],0,Datas[3],0,"","ここでは使えないようだ。",0,0,0,Setting_Flag[4],0];
         }
         Scene_type = "メイン";
         return;
@@ -750,17 +689,17 @@ function Load(width,height,DATAS){
     }
     if(Number.length>5){
       if(Number.substring(0,5)=="つきつける"){
-        Scene_loads2(Flag[4],"つきつけるデフォルト",false);
+        Scene_loads2(Setting_Flag[4],"つきつけるデフォルト",false);
         return;
       }
     }
     if(Number.length>2){
       if(Number.substring(0,2)=="使う"){
-        Scene_loads2(Flag[4],"使うデフォルト",false);
+        Scene_loads2(Setting_Flag[4],"使うデフォルト",false);
         return;
       }
     }
-    if(Flag[4]) Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + kousin2,0,0,0,"未完成",0];
+    if(Setting_Flag[4]) Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + kousin2,0,0,0,"未完成",0];
     else Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + kousin2,0,0,0,"タイトルに戻る",0];
     Scene_type = "メイン";
     return;
@@ -779,7 +718,7 @@ function Load(width,height,DATAS){
         game.assets[Image_conversion(DATAS[i].BGM)].play();
         game.assets[Image_conversion(DATAS[i].BGM)].状態 = "再生中";
         if(game.assets[Image_conversion(DATAS[i].BGM)].src==undefined){
-          game.assets[Image_conversion(DATAS[i].BGM)].volume = Flag[10]/10;
+          game.assets[Image_conversion(DATAS[i].BGM)].volume = Setting_Flag[9]/10;
           game.assets[Image_conversion(DATAS[i].BGM)]._element.loop = true;
           console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
         }
@@ -791,10 +730,10 @@ function Load(width,height,DATAS){
           game.assets[Image_conversion(DATAS[i].BGM)].src.loop = true;
           game.assets[Image_conversion(DATAS[i].BGM)].src.loopStart = Loop[1]*1;
           game.assets[Image_conversion(DATAS[i].BGM)].src.loopEnd = Loop[2]*1;
-          game.assets[Image_conversion(DATAS[i].BGM)]._volume = Flag[10]/10;
+          game.assets[Image_conversion(DATAS[i].BGM)]._volume = Setting_Flag[9]/10;
         }
         console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
-        if(Flag[10]==0)game.assets[Image_conversion(DATAS[i].BGM)].stop();
+        if(Setting_Flag[9]==0)game.assets[Image_conversion(DATAS[i].BGM)].stop();
       }
     }
     if(Scene_type=="メイン"){
@@ -806,7 +745,7 @@ function Load(width,height,DATAS){
       Datas[5] = Image_conversion(DATAS[i].Datas5);
       Datas[6] = DATAS[i].Datas6;
       Datas[7] = DATAS[i].Datas7.replace(/\(主人公苗字\)/g,Surname).replace(/\(主人公名前\)/,Name);
-      Datas[8] = DATAS[i].Datas8.replace(/\n/g,"↓").replace(/\(主人公苗字\)/g,Surname).replace(/\(主人公名前\)/g,Name).replace(/\(一人称\)/g,Person).replace(/\(残りライフ\)/g,Flag[6]);
+      Datas[8] = DATAS[i].Datas8.replace(/\n/g,"↓").replace(/\(主人公苗字\)/g,Surname).replace(/\(主人公名前\)/g,Name).replace(/\(一人称\)/g,Person).replace(/\(残りライフ\)/g,Setting_Flag[3]);
       Datas[9] = DATAS[i].Datas9;
       Datas[10] = DATAS[i].Datas10;
       Datas[11] = DATAS[i].Datas11;
@@ -855,11 +794,11 @@ function Load(width,height,DATAS){
       Scene_loads2(Number,false,false);
     }
     else if (Scene_type=="ライフ判断") {
-      if(Flag[6]==0){
+      if(Setting_Flag[3]==0){
         Number = "ライフ0_1";
       }
       else {
-        Number = Flag[4];
+        Number = Setting_Flag[4];
       }
       Scene_loads2(Number,false,false);
     }
@@ -882,19 +821,19 @@ function Load(width,height,DATAS){
         for (var l = 0; l < GET.length; l++) {
           switch(GET[l]){
           case "フラグリセット":
-              Flag_reset();
+              Flag = [];
               continue;
               break;
           case "アイテムリセット":
             Item_Flag = [];
             continue;
             break;
-            case "人物リセット":
-              Character_Flag = [];
-              continue;
-              break;
+          case "人物リセット":
+            Character_Flag = [];
+            continue;
+            break;
             case "ダメージ":
-              Flag[6]--;
+              Setting_Flag[3]--;
               continue;
               break;
             default:
@@ -916,11 +855,11 @@ function Load(width,height,DATAS){
     console.log("調べる"+Number);
     switch (Number) {
     default:
-    Flag[4] = Number;
+    Setting_Flag[4] = Number;
     if(Number.length>5){
     if(Number.substring(0,6)=="アイテム使用"){
     Number = Number.substring(6).split(",");
-    if(Flag[4].replace(/\d/g,"").replace(/\./g,"")=="") Flag[4] = Flag[4]*1;
+    if(Setting_Flag[4].replace(/\d/g,"").replace(/\./g,"")=="") Setting_Flag[4] = Setting_Flag[4]*1;
     Number = Number[0];
     }
     }
@@ -941,7 +880,7 @@ function Load(width,height,DATAS){
 
     function Get_Datas(){
     Get = true;
-    Scene_loads2(Flag[4],false,true);
+    Scene_loads2(Setting_Flag[4],false,true);
     Get = false;
     return;
     }
@@ -1020,8 +959,8 @@ function Load(width,height,DATAS){
       Submit("説明");
 
       if(Data){
-        Flag = window.localStorage.getItem("Flag").split(",");
-        if(Flag[1]=="不動"&&Flag[0]=="遊星"&&Flag[2]=="男") Submit("テスト用");
+        Setting_Flag = window.localStorage.getItem("Setting_Flag").split(",");
+        if(Setting_Flag[1]=="不動"&&Setting_Flag[0]=="遊星"&&Setting_Flag[2]=="男") Submit("テスト用");
         else {
           fetch(GAS[1],
             {
@@ -1078,8 +1017,8 @@ function Load(width,height,DATAS){
             }
           }
         }
-        if(OK) Flag[4] = Datas[11];
-        if(Flag[8]){
+        if(OK) Setting_Flag[4] = Datas[11];
+        if(Setting_Flag[8]){
           Save(Datas[11]);
         }
       }
@@ -1329,7 +1268,6 @@ function Load(width,height,DATAS){
         default:
           break;
       }
-      //  Datas = [1,S_image,0,0,0,4,0,T_Name,Text,Rewind,Before,Number,After,Skip];
 
       if(Datas[14]!=undefined&&Datas[14]!=false){
         var xxx = game.assets[Datas[15]].width;
@@ -1735,8 +1673,8 @@ function Load(width,height,DATAS){
             }
           }
         }
-        if(OK) Flag[4] = Datas[6];
-        if(Flag[8]&&Datas[6]!="ゲームオーバー"){
+        if(OK) Setting_Flag[4] = Datas[6];
+        if(Setting_Flag[8]&&Datas[6]!="ゲームオーバー"){
           Save(Datas[6]);
         }
       }
@@ -1978,11 +1916,11 @@ function Load(width,height,DATAS){
     var InterrogationScene = function(){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      if(Flag[8]&&Datas[5]!=false){
+      if(Setting_Flag[8]&&Datas[5]!=false){
         Save(Datas[5]);
       }
 
-      Flag[4] = Datas[5];
+      Setting_Flag[4] = Datas[5];
 
       var xxx = game.assets["image/背景/stand.png"].width;
       var yyy = game.assets["image/背景/stand.png"].height;
@@ -2241,14 +2179,14 @@ function Load(width,height,DATAS){
               this._element.value = "セーブしました。";
               break;
               case "セーブ方法の切り替え":
-              if(Flag[8]){
+              if(Setting_Flag[8]){
                 Button[6]._element.value = "セーブする";
-                Flag[8] = false;
+                Setting_Flag[8] = false;
                 scene.addChild(Button[6]);
                 scene.removeChild(Button[7]);
               }
               else{
-                Flag[8] = true;
+                Setting_Flag[8] = true;
                 scene.addChild(Button[7]);
                 scene.removeChild(Button[6]);
               }
@@ -2271,22 +2209,22 @@ function Load(width,height,DATAS){
                 Text[11].text = ",(カンマ)は使用できません。";
               }
               else{
-                Flag[0] = S_Input2._element.value;
-                Flag[1] = S_Input1._element.value;
+                Setting_Flag[0] = S_Input2._element.value;
+                Setting_Flag[1] = S_Input1._element.value;
                 if(Gender._element.value=="男"){
-                  Flag[2] = "男";
-                  if(S_Input1._element.value=="") Flag[1] = "若辻";
-                  if(S_Input2._element.value=="") Flag[0] = "俛人";
+                  Setting_Flag[2] = "男";
+                  if(S_Input1._element.value=="") Setting_Flag[1] = "若辻";
+                  if(S_Input2._element.value=="") Setting_Flag[0] = "俛人";
                 }
                 else if(Gender._element.value=="女"){
-                  Flag[2] = "女";
-                  if(S_Input1._element.value=="") Flag[1] = "防人";
-                  if(S_Input2._element.value=="") Flag[0] = "玲奈";
+                  Setting_Flag[2] = "女";
+                  if(S_Input1._element.value=="") Setting_Flag[1] = "防人";
+                  if(S_Input2._element.value=="") Setting_Flag[0] = "玲奈";
                 }
                 else{
-                  Flag[2] = "未設定";
-                  if(S_Input1._element.value=="") Flag[1] = "カードの精霊";
-                  if(S_Input2._element.value=="") Flag[0] = "ユベル";
+                  Setting_Flag[2] = "未設定";
+                  if(S_Input1._element.value=="") Setting_Flag[1] = "カードの精霊";
+                  if(S_Input2._element.value=="") Setting_Flag[0] = "ユベル";
                 }
                 Sound_ON("Item",true);
                 Text[11].text = "設定しました。";
@@ -2308,7 +2246,7 @@ function Load(width,height,DATAS){
       Submit("セーブする");
       Numbers -= (width/20)+(width/25)+(width/25);
       Submit("現在はオートセーブです。");
-      if(Flag[8]) scene.removeChild(Button[6]);
+      if(Setting_Flag[8]) scene.removeChild(Button[6]);
       else scene.removeChild(Button[7]);
 
       return scene;
@@ -2336,7 +2274,7 @@ function Load(width,height,DATAS){
       Numbers += (width/20)+(width/25)+(width/25);
 
       var Option = [];
-      switch (Flag[2]) {
+      switch (Setting_Flag[2]) {
         case "男":
           var Choice_Transform = ["男","女","どちらでもない"];
           break;
@@ -2361,7 +2299,7 @@ function Load(width,height,DATAS){
       S_Input1.width = width/2;
       S_Input1.height = (width/10);
       S_Input1._element = document.createElement('input');
-      S_Input1._element.value = Flag[1];
+      S_Input1._element.value = Setting_Flag[1];
       S_Input1._element.placeholder = "苗字を入力";
       Numbers += (width/20)+(width/25)+(width/25);
       scene.addChild(S_Input1);
@@ -2371,7 +2309,7 @@ function Load(width,height,DATAS){
       S_Input2.width = width/2;
       S_Input2.height = (width/10);
       S_Input2._element = document.createElement('input');
-      S_Input2._element.value = Flag[0];
+      S_Input2._element.value = Setting_Flag[0];
       S_Input2._element.placeholder = "名前を入力";
       scene.addChild(S_Input2);
 
@@ -2393,22 +2331,22 @@ function Load(width,height,DATAS){
             scene.addChild(Text[3]);
           }
           else{
-            Flag[0] = S_Input2._element.value;
-            Flag[1] = S_Input1._element.value;
+            Setting_Flag[0] = S_Input2._element.value;
+            Setting_Flag[1] = S_Input1._element.value;
             if(Gender._element.value=="男"){
-              Flag[2] = "男";
-              if(S_Input1._element.value=="") Flag[1] = "若辻";
-              if(S_Input2._element.value=="") Flag[0] = "俛人";
+              Setting_Flag[2] = "男";
+              if(S_Input1._element.value=="") Setting_Flag[1] = "若辻";
+              if(S_Input2._element.value=="") Setting_Flag[0] = "俛人";
             }
             else if(Gender._element.value=="女"){
-              Flag[2] = "女";
-              if(S_Input1._element.value=="") Flag[1] = "防人";
-              if(S_Input2._element.value=="") Flag[0] = "玲奈";
+              Setting_Flag[2] = "女";
+              if(S_Input1._element.value=="") Setting_Flag[1] = "防人";
+              if(S_Input2._element.value=="") Setting_Flag[0] = "玲奈";
             }
             else{
-              Flag[2] = "未設定";
-              if(S_Input1._element.value=="") Flag[1] = "カードの精霊";
-              if(S_Input2._element.value=="") Flag[0] = "ユベル";
+              Setting_Flag[2] = "未設定";
+              if(S_Input1._element.value=="") Setting_Flag[1] = "カードの精霊";
+              if(S_Input2._element.value=="") Setting_Flag[0] = "ユベル";
             }
             game.popScene();
             Scene_kazu--;
@@ -2527,57 +2465,57 @@ function Load(width,height,DATAS){
           switch (b) {
             case Text[10].y:
               if(c=="+"){
-                if(Flag[10]!=10) Flag[10] ++;
+                if(Setting_Flag[9]!=10) Setting_Flag[9] ++;
               }
               else{
-                if(Flag[10]!=0) Flag[10] --;
+                if(Setting_Flag[9]!=0) Setting_Flag[9] --;
               }
-              if(Flag[10]==10) Text[13].text = Flag[10];
-              else Text[13].text = " "+Flag[10];
+              if(Setting_Flag[9]==10) Text[13].text = Setting_Flag[9];
+              else Text[13].text = " "+Setting_Flag[9];
               for (var k = 0; k < ImageDATAS.length; k++){
                 if(ImageDATAS[k].画像.substring(0,1)=="音"){
                   if(game.assets[ImageDATAS[k].url].状態=="再生中"){
                     var basyo = game.assets[ImageDATAS[k].url].currentTime;
                     game.assets[ImageDATAS[k].url].pause();
                     if(game.assets[ImageDATAS[k].url].src==undefined){
-                      game.assets[ImageDATAS[k].url].volume = Flag[10]/10;
+                      game.assets[ImageDATAS[k].url].volume = Setting_Flag[9]/10;
                       game.assets[ImageDATAS[k].url].play();
                     }
                     else{
                       var Loop = ImageDATAS[k].画像.split("↓");
                       game.assets[ImageDATAS[k].url]._currentTime = basyo;
-                      game.assets[ImageDATAS[k].url]._volume = Flag[10]/10;
+                      game.assets[ImageDATAS[k].url]._volume = Setting_Flag[9]/10;
                       game.assets[ImageDATAS[k].url].play();
                       game.assets[ImageDATAS[k].url].src.loop = true;
                       game.assets[ImageDATAS[k].url].src.loopStart = Loop[1]*1;
                       game.assets[ImageDATAS[k].url].src.loopEnd = Loop[2]*1;
                     }
                     console.log(game.assets[ImageDATAS[k].url]);
-                    if(Flag[10]==0) game.assets[ImageDATAS[k].url].stop();
+                    if(Setting_Flag[9]==0) game.assets[ImageDATAS[k].url].stop();
                   }
                 }
               }
               break;
             case Text[11].y:
               if(c=="+"){
-                if(Flag[11]!=10) Flag[11] ++;
+                if(Setting_Flag[10]!=10) Setting_Flag[10] ++;
               }
               else{
-                if(Flag[11]!=0) Flag[11] --;
+                if(Setting_Flag[10]!=0) Setting_Flag[10] --;
               }
-              if(Flag[11]==10) Text[14].text = Flag[11];
-              else Text[14].text = " "+Flag[11];
+              if(Setting_Flag[10]==10) Text[14].text = Setting_Flag[10];
+              else Text[14].text = " "+Setting_Flag[10];
               Sound_ON("進む",true);
               break;
             case Text[12].y:
               if(c=="+"){
-                if(Flag[12]!=10) Flag[12] ++;
+                if(Setting_Flag[11]!=10) Setting_Flag[11] ++;
               }
               else{
-                if(Flag[12]!=0) Flag[12] --;
+                if(Setting_Flag[11]!=0) Setting_Flag[11] --;
               }
-              if(Flag[12]==10) Text[15].text = Flag[12];
-              else Text[15].text = " "+Flag[12];
+              if(Setting_Flag[11]==10) Text[15].text = Setting_Flag[11];
+              else Text[15].text = " "+Setting_Flag[11];
               Sound_ON("音量調整用",true);
               break;
           }
@@ -2585,13 +2523,13 @@ function Load(width,height,DATAS){
         submits++;
       }
       Submit2(width/2,Text[10].y,"-");
-      Text[Text_Number] = new Texts(Flag[10],width/2+width/8,Text[10].y);
+      Text[Text_Number] = new Texts(Setting_Flag[9],width/2+width/8,Text[10].y);
       Submit2(width/2+width/4,Text[10].y,"+");
       Submit2(width/2,Text[11].y,"-");
-      Text[Text_Number] = new Texts(Flag[11],width/2+width/8,Text[11].y);
+      Text[Text_Number] = new Texts(Setting_Flag[10],width/2+width/8,Text[11].y);
       Submit2(width/2+width/4,Text[11].y,"+");
       Submit2(width/2,Text[12].y,"-");
-      Text[Text_Number] = new Texts(Flag[12],width/2+width/8,Text[12].y);
+      Text[Text_Number] = new Texts(Setting_Flag[11],width/2+width/8,Text[12].y);
       Submit2(width/2+width/4,Text[12].y,"+");
 
       return scene;
@@ -2649,14 +2587,14 @@ function Load(width,height,DATAS){
       Text.text = "◆ 戻る";
       //scene.addChild(Text);
       Text.addEventListener('touchstart',function(e){
-        if(Flag[4].length>5){
-          if(Flag[4].substring(0,6)=="アイテム使用"){
-            Flag[4] = Flag[4].substring(6).split(",");
-            Flag[4] = Flag[4][1];
-            if(Flag[4].replace(/\d/g,"").replace(/\./g,"")=="") Flag[4] = Flag[4]*1;
+        if(Setting_Flag[4].length>5){
+          if(Setting_Flag[4].substring(0,6)=="アイテム使用"){
+            Setting_Flag[4] = Setting_Flag[4].substring(6).split(",");
+            Setting_Flag[4] = Setting_Flag[4][1];
+            if(Setting_Flag[4].replace(/\d/g,"").replace(/\./g,"")=="") Setting_Flag[4] = Setting_Flag[4]*1;
           }
         }
-        Scene_loads(Flag[4],true,Item);
+        Scene_loads(Setting_Flag[4],true,Item);
       });
 
       var Modoru = new Entity();
@@ -2669,7 +2607,7 @@ function Load(width,height,DATAS){
       scene.addChild(Modoru);
       Modoru.addEventListener('touchstart',function(e){
         if(Button_push("戻る")) return;
-        Scene_loads(Flag[4],true,Item);
+        Scene_loads(Setting_Flag[4],true,Item);
       });
 
       return scene;
@@ -3923,20 +3861,16 @@ function Load(width,height,DATAS){
         console.log("Scene数",Scene_kazu);
         Data = false;
         window.localStorage.clear();
-        Rewind = 0;
-        Skip = 0;
-        Before = 0;
-        After = 0;
         Datas = [];
-        Flag = ["名前","苗字","未設定",1,1,21,10,"0乙0乙0",true,false,5,5,5,true,true,true];
-        //3早戻し,4本線,5先送り,6体力,7ページ,8オートセーブ,9おまけ裁判,10選択音,11トロフィー音,12アイテム音,13異議あり!音,14待った！音;
+        Setting_Flag = ["名前","苗字","未設定",10,"最初から",0,0,0,true,5,5,5];
+        //[0名前,1苗字,2性別,3体力,4直前,5アイテムページ,6人物ページ,7トロフィーページ,8オートセーブ,9BGM音量,10効果音音量,11音声音量];
+        Flag = [];//フラグ
         Item_Flag = [];//所持アイテム
         Character_Flag = [];//人物
         Trophy_Flag = [];//トロフィー
         Pages = 0;//アイテムのページ
         Pages2 = 0;//人物のページ
         Pages4 = 0;//トロフィーのページ
-        T_Name = "";
         Text = "";
         Scene_type = "メイン";
         Scene_kazu = 1;
@@ -4974,12 +4908,12 @@ function Load(width,height,DATAS){
             game.popScene();
             Scene_kazu--;
             console.log("Scene数",Scene_kazu);
-            Datas = ["Black",0,0,0,0,0,0,0,"シーンデータを修正しました。",0,0,0,Flag[4],0];
+            Datas = ["Black",0,0,0,0,0,0,0,"シーンデータを修正しました。",0,0,0,Setting_Flag[4],0];
             game.replaceScene(MainScene());
             Sound_ON("Item",true);
             break;
           case "フラグ追加 or 消去":
-            for (var i = 10; i < Flag.length; i++){
+            for (var i = 0; i < Flag.length; i++){
               if(Flag[i]==S_Inputss[0]._element.value){
                 Flag[i] = false;
                 Text[1].text = S_Inputss[0]._element.value+" オフ。";
@@ -4992,12 +4926,12 @@ function Load(width,height,DATAS){
             Sound_ON("Item",true);
             break;
           case "体力変更":
-            Flag[6] = S_Inputss[0]._element.value*1;
-            Text[1].text = "残り回数 = " + Flag[6];
+            Setting_Flag[3] = S_Inputss[0]._element.value*1;
+            Text[1].text = "残り回数 = " + Setting_Flag[3];
             Sound_ON("Item",true);
             break;
           case "フラグリセット":
-            Flag_reset();
+            Flag = [];
             Text[1].text = S_Input._element.value;
             Sound_ON("Item",true);
             break;
