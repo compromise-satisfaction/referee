@@ -271,7 +271,8 @@ function Load(width,height,DATAS){
           game.assets["sound/"+Sound_Name+".wav"].volume = Volume;
         }
         else{
-          game.assets["sound/"+Sound_Name+".wav"].volume = Volume;
+          console.log(game.assets["sound/"+Sound_Name+".wav"]);
+          game.assets["sound/"+Sound_Name+".wav"].src.volume = Volume;
         }
         game.assets["sound/"+Sound_Name+".wav"].play();
       }
