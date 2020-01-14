@@ -1,5 +1,7 @@
 enchant();
 
+var Version = "var 1.2";
+
 switch (GitHub_type) {
 case "referee":
 var GAS = [
@@ -49,7 +51,6 @@ function vue(width,height){
 }
 
 var Image_urls = false;
-
 var Button_time_next = 3;
 var Button_time = Button_time_next;
 
@@ -80,7 +81,7 @@ function Load(width,height,DATAS){
   for (var i = 0; i < ImageDATAS.length; i++) {
     if(ImageDATAS[i].name=="最終更新日時") break;
   }
-  var kousin2 = ImageDATAS[i].url;
+  var kousin2 = ImageDATAS[i].url+"↓"+Version;
   var kousin3 = kousin2.split("↓")
   for (var i = 0; i < kousin3.length; i++) {
     kousin[i] = new Texts(kousin3[i],i);
@@ -226,7 +227,6 @@ function Load(width,height,DATAS){
           case "戻る":
           case "選択音":
           case "セーブ":
-          case "音量調整用":
           case "お任せなのだ":
             Sound_ON(expression,true);
             break;
@@ -2508,15 +2508,7 @@ function Load(width,height,DATAS){
         Button2[submits]._element.value = c;
         scene.addChild(Button2[submits]);
         Button2[submits].addEventListener('touchstart',function(e){
-          switch (b) {
-            case Text[12].y:
-              var ooo = "音量調整用";
-              break;
-            default:
-              var ooo = "進む";
-              break;
-          }
-          if(Button_push(ooo)) return;
+          if(Button_push("音無し")) return;
           switch (b) {
             case Text[10].y:
               if(c=="+"){
@@ -2535,6 +2527,7 @@ function Load(width,height,DATAS){
                 if(Flag[11]!=0) Flag[11] --;
               }
               Text[14].text = Flag[11];
+              Sound_ON("進む",true);
               break;
             case Text[12].y:
               if(c=="+"){
@@ -2544,6 +2537,7 @@ function Load(width,height,DATAS){
                 if(Flag[12]!=0) Flag[12] --;
               }
               Text[15].text = Flag[12];
+              Sound_ON("音量調整用",true);
               break;
           }
         });
