@@ -762,7 +762,7 @@ function Load(width,height,DATAS){
     Scene_type = "メイン";
     return;
     }
-    if(Flag[10]&&DATAS[i].BGM!="変化無し"){
+    if(DATAS[i].BGM!="変化無し"){
       for (var k = 0; k < ImageDATAS.length; k++){
         if(ImageDATAS[k].画像.substring(0,1)=="音"){
           if(DATAS[i].BGM!=ImageDATAS[k].name&&game.assets[ImageDATAS[k].url].状態=="再生中"){
@@ -776,6 +776,7 @@ function Load(width,height,DATAS){
         game.assets[Image_conversion(DATAS[i].BGM)].play();
         game.assets[Image_conversion(DATAS[i].BGM)].状態 = "再生中";
         if(game.assets[Image_conversion(DATAS[i].BGM)].src==undefined){
+          game.assets[Image_conversion(DATAS[i].BGM)].volume = Flag[10]/10;
           game.assets[Image_conversion(DATAS[i].BGM)]._element.loop = true;
           console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
         }
@@ -979,7 +980,15 @@ function Load(width,height,DATAS){
         Button[submits]._element.value = a;
         scene.addChild(Button[submits]);
         Button[submits].addEventListener('touchstart',function(e){
-          if(Button_push("選択音")) return;
+          switch (a) {
+            case "データ初期化":
+              var ooo = "音無し";
+              break;
+            default:
+              var ooo ="選択音";
+              break;
+          }
+          if(Button_push(ooo)) return;
           if(a!="データ初期化"&&Data) Load_Datas();
           switch (a) {
             case "続きから":
@@ -2520,6 +2529,18 @@ function Load(width,height,DATAS){
               }
               if(Flag[10]==10) Text[13].text = Flag[10];
               else Text[13].text = " "+Flag[10];
+              for (var k = 0; k < ImageDATAS.length; k++){
+                if(ImageDATAS[k].画像.substring(0,1)=="音"){
+                  if(game.assets[ImageDATAS[k].url].状態=="再生中"){
+                    if(game.assets[ImageDATAS[k].url].src==undefined){
+                      game.assets[ImageDATAS[k].url].volume = Flag[10]/10;
+                    }
+                    else{
+                      game.assets[ImageDATAS[k].url]._volume = Flag[10]/10;
+                    }
+                  }
+                }
+              }
               break;
             case Text[11].y:
               if(c=="+"){
@@ -3880,7 +3901,7 @@ function Load(width,height,DATAS){
       //Text[2] = new Texts("◆ いいえ");
 
       Button[0].addEventListener('touchstart',function(e){
-        if(Button_push("選択音")) return;
+        if(Button_push("音無し")) return;
         game.popScene();
         Scene_kazu--;
         console.log("Scene数",Scene_kazu);
