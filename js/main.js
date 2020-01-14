@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "var 2.4";
+var Version = "var 2.5";
 
 switch (GitHub_type) {
 case "referee":
@@ -2539,9 +2539,9 @@ function Load(width,height,DATAS){
                     }
                     else{
                       var Loop = ImageDATAS[k].画像.split("↓");
-                      //game.assets[ImageDATAS[k].url].src.loop = true;
-                      //game.assets[ImageDATAS[k].url].src.loopStart = Loop[1]*1;
-                      //game.assets[ImageDATAS[k].url].src.loopEnd = Loop[2]*1;
+                      game.assets[ImageDATAS[k].url].src.loop = true;
+                      game.assets[ImageDATAS[k].url].src.loopStart = Loop[1]*1;
+                      game.assets[ImageDATAS[k].url].src.loopEnd = Loop[2]*1;
                       game.assets[ImageDATAS[k].url]._volume = Flag[10]/10;
                     }
                     game.assets[ImageDATAS[k].url].play();
