@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 3.0";
+var Version = "バージョン 3.1";
 
 switch (GitHub_type) {
 case "referee":
@@ -274,6 +274,10 @@ function Load(width,height,DATAS){
           game.assets["sound/"+Sound_Name+".wav"]._volume = Volume;
         }
         game.assets["sound/"+Sound_Name+".wav"].play();
+      }
+      else{
+        game.assets["sound/"+Sound_Name+".wav"].play();
+        game.assets["sound/"+Sound_Name+".wav"].stop();
       }
       return;
     }
