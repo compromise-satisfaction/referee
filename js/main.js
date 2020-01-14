@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "var 1.8";
+var Version = "var 1.9";
 
 switch (GitHub_type) {
 case "referee":
@@ -2537,6 +2537,7 @@ function Load(width,height,DATAS){
                     }
                     else{
                       game.assets[ImageDATAS[k].url]._volume = Flag[10]/10;
+                      console.log(game.assets[ImageDATAS[k].url]);
                     }
                   }
                 }
