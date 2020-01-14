@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "var 2.2";
+var Version = "var 2.3";
 
 switch (GitHub_type) {
 case "referee":
@@ -790,6 +790,7 @@ function Load(width,height,DATAS){
           console.log(game.assets[Image_conversion(DATAS[i].BGM)].src);
         }
         game.assets[Image_conversion(DATAS[i].BGM)].play();
+        if(Flag[10]==0)game.assets[Image_conversion(DATAS[i].BGM)].stop();
       }
     }
     if(Scene_type=="メイン"){
@@ -2538,6 +2539,7 @@ function Load(width,height,DATAS){
                     else{
                       game.assets[ImageDATAS[k].url]._volume = Flag[10]/10;
                       game.assets[ImageDATAS[k].url].play();
+                      if(Flag[10]==0) game.assets[ImageDATAS[k].url].stop();
                     }
                   }
                 }
