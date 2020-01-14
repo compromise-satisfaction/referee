@@ -254,15 +254,17 @@ function Load(width,height,DATAS){
         case "異議あり！":
         case "待った！":
         case "お任せなのだ":
-        if(Flag[12]==false) Play = false;
+        if(Flag[12]==0) Play = false;
           break;
         default:
-          if(Flag[11]==false) Play = false;
+          if(Flag[11]==0) Play = false;
           break;
       }
       if(Play&&Sound_Name!="ポ") console.log(Sound_Name);
-      if(Play) game.assets["sound/"+Sound_Name+".wav"].play();
-      //else game.assets["sound/"+Sound_Name+".wav"].pause();
+      if(Play){
+        console.log(game.assets["sound/"+Sound_Name+".wav"]);
+        game.assets["sound/"+Sound_Name+".wav"].play();
+      }
       return;
     }
 
@@ -2463,12 +2465,12 @@ function Load(width,height,DATAS){
       var Text_Number = 10;
 
       var Texts = Class.create(Label, {
-        initialize: function(a) {
+        initialize: function(a,b,c) {
           Label.call(this);
           this.font  = (width/10)+"px monospace";
           this.color = 'black';
-          this.x = (width/8);
-          this.y = Numbers;
+          this.x = b;
+          this.y = c;
           this.width = width;
           this.height = (width/10);
           this.c = Text_Number;
@@ -2479,9 +2481,9 @@ function Load(width,height,DATAS){
         }
       });
 
-      Text[Text_Number] = new Texts("BGM");
-      Text[Text_Number] = new Texts("効果音");
-      Text[Text_Number] = new Texts("音声");
+      Text[Text_Number] = new Texts("BGM",width/8,Numbers);
+      Text[Text_Number] = new Texts("効果音",width/8,Numbers);
+      Text[Text_Number] = new Texts("音声",width/8,Numbers);
 
       submits = 0;
       var Button2 = [];
@@ -2501,10 +2503,13 @@ function Load(width,height,DATAS){
         submits++;
       }
       Submit2(width/2,Text[10].y,"-");
+      Text[Text_Number] = new Texts(Flag[10]*10,width/2+width/8,Text[10].y);
       Submit2(width/2+width/4,Text[10].y,"+");
       Submit2(width/2,Text[11].y,"-");
+      Text[Text_Number] = new Texts(Flag[11]*10,width/2+width/8,Text[11].y);
       Submit2(width/2+width/4,Text[11].y,"+");
       Submit2(width/2,Text[12].y,"-");
+      Text[Text_Number] = new Texts(Flag[12]*10,width/2+width/8,Text[12].y);
       Submit2(width/2+width/4,Text[12].y,"+");
 
       return scene;
