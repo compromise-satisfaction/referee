@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "var 2.5";
+var Version = "var 2.6";
 
 switch (GitHub_type) {
 case "referee":
@@ -790,6 +790,7 @@ function Load(width,height,DATAS){
           console.log(game.assets[Image_conversion(DATAS[i].BGM)].src);
         }
         game.assets[Image_conversion(DATAS[i].BGM)].play();
+        console.log(game.assets[Image_conversion(DATAS[i].BGM)]);
         if(Flag[10]==0)game.assets[Image_conversion(DATAS[i].BGM)].stop();
       }
     }
@@ -2545,6 +2546,7 @@ function Load(width,height,DATAS){
                       game.assets[ImageDATAS[k].url]._volume = Flag[10]/10;
                     }
                     game.assets[ImageDATAS[k].url].play();
+                    console.log(game.assets[ImageDATAS[k].url]);
                     if(Flag[10]==0) game.assets[ImageDATAS[k].url].stop();
                   }
                 }
