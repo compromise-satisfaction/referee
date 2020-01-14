@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 3.3";
+var Version = "バージョン 3.4";
 
 switch (GitHub_type) {
 case "referee":
@@ -2445,7 +2445,6 @@ function Load(width,height,DATAS){
         scene.addChild(Button2[submits]);
         Button2[submits].addEventListener('touchstart',function(e){
           if(Button_push("音無し")) return;
-          window.localStorage.setItem("Setting_Flag",Setting_Flag);
           switch (b) {
             case Text[10].y:
               if(c=="+"){
@@ -2503,6 +2502,7 @@ function Load(width,height,DATAS){
               Sound_ON("音量調整用",true);
               break;
           }
+          window.localStorage.setItem("Setting_Flag",Setting_Flag);
         });
         submits++;
       }
