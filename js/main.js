@@ -24,8 +24,11 @@ break;
 }
 
 function Images(width,height){
-  fetch(
-    GAS[0],
+  fetch(GAS[1],
+    {
+      method: 'POST',
+      body: "画像"
+    }
   )
   .then(res => res.json())
   .then(result => {
