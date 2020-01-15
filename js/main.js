@@ -2909,34 +2909,6 @@ function Load(width,height,DATAS){
         Text_Number++;
       }
 
-      var Text8 = new Label();
-      Text8.font  = (width/20)+"px monospace";
-      Text8.color = 'black';
-      Text8.x = (width/1.4);
-      Text8.y = (width/4) + ((width/20)+(width/25)*10);
-      Text8.width = width;
-      Text8.height = (width/20);
-      Text8.text = "Text8";
-      scene.addChild(Text8)
-
-      if(Number.length>1){
-        if(Number.substring(0,2)=="使う") Text3.text = "未表示";
-        if(Number.length>2){
-          if(Number.substring(0,3)=="調べる") Text3.text = "未表示";
-          if(Number.length>4){
-            if(Number.substring(0,5)=="つきつける") Text3.text = "未表示";
-          }
-        }
-      }
-      if(Text3.text==""){
-        scene.addChild(Text8);
-        scene.addChild(Text3);
-      }
-      if(Ig){
-        Text3.text = "つきつける";
-        scene.addChild(Text3);
-      }
-
       if(Item_Flag.length>5){
         Submit("◀",width/8,(width/4)+((width/20)+(width/25)*14),W_X_H,W_X_H);
         Submit("▶",width/2.5,(width/4)+((width/20)+(width/25)*14),W_X_H,W_X_H);
@@ -2986,94 +2958,6 @@ function Load(width,height,DATAS){
         }
         return;
       });
-
-      Text8.addEventListener('touchstart',function(e){
-        if(this.text=="") return;
-        else if(this.text=="◆ 再生"){
-          Sound_ON(Choice_Item,true);
-          for (var i = 0; i < Item_Flag.length; i++) {
-            if(Item_Flag[i][0]==Choice_Item) break;
-          }
-          game.popScene();
-          Scene_kazu--;
-          console.log("Scene数",Scene_kazu);
-        }
-        else if(this.text=="■ 停止"){
-          Sound_ON(Choice_Item,false);
-          for (var i = 0; i < Item_Flag.length; i++) {
-            if(Item_Flag[i][0]==Choice_Item) break;
-          }
-          game.popScene();
-          console.log("Scene数",Scene_kazu);
-        }
-        else if(this.text=="◆ 調べる"){
-          game.popScene();
-          Scene_kazu--;
-          console.log("Scene数",Scene_kazu);
-          Inspect_loads(Number,Choice_Item);
-        }
-        else if(this.text=="◆ 召喚"){
-          Moves = "空";
-          game.replaceScene(MoveScene(10));
-          console.log("Scene数",Scene_kazu);
-        }
-        else if(this.text=="◆ 遊ぶ"){
-          OASOBI = true;
-          game.popScene();
-          game.pushScene(ReversiScene());
-          console.log("Scene数",Scene_kazu);
-        }
-        else if(this.text=="◆ 改造"){
-          game.replaceScene(TransformScene(Number,Ig));
-          console.log("Scene数",Scene_kazu);
-        }
-        else {
-          for (var i = 0; i < Item.length; i++) {
-            if(Item[i].text.substring(2)==Choice_Item) break;
-          }
-          game.pushScene(DetailsScene(Item[i].syousai,Item[i].text6));
-          Scene_kazu++;
-          console.log("Scene数",Scene_kazu);
-        }
-        return;
-      });
-
-      for (var i = 0; i < Item.length; i++){
-        Item[i].addEventListener('touchstart',function(e){
-          if(this.color=="black"){
-            scene.addChild(Image[this.image_number]);
-            Choice_Item = this.text;
-            this.text = "◆ " + this.text;
-            this.color = "red";
-            if(Ig) Text3.text = "◆ つきつける";
-            //else Text3.text = "◆ 使う";//使うを非表示
-            Text4.text = this.text2;
-            Text5.text = this.text3;
-            Text6.text = this.text4;
-            Text7.text = this.text5;
-            Text8.text = this.text6;
-          }
-          else{
-            scene.removeChild(Image[this.image_number]);
-            this.text = this.text.substring(2);
-            this.color = "black";
-            Text3.text = "";
-            Text4.text = "";
-            Text5.text = "";
-            Text6.text = "";
-            Text7.text = "";
-            Text8.text = "";
-          }
-          for (var k = 0; k < Item.length; k++){
-            if(Item[k].color=="red"&&this!=Item[k]){
-              scene.removeChild(Image[k]);
-              Item[k].text = Item[k].text.substring(2);
-              Item[k].color = "black";
-            }
-          }
-          return;
-        });
-      }
 
       return scene;
     }
@@ -4036,26 +3920,28 @@ function Load(width,height,DATAS){
       Background.y = (Background.scaleY*yyy/2)-yyy/2;
       scene.addChild(Background);
 
-      var Numbers = (width/20);
+      var Numbers = (width/10)+(width/30);
+      var Button = [];
+      var submits = 0;
+      function Submit(a){
+        Button[submits] = new Entity();
+        Button[submits].moveTo(width/4,Numbers);
+        Button[submits].width = width/2;
+        Button[submits].height = (width/10);
+        Button[submits]._element = document.createElement('input');
+        Button[submits]._element.type = "submit";
+        Button[submits]._element.value = a;
+        scene.addChild(Button[submits]);
+        Button[submits].addEventListener('touchstart',function(e){
+          if(Button_push("戻る")) return;
+          game.popScene();
+          Scene_kazu--;
+          console.log("Scene数",Scene_kazu);
+        });
+        submits++;
+      }
 
-      var Texts = Class.create(Label, {
-        initialize: function(a) {
-          Label.call(this);
-          Numbers += (width/20)+(width/25);
-          this.font  = (width/20)+"px monospace";
-          this.color = 'black';
-          this.x = (width/12);
-          this.y = Numbers;
-          this.width = width;
-          this.height = (width/20);
-          this.text = a;
-          scene.addChild(this);
-        }
-      });
-
-      var Text = [];
-
-      Text[0] = new Texts("◆ 閉じる");
+      Submit("戻る");
 
       switch (Type) {
           case "見る":
@@ -4120,13 +4006,6 @@ function Load(width,height,DATAS){
           }
         });
       }
-
-      Text[0].addEventListener('touchstart',function(e){
-        game.popScene();
-        Scene_kazu--;
-        console.log("Scene数",Scene_kazu);
-        return;
-      });
 
       return scene;
     };
