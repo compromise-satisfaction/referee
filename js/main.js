@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 3.4";
+var Version = "バージョン 3.5";
 
 switch (GitHub_type) {
 case "referee":
@@ -270,7 +270,7 @@ function Load(width,height,DATAS){
           game.assets["sound/"+Sound_Name+".wav"].volume = Volume;
         }
         else{
-          game.assets["sound/"+Sound_Name+".wav"]._volume = Volume;
+          game.assets["sound/"+Sound_Name+".wav"]._defaultValue = Volume;
         }
         game.assets["sound/"+Sound_Name+".wav"].play();
       }
@@ -727,7 +727,7 @@ function Load(width,height,DATAS){
             if(ImageDATAS[k].name==DATAS[i].BGM) break;
           }
           var Loop = ImageDATAS[k].画像.split("↓");
-          game.assets[Image_conversion(DATAS[i].BGM)]._volume = Setting_Flag[9]/10;
+          game.assets[Image_conversion(DATAS[i].BGM)]._defaultValuevolume = Setting_Flag[9]/10;
           game.assets[Image_conversion(DATAS[i].BGM)].play();
           game.assets[Image_conversion(DATAS[i].BGM)].src.loop = true;
           game.assets[Image_conversion(DATAS[i].BGM)].src.loopStart = Loop[1]*1;
@@ -2471,7 +2471,7 @@ function Load(width,height,DATAS){
                     else{
                       var Loop = ImageDATAS[k].画像.split("↓");
                       game.assets[ImageDATAS[k].url]._currentTime = basyo;
-                      game.assets[ImageDATAS[k].url]._volume = Setting_Flag[9]/10;
+                      game.assets[ImageDATAS[k].url]._defaultVolume = Setting_Flag[9]/10;
                       game.assets[ImageDATAS[k].url].play();
                       game.assets[ImageDATAS[k].url].src.loop = true;
                       game.assets[ImageDATAS[k].url].src.loopStart = Loop[1]*1;
