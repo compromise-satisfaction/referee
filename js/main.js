@@ -270,7 +270,7 @@ function Load(width,height,DATAS){
           game.assets["sound/"+Sound_Name+".wav"].volume = Volume;
         }
         else{
-          game.assets["sound/"+Sound_Name+".wav"]._defaultValue = Volume;
+          game.assets["sound/"+Sound_Name+".wav"].value = Volume;
         }
         game.assets["sound/"+Sound_Name+".wav"].play();
       }
@@ -727,7 +727,7 @@ function Load(width,height,DATAS){
             if(ImageDATAS[k].name==DATAS[i].BGM) break;
           }
           var Loop = ImageDATAS[k].画像.split("↓");
-          game.assets[Image_conversion(DATAS[i].BGM)]._defaultValue = Setting_Flag[9]/10;
+          game.assets[Image_conversion(DATAS[i].BGM)].value = Setting_Flag[9]/10;
           game.assets[Image_conversion(DATAS[i].BGM)].play();
           game.assets[Image_conversion(DATAS[i].BGM)].src.loop = true;
           game.assets[Image_conversion(DATAS[i].BGM)].src.loopStart = Loop[1]*1;
@@ -2471,7 +2471,7 @@ function Load(width,height,DATAS){
                     else{
                       var Loop = ImageDATAS[k].画像.split("↓");
                       game.assets[ImageDATAS[k].url]._currentTime = basyo;
-                      game.assets[ImageDATAS[k].url]._defaultVolume = Setting_Flag[9]/10;
+                      game.assets[ImageDATAS[k].url].volume = Setting_Flag[9]/10;
                       game.assets[ImageDATAS[k].url].play();
                       game.assets[ImageDATAS[k].url].src.loop = true;
                       game.assets[ImageDATAS[k].url].src.loopStart = Loop[1]*1;
@@ -2778,7 +2778,13 @@ function Load(width,height,DATAS){
               var ooo ="選択音";
               break;
           }
+          if(this.backgroundColor=="red"){
+            var ooo ="メニュー移動";
+          }
           if(Button_push(ooo)) return;
+          if(this.backgroundColor=="red"){
+            game.replaceScene(ItemScene(Number,Ig));
+          }
           switch (this._element.value) {
             case "召喚":
               Moves = "空";
@@ -2832,38 +2838,33 @@ function Load(width,height,DATAS){
               game.replaceScene(CharacterScene(Number,Ig));
               break;
             default:
-              if(this.backgroundColor=="red"){
-                game.replaceScene(ItemScene(Number,Ig));
+              for (var i = 0; i < 5; i++) {
+                if(f[1].split("↓")[i]==undefined) Text[i].text = "";
+                else Text[i].text = f[1].split("↓")[i];
               }
-              else {
-                for (var i = 0; i < 5; i++) {
-                  if(f[1].split("↓")[i]==undefined) Text[i].text = "";
-                  else Text[i].text = f[1].split("↓")[i];
-                }
-                for (var i = 0; i < submits; i++) {
-                  Button[i].backgroundColor = "buttonface";
-                }
-                Choice_Item = f[0];
-                console.log(Choice_Item+"を選択");
-                var Item_image_url = Image_conversion(f[2]);
-                var xxx = game.assets[Item_image_url].width;
-                var yyy = game.assets[Item_image_url].height;
-                Item_image.image = game.assets[Item_image_url];
-                Item_image.width = xxx;
-                Item_image.height = yyy;
-                Item_image.scaleX = ((width/4)/xxx);
-                Item_image.scaleY = ((width/4)/yyy);
-                Item_image.x = (Item_image.scaleX*xxx/2)-xxx/2+(width/1.6);
-                Item_image.y = (Item_image.scaleY*yyy/2)-yyy/2+(width/4)+(width/20)+(width/25);
-                this.backgroundColor = "red";
-                if(f[3]){
-                  Button[3]._element.value = f[3];
-                  Button[3].syousai = f[4];
-                  scene.addChild(Button[3]);
-                }
-                else scene.removeChild(Button[3]);
-                console.log(f);
+              for (var i = 0; i < submits; i++) {
+                Button[i].backgroundColor = "buttonface";
               }
+              Choice_Item = f[0];
+              console.log(Choice_Item+"を選択");
+              var Item_image_url = Image_conversion(f[2]);
+              var xxx = game.assets[Item_image_url].width;
+              var yyy = game.assets[Item_image_url].height;
+              Item_image.image = game.assets[Item_image_url];
+              Item_image.width = xxx;
+              Item_image.height = yyy;
+              Item_image.scaleX = ((width/4)/xxx);
+              Item_image.scaleY = ((width/4)/yyy);
+              Item_image.x = (Item_image.scaleX*xxx/2)-xxx/2+(width/1.6);
+              Item_image.y = (Item_image.scaleY*yyy/2)-yyy/2+(width/4)+(width/20)+(width/25);
+              this.backgroundColor = "red";
+              if(f[3]){
+                Button[3]._element.value = f[3];
+                Button[3].syousai = f[4];
+                scene.addChild(Button[3]);
+              }
+              else scene.removeChild(Button[3]);
+              console.log(f);
               break;
           }
         });
