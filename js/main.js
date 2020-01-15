@@ -331,7 +331,7 @@ function Load(width,height){
           game.assets["sound/"+Sound_Name+".wav"].volume = Volume;
         }
         else{
-          game.assets["sound/"+Sound_Name+".wav"].value = Volume;
+          game.assets["sound/"+Sound_Name+".wav"]._value = Volume;
         }
         game.assets["sound/"+Sound_Name+".wav"].play();
       }
@@ -783,7 +783,7 @@ function Load(width,height){
           for (var k = 0; k < BGMDATAS.length; k++){
             if(BGMDATAS[k].name==DATAS[i].BGM) break;
           }
-          game.assets[conversion_url(DATAS[i].BGM,"BGM")].value = Setting_Flag[9]/10;
+          game.assets[conversion_url(DATAS[i].BGM,"BGM")]._value = Setting_Flag[9]/10;
           game.assets[conversion_url(DATAS[i].BGM,"BGM")].play();
           game.assets[conversion_url(DATAS[i].BGM,"BGM")].src.loop = true;
           game.assets[conversion_url(DATAS[i].BGM,"BGM")].src.loopStart = BGMDATAS[k].ループ開始;
@@ -2525,7 +2525,7 @@ function Load(width,height){
                   }
                   else{
                     game.assets[BGMDATAS[k].url]._currentTime = basyo;
-                    game.assets[BGMDATAS[k].url].volume = Setting_Flag[9]/10;
+                    game.assets[BGMDATAS[k].url]._volume = Setting_Flag[9]/10;
                     game.assets[BGMDATAS[k].url].play();
                     game.assets[BGMDATAS[k].url].src.loop = true;
                     game.assets[BGMDATAS[k].url].src.loopStart = BGMDATAS[k].ループ開始;
