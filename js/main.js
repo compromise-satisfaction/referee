@@ -1,30 +1,22 @@
 enchant();
 
 var Version = "バージョン 3.5";
+var Fetchs = 0;
 
 switch (GitHub_type) {
-case "referee":
-var GAS = [
-"https://script.google.com/macros/s/AKfycbzcY3aEn2ovKGtc9HA87smGV34KDo52qHVGTq395_9iqVylKPSg/exec",//画像
-"https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec"//シーン
-];
-break;
-case "Share":
-var GAS = [
-"https://script.google.com/macros/s/AKfycbydKeSrgciGcfdx1HbW5TXagCujRHYARr-pIrw2BzwsRq5H-U0/exec",//画像
-"https://script.google.com/macros/s/AKfycbyfEnjDE8FhsxIo97tN5hsvYF_nSW47gwYia54D0-JPgyWti0K4/exec"//シーン
-];
-break;
-case "novel_game":
-var GAS = [
-"https://script.google.com/macros/s/AKfycbwpfQNI_EdtFjQdekQERjNaYXxvRWACZMulrCXUBsC1ZayUn5A/exec",//画像
-"https://script.google.com/macros/s/AKfycbwpMKf5237VlebQuUNjHKYGvLrOi3bdGV1Oa2CKsKAMmv_-mpM/exec"//シーン
-];
-break;
+  case "referee":
+    var GAS = "https://script.google.com/macros/s/AKfycbykP5rFHcjf_Sd-u0u5_iRoqUlHNl_A02IyjsECYOeaO_Vn00Ap/exec";
+    break;
+  case "Share":
+    var GAS = "https://script.google.com/macros/s/AKfycbyfEnjDE8FhsxIo97tN5hsvYF_nSW47gwYia54D0-JPgyWti0K4/exec";
+    break;
+  case "novel_game":
+    var GAS = "https://script.google.com/macros/s/AKfycbwpMKf5237VlebQuUNjHKYGvLrOi3bdGV1Oa2CKsKAMmv_-mpM/exec";
+    break;
 }
 
 function Images(width,height){
-  fetch(GAS[1],
+  fetch(GAS,
     {
       method: 'POST',
       body: "画像"
@@ -45,7 +37,12 @@ function Images(width,height){
 }
 
 function vue(width,height){
-      fetch(GAS[1],)
+      fetch(GAS,
+        {
+          method: 'POST',
+          body: "メインシーン"
+        }
+      )
       .then(res => res.json())
       .then(result => {
         DATAS = result;
