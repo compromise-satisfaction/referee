@@ -727,7 +727,7 @@ function Load(width,height,DATAS){
             if(ImageDATAS[k].name==DATAS[i].BGM) break;
           }
           var Loop = ImageDATAS[k].画像.split("↓");
-          game.assets[Image_conversion(DATAS[i].BGM)]._defaultValuevolume = Setting_Flag[9]/10;
+          game.assets[Image_conversion(DATAS[i].BGM)]._defaultValue = Setting_Flag[9]/10;
           game.assets[Image_conversion(DATAS[i].BGM)].play();
           game.assets[Image_conversion(DATAS[i].BGM)].src.loop = true;
           game.assets[Image_conversion(DATAS[i].BGM)].src.loopStart = Loop[1]*1;
@@ -2779,7 +2779,29 @@ function Load(width,height,DATAS){
               break;
           }
           if(Button_push(ooo)) return;
-          switch (a) {
+          switch (this._element.value) {
+            case "召喚":
+              Moves = "空";
+              game.replaceScene(MoveScene(10));
+              console.log("Scene数",Scene_kazu);
+              break;
+            case "遊ぶ":
+              OASOBI = true;
+              game.popScene();
+              game.pushScene(ReversiScene());
+              console.log("Scene数",Scene_kazu);
+              break;
+            case "改造":
+              game.replaceScene(TransformScene(Number,Ig));
+              console.log("Scene数",Scene_kazu);
+              break;
+            case "詳細":
+            case "見る":
+            case "拡大":
+              game.pushScene(DetailsScene(this.syousai,this._element.value));
+              Scene_kazu++;
+              console.log("Scene数",Scene_kazu);
+              break;
             case "▶":
               if(Setting_Flag[5]==0){
                 Setting_Flag[5] = Item_Flag.length-Item_Flag.length%5;
@@ -2836,6 +2858,7 @@ function Load(width,height,DATAS){
                 this.backgroundColor = "red";
                 if(f[3]){
                   Button[3]._element.value = f[3];
+                  Button[3].syousai = f[4];
                   scene.addChild(Button[3]);
                 }
                 else scene.removeChild(Button[3]);
@@ -4035,8 +4058,8 @@ function Load(width,height,DATAS){
       Text[0] = new Texts("◆ 閉じる");
 
       switch (Type) {
-          case "◆ 見る":
-          case "◆ 拡大":
+          case "見る":
+          case "拡大":
           Number = Image_conversion(Number);
           var xxx = game.assets[Number].width;
           var yyy = game.assets[Number].height;
