@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 3.5";
+var Version = "バージョン 3.6";
 
 switch (GitHub_type) {
   case "referee":
@@ -343,7 +343,6 @@ function Load(width,height){
     }
 
     function post(a,b,c){
-      fetch(GAS[1],)
       return;
       var form = document.createElement('form');
       var input = [];
