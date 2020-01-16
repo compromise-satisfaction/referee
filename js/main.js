@@ -774,7 +774,7 @@ function Load(width,height){
           for (var k = 0; k < BGMDATAS.length; k++){
             if(BGMDATAS[k].名前==DATAS[i].BGM) break;
           }
-          game.assets[conversion_url(DATAS[i].BGM,"BGM")]._value = Setting_Flag[9]/10;
+          game.assets[conversion_url(DATAS[i].BGM,"BGM")]._volume = Setting_Flag[9]/10;
           game.assets[conversion_url(DATAS[i].BGM,"BGM")].play();
           game.assets[conversion_url(DATAS[i].BGM,"BGM")].src.loop = true;
           game.assets[conversion_url(DATAS[i].BGM,"BGM")].src.loopStart = BGMDATAS[k].ループ開始;
