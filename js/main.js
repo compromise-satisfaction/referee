@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 3.6";
+var Version = "バージョン 3.7";
 
 switch (GitHub_type) {
   case "referee":
@@ -1346,6 +1346,7 @@ function Load(width,height){
         Button[submits].addEventListener('touchstart',function(e){
           switch (a) {
             case "データ初期化":
+            case "データ初期化(推奨)":
               var ooo = "音無し";
               break;
             default:
