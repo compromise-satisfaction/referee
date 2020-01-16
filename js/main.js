@@ -299,12 +299,12 @@ function Load(width,height){
       switch (Type) {
         case "画像":
           for (var i = 0; i < ImageDATAS.length; i++) {
-            if(ImageDATAS[i].name==name) return(ImageDATAS[i].url);
+            if(ImageDATAS[i].名前==name) return(ImageDATAS[i].url);
           }
           break;
         case "BGM":
           for (var i = 0; i < BGMDATAS.length; i++) {
-            if(BGMDATAS[i].name==name) return(BGMDATAS[i].url);
+            if(BGMDATAS[i].名前==name) return(BGMDATAS[i].url);
           }
           break;
       }
@@ -766,7 +766,7 @@ function Load(width,height){
     }
     if(DATAS[i].BGM!="変化無し"){
       for (var k = 0; k < BGMDATAS.length; k++){
-        if(DATAS[i].BGM!=BGMDATAS[k].name&&game.assets[BGMDATAS[k].url].状態=="再生中"){
+        if(DATAS[i].BGM!=BGMDATAS[k].名前&&game.assets[BGMDATAS[k].url].状態=="再生中"){
           game.assets[BGMDATAS[k].url].stop();
           game.assets[BGMDATAS[k].url].状態 = "停止";
         }
@@ -781,7 +781,7 @@ function Load(width,height){
         }
         else{
           for (var k = 0; k < BGMDATAS.length; k++){
-            if(BGMDATAS[k].name==DATAS[i].BGM) break;
+            if(BGMDATAS[k].名前==DATAS[i].BGM) break;
           }
           game.assets[conversion_url(DATAS[i].BGM,"BGM")]._value = Setting_Flag[9]/10;
           game.assets[conversion_url(DATAS[i].BGM,"BGM")].play();
@@ -5133,8 +5133,8 @@ function Load(width,height){
 
       for (var i = 1; i < ImageDATAS.length; i++){
         Option[i-1] = document.createElement("option");
-        Option[i-1].text = ImageDATAS[i].name;
-        Option[i-1].value = ImageDATAS[i].name;
+        Option[i-1].text = ImageDATAS[i].名前;
+        Option[i-1].value = ImageDATAS[i].名前;
         S_Input1._element.appendChild(Option[i-1]);
       }
       scene.addChild(S_Input1);
