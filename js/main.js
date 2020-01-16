@@ -234,6 +234,7 @@ function Load(width,height){
   game.preload("sound/ポ.wav");
   game.preload("sound/メニュー.wav");
   game.preload("sound/メニュー移動.wav");
+  game.preload("sound/アイテム表示音.wav");
   game.preload("sound/戻る.wav");
   game.preload("sound/選択音.wav");
   game.preload("sound/Trophy.wav");
@@ -246,7 +247,7 @@ function Load(width,height){
   game.preload("image/背景/left.png");
   game.preload("image/背景/right.png");
   game.preload("image/背景/stand.png");
-  game.preload("image/背景/裁判長.png");
+  game.preload("image/背景/裁判長席.png");
   game.preload("image/背景/透明.png");
   game.preload("image/背景/留置所.png");
   game.preload("image/Background.png");
@@ -274,20 +275,10 @@ function Load(width,height){
       if(Button_time==Button_time_next){
         Button_time = 0;
         switch (expression) {
-          case "戻る":
-          case "選択音":
-          case "セーブ":
-          case "お任せなのだ":
-          case "メニュー移動":
-            Sound_ON(expression,true);
-            break;
-          case "アイテム":
-            Sound_ON("メニュー",true);
-            break;
           case "音無し":
             break;
           default:
-            Sound_ON("進む",true);
+            Sound_ON(expression,true);
             break;
         }
         return(false);
@@ -1114,7 +1105,7 @@ function Load(width,height){
           case "left":
           case "right":
           case "stand":
-          case "裁判長":
+          case "裁判長席":
           case "留置所":
           var xxx = game.assets["image/背景/"+Datas[0]+".png"].width;
           var yyy = game.assets["image/背景/"+Datas[0]+".png"].height;
@@ -1575,7 +1566,9 @@ function Load(width,height){
         Buttons[a]._element.value = b;
         scene.addChild(Buttons[a]);
         Buttons[a].addEventListener('touchstart',function(e){
-          if(Button_push(b)) return;
+          if(b=="アイテム") var ooo = "メニュー";
+          else var ooo = "進む";
+          if(Button_push(ooo)) return;
           if(a==2){
             game.pushScene(ItemScene(c,false));
             Scene_kazu++;
@@ -1771,7 +1764,7 @@ function Load(width,height){
           case "left":
           case "right":
           case "stand":
-          case "裁判長":
+          case "裁判長席":
           case "留置所":
           var xxx = game.assets["image/背景/"+Datas[0]+".png"].width;
           var yyy = game.assets["image/背景/"+Datas[0]+".png"].height;
@@ -1882,10 +1875,10 @@ function Load(width,height){
           Text[submits].backgroundColor = "red";
         }
         Text[submits].addEventListener('touchstart',function(e){
-          if(a=="戻る") var sss = "戻る";
-          else if(a == "つきつける") var sss = "アイテム";
-          else var sss = "選択音";
-          if(Button_push(sss)) return;
+          if(a=="戻る") var ooo = "戻る";
+          else if(a == "つきつける") var ooo = "メニュー";
+          else var ooo = "選択音";
+          if(Button_push(ooo)) return;
           if(a == "調べる") Inspect_loads(Datas[6],false);
           else if (a == "つきつける"){
             game.pushScene(ItemScene(Datas[6],"日常"));
@@ -1915,7 +1908,9 @@ function Load(width,height){
         Buttons[a]._element.value = b;
         scene.addChild(Buttons[a]);
         Buttons[a].addEventListener('touchstart',function(e){
-          if(Button_push(b)) return;
+          if(b=="アイテム") var ooo = "メニュー";
+          else var ooo = "進む";
+          if(Button_push(ooo)) return;
           if(b=="アイテム"){
             game.pushScene(ItemScene(c,false));
             Scene_kazu++;
@@ -2074,13 +2069,13 @@ function Load(width,height){
               console.log("Scene数",Scene_kazu);
               break;
             case "設定を開く":
-              if(Button_push("アイテム")) return;
+              if(Button_push("メニュー")) return;
               game.pushScene(SettingScene(Datas[5]));
               Scene_kazu++;
               console.log("Scene数",Scene_kazu);
               break;
             case "つきつける":
-              if(Button_push("アイテム")) return;
+              if(Button_push("メニュー")) return;
               game.pushScene(ItemScene(Datas[7],Datas[8]));
               Scene_kazu++;
               console.log("Scene数",Scene_kazu);
@@ -2210,7 +2205,7 @@ function Load(width,height){
               break;
             case "サウンド設定":
             case "プレイヤー設定":
-              if(Button_push("アイテム")) return;
+              if(Button_push("メニュー")) return;
               break;
             case "セーブする":
             if(Button_push("セーブ")) return;
@@ -2825,7 +2820,7 @@ function Load(width,height){
               break;
             case "設定を開く":
             case "人物":
-              var ooo ="アイテム";
+              var ooo ="メニュー";
               break;
             default:
               var ooo ="選択音";
@@ -2890,6 +2885,30 @@ function Load(width,height){
             case "人物":
               game.replaceScene(CharacterScene(Number,Ig));
               break;
+            case "つきつける":
+              game.popScene();
+              Scene_kazu--;
+              console.log("Scene数",Scene_kazu);
+              if(Ig==Choice_Item||(Ig!="日常"&&(Choice_Item=="強欲な壺"||Choice_Item=="ヒントカード"))){
+                if(Choice_Item=="ヒントカード"){
+                  Scene_loads("ヒント"+Number,false,false);
+                  return;
+                }
+                if(Choice_Item=="強欲な壺"){
+                  Get_ICF("アイテム","強欲な壺","消失");
+                  Item_Flag[Item_Flag.length] = ["強欲なカケラ","強欲な壺を使った証。","強欲なカケラ"];
+                }
+                game.pushScene(PopScene(Number,"異議あり！"));
+                Scene_kazu++;
+                console.log("Scene数",Scene_kazu);
+              }
+              else if(Ig=="日常") Scene_loads(Number,true,"つきつける"+Choice_Item);
+              else{
+                game.pushScene(PopScene("つきつけ失敗","異議あり！"));
+                Scene_kazu++;
+                console.log("Scene数",Scene_kazu);
+              }
+              break;
             default:
               for (var i = 0; i < 5; i++) {
                 if(f[1].split("↓")[i]==undefined) Text[i].text = "";
@@ -2917,6 +2936,10 @@ function Load(width,height){
                 scene.addChild(Button[3]);
               }
               else scene.removeChild(Button[3]);
+              if(Ig){
+                Button[4]._element.value = "つきつける";
+                scene.addChild(Button[4]);
+              }
               console.log(f);
               break;
           }
