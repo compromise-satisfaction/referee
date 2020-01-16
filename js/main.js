@@ -536,6 +536,21 @@ function Load(width,height){
           game.replaceScene(TitleScene());
           return;
           break;
+        case "タイトル移動":
+          Moves = "タイトルに戻る";
+          game.pushScene(MoveScene(10));
+          Scene_kazu++;
+          console.log("Scene数",Scene_kazu);
+          break;
+        case "直前":
+          Number = Setting_Flag[4];
+          break;
+        case "直前移動":
+          Moves = Setting_Flag[4];
+          game.pushScene(MoveScene(10));
+          Scene_kazu++;
+          console.log("Scene数",Scene_kazu);
+          break;
         case "調べる何もない":
           Datas[1] = 0;
           Datas[2] = 0;
