@@ -2607,9 +2607,11 @@ function Load(width,height){
             break;
             case "タイトルに戻る":
             game.popScene();
-            game.popScene();
             Scene_kazu--;
-            Scene_kazu--;
+            if(Scene_kazu==2){
+              game.popScene();
+              Scene_kazu--;
+            }
             console.log("Scene数",Scene_kazu);
             Scene_loads("タイトル移動",false,false,false);
             break;
