@@ -262,7 +262,6 @@ function Load(width,height){
 
   });
   loadScene.addEventListener('load', function(e) {
-
     Buttons.addEventListener('touchstart',function(){
       var core = enchant.Core.instance;
       core.removeScene(core.loadingScene);
@@ -721,6 +720,9 @@ function Load(width,height){
           game.replaceScene(InterrogationScene());
         }
       }
+      if(Setting_Flag[4]) Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + kousin2,0,0,0,"未完成",0];
+      else Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + kousin2,0,0,0,"タイトルに戻る",0];
+      game.replaceScene(MainScene(Return));
     }
 
     function Scene_loads3(Number,Return,Item){
