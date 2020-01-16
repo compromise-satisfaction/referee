@@ -534,6 +534,12 @@ function Load(width,height){
           return;
           break;
         case "タイトルに戻る":
+          for (var k = 0; k < BGM_DATAS.length; k++){
+            if(game.assets[BGM_DATAS[k].url].状態=="再生中"){
+              game.assets[BGM_DATAS[k].url].stop();
+              game.assets[BGM_DATAS[k].url].状態 = "停止";
+            }
+          }
           game.replaceScene(TitleScene());
           return;
           break;
