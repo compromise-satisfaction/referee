@@ -524,6 +524,7 @@ function Load(width,height){
       }
     }
     function Scene_loads(Number,Return,Item){
+      if(Item) Number = Item + Number;
       console.log(Number);
       switch (Number) {
         case "セーブ読み込み":
@@ -583,7 +584,6 @@ function Load(width,height){
         default:
           break;
       }
-      if(Item) Number = Item + Number;
       var Name = Setting_Flag[0];
       var Gender = Setting_Flag[2];
       var Surname = Setting_Flag[1];
