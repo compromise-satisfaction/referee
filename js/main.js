@@ -530,7 +530,6 @@ function Load(width,height){
           game.pushScene(MoveScene(10));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
-          return;
           break;
         case "タイトルに戻る":
           game.replaceScene(TitleScene());
@@ -538,6 +537,7 @@ function Load(width,height){
           break;
         case "直前":
           Number = Setting_Flag[4];
+          Scene_loads(Number,false,false);
           break;
         case "調べる何もない":
           Datas[1] = 0;
@@ -554,10 +554,10 @@ function Load(width,height){
           Datas[12] = Setting_Flag[12];
           Datas[13] = 0;
           game.replaceScene(MainScene(Return));
-          return;
           break;
         case "調べる":
           Number = Setting_Flag[12];
+          Scene_loads(Number,false,false);
           break;
         case "ライフ判断":
         if(Setting_Flag[3]==0){
@@ -566,8 +566,10 @@ function Load(width,height){
         else {
           Number = Setting_Flag[4];
         }
-        Scene_loads(Number,false,false);
-        break;
+          Scene_loads(Number,false,false);
+          break;
+        default:
+          break;
       }
       if(Item) Number = Item + Number;
       console.log(Number);
