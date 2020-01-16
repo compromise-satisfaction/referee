@@ -28,24 +28,9 @@ function Images(width,height){
     for (var i = 0; i < Image_DATAS.length; i++){
       Image_urls[i] = Image_DATAS[i].url;
     }
-    vue1(width,height);
+    vue2(width,height);
     console.log("画像シート読み込み完了");
   },);
-}
-
-function vue1(width,height){
-      fetch(GAS,
-        {
-          method: 'POST',
-          body: "1"
-        }
-      )
-      .then(res => res.json())
-      .then(result => {
-        Main_DATAS = result;
-        vue2(width,height);
-        console.log("メインシート読み込み完了");
-      },);
 }
 
 function vue2(width,height){
@@ -77,128 +62,8 @@ function vue3(width,height){
         for (var i = 0; i < BGM_DATAS.length; i++){
           BGM_urls[i] = BGM_DATAS[i].url;
         }
-        vue4(width,height);
-        console.log("BGMシート読み込み完了");
-      },);
-}
-
-function vue4(width,height){
-      fetch(GAS,
-        {
-          method: 'POST',
-          body: "4444"
-        }
-      )
-      .then(res => res.json())
-      .then(result => {
-        Interrogation_DATAS = result;
-        vue5(width,height);
-        console.log("尋問シート読み込み完了");
-      },);
-}
-
-function vue5(width,height){
-      fetch(GAS,
-        {
-          method: 'POST',
-          body: "55555"
-        }
-      )
-      .then(res => res.json())
-      .then(result => {
-        Choice_DATAS = result;
-        vue6(width,height);
-        console.log("チョイスシート読み込み完了");
-      },);
-}
-
-function vue6(width,height){
-      fetch(GAS,
-        {
-          method: 'POST',
-          body: "666666"
-        }
-      )
-      .then(res => res.json())
-      .then(result => {
-        Inspect_DATAS = result;
-        vue7(width,height);
-        console.log("調べるシート読み込み完了");
-      },);
-}
-
-function vue7(width,height){
-      fetch(GAS,
-        {
-          method: 'POST',
-          body: "7777777"
-        }
-      )
-      .then(res => res.json())
-      .then(result => {
-        Speech_DATAS = result;
-        vue8(width,height);
-        console.log("吹き出しシート読み込み完了");
-      },);
-}
-
-function vue8(width,height){
-      fetch(GAS,
-        {
-          method: 'POST',
-          body: "88888888"
-        }
-      )
-      .then(res => res.json())
-      .then(result => {
-        Item_get_DATAS = result;
-        vue9(width,height);
-        console.log("アイテムゲットシート読み込み完了");
-      },);
-}
-
-function vue9(width,height){
-      fetch(GAS,
-        {
-          method: 'POST',
-          body: "999999999"
-        }
-      )
-      .then(res => res.json())
-      .then(result => {
-        Move_DATAS = result;
-        vue10(width,height);
-        console.log("移動シート読み込み完了");
-      },);
-}
-
-function vue10(width,height){
-      fetch(GAS,
-        {
-          method: 'POST',
-          body: "0000000000"
-        }
-      )
-      .then(res => res.json())
-      .then(result => {
-        Branch_DATAS = result;
-        vue11(width,height);
-        console.log("分岐シート読み込み完了");
-      },);
-}
-
-function vue11(width,height){
-      fetch(GAS,
-        {
-          method: 'POST',
-          body: "11111111111"
-        }
-      )
-      .then(res => res.json())
-      .then(result => {
-        I_C_F_DATAS = result;
         Load(width,height);
-        console.log("アイテム/人物/フラグシート読み込み完了");
+        console.log("BGMシート読み込み完了");
       },);
 }
 
@@ -234,36 +99,176 @@ function Load(width,height){
     new Texts(kousin3[i],i);
   }
 
-	loadScene.addEventListener('progress', function(e){
+  vue1();
 
-    label.moveTo(100,290);
+  var Sheets = new Texts("",5);
+
+  var Buttons = new Entity();
+  Buttons.moveTo(100,100 + 40*6);
+  Buttons.width = (width/2);
+  Buttons.height = (width/5);
+  Buttons._element = document.createElement('input');
+  Buttons._element.type = "submit";
+  Buttons._element.value = "始める";
+
+  function vue1(){
+        fetch(GAS,
+          {
+            method: 'POST',
+            body: "1"
+          }
+        )
+        .then(res => res.json())
+        .then(result => {
+          Main_DATAS = result;
+          vue4();
+          Sheets.text = "シーンデータ読み込み 1/9";
+        },);
+  }
+
+  function vue4(){
+        fetch(GAS,
+          {
+            method: 'POST',
+            body: "4444"
+          }
+        )
+        .then(res => res.json())
+        .then(result => {
+          Interrogation_DATAS = result;
+          vue5();
+          Sheets.text = "シーンデータ読み込み 2/9";
+        },);
+  }
+
+  function vue5(){
+        fetch(GAS,
+          {
+            method: 'POST',
+            body: "55555"
+          }
+        )
+        .then(res => res.json())
+        .then(result => {
+          Choice_DATAS = result;
+          vue6();
+          Sheets.text = "シーンデータ読み込み 3/9";
+        },);
+  }
+
+  function vue6(){
+        fetch(GAS,
+          {
+            method: 'POST',
+            body: "666666"
+          }
+        )
+        .then(res => res.json())
+        .then(result => {
+          Inspect_DATAS = result;
+          vue7();
+          Sheets.text = "シーンデータ読み込み 4/9";
+        },);
+  }
+
+  function vue7(){
+        fetch(GAS,
+          {
+            method: 'POST',
+            body: "7777777"
+          }
+        )
+        .then(res => res.json())
+        .then(result => {
+          Speech_DATAS = result;
+          vue8();
+          Sheets.text = "シーンデータ読み込み 5/9";
+        },);
+  }
+
+  function vue8(){
+        fetch(GAS,
+          {
+            method: 'POST',
+            body: "88888888"
+          }
+        )
+        .then(res => res.json())
+        .then(result => {
+          Item_get_DATAS = result;
+          vue9();
+          Sheets.text = "シーンデータ読み込み 6/9";
+        },);
+  }
+
+  function vue9(){
+        fetch(GAS,
+          {
+            method: 'POST',
+            body: "999999999"
+          }
+        )
+        .then(res => res.json())
+        .then(result => {
+          Move_DATAS = result;
+          vue10();
+          Sheets.text = "シーンデータ読み込み 7/9";
+        },);
+  }
+
+  function vue10(){
+        fetch(GAS,
+          {
+            method: 'POST',
+            body: "0000000000"
+          }
+        )
+        .then(res => res.json())
+        .then(result => {
+          Branch_DATAS = result;
+          vue11();
+          Sheets.text = "シーンデータ読み込み 8/9";
+        },);
+  }
+
+  function vue11(width,height){
+        fetch(GAS,
+          {
+            method: 'POST',
+            body: "11111111111"
+          }
+        )
+        .then(res => res.json())
+        .then(result => {
+          I_C_F_DATAS = result;
+          Sheets.text = "シーンデータ読み込み 9/9";
+          loadScene.addChild(Buttons);
+        },);
+  }
+
+    loadScene.addEventListener('progress', function(e){
+
+    label.moveTo(10,100 + 40*4);
     label.color = 'Black';
     label.font  = "30px monospace";
     loadScene.addChild(label);
 
-		progress = e.loaded / e.total;
-		progress *= 100;
-		progress = Math.round(progress);
+  	progress = e.loaded / e.total;
+  	progress *= 100;
+  	progress = Math.round(progress);
     if(progress<10) progress = "00" + progress;
     else if(progress<100) progress = "0" + progress;
-    label.text = "LOADING..." + progress + "％";
+    label.text = "画像・音読み込み" + progress + "％";
 
-	});
-	loadScene.addEventListener('load', function(e) {
-    var Buttons = new Entity();
-    Buttons.moveTo(100,330);
-    Buttons.width = (width/2);
-    Buttons.height = (width/5);
-    Buttons._element = document.createElement('input');
-    Buttons._element.type = "submit";
-    Buttons._element.value = "始める";
-    loadScene.addChild(Buttons);
+  });
+  loadScene.addEventListener('load', function(e) {
+
     Buttons.addEventListener('touchstart',function(){
       var core = enchant.Core.instance;
       core.removeScene(core.loadingScene);
       core.dispatchEvent(e);
     });
-	});
+  });
   game.preload("image/融合.png");
   game.preload("sound/Item.wav");
   game.preload("sound/セーブ.wav");
@@ -1426,22 +1431,10 @@ function Load(width,height){
     var MainScene = function(Return){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var OK = true;
-      //console.log(Datas[11]);
-      if(Datas[11]!=false){
-        if(Datas[11].length>1){
-          if(Datas[11].substring(0,2)=="使う") OK = false;
-          if(Datas[11].length>2){
-            if(Datas[11].substring(0,3)=="調べる") OK = false;
-            if(Datas[11].substring(0,3)=="ヒント") OK = false;
-            if(Datas[11].length>4){
-              if(Datas[11].substring(0,5)=="つきつける") OK = false;
-            }
-          }
-        }
-        if(OK) Setting_Flag[4] = Datas[11];
-        if(Setting_Flag[8]){
-          Save(Datas[11]);
+      if(Datas[11]){
+        if(Datas[11]!="無し"){
+          Setting_Flag[4] = Datas[11];
+          if(Setting_Flag[8]) Save(Datas[11]);
         }
       }
 
@@ -2086,24 +2079,12 @@ function Load(width,height){
     var ChoiceScene = function(){
       var scene = new Scene();                                // 新しいシーンを作る
 
-      var OK = true;
-      if(Datas[6]!=false){
-        if(Datas[6].length>1){
-          if(Datas[6].substring(0,2)=="使う") OK = false;
-          if(Datas[6].length>2){
-            if(Datas[6].substring(0,3)=="調べる") OK = false;
-            if(Datas[6].substring(0,3)=="ヒント") OK = false;
-            if(Datas[6].length>4){
-              if(Datas[6].substring(0,5)=="つきつける") OK = false;
-            }
-          }
-        }
-        if(OK) Setting_Flag[4] = Datas[6];
-        if(Setting_Flag[8]&&Datas[6]!="ゲームオーバー"){
-          Save(Datas[6]);
+      if(Datas[6]){
+        if(Datas[6]!="無し"){
+          Setting_Flag[4] = Datas[6];
+          if(Setting_Flag[8]&&Datas[6]!="ゲームオーバー") Save(Datas[6]);
         }
       }
-
 
       switch (Datas[0]) {
         case "ヒント":
