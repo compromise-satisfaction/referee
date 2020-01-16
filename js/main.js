@@ -179,6 +179,7 @@ function Load(width,height){
   game.preload("image/stand.png");
   game.preload("image/ユベル.png");
   game.preload("image/留置所.png");
+  game.preload("image/裁判長席.png");
   game.preload("image/背景/留置所背景.png");
   game.preload("sound/進む.wav");
   game.preload("image/Buttons.png");
