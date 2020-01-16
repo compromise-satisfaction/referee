@@ -1741,11 +1741,23 @@ function Load(width,height){
 
         var Option = [];
 
-        for (var i = 0; i < DATAS.length; i++){
+        for (var i = 0; i < Main_DATAS.length; i++){
         Option[i] = document.createElement("option");
-        Option[i].text = DATAS[i].Number;
-        Option[i].value = DATAS[i].Number;
-        if(DATAS[i].type=="メイン"||DATAS[i].type=="チョイス"||DATAS[i].type=="尋問") S_Input1._element.appendChild(Option[i]);
+        Option[i].text = Main_DATAS[i].シーン名;
+        Option[i].value = Main_DATAS[i].シーン名;
+        S_Input1._element.appendChild(Option[i]);
+        }
+        for (var i = 0; i < Choice_DATAS.length; i++){
+        Option[i] = document.createElement("option");
+        Option[i].text = Choice_DATAS[i].シーン名;
+        Option[i].value = Choice_DATAS[i].シーン名;
+        S_Input1._element.appendChild(Option[i]);
+        }
+        for (var i = 0; i < Interrogation_DATAS.length; i++){
+        Option[i] = document.createElement("option");
+        Option[i].text = Interrogation_DATAS[i].シーン名;
+        Option[i].value = Interrogation_DATAS[i].シーン名;
+        S_Input1._element.appendChild(Option[i]);
         }
         scene.addChild(S_Input1);
 
