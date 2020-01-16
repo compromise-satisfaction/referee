@@ -2832,7 +2832,7 @@ function Load(width,height){
               break;
           }
           if(this.backgroundColor=="red"){
-            var ooo ="メニュー移動";
+            var ooo ="戻る";
           }
           if(Button_push(ooo)) return;
           if(this.backgroundColor=="red"){
