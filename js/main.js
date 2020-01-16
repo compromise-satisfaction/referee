@@ -1105,8 +1105,8 @@ function Load(width,height){
           case "left":
           case "right":
           case "stand":
-          case "裁判長席":
           case "留置所":
+          case "裁判長席":
           var xxx = game.assets["image/背景/"+Datas[0]+".png"].width;
           var yyy = game.assets["image/背景/"+Datas[0]+".png"].height;
           var Background = new Sprite(xxx,yyy);
@@ -1203,6 +1203,7 @@ function Load(width,height){
       switch (Datas[0]) {
         case "stand":
         case "留置所":
+        case "裁判長席":
           var xxx = game.assets["image/"+Datas[0]+".png"].width;
           var yyy = game.assets["image/"+Datas[0]+".png"].height;
           var Stand = new Sprite(xxx,yyy);
