@@ -524,12 +524,14 @@ function Load(width,height){
     }
 
     function Scene_loads(Number,Return,Item){
+      console.log(Number);
       switch (Number) {
         case "セーブ読み込み":
           Moves = Load_Datas();
           game.pushScene(MoveScene(10));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
+          return;
           break;
         case "タイトルに戻る":
           game.replaceScene(TitleScene());
@@ -538,6 +540,7 @@ function Load(width,height){
         case "直前":
           Number = Setting_Flag[4];
           Scene_loads(Number,false,false);
+          return;
           break;
         case "調べる何もない":
           Datas[1] = 0;
@@ -554,10 +557,12 @@ function Load(width,height){
           Datas[12] = Setting_Flag[12];
           Datas[13] = 0;
           game.replaceScene(MainScene(Return));
+          return;
           break;
         case "調べる":
           Number = Setting_Flag[12];
           Scene_loads(Number,false,false);
+          return;
           break;
         case "ライフ判断":
         if(Setting_Flag[3]==0){
@@ -567,12 +572,12 @@ function Load(width,height){
           Number = Setting_Flag[4];
         }
           Scene_loads(Number,false,false);
+          return;
           break;
         default:
           break;
       }
       if(Item) Number = Item + Number;
-      console.log(Number);
       var Name = Setting_Flag[0];
       var Gender = Setting_Flag[2];
       var Surname = Setting_Flag[1];
@@ -657,9 +662,11 @@ function Load(width,height){
       for (var i = 0; i < Move_DATAS.length; i++) {
         if(Number==Move_DATAS[i].シーン名){
           Moves = Move_DATAS[i].移動先;
+          console.log(Moves);
           game.pushScene(MoveScene(10));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
+          return;
         }
       }
       for (var i = 0; i < Branch_DATAS.length; i++) {
@@ -675,6 +682,7 @@ function Load(width,height){
           game.pushScene(ItemgetScene(conversion_url(Item_get_DATAS[i].画像,"画像"),Item_get_DATAS[i].文章,Item_get_DATAS[i].次のシーン));
           Scene_kazu++;
           console.log("Scene数",Scene_kazu);
+          return;
         }
       }
       for (var i = 0; i < Inspect_DATAS.length; i++) {
@@ -708,6 +716,7 @@ function Load(width,height){
           Inspect[24] = Inspect_DATAS[i].高さ5;
           Inspect[25] = Inspect_DATAS[i].移動先5;
           game.replaceScene(InspectScene(Inspect));
+          return;
         }
       }
       for (var i = 0; i < Interrogation_DATAS.length; i++) {
@@ -723,11 +732,13 @@ function Load(width,height){
           Datas[7] = Interrogation_DATAS[i].正解移動場所;
           Datas[8] = Interrogation_DATAS[i].正解アイテム;
           game.replaceScene(InterrogationScene());
+          return;
         }
       }
       if(Setting_Flag[4]) Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + kousin2,0,0,0,"未完成",0];
       else Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + kousin2,0,0,0,"タイトルに戻る",0];
       game.replaceScene(MainScene(Return));
+      return;
     }
 
     function Scene_loads3(Number,Return,Item){
