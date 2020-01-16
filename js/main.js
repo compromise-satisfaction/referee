@@ -411,7 +411,7 @@ function Load(width,height){
       }
       return(name);
     }
-    function Sound_ON(Sound_Name,Play,Voice){
+    function Sound_ON(Sound_Name,Play,Type){
       switch (Sound_Name) {
         case "お任せなのだ":
         case "音量調整用":
@@ -423,9 +423,17 @@ function Load(width,height){
           else var Volume = Setting_Flag[10]/10;
           break;
       }
-      if(Voice){
-        if(Setting_Flag[11]==0) Play = false;
-        else var Volume = Setting_Flag[11]/10;
+      if(Type){
+        switch (Type) {
+          case "音声":
+            if(Setting_Flag[11]==0) Play = false;
+            else var Volume = Setting_Flag[11]/10;
+            break;
+          default:
+            if(Setting_Flag[10]==0) Play = false;
+            else var Volume = Setting_Flag[10]/10;
+            break;
+        }
         if(Play){
           if(game.assets[Sound_Name].src==undefined){
             game.assets[Sound_Name].volume = Volume;
@@ -628,6 +636,7 @@ function Load(width,height){
           Datas[16] = Main_DATAS[i].トロフィー;
           Datas[17] = Main_DATAS[i].トロフィー画像;
           Datas[18] = Main_DATAS[i].トロフィー内容.replace(/\n/g,"↓");
+          Datas[19] = conversion_url(Main_DATAS[i].文章音,"BGM");
           if(Datas[1]=="主人公") Datas[1] = S_image;
           if(Datas[3]=="主人公") Datas[3] = S_image;
           if(Datas[5]=="主人公") Datas[5] = S_image;
@@ -1473,63 +1482,65 @@ function Load(width,height){
             if(Text[k].text.substring(0,1)=="("||Text[k].text.substring(0,1)==" ") Text[k].color = "blue";
             Text[k].text = Text[k].text+Datas[8].substring(Time-1,Time);
             if(Return==false){
-              if(Datas[7]=="メカ"){
-                switch(Text[k].text.substring(Text[k].text.length-1)){
-                  case "ア":
-                  case "イ":
-                  case "ウ":
-                  case "エ":
-                  case "オ":
-                  case "カ":
-                  case "キ":
-                  case "ク":
-                  case "ケ":
-                  case "コ":
-                  case "サ":
-                  case "シ":
-                  case "ス":
-                  case "セ":
-                  case "ソ":
-                  case "タ":
-                  case "チ":
-                  case "ツ":
-                  case "テ":
-                  case "ト":
-                  case "ナ":
-                  case "ニ":
-                  case "ヌ":
-                  case "ネ":
-                  case "ノ":
-                  case "ハ":
-                  case "ヒ":
-                  case "フ":
-                  case "ヘ":
-                  case "ホ":
-                  case "マ":
-                  case "ミ":
-                  case "ム":
-                  case "メ":
-                  case "モ":
-                  case "ヤ":
-                  case "ユ":
-                  case "ヨ":
-                  case "ラ":
-                  case "ラ":
-                  case "リ":
-                  case "ル":
-                  case "レ":
-                  case "ロ":
-                  case "ワ":
-                  case "ヲ":
-                  case "ン":
-                    Sound_ON(Text[k].text.substring(Text[k].text.length-1),true);
-                    break;
-                  default:
-                    //Sound_ON("ポ",true);
-                    break;
+              if(Datas[19]){
+                if(Datas[19]=="メカ"){
+                  switch(Text[k].text.substring(Text[k].text.length-1)){
+                    case "ア":
+                    case "イ":
+                    case "ウ":
+                    case "エ":
+                    case "オ":
+                    case "カ":
+                    case "キ":
+                    case "ク":
+                    case "ケ":
+                    case "コ":
+                    case "サ":
+                    case "シ":
+                    case "ス":
+                    case "セ":
+                    case "ソ":
+                    case "タ":
+                    case "チ":
+                    case "ツ":
+                    case "テ":
+                    case "ト":
+                    case "ナ":
+                    case "ニ":
+                    case "ヌ":
+                    case "ネ":
+                    case "ノ":
+                    case "ハ":
+                    case "ヒ":
+                    case "フ":
+                    case "ヘ":
+                    case "ホ":
+                    case "マ":
+                    case "ミ":
+                    case "ム":
+                    case "メ":
+                    case "モ":
+                    case "ヤ":
+                    case "ユ":
+                    case "ヨ":
+                    case "ラ":
+                    case "ラ":
+                    case "リ":
+                    case "ル":
+                    case "レ":
+                    case "ロ":
+                    case "ワ":
+                    case "ヲ":
+                    case "ン":
+                      Sound_ON(Text[k].text.substring(Text[k].text.length-1),true);
+                      break;
+                    default:
+                      //Sound_ON("ポ",true);
+                      break;
+                  }
                 }
+                else Sound_ON(Datas[19],true,"効果音");
               }
-              else Sound_ON("ポ",true);
             }
           }
           else if(Datas[8].substring(Time-1,Time)==""){
@@ -1937,7 +1948,7 @@ function Load(width,height){
       Pop.x = (Pop.scaleX*xxx/2)-xxx/2;
       Pop.y = (Pop.scaleY*yyy/2)-yyy/2;
       scene.addChild(Pop);
-      if(Sound) Sound_ON(Sound,true,true);
+      if(Sound) Sound_ON(Sound,true,"音声");
 
       var Time = 0;
 
