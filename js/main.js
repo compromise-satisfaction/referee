@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 3.8";
+var Version = "バージョン 3.9";
 
 switch (GitHub_type) {
   case "referee":
@@ -109,7 +109,7 @@ function Load(width,height){
   Buttons.height = (width/5);
   Buttons._element = document.createElement('input');
   Buttons._element.type = "submit";
-  Buttons._element.value = "始める";
+  Buttons._element.value = "お待ちください…";
 
   function vue1(){
         fetch(GAS,
@@ -262,7 +262,8 @@ function Load(width,height){
 
   });
   loadScene.addEventListener('load', function(e) {
-    Buttons.addEventListener('touchstart',function(){
+    Buttons.addEventListener('enterframe',function(){
+      if(Sheets.text != "シーンデータ読み込み 9/9") return;
       var core = enchant.Core.instance;
       core.removeScene(core.loadingScene);
       core.dispatchEvent(e);
