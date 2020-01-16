@@ -284,7 +284,6 @@ function Load(width,height){
   game.preload("sound/進む.wav");
   game.preload("image/Buttons.png");
   game.preload("image/待った！.png");
-  game.preload("sound/待った！.wav");
   game.preload("sound/ア.wav");
   game.preload("sound/イ.wav");
   game.preload("sound/ウ.wav");
@@ -341,7 +340,6 @@ function Load(width,height){
   game.preload("sound/Trophy.wav");
   game.preload("image/Trophy.png");
   game.preload("image/異議あり！.png");
-  game.preload("sound/異議あり！.wav");
   game.preload("image/カットイン.png");
   game.preload("image/Explosion.png");
   game.preload("image/背景/Black.png");
@@ -415,8 +413,6 @@ function Load(width,height){
     }
     function Sound_ON(Sound_Name,Play,Voice){
       switch (Sound_Name) {
-        case "異議あり！":
-        case "待った！":
         case "お任せなのだ":
         case "音量調整用":
           if(Setting_Flag[11]==0) Play = false;
@@ -430,6 +426,20 @@ function Load(width,height){
       if(Voice){
         if(Setting_Flag[11]==0) Play = false;
         else var Volume = Setting_Flag[11]/10;
+        if(Play){
+          if(game.assets[Sound_Name].src==undefined){
+            game.assets[Sound_Name].volume = Volume;
+          }
+          else{
+            game.assets[Sound_Name]._value = Volume;
+          }
+          game.assets[Sound_Name].play();
+        }
+        else{
+          game.assets["sound/"+Sound_Name+".wav"].play();
+          game.assets["sound/"+Sound_Name+".wav"].stop();
+        }
+        return;
       }
       if(Play&&Sound_Name!="ポ") console.log(Sound_Name);
       if(Play){
@@ -1911,6 +1921,13 @@ function Load(width,height){
           break;
       }
 
+      switch (Sound) {
+        case "主人公異議あり！":
+        case "主人公待った！":
+          Sound = conversion_url(Setting_Flag[2]+Sound,"BGM");
+          break;
+      }
+
       var xxx = game.assets[Type].width;
       var yyy = game.assets[Type].height;
       var Pop = new Sprite(xxx,yyy);
@@ -2052,7 +2069,7 @@ function Load(width,height){
           switch (b) {
             case "ゆさぶる":
               if(Button_push("音無し")) return;
-              game.pushScene(PopScene(c,"待った！"));
+              game.pushScene(PopScene(c,"待った！","主人公待った！"));
               Scene_kazu++;
               console.log("Scene数",Scene_kazu);
               break;
@@ -2888,13 +2905,13 @@ function Load(width,height){
                   Get_ICF("アイテム","強欲な壺","消失");
                   Choice_Flag[Choice_Flag.length] = ["強欲なカケラ","強欲な壺を使った証。","強欲なカケラ"];
                 }
-                game.pushScene(PopScene(Number,"異議あり！"));
+                game.pushScene(PopScene(Number,"異議あり！","主人公異議あり！"));
                 Scene_kazu++;
                 console.log("Scene数",Scene_kazu);
               }
               else if(Ig=="日常") Scene_loads(Number,false,"つきつける"+Choice_Item);
               else{
-                game.pushScene(PopScene("つきつけ失敗","異議あり！"));
+                game.pushScene(PopScene("つきつけ失敗","異議あり！","主人公異議あり！"));
                 Scene_kazu++;
                 console.log("Scene数",Scene_kazu);
               }
