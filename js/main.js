@@ -331,7 +331,6 @@ function Load(width,height){
   game.preload("sound/ワ.wav");
   game.preload("sound/ヲ.wav");
   game.preload("sound/ン.wav");
-  game.preload("sound/ポ.wav");
   game.preload("sound/メニュー.wav");
   game.preload("sound/メニュー移動.wav");
   game.preload("sound/アイテム表示音.wav");
@@ -449,7 +448,6 @@ function Load(width,height){
         }
         return;
       }
-      if(Play&&Sound_Name!="ポ") console.log(Sound_Name);
       if(Play){
         if(game.assets["sound/"+Sound_Name+".wav"].src==undefined){
           game.assets["sound/"+Sound_Name+".wav"].volume = Volume;
@@ -1535,7 +1533,6 @@ function Load(width,height){
                       Sound_ON(Text[k].text.substring(Text[k].text.length-1),true);
                       break;
                     default:
-                      //Sound_ON("ポ",true);
                       break;
                   }
                 }
