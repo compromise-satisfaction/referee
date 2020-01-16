@@ -24,9 +24,9 @@ function Images(width,height){
   .then(res => res.json())
   .then(result => {
     Image_urls = [];
-    ImageDATAS = result;
-    for (var i = 0; i < ImageDATAS.length; i++){
-      Image_urls[i] = ImageDATAS[i].url;
+    Image_DATAS = result;
+    for (var i = 0; i < Image_DATAS.length; i++){
+      Image_urls[i] = Image_DATAS[i].url;
     }
     vue1(width,height);
   },);
@@ -46,7 +46,7 @@ function vue1(width,height){
       },);
 }
 
-function vue2(width,height,DATAS){
+function vue2(width,height){
       fetch(GAS,
         {
           method: 'POST',
@@ -60,7 +60,7 @@ function vue2(width,height,DATAS){
       },);
 }
 
-function vue3(width,height,DATAS,kousin1){
+function vue3(width,height){
       fetch(GAS,
         {
           method: 'POST',
@@ -70,39 +70,123 @@ function vue3(width,height,DATAS,kousin1){
       .then(res => res.json())
       .then(result => {
         BGM_urls = [];
-        BGMDATAS = result;
-        for (var i = 0; i < BGMDATAS.length; i++){
-          BGM_urls[i] = BGMDATAS[i].url;
+        BGM_DATAS = result;
+        for (var i = 0; i < BGM_DATAS.length; i++){
+          BGM_urls[i] = BGM_DATAS[i].url;
         }
+        vue4(width,height);
+      },);
+}
+
+function vue4(width,height){
+      fetch(GAS,
+        {
+          method: 'POST',
+          body: "4444"
+        }
+      )
+      .then(res => res.json())
+      .then(result => {
+        Interrogation_DATAS = result;
+        vue5(width,height);
+      },);
+}
+
+function vue5(width,height){
+      fetch(GAS,
+        {
+          method: 'POST',
+          body: "55555"
+        }
+      )
+      .then(res => res.json())
+      .then(result => {
+        Choice_DATAS = result;
+        vue6(width,height);
+      },);
+}
+
+function vue6(width,height){
+      fetch(GAS,
+        {
+          method: 'POST',
+          body: "666666"
+        }
+      )
+      .then(res => res.json())
+      .then(result => {
+        Inspect_DATAS = result;
+        vue7(width,height);
+      },);
+}
+
+function vue7(width,height){
+      fetch(GAS,
+        {
+          method: 'POST',
+          body: "7777777"
+        }
+      )
+      .then(res => res.json())
+      .then(result => {
+        Speech_DATAS = result;
+        vue8(width,height);
+      },);
+}
+
+function vue8(width,height){
+      fetch(GAS,
+        {
+          method: 'POST',
+          body: "88888888"
+        }
+      )
+      .then(res => res.json())
+      .then(result => {
+        Item_get_DATAS = result;
+        vue9(width,height);
+      },);
+}
+
+function vue9(width,height){
+      fetch(GAS,
+        {
+          method: 'POST',
+          body: "999999999"
+        }
+      )
+      .then(res => res.json())
+      .then(result => {
+        Move_DATAS = result;
+        vue10(width,height);
+      },);
+}
+
+function vue10(width,height){
+      fetch(GAS,
+        {
+          method: 'POST',
+          body: "0000000000"
+        }
+      )
+      .then(res => res.json())
+      .then(result => {
+        Branch_DATAS = result;
+        vue11(width,height);
+      },);
+}
+
+function vue11(width,height){
+      fetch(GAS,
+        {
+          method: 'POST',
+          body: "11111111111"
+        }
+      )
+      .then(res => res.json())
+      .then(result => {
+        I_C_F_DATAS = result;
         Load(width,height);
-      },);
-}
-
-function vue(width,height){
-      fetch(GAS,
-        {
-          method: 'POST',
-          body: "メインシーン"
-        }
-      )
-      .then(res => res.json())
-      .then(result => {
-        Vues[Fetchs][1] = result;
-        Load(width,height,DATAS);
-      },);
-}
-
-function vue(width,height){
-      fetch(GAS,
-        {
-          method: 'POST',
-          body: "メインシーン"
-        }
-      )
-      .then(res => res.json())
-      .then(result => {
-        Vues[Fetchs][1] = result;
-        Load(width,height,DATAS);
       },);
 }
 
@@ -290,13 +374,13 @@ function Load(width,height){
     function conversion_url(name,Type){
       switch (Type) {
         case "画像":
-          for (var i = 0; i < ImageDATAS.length; i++) {
-            if(ImageDATAS[i].名前==name) return(ImageDATAS[i].url);
+          for (var i = 0; i < Image_DATAS.length; i++) {
+            if(Image_DATAS[i].名前==name) return(Image_DATAS[i].url);
           }
           break;
         case "BGM":
-          for (var i = 0; i < BGMDATAS.length; i++) {
-            if(BGMDATAS[i].名前==name) return(BGMDATAS[i].url);
+          for (var i = 0; i < BGM_DATAS.length; i++) {
+            if(BGM_DATAS[i].名前==name) return(BGM_DATAS[i].url);
           }
           break;
       }
@@ -589,7 +673,7 @@ function Load(width,height){
     }
     }
     Character_Flag = Character_Flag2;
-    if(Pages2==Character_Flag.length) Pages2-=5;
+    if(Setting_Flag[6]==Character_Flag.length) Setting_Flag[6]-=5;
     }
     else if(b=="書き換え"){
       if(i==Character_Flag.length) return;
@@ -618,7 +702,7 @@ function Load(width,height){
     }
     }
     Item_Flag = Item_Flag2;
-    if(Pages==Item_Flag.length) Pages-=5;
+    if(Setting_Flag[5]==Item_Flag.length) Setting_Flag[5]-=5;
     }
     else if(b=="書き換え"){
       if(i==Item_Flag.length) return;
@@ -757,10 +841,10 @@ function Load(width,height){
     return;
     }
     if(DATAS[i].BGM!="変化無し"){
-      for (var k = 0; k < BGMDATAS.length; k++){
-        if(DATAS[i].BGM!=BGMDATAS[k].名前&&game.assets[BGMDATAS[k].url].状態=="再生中"){
-          game.assets[BGMDATAS[k].url].stop();
-          game.assets[BGMDATAS[k].url].状態 = "停止";
+      for (var k = 0; k < BGM_DATAS.length; k++){
+        if(DATAS[i].BGM!=BGM_DATAS[k].名前&&game.assets[BGM_DATAS[k].url].状態=="再生中"){
+          game.assets[BGM_DATAS[k].url].stop();
+          game.assets[BGM_DATAS[k].url].状態 = "停止";
         }
       }
       if(DATAS[i].BGM!=false&&game.assets[conversion_url(DATAS[i].BGM,"BGM")].状態!="再生中"){
@@ -772,14 +856,14 @@ function Load(width,height){
           console.log(game.assets[conversion_url(DATAS[i].BGM,"BGM")]);
         }
         else{
-          for (var k = 0; k < BGMDATAS.length; k++){
-            if(BGMDATAS[k].名前==DATAS[i].BGM) break;
+          for (var k = 0; k < BGM_DATAS.length; k++){
+            if(BGM_DATAS[k].名前==DATAS[i].BGM) break;
           }
           game.assets[conversion_url(DATAS[i].BGM,"BGM")]._volume = Setting_Flag[9]/10;
           game.assets[conversion_url(DATAS[i].BGM,"BGM")].play();
           game.assets[conversion_url(DATAS[i].BGM,"BGM")].src.loop = true;
-          game.assets[conversion_url(DATAS[i].BGM,"BGM")].src.loopStart = BGMDATAS[k].ループ開始;
-          game.assets[conversion_url(DATAS[i].BGM,"BGM")].src.loopEnd = BGMDATAS[k].ループ終了;
+          game.assets[conversion_url(DATAS[i].BGM,"BGM")].src.loopStart = BGM_DATAS[k].ループ開始;
+          game.assets[conversion_url(DATAS[i].BGM,"BGM")].src.loopEnd = BGM_DATAS[k].ループ終了;
           console.log(game.assets[conversion_url(DATAS[i].BGM,"BGM")]);
         }
         if(Setting_Flag[9]==0)game.assets[conversion_url(DATAS[i].BGM,"BGM")].stop();
@@ -2512,24 +2596,24 @@ function Load(width,height){
               }
               if(Setting_Flag[9]==10) Text[13].text = Setting_Flag[9];
               else Text[13].text = " "+Setting_Flag[9];
-              for (var k = 0; k < BGMDATAS.length; k++){
-                if(game.assets[BGMDATAS[k].url].状態=="再生中"){
-                  var basyo = game.assets[BGMDATAS[k].url].currentTime;
-                  game.assets[BGMDATAS[k].url].pause();
-                  if(game.assets[BGMDATAS[k].url].src==undefined){
-                    game.assets[BGMDATAS[k].url].volume = Setting_Flag[9]/10;
-                    game.assets[BGMDATAS[k].url].play();
+              for (var k = 0; k < BGM_DATAS.length; k++){
+                if(game.assets[BGM_DATAS[k].url].状態=="再生中"){
+                  var basyo = game.assets[BGM_DATAS[k].url].currentTime;
+                  game.assets[BGM_DATAS[k].url].pause();
+                  if(game.assets[BGM_DATAS[k].url].src==undefined){
+                    game.assets[BGM_DATAS[k].url].volume = Setting_Flag[9]/10;
+                    game.assets[BGM_DATAS[k].url].play();
                   }
                   else{
-                    game.assets[BGMDATAS[k].url]._currentTime = basyo;
-                    game.assets[BGMDATAS[k].url]._volume = Setting_Flag[9]/10;
-                    game.assets[BGMDATAS[k].url].play();
-                    game.assets[BGMDATAS[k].url].src.loop = true;
-                    game.assets[BGMDATAS[k].url].src.loopStart = BGMDATAS[k].ループ開始;
-                    game.assets[BGMDATAS[k].url].src.loopEnd = BGMDATAS[k].ループ終了;
+                    game.assets[BGM_DATAS[k].url]._currentTime = basyo;
+                    game.assets[BGM_DATAS[k].url]._volume = Setting_Flag[9]/10;
+                    game.assets[BGM_DATAS[k].url].play();
+                    game.assets[BGM_DATAS[k].url].src.loop = true;
+                    game.assets[BGM_DATAS[k].url].src.loopStart = BGM_DATAS[k].ループ開始;
+                    game.assets[BGM_DATAS[k].url].src.loopEnd = BGM_DATAS[k].ループ終了;
                   }
-                  console.log(game.assets[BGMDATAS[k].url]);
-                  if(Setting_Flag[9]==0) game.assets[BGMDATAS[k].url].stop();
+                  console.log(game.assets[BGM_DATAS[k].url]);
+                  if(Setting_Flag[9]==0) game.assets[BGM_DATAS[k].url].stop();
                 }
               }
               break;
@@ -2804,7 +2888,6 @@ function Load(width,height){
           var Type2 = "アイテム";
           break;
       }
-      console.log(Type);
 
       var xxx = game.assets["image/Background.png"].width;
       var yyy = game.assets["image/Background.png"].height;
@@ -2910,7 +2993,7 @@ function Load(width,height){
               game.popScene();
               Scene_kazu--;
               console.log("Scene数",Scene_kazu);
-              if(Ig==Choice_Item||(Ig!="日常"&&(Choice_Item=="強欲な壺"||Choice_Item=="ヒントカード"))){
+              if(Ig==Choice_Item||(Ig!="日常"&&(Choice_Item=="強欲な壺"||Choice_Item=="万能ツール"||Choice_Item=="ヒントカード"))){
                 if(Choice_Item=="ヒントカード"){
                   Scene_loads("ヒント"+Number,false,false);
                   return;
@@ -3192,9 +3275,6 @@ function Load(width,height){
         Item_Flag = [];//所持アイテム
         Character_Flag = [];//人物
         Trophy_Flag = [];//トロフィー
-        Pages = 0;//アイテムのページ
-        Pages2 = 0;//人物のページ
-        Pages4 = 0;//トロフィーのページ
         Text = "";
         Scene_type = "メイン";
         Scene_kazu = 1;
@@ -4190,10 +4270,10 @@ function Load(width,height){
 
       Option = [];
 
-      for (var i = 1; i < ImageDATAS.length; i++){
+      for (var i = 1; i < Image_DATAS.length; i++){
         Option[i-1] = document.createElement("option");
-        Option[i-1].text = ImageDATAS[i].名前;
-        Option[i-1].value = ImageDATAS[i].名前;
+        Option[i-1].text = Image_DATAS[i].名前;
+        Option[i-1].value = Image_DATAS[i].名前;
         S_Input1._element.appendChild(Option[i-1]);
       }
       scene.addChild(S_Input1);
