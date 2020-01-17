@@ -760,6 +760,8 @@ function Load(width,height){
           Datas[0] = conversion_url(Speech_DATAS[i].吹き出し画像,"画像");
           Datas[1] = conversion_url(Speech_DATAS[i].再生音声,"音声");
           Datas[2] = Speech_DATAS[i].次のシーン;
+          Scene_kazu++;
+          console.log(Scene_kazu);
           game.pushScene(PopScene(Datas[2],Datas[0],Datas[1]));
           return;
         }
