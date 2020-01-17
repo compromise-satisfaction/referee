@@ -600,6 +600,7 @@ function Load(width,height){
       var www = ["僕","俺"];
       var Person = www[rand(1)];
       var S_image = conversion_url("男主人公","画像");
+      var S_Sound = conversion_url("男主人公ポポポ","サウンド");
       if(Setting_Flag[1]=="不動"&&Setting_Flag[0]=="遊星"){
         var Person = "俺";
         var S_image = conversion_url("蟹","画像");
@@ -608,10 +609,12 @@ function Load(width,height){
       else if(Gender=="女"){
       var Person = "私";
       var S_image = conversion_url("女主人公","画像");
+      var S_Sound = conversion_url("女主人公ポポポ","サウンド");
       }
       else{
       var Person = "我";
       var S_image = "image/ユベル.png";
+      var S_Sound = conversion_url("未設定主人公ポポポ","サウンド");
       }
       Datas = [];
       for (var i = 0; i < Main_DATAS.length; i++) {
@@ -641,6 +644,7 @@ function Load(width,height){
           if(Datas[1]=="主人公") Datas[1] = S_image;
           if(Datas[3]=="主人公") Datas[3] = S_image;
           if(Datas[5]=="主人公") Datas[5] = S_image;
+          if(Datas[19]=="主人公") Datas[19] = S_Sound;
           game.replaceScene(MainScene(Return,Number));
           return;
         }
