@@ -1040,7 +1040,7 @@ function Load(width,height){
           fetch(GAS,)
           .then(res => res.json())
           .then(result => {
-            console.log(result);
+            console.log(result[0].更新日);
           },);
         }
       }
@@ -1048,7 +1048,7 @@ function Load(width,height){
         fetch(GAS,)
         .then(res => res.json())
         .then(result => {
-          console.log(result);
+          console.log(result[0].更新日);
         },);
       }
 
