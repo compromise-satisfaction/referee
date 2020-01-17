@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 4.6";
+var Version = "バージョン 4.7";
 
 switch (GitHub_type) {
   case "referee":
@@ -758,7 +758,7 @@ function Load(width,height){
       for (var i = 0; i < Speech_DATAS.length; i++) {
         if(Number==Speech_DATAS[i].シーン名){
           Datas[0] = conversion_url(Speech_DATAS[i].吹き出し画像,"画像");
-          Datas[1] = conversion_url(Speech_DATAS[i].再生音声,"音声");
+          Datas[1] = conversion_url(Speech_DATAS[i].再生音声,"サウンド");
           Datas[2] = Speech_DATAS[i].次のシーン;
           Scene_kazu++;
           console.log(Scene_kazu);
