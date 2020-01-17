@@ -275,6 +275,7 @@ function Load(width,height){
   game.preload("sound/セーブ.wav");
   game.preload("sound/音量調整用.wav");
   game.preload("sound/お任せなのだ.wav");
+  game.preload("sound/ダメージ.wav");
   game.preload("image/left.png");
   game.preload("image/right.png");
   game.preload("image/white.png");
