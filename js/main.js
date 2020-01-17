@@ -1537,7 +1537,20 @@ function Load(width,height){
                       break;
                   }
                 }
-                else Sound_ON(Datas[19],true,"効果音");
+                else{
+                  switch(Text[k].text.substring(Text[k].text.length-1)){
+                    case "「":
+                    case "　":
+                    case "」":
+                    case "(":
+                    case " ":
+                    case ")":
+                      break;
+                    default:
+                      Sound_ON(Datas[19],true,"効果音");
+                      break;
+                  }
+                }
               }
             }
           }
