@@ -57,13 +57,13 @@ function vue3(width,height){
       )
       .then(res => res.json())
       .then(result => {
-        BGM_urls = [];
-        BGM_DATAS = result;
-        for (var i = 0; i < BGM_DATAS.length; i++){
-          BGM_urls[i] = BGM_DATAS[i].url;
+        Sounds_urls = [];
+        Sounds_DATAS = result;
+        for (var i = 0; i < Sounds_DATAS.length; i++){
+          Sounds_urls[i] = Sounds_DATAS[i].url;
         }
         Load(width,height);
-        console.log("BGMシート読み込み完了");
+        console.log("サウンドシート読み込み完了");
       },);
 }
 
@@ -354,7 +354,7 @@ function Load(width,height){
   game.preload("image/Background.png");
   game.preload("image/Set_button.png","image/stone.png","image/Hand.png","image/V_or_D.png");
   game.preload(Image_urls);
-  game.preload(BGM_urls);
+  game.preload(Sounds_urls);
 
   game.fps = 10;
   game.onload = function(){
@@ -405,9 +405,9 @@ function Load(width,height){
             if(Image_DATAS[i].名前==name) return(Image_DATAS[i].url);
           }
           break;
-        case "BGM":
-          for (var i = 0; i < BGM_DATAS.length; i++) {
-            if(BGM_DATAS[i].名前==name) return(BGM_DATAS[i].url);
+        case "サウンド":
+          for (var i = 0; i < Sounds_DATAS.length; i++) {
+            if(Sounds_DATAS[i].名前==name) return(Sounds_DATAS[i].url);
           }
           break;
       }
@@ -503,32 +503,32 @@ function Load(width,height){
     }
     function BGM_SSS(DATAS){
       if(DATAS.BGM!="変化無し"){
-        for (var k = 0; k < BGM_DATAS.length; k++){
-          if(DATAS.BGM!=BGM_DATAS[k].名前&&game.assets[BGM_DATAS[k].url].状態=="再生中"){
-            game.assets[BGM_DATAS[k].url].stop();
-            game.assets[BGM_DATAS[k].url].状態 = "停止";
+        for (var k = 0; k < Sounds_DATAS.length; k++){
+          if(DATAS.BGM!=Sounds_DATAS[k].名前&&game.assets[Sounds_DATAS[k].url].状態=="再生中"){
+            game.assets[Sounds_DATAS[k].url].stop();
+            game.assets[Sounds_DATAS[k].url].状態 = "停止";
           }
         }
-        if(DATAS.BGM!=false&&game.assets[conversion_url(DATAS.BGM,"BGM")].状態!="再生中"){
-          game.assets[conversion_url(DATAS.BGM,"BGM")].状態 = "再生中";
-          if(game.assets[conversion_url(DATAS.BGM,"BGM")].src==undefined){
-            game.assets[conversion_url(DATAS.BGM,"BGM")].volume = Setting_Flag[9]/10;
-            game.assets[conversion_url(DATAS.BGM,"BGM")].play();
-            game.assets[conversion_url(DATAS.BGM,"BGM")]._element.loop = true;
-            console.log(game.assets[conversion_url(DATAS.BGM,"BGM")]);
+        if(DATAS.BGM!=false&&game.assets[conversion_url(DATAS.BGM,"サウンド")].状態!="再生中"){
+          game.assets[conversion_url(DATAS.BGM,"サウンド")].状態 = "再生中";
+          if(game.assets[conversion_url(DATAS.BGM,"サウンド")].src==undefined){
+            game.assets[conversion_url(DATAS.BGM,"サウンド")].volume = Setting_Flag[9]/10;
+            game.assets[conversion_url(DATAS.BGM,"サウンド")].play();
+            game.assets[conversion_url(DATAS.BGM,"サウンド")]._element.loop = true;
+            console.log(game.assets[conversion_url(DATAS.BGM,"サウンド")]);
           }
           else{
-            for (var k = 0; k < BGM_DATAS.length; k++){
-              if(BGM_DATAS[k].名前==DATAS.BGM) break;
+            for (var k = 0; k < Sounds_DATAS.length; k++){
+              if(Sounds_DATAS[k].名前==DATAS.BGM) break;
             }
-            game.assets[conversion_url(DATAS.BGM,"BGM")]._volume = Setting_Flag[9]/10;
-            game.assets[conversion_url(DATAS.BGM,"BGM")].play();
-            game.assets[conversion_url(DATAS.BGM,"BGM")].src.loop = true;
-            game.assets[conversion_url(DATAS.BGM,"BGM")].src.loopStart = BGM_DATAS[k].ループ開始;
-            game.assets[conversion_url(DATAS.BGM,"BGM")].src.loopEnd = BGM_DATAS[k].ループ終了;
-            console.log(game.assets[conversion_url(DATAS.BGM,"BGM")]);
+            game.assets[conversion_url(DATAS.BGM,"サウンド")]._volume = Setting_Flag[9]/10;
+            game.assets[conversion_url(DATAS.BGM,"サウンド")].play();
+            game.assets[conversion_url(DATAS.BGM,"サウンド")].src.loop = true;
+            game.assets[conversion_url(DATAS.BGM,"サウンド")].src.loopStart = Sounds_DATAS[k].ループ開始;
+            game.assets[conversion_url(DATAS.BGM,"サウンド")].src.loopEnd = Sounds_DATAS[k].ループ終了;
+            console.log(game.assets[conversion_url(DATAS.BGM,"サウンド")]);
           }
-          if(Setting_Flag[9]==0) game.assets[conversion_url(DATAS.BGM,"BGM")].stop();
+          if(Setting_Flag[9]==0) game.assets[conversion_url(DATAS.BGM,"サウンド")].stop();
         }
       }
     }
@@ -544,10 +544,10 @@ function Load(width,height){
           return;
           break;
         case "タイトルに戻る":
-          for (var k = 0; k < BGM_DATAS.length; k++){
-            if(game.assets[BGM_DATAS[k].url].状態=="再生中"){
-              game.assets[BGM_DATAS[k].url].stop();
-              game.assets[BGM_DATAS[k].url].状態 = "停止";
+          for (var k = 0; k < Sounds_DATAS.length; k++){
+            if(game.assets[Sounds_DATAS[k].url].状態=="再生中"){
+              game.assets[Sounds_DATAS[k].url].stop();
+              game.assets[Sounds_DATAS[k].url].状態 = "停止";
             }
           }
           game.replaceScene(TitleScene());
@@ -637,7 +637,7 @@ function Load(width,height){
           Datas[16] = Main_DATAS[i].トロフィー;
           Datas[17] = Main_DATAS[i].トロフィー画像;
           Datas[18] = Main_DATAS[i].トロフィー内容.replace(/\n/g,"↓");
-          Datas[19] = conversion_url(Main_DATAS[i].文章音,"BGM");
+          Datas[19] = conversion_url(Main_DATAS[i].文章音,"サウンド");
           if(Datas[1]=="主人公") Datas[1] = S_image;
           if(Datas[3]=="主人公") Datas[3] = S_image;
           if(Datas[5]=="主人公") Datas[5] = S_image;
@@ -687,7 +687,7 @@ function Load(width,height){
       }
       for (var i = 0; i < Branch_DATAS.length; i++) {
         if(Number==Branch_DATAS[i].シーン名){
-          if(have(Branch_DATAS[i].アイテム又はフラグ名)) Scene_loads(Branch_DATAS[i].ある,Return,Item);
+          if(have(Branch_DATAS[i].アイテムorフラグ名)) Scene_loads(Branch_DATAS[i].ある,Return,Item);
           else Scene_loads(Branch_DATAS[i].ない,Return,Item);
           return;
         }
@@ -1950,7 +1950,7 @@ function Load(width,height){
       switch (Sound) {
         case "主人公異議あり！":
         case "主人公待った！":
-          Sound = conversion_url(Setting_Flag[2]+Sound,"BGM");
+          Sound = conversion_url(Setting_Flag[2]+Sound,"サウンド");
           break;
       }
 
@@ -2543,24 +2543,24 @@ function Load(width,height){
               }
               if(Setting_Flag[9]==10) Text[13].text = Setting_Flag[9];
               else Text[13].text = " "+Setting_Flag[9];
-              for (var k = 0; k < BGM_DATAS.length; k++){
-                if(game.assets[BGM_DATAS[k].url].状態=="再生中"){
-                  var basyo = game.assets[BGM_DATAS[k].url].currentTime;
-                  game.assets[BGM_DATAS[k].url].pause();
-                  if(game.assets[BGM_DATAS[k].url].src==undefined){
-                    game.assets[BGM_DATAS[k].url].volume = Setting_Flag[9]/10;
-                    game.assets[BGM_DATAS[k].url].play();
+              for (var k = 0; k < Sounds_DATAS.length; k++){
+                if(game.assets[Sounds_DATAS[k].url].状態=="再生中"){
+                  var basyo = game.assets[Sounds_DATAS[k].url].currentTime;
+                  game.assets[Sounds_DATAS[k].url].pause();
+                  if(game.assets[Sounds_DATAS[k].url].src==undefined){
+                    game.assets[Sounds_DATAS[k].url].volume = Setting_Flag[9]/10;
+                    game.assets[Sounds_DATAS[k].url].play();
                   }
                   else{
-                    game.assets[BGM_DATAS[k].url]._currentTime = basyo;
-                    game.assets[BGM_DATAS[k].url]._volume = Setting_Flag[9]/10;
-                    game.assets[BGM_DATAS[k].url].play();
-                    game.assets[BGM_DATAS[k].url].src.loop = true;
-                    game.assets[BGM_DATAS[k].url].src.loopStart = BGM_DATAS[k].ループ開始;
-                    game.assets[BGM_DATAS[k].url].src.loopEnd = BGM_DATAS[k].ループ終了;
+                    game.assets[Sounds_DATAS[k].url]._currentTime = basyo;
+                    game.assets[Sounds_DATAS[k].url]._volume = Setting_Flag[9]/10;
+                    game.assets[Sounds_DATAS[k].url].play();
+                    game.assets[Sounds_DATAS[k].url].src.loop = true;
+                    game.assets[Sounds_DATAS[k].url].src.loopStart = Sounds_DATAS[k].ループ開始;
+                    game.assets[Sounds_DATAS[k].url].src.loopEnd = Sounds_DATAS[k].ループ終了;
                   }
-                  console.log(game.assets[BGM_DATAS[k].url]);
-                  if(Setting_Flag[9]==0) game.assets[BGM_DATAS[k].url].stop();
+                  console.log(game.assets[Sounds_DATAS[k].url]);
+                  if(Setting_Flag[9]==0) game.assets[Sounds_DATAS[k].url].stop();
                 }
               }
               break;
