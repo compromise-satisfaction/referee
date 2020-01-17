@@ -1444,6 +1444,7 @@ function Load(width,height){
           if(Return==false){
             Explosion.x = (Explosion.scaleX*80/2)-80/2+(width/2);
             Explosion.frame = 0;
+            Sound_ON("ダメージ",true);
           }
         }
         else if(Datas[8].substring(Time,Time+1)=="㊥"){
@@ -1451,6 +1452,7 @@ function Load(width,height){
           if(Return==false){
             Explosion.x = (Explosion.scaleX*80/2)-80/2+(width/4);
             Explosion.frame = 0;
+            Sound_ON("ダメージ",true);
           }
         }
         else if(Datas[8].substring(Time,Time+1)=="㊧"){
@@ -1458,6 +1460,7 @@ function Load(width,height){
           if(Return==false){
             Explosion.x = (Explosion.scaleX*80/2)-80/2;
             Explosion.frame = 0;
+            Sound_ON("ダメージ",true);
           }
         }
         Time ++;
