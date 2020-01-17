@@ -1037,12 +1037,7 @@ function Load(width,height){
         Setting_Flag = window.localStorage.getItem("Setting_Flag").split(",");
         if(Setting_Flag[1]=="不動"&&Setting_Flag[0]=="遊星"&&Setting_Flag[2]=="男") Submit("テスト用");
         else {
-          fetch(GAS,
-            {
-              method: 'POST',
-              body: "121212121212"
-            }
-          )
+          fetch(GAS,)
           .then(res => res.json())
           .then(result => {
             console.log(reset);
@@ -1050,12 +1045,7 @@ function Load(width,height){
         }
       }
       else{
-        fetch(GAS,
-          {
-            method: 'POST',
-            body: "121212121212"
-          }
-        )
+        fetch(GAS,)
         .then(res => res.json())
         .then(result => {
           console.log(reset);
