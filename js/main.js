@@ -251,6 +251,7 @@ function Load(width,height){
     label.moveTo(10,100 + 40*4);
     label.color = 'Black';
     label.font  = "30px monospace";
+    label.width = width;
     loadScene.addChild(label);
 
   	progress = e.loaded / e.total;
@@ -866,7 +867,6 @@ function Load(width,height){
     window.localStorage.setItem("Trophy",Trophy_Flag2);
     window.localStorage.setItem("syoken",false);
     console.log(Datas);
-    post(Setting_Flag[1],Setting_Flag[0],Number);
     }//セーブ
     function rand(n) {
     return Math.floor(Math.random() * (n + 1));
