@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 4.0";
+var Version = "バージョン 4.1";
 
 switch (GitHub_type) {
   case "referee":
@@ -760,8 +760,26 @@ function Load(width,height){
           return;
         }
       }
-      if(Setting_Flag[4]) Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + kousin2,0,0,0,"未完成",0];
-      else Datas = ["Black",0,0,0,0,0,0,"","ここから先はできていません。↓ ↓" + kousin2,0,0,0,"タイトルに戻る",0];
+      Datas[0] = "Black";
+      Datas[1] = "";
+      Datas[2] = "";
+      Datas[3] = "";
+      Datas[4] = "";
+      Datas[5] = "";
+      Datas[6] = "";
+      Datas[7] = "製作者";
+      Datas[8] = "ここから先は出来ていません。↓更新をお待ちください。↓" + kousin2;
+      Datas[9] = "";
+      Datas[10] = "";
+      Datas[11] = "";
+      Datas[12] = "未完成";
+      Datas[13] = "";
+      Datas[14] = "";
+      Datas[15] = "";
+      Datas[16] = "";
+      Datas[17] = "";
+      Datas[18] = "";
+      Datas[19] = conversion_url("日付","サウンド");
       game.replaceScene(MainScene(Return));
       return;
     }
