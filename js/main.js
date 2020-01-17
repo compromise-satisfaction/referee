@@ -1043,6 +1043,10 @@ function Load(width,height){
               body: "121212121212"
             }
           )
+          .then(res => res.json())
+          .then(result => {
+            console.log(reset);
+          },);
         }
       }
       else{
@@ -1052,6 +1056,10 @@ function Load(width,height){
             body: "121212121212"
           }
         )
+        .then(res => res.json())
+        .then(result => {
+          console.log(reset);
+        },);
       }
 
       Title.addEventListener("enterframe",function(){
