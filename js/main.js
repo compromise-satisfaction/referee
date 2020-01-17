@@ -1,6 +1,6 @@
 enchant();
 
-var Version = "バージョン 4.1";
+var Version = "バージョン 4.2";
 
 switch (GitHub_type) {
   case "referee":
